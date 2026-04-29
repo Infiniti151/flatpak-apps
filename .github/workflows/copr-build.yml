@@ -9,8 +9,7 @@ on:
 
 jobs:
   trigger:
-    #if: github.actor == 'Infiniti151' && 
-      #startsWith(github.event.head_commit.message, 'chore(')
+    #if: github.actor == 'Infiniti151' && startsWith(github.event.head_commit.message, 'chore(')
     runs-on: ubuntu-latest
     steps:
       - name: Extract App Name and Trigger
