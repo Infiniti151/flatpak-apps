@@ -1,10 +1,15 @@
+%define debug_package %{nil}
+%define __brp_check_rpaths %{nil}
+%define _build_id_links none
+%define _unpackaged_files_terminate_build 0
+
 Name:           text-compare
-Version:        %{?_version}%{!?_version:0.0.0}
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        A simple text comparison tool
 URL:            https://github.com/josephmawa/TextCompare
-BugURL:			https://github.com/Infiniti151/flatpak-apps/issues
-# This pulls code directly from the original author
+BugURL:			    https://github.com/Infiniti151/flatpak-apps/issues
+
 Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildRequires:  meson
