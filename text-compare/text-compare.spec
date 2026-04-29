@@ -15,6 +15,7 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildRequires:  meson
 BuildRequires:  gcc
+BuildRequires:  gjs
 BuildRequires:  blueprint-compiler
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
