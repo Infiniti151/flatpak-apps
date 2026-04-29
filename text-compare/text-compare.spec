@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 0
 
 Name:           text-compare
-Version:        0.1.11
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        A simple text comparison tool
 URL:            https://github.com/josephmawa/TextCompare
