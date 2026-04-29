@@ -9,34 +9,47 @@ jobs:
   check-and-build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
           - app_name: text-compare
             upstream_repo: josephmawa/TextCompare
     steps:
-      - name: Setup COPR CLI
-        run: |
-          sudo pip install copr-cli
-          mkdir -p ~/.config
-          echo "${{ secrets.COPR_CONFIG }}" > ~/.config/copr
+      - name: Checkout Subdirectory
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT }}
+          sparse-checkout: |
+            ${{ matrix.app_name }}
 
       - name: Get Latest Upstream Tag
         id: upstream
         run: |
           TAG=$(curl -s "https://api.github.com/repos/${{ matrix.upstream_repo }}/tags" | jq -r '.[0].name')
-          VERSION=${TAG#v}
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version=${TAG#v}" >> $GITHUB_OUTPUT
 
-      - name: Get Latest COPR Version
-        id: copr
+      - name: Update Spec and Push
         run: |
-          COPR_VER=$(copr-cli get-package infiniti151/flatpak-apps --name ${{ matrix.app_name }} | jq -r '.latest_build.source_package.version // "0"' | cut -d'-' -f1)
-          echo "version=$COPR_VER" >> $GITHUB_OUTPUT
+          SPEC="${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
+          NEW_VER="${{ steps.upstream.outputs.version }}"
 
-      - name: Compare and Trigger
-        if: steps.upstream.outputs.version != steps.copr.outputs.version
-        run: |
-          echo -e "\e[1;36m==> New version detected: ${{ steps.upstream.outputs.version }} (COPR has ${{ steps.copr.outputs.version }})\e[0m"
-          copr-cli build-package infiniti151/flatpak-apps \
-            --name ${{ matrix.app_name }} \
-            --arg "--define='_version ${{ steps.upstream.outputs.version }}'"
+          if [ ! -f "$SPEC" ]; then
+            echo -e "\e[1;31m==> Error: $SPEC not found!\e[0m"
+            exit 1
+          fi
+
+          OLD_VER=$(grep -m1 '^Version:' $SPEC | awk '{print $2}')
+
+          if [ "$OLD_VER" != "$NEW_VER" ]; then
+            echo -e "\e[1;36m==> Bumping ${{ matrix.app_name }} from $OLD_VER to $NEW_VER\e[0m"
+
+            sed -i "s/^Version:.*/Version:        $NEW_VER/" $SPEC
+
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add $SPEC
+            git commit -m "chore(${{ matrix.app_name }}): bump version to $NEW_VER"
+            git push
+          else
+            echo -e "\e[1;32m==> ${{ matrix.app_name }} is already up to date.\e[0m"
+          fi
