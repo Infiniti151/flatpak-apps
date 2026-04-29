@@ -7,6 +7,7 @@ Name:           text-compare
 Version:        0.1.11
 Release:        1%{?dist}
 Summary:        A simple text comparison tool
+License:        GPL-3.0-or-later
 URL:            https://github.com/josephmawa/TextCompare
 BugURL:			    https://github.com/Infiniti151/flatpak-apps/issues
 
