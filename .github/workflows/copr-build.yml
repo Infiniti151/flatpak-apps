@@ -27,7 +27,4 @@ jobs:
           FINAL_URL="${BASE_URL%/}/$APP_NAME/"
           
           echo -e "\e[1;36m==> Triggering COPR\e[0m"
-          curl -X POST \
-            -H "Content-Type: application/json" \
-            -d "{\"repository\": {\"url\": \"https://github.com/${{ github.repository }}\"}}" \
-            "$FINAL_URL"
+          curl -s -X POST "$FINAL_URL"
