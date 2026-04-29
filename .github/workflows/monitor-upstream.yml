@@ -1,0 +1,42 @@
+---
+name: Monitor Upstream
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  check-and-build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - app_name: text-compare
+            upstream_repo: josephmawa/TextCompare
+    steps:
+      - name: Setup COPR CLI
+        run: |
+          sudo pip install copr-cli
+          mkdir -p ~/.config
+          echo "${{ secrets.COPR_CONFIG }}" > ~/.config/copr
+
+      - name: Get Latest Upstream Tag
+        id: upstream
+        run: |
+          TAG=$(curl -s "https://api.github.com/repos/${{ matrix.upstream_repo }}/tags" | jq -r '.[0].name')
+          VERSION=${TAG#v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get Latest COPR Version
+        id: copr
+        run: |
+          COPR_VER=$(copr-cli get-package infiniti151/flatpak-apps --name ${{ matrix.app_name }} | jq -r '.latest_build.source_package.version // "0"' | cut -d'-' -f1)
+          echo "version=$COPR_VER" >> $GITHUB_OUTPUT
+
+      - name: Compare and Trigger
+        if: steps.upstream.outputs.version != steps.copr.outputs.version
+        run: |
+          echo -e "\e[1;36m==> New version detected: ${{ steps.upstream.outputs.version }} (COPR has ${{ steps.copr.outputs.version }})\e[0m"
+          copr-cli build-package infiniti151/flatpak-apps \
+            --name ${{ matrix.app_name }} \
+            --arg "--define='_version ${{ steps.upstream.outputs.version }}'"
