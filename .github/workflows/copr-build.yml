@@ -23,4 +23,8 @@ jobs:
 
           echo -e "\e[1;36m==> Detected update for: $APP_NAME\e[0m"
 
-          curl -X POST "${{ secrets.COPR_BASE_WEBHOOK_URL }}/$APP_NAME/"
+          BASE_URL=$(echo "${{ secrets.COPR_BASE_WEBHOOK_URL }}" | xargs)          
+          FINAL_URL="${BASE_URL%/}/$APP_NAME/"
+          
+          echo -e "\e[1;36m==> Triggering COPR\e[0m"
+          curl -X POST "$FINAL_URL"
