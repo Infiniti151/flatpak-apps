@@ -43,12 +43,12 @@ jobs:
           OLD_VER=$(grep -m1 '^Version:' $SPEC | awk '{print $2}')
 
           if [ "$OLD_VER" != "$NEW_VER" ]; then
-            echo -e "\e[1;36m==> Bumping ${{ matrix.app_name }} from $OLD_VER to $NEW_VER\e[0m"
+            echo -e "\e[1;36m==> Bumping ${{ matrix.app_name }} from $OLD_VER to $NEW_VER...\e[0m"
 
             sed -i "s/^Version:.*/Version:        $NEW_VER/" $SPEC
 
             git config --global user.name "github-actions[bot]"
-            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add $SPEC
             git commit -m "chore(${{ matrix.app_name }}): bump version to $NEW_VER"
             git push
@@ -58,7 +58,7 @@ jobs:
             BASE_URL=$(echo "${{ secrets.COPR_BASE_WEBHOOK_URL }}" | xargs)
             FINAL_URL="${BASE_URL%/}/${{ matrix.app_name }}/"
 
-            echo -e "\e[1;36m==> Triggering COPR\e[0m"
+            echo -e "\e[1;36m==> Triggering COPR...\e[0m"
             curl -s -X POST "$FINAL_URL"
           else
             echo -e "\e[1;32m==> ${{ matrix.app_name }} is already up to date.\e[0m"
