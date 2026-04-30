@@ -56,7 +56,7 @@ git submodule update --init --recursive
 %build
 export CARGO_NET_OFFLINE=false
 export RUSTFLAGS="-C opt-level=z -C codegen-units=1 -C strip=symbols"
-%meson -Dbuildtype=release -Dflatpak=false --wrap-mode=nodownload
+%meson -Dflatpak=false --wrap-mode=nodownload
 %meson_build
 
 %install
