@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           text-compare
-Version:        0.1.11
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        A simple text comparison tool
 License:        GPL-3.0-or-later
@@ -39,17 +39,19 @@ A simple text comparison tool built with GJS and Adwaita.
 
 %install
 %meson_install
-sed -i 's/DBusActivatable=true/DBusActivatable=false/' %{buildroot}%{_datadir}/applications/*.desktop
+%find_lang TextCompare %{name}.lang
 
 %check
 %meson_test
 
-%files
+%files -f %{name}.lang
 %{_bindir}/io.github.josephmawa.TextCompare
+%{_datadir}/TextCompare/
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
-%{_datadir}/TextCompare/
+%{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/metainfo/*.metainfo.xml
-%{_datadir}/locale/*/LC_MESSAGES/*.mo
-
+%{_datadir}/dbus-1/services/*.service
+%license LICENSE
+%doc README.md

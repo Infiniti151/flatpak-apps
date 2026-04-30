@@ -40,18 +40,20 @@ It allows you to convert between symbolic and numeric representations
 
 %install
 %meson_install
-sed -i 's/DBusActivatable=true/DBusActivatable=false/' %{buildroot}%{_datadir}/applications/*.desktop
+%find_lang io.github.ronniedroid.concessio %{name}.lang
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
-%files
-%license LICENSE
-%doc README.md
-%{_bindir}/concessio
-%{_datadir}/concessio/
+%files -f %{name}.lang
+%{_bindir}/io.github.ronniedroid.concessio
+%{_datadir}/io.github.ronniedroid.concessio/
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
+%{_datadir}/icons/hicolor/symbolic/apps/*.svg
+%{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/metainfo/*.xml
-
+%{_datadir}/dbus-1/services/*.service
+%license LICENSE
+%doc README.md
