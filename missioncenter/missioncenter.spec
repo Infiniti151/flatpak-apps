@@ -26,9 +26,12 @@ BuildRequires:  gettext
 # Added for magpie/nng
 BuildRequires:  cmake
 BuildRequires:  nng-devel
-BuildRequires:  pkgconfig(libdrm)
-BuildRequires:  pkgconfig(gbm)
-BuildRequires:  pkgconfig(udev)
+BuildRequires:  systemd-devel
+BuildRequires:  libinput-devel
+BuildRequires:  mesa-libgbm-devel
+BuildRequires:  libxkbcommon-devel
+BuildRequires:  libdrm-devel
+BuildRequires:  rust-ticker
 
 Requires:       gtk4
 Requires:       libadwaita
