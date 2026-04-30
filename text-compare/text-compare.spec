@@ -1,4 +1,4 @@
-%define debug_package %{nil}
+%define         debug_package %{nil}
 
 Name:           text-compare
 Version:        0.1.11
