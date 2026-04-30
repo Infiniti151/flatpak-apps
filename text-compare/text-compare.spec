@@ -54,6 +54,7 @@ A simple text comparison tool built with GJS and Adwaita.
 %{_datadir}/metainfo/*.metainfo.xml
 %{_datadir}/dbus-1/services/*.service
 %doc README.md
+
 %changelog
 * Thu Apr 30 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.11-1
 - Update to 0.1.11
