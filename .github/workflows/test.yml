@@ -33,9 +33,11 @@ jobs:
       - name: Execute RPM Build
         run: |
           cd "${{ vars.APP }}"
+          spectool -g *.spec
+          
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
-            --define "_sourcedir $GITHUB_WORKSPACE/${{ vars.APP }}"
+            --define "_sourcedir $(pwd)"
         env:
           GIT_CONFIG_COUNT: 1
           GIT_CONFIG_KEY_0: safe.directory
