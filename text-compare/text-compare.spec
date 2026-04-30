@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           text-compare
-Version:        0.1.11
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        A simple text comparison tool
 License:        GPL-3.0-or-later
@@ -53,9 +53,4 @@ A simple text comparison tool built with GJS and Adwaita.
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/metainfo/*.metainfo.xml
 %{_datadir}/dbus-1/services/*.service
-%license LICENSE
 %doc README.md
-%changelog
-* Thu Apr 30 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.11-1
-- Update to 0.1.11
-
