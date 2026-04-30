@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           text-compare
-Version:        0.0.0
+Version:        0.1.11
 Release:        1%{?dist}
 Summary:        A simple text comparison tool
 License:        GPL-3.0-or-later
