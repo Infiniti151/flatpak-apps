@@ -15,6 +15,7 @@ BuildRequires:  meson
 BuildRequires:  ninja-build
 BuildRequires:  cargo
 BuildRequires:  rust
+BuildRequires:  git
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
 BuildRequires:  pkgconfig(blueprint-compiler)
@@ -41,8 +42,13 @@ CPU usage and hardware-accelerated GPU monitoring.
 %prep
 %autosetup -n mission-center-v%{version}
 
+git init
+git remote add origin %{url}
+git submodule update --init --recursive
+
 %build
 export CARGO_NET_OFFLINE=false
+
 %meson -Dflatpak=false
 %meson_build
 
