@@ -71,9 +71,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %files -f %{name}.lang
 %{_bindir}/%{name}
 %{_bindir}/%{name}-magpie
+%{_datadir}/%{name}/
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/scalable/apps/*.svg
-%{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
+%{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.xml
 %doc README.md
