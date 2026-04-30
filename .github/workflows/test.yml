@@ -1,0 +1,46 @@
+name: Test RPM Build (COPR Simulation)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: Test
+    
+    container:
+      image: fedora:44
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          submodules: false 
+
+      - name: Install Build Tools
+        run: |
+          dnf install -y 'dnf-command(builddep)' rpm-build rpmdevtools git
+
+      - name: Install Dependencies for ${{ vars.APP }}
+        run: |
+          cd "${{ vars.APP }}"
+          dnf builddep -y *.spec
+
+      - name: Execute RPM Build
+        run: |
+          cd "${{ vars.APP }}"
+          rpmbuild -ba *.spec \
+            --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
+            --define "_sourcedir $GITHUB_WORKSPACE/${{ vars.APP }}"
+        env:
+          GIT_CONFIG_COUNT: 1
+          GIT_CONFIG_KEY_0: safe.directory
+          GIT_CONFIG_VALUE_0: '*'
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ vars.APP }}-fc44-rpm
+          path: |
+            rpmbuild/RPMS/*/*.rpm
+            rpmbuild/SRPMS/*.rpm

@@ -44,6 +44,8 @@ CPU usage and hardware-accelerated GPU monitoring.
 
 git init
 git remote add origin %{url}
+git fetch --depth 1 origin v%{version}
+git checkout FETCH_HEAD
 git submodule update --init --recursive
 
 %build
