@@ -31,7 +31,7 @@ BuildRequires:  libinput-devel
 BuildRequires:  mesa-libgbm-devel
 BuildRequires:  libxkbcommon-devel
 BuildRequires:  libdrm-devel
-BuildRequires:  rust-ticker
+BuildRequires:  cargo-rpm-macros
 
 Requires:       gtk4
 Requires:       libadwaita
