@@ -1,11 +1,11 @@
 %define debug_package %{nil}
 
-Name:           text-compare
+Name:           concessio
 Version:        0.0.0
 Release:        1%{?dist}
-Summary:        A simple text comparison tool
+Summary:        Understand and convert UNIX file permissions
 License:        GPL-3.0-or-later
-URL:            https://github.com/josephmawa/TextCompare
+URL:            https://github.com/ronniedroid/concessio
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/archive/v%{version}.tar.gz
@@ -13,14 +13,13 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  meson
-BuildRequires:  gcc
-BuildRequires:  gjs
+BuildRequires:  nodejs
+BuildRequires:  npm
 BuildRequires:  blueprint-compiler
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
-BuildRequires:  glib2-devel
 
 Requires:       gjs
 Requires:       gtk4
@@ -28,13 +27,15 @@ Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
-A simple text comparison tool built with GJS and Adwaita.
+Concessio is a simple utility to help you understand UNIX file permissions.
+It allows you to convert between symbolic and numeric representations 
+(e.g., rwx------ to 700) using an intuitive GTK4 interface.
 
 %prep
-%autosetup -n TextCompare-%{version}
+%autosetup
 
 %build
-%meson
+%meson -Dforce_fallback_for=blueprint-compiler
 %meson_build
 
 %install
@@ -42,14 +43,15 @@ A simple text comparison tool built with GJS and Adwaita.
 sed -i 's/DBusActivatable=true/DBusActivatable=false/' %{buildroot}%{_datadir}/applications/*.desktop
 
 %check
-%meson_test
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
 %files
-%{_bindir}/io.github.josephmawa.TextCompare
+%license LICENSE
+%doc README.md
+%{_bindir}/concessio
+%{_datadir}/concessio/
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
-%{_datadir}/TextCompare/
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/metainfo/*.metainfo.xml
-%{_datadir}/locale/*/LC_MESSAGES/*.mo
+%{_datadir}/metainfo/*.xml
 
