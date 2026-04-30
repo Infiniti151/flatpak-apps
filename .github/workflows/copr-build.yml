@@ -60,10 +60,10 @@ jobs:
             echo "- Update to $NEW_VER" >> entry.tmp
             echo "" >> entry.tmp
 
-            if grep -q "%changelog" "$SPEC"; then
-                sed -i "/%changelog/r entry.tmp" "$SPEC"
+            if grep -q "^%changelog" "$SPEC"; then
+                sed -i "/^%changelog/r entry.tmp" "$SPEC"
             else
-                echo -e "\n%changelog" >> "$SPEC"
+                printf "\n%%changelog\n" >> "$SPEC"
                 cat entry.tmp >> "$SPEC"
             fi
             
@@ -77,7 +77,7 @@ jobs:
             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add "$SPEC" "$README"
             git commit -m "chore($APP): bump version to $NEW_VER"
-            git pull --rebase origin main
+            git pull --rebase -X ours origin main
             git push
 
             sleep 5
