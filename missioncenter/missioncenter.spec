@@ -11,27 +11,29 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/-/archive/v%{version}/mission-center-v%{version}.tar.gz
 
+# 1. Build Systems & Language Toolchains
 BuildRequires:  meson
-BuildRequires:  ninja-build
-BuildRequires:  cargo
-BuildRequires:  rust
-BuildRequires:  git
-BuildRequires:  pkgconfig(gtk4)
-BuildRequires:  pkgconfig(libadwaita-1)
-BuildRequires:  pkgconfig(blueprint-compiler)
-BuildRequires:  pkgconfig(libxml-2.0)
-BuildRequires:  gcc
-BuildRequires:  gettext
-
-# Added for magpie/nng
 BuildRequires:  cmake
-BuildRequires:  nng-devel
+BuildRequires:  gcc
+BuildRequires:  rustc
+BuildRequires:  cargo
+BuildRequires:  cargo-rpm-macros
+BuildRequires:  blueprint-compiler
+
+# 2. GNOME / Desktop Integration Tools
+BuildRequires:  desktop-file-utils
+BuildRequires:  gettext
+BuildRequires:  glib2-devel
+BuildRequires:  gtk-update-icon-cache
+BuildRequires:  libappstream-glib
+
+# 3. System Libraries (for Magpie & Mission Center)
 BuildRequires:  systemd-devel
 BuildRequires:  libinput-devel
 BuildRequires:  mesa-libgbm-devel
-BuildRequires:  libxkbcommon-devel
 BuildRequires:  libdrm-devel
-BuildRequires:  cargo-rpm-macros
+BuildRequires:  libxkbcommon-devel
+BuildRequires:  libadwaita-devel
 
 Requires:       gtk4
 Requires:       libadwaita
@@ -54,7 +56,8 @@ git submodule update --init --recursive
 %build
 export CARGO_NET_OFFLINE=false
 
-%meson -Dflatpak=false
+%meson -Dflatpak=false \
+       --wrap-mode=nodownload
 %meson_build
 
 %install
