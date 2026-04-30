@@ -1,4 +1,4 @@
-%global debug_package %{nil}
+%global         debug_package %{nil}
 
 Name:           missioncenter
 Version:        1.1.0
@@ -51,8 +51,8 @@ export CARGO_NET_OFFLINE=false
 %find_lang %{name}
 
 %check
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 
 %files -f %{name}.lang
 %{_bindir}/%{name}
