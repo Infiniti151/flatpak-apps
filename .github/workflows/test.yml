@@ -1,4 +1,5 @@
-name: Test RPM Build (COPR Simulation)
+---
+name: Test RPM Build
 
 on:
   workflow_dispatch:
@@ -7,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: Test
-    
+
     container:
       image: fedora:44
 
@@ -15,7 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v6
         with:
-          submodules: false 
+          submodules: false
 
       - name: Install Build Tools
         run: |
@@ -35,7 +36,7 @@ jobs:
         env:
           GIT_CONFIG_COUNT: 1
           GIT_CONFIG_KEY_0: safe.directory
-          GIT_CONFIG_VALUE_0: '*'
+          GIT_CONFIG_VALUE_0: "*"
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v7

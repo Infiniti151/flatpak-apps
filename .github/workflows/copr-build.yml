@@ -56,7 +56,7 @@ jobs:
 
             DATE=$(date +"%a %b %d %Y")
             AUTHOR="Infiniti151 <43163551+Infiniti151@users.noreply.github.com>"
-            
+
             echo "* $DATE $AUTHOR - $NEW_VER-1" > entry.tmp
             echo "- Update to $NEW_VER" >> entry.tmp
             echo "" >> entry.tmp
@@ -67,7 +67,7 @@ jobs:
                 printf "\n%%changelog\n" >> "$SPEC"
                 cat entry.tmp >> "$SPEC"
             fi
-            
+
             rm entry.tmp
 
             if [ -f "$README" ]; then
