@@ -1,5 +1,5 @@
 # flatpak-apps
-Collection of Flatpak apps available as RPM through COPR
+Collection of Flatpak apps available as RPM through COPR (for Fedora Linux)
 
 ## App List
 
