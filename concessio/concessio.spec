@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           concessio
-Version:        0.3.0
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        Understand and convert UNIX file permissions
 License:        GPL-3.0-or-later
@@ -12,9 +12,9 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildArch:      noarch
 
+BuildRequires:  /usr/bin/node
+BuildRequires:  /usr/bin/npm
 BuildRequires:  meson
-BuildRequires:  nodejs
-BuildRequires:  npm
 BuildRequires:  gjs
 BuildRequires:  blueprint-compiler
 BuildRequires:  pkgconfig(gtk4)
@@ -58,8 +58,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/dbus-1/services/*.service
 %license LICENSE
 %doc README.md
-
-%changelog
-* Thu Apr 30 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.0-1
-- Update to 0.3.0
-
