@@ -55,13 +55,14 @@ git submodule update --init --recursive
 
 %build
 export CARGO_NET_OFFLINE=false
-
-%meson -Dflatpak=false \
-       --wrap-mode=nodownload
+export RUSTFLAGS="-C opt-level=z -C codegen-units=1 -C strip=symbols"
+%meson -Dbuildtype=release -Dflatpak=false --wrap-mode=nodownload
 %meson_build
 
 %install
 %meson_install
+strip --strip-unneeded %{buildroot}%{_bindir}/%{name}
+strip --strip-unneeded %{buildroot}%{_bindir}/%{name}-magpie
 %find_lang %{name}
 
 %check
