@@ -47,6 +47,7 @@ jobs:
           cache-on-failure: "true"
           cache-targets: "false"
           add-rust-environment-hash-key: "false"
+          cmd-format: "true ; # {0}"
           cache-directories: |
             .sccache
             .ccache
