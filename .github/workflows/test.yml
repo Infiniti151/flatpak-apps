@@ -20,9 +20,7 @@ jobs:
       RUSTC_WRAPPER: sccache
       CARGO_INCREMENTAL: "0"
       SCCACHE_DIR: ${{ github.workspace }}/.sccache
-      SCCACHE_GHA_ENABLED: "true"
-      SCCACHE_PATH_TRANSFORM: "true"
-      
+
       # --- C/C++ / ccache ---
       CC: "ccache clang"
       CXX: "ccache clang++"
@@ -48,6 +46,7 @@ jobs:
           shared-key: "fedora-build-cache"
           cache-on-failure: "true"
           cache-targets: "false"
+          add-rust-environment-hash-key: "false"
           cache-directories: |
             .sccache
             .ccache
