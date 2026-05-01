@@ -20,6 +20,8 @@ jobs:
       RUSTC_WRAPPER: sccache
       CARGO_INCREMENTAL: "0"
       SCCACHE_DIR: ${{ github.workspace }}/.sccache
+      SCCACHE_GHA_ENABLED: "true"
+      SCCACHE_PATH_TRANSFORM: "true"
       
       # --- C/C++ / ccache ---
       CC: "ccache clang"
@@ -28,7 +30,7 @@ jobs:
       CCACHE_COMPILERCHECK: content
       
       # --- Global ---
-      DNF_OPT: "--color=always"
+      DNF_OPT: "--color=always -y --setopt=max_parallel_downloads=10 --setopt=deltarpm=false"
       TERM: xterm-256color
       FORCE_COLOR: "1"
       CFLAGS: "-fcolor-diagnostics"
@@ -45,15 +47,16 @@ jobs:
         with:
           shared-key: "fedora-build-cache"
           cache-on-failure: "true"
+          cache-targets: "false"
           cache-directories: |
             .sccache
             .ccache
 
       - name: Install Build Tools and Dependencies
         run: |
-          dnf install $DNF_OPT -y 'dnf-command(builddep)' rpm-build rpmdevtools git nodejs ccache sccache
+          dnf install $DNF_OPT 'dnf-command(builddep)' rpm-build rpmdevtools git nodejs ccache sccache
           cd "${{ vars.APP }}"
-          dnf builddep $DNF_OPT -y *.spec
+          dnf builddep $DNF_OPT *.spec
 
       - name: Start sccache
         run: sccache --start-server
