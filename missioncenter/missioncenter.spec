@@ -1,4 +1,5 @@
 %global         debug_package %{nil}
+%define         __spec_install_post /usr/lib/rpm/brp-compress
 
 Name:           missioncenter
 Version:        1.1.0
@@ -15,6 +16,7 @@ Source0:        %{url}/-/archive/v%{version}/mission-center-v%{version}.tar.gz
 BuildRequires:  meson
 BuildRequires:  cmake
 BuildRequires:  gcc
+BuildRequires:  upx
 BuildRequires:  clang
 BuildRequires:  lld
 BuildRequires:  compiler-rt
@@ -74,6 +76,8 @@ export RUSTFLAGS="-C linker=clang -C link-arg=-fuse-ld=lld -C lto=fat -C embed-b
 %meson_install
 strip --strip-unneeded %{buildroot}%{_bindir}/%{name}
 strip --strip-unneeded %{buildroot}%{_bindir}/%{name}-magpie
+upx --best --ultra-brute %{buildroot}%{_bindir}/%{name}
+upx --best --ultra-brute %{buildroot}%{_bindir}/%{name}-magpie
 %find_lang %{name}
 
 %check

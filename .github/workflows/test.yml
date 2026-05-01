@@ -15,6 +15,15 @@ jobs:
     container:
       image: fedora:44
 
+    env:
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CCACHE_COMPILERCHECK: content
+      CC: "ccache clang"
+      CXX: "ccache clang++"
+      TERM: xterm-256color
+      CFLAGS: "-fcolor-diagnostics"
+      CXXFLAGS: "-fcolor-diagnostics"
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
@@ -23,7 +32,7 @@ jobs:
 
       - name: Install Build Tools
         run: |
-          dnf install -y 'dnf-command(builddep)' rpm-build rpmdevtools git nodejs tar zstd ccache
+          dnf install $DNF_OPT -y 'dnf-command(builddep)' rpm-build rpmdevtools git nodejs ccache
 
       - name: Restore Ccache
         uses: actions/cache/restore@v5
@@ -38,17 +47,13 @@ jobs:
       - name: Install Dependencies for ${{ vars.APP }}
         run: |
           cd "${{ vars.APP }}"
-          dnf builddep -y *.spec
+          dnf builddep $DNF_OPT -y *.spec
 
       - name: Execute RPM Build
         run: |
           cd "${{ vars.APP }}"
           spectool -g *.spec
 
-          export CC="ccache clang"
-          export CXX="ccache clang++"
-          export CCACHE_DIR="$GITHUB_WORKSPACE/.ccache"
-          
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
             --define "_sourcedir $(pwd)"
