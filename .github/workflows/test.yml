@@ -23,7 +23,17 @@ jobs:
 
       - name: Install Build Tools
         run: |
-          dnf install -y 'dnf-command(builddep)' rpm-build rpmdevtools git
+          dnf install -y 'dnf-command(builddep)' rpm-build rpmdevtools git nodejs tar zstd ccache
+
+      - name: Restore Ccache
+        uses: actions/cache/restore@v5
+        id: cache-restore
+        with:
+          path: .ccache
+          key: ccache-fedora-llvm-${{ github.sha }}
+          restore-keys: |
+            ccache-fedora-llvm-${{ github.ref_name }}-
+            ccache-fedora-llvm-
 
       - name: Install Dependencies for ${{ vars.APP }}
         run: |
@@ -34,6 +44,10 @@ jobs:
         run: |
           cd "${{ vars.APP }}"
           spectool -g *.spec
+
+          export CC="ccache clang"
+          export CXX="ccache clang++"
+          export CCACHE_DIR="$GITHUB_WORKSPACE/.ccache"
           
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
@@ -42,6 +56,13 @@ jobs:
           GIT_CONFIG_COUNT: 1
           GIT_CONFIG_KEY_0: safe.directory
           GIT_CONFIG_VALUE_0: "*"
+
+      - name: Save Ccache
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: .ccache
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v7

@@ -15,6 +15,9 @@ Source0:        %{url}/-/archive/v%{version}/mission-center-v%{version}.tar.gz
 BuildRequires:  meson
 BuildRequires:  cmake
 BuildRequires:  gcc
+BuildRequires:  clang
+BuildRequires:  lld
+BuildRequires:  compiler-rt
 BuildRequires:  rustc
 BuildRequires:  cargo
 BuildRequires:  cargo-rpm-macros
@@ -55,8 +58,16 @@ git submodule update --init --recursive
 
 %build
 export CARGO_NET_OFFLINE=false
-export RUSTFLAGS="-C opt-level=z -C codegen-units=1 -C lto=fat -C embed-bitcode=yes -C strip=symbols"
-%meson -Dflatpak=false --wrap-mode=nodownload
+export CC="${CC:-clang}"
+export CXX="${CXX:-clang++}"
+export LDFLAGS="-fuse-ld=lld"
+export RUSTFLAGS="-C linker=clang -C link-arg=-fuse-ld=lld -C lto=fat -C embed-bitcode=yes -C opt-level=z -C strip=symbols"
+
+%meson \
+  -Db_lto=true \
+  -Dflatpak=false \
+  --wrap-mode=nodownload
+
 %meson_build
 
 %install
