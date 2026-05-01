@@ -16,6 +16,8 @@ Source0:        %{url}/-/archive/v%{version}/mission-center-v%{version}.tar.gz
 BuildRequires:  meson
 BuildRequires:  cmake
 BuildRequires:  gcc
+BuildRequires:  sccache
+BuildRequires:  ccache
 BuildRequires:  upx
 BuildRequires:  clang
 BuildRequires:  lld
@@ -59,9 +61,10 @@ git checkout -f FETCH_HEAD
 git submodule update --init --recursive
 
 %build
+export RUSTC_WRAPPER=sccache
 export CARGO_NET_OFFLINE=false
-export CC="${CC:-clang}"
-export CXX="${CXX:-clang++}"
+export CC="${CC:-ccache clang}"
+export CXX="${CXX:-ccache clang++}"
 export LDFLAGS="-fuse-ld=lld"
 export RUSTFLAGS="-C linker=clang -C link-arg=-fuse-ld=lld -C lto=fat -C embed-bitcode=yes -C opt-level=z -C strip=symbols"
 
@@ -76,8 +79,8 @@ export RUSTFLAGS="-C linker=clang -C link-arg=-fuse-ld=lld -C lto=fat -C embed-b
 %meson_install
 strip --strip-unneeded %{buildroot}%{_bindir}/%{name}
 strip --strip-unneeded %{buildroot}%{_bindir}/%{name}-magpie
-upx --best --ultra-brute %{buildroot}%{_bindir}/%{name}
-upx --best --ultra-brute %{buildroot}%{_bindir}/%{name}-magpie
+upx --best --lzma %{buildroot}%{_bindir}/%{name}
+upx --best --lzma %{buildroot}%{_bindir}/%{name}-magpie
 %find_lang %{name}
 
 %check

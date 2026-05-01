@@ -13,14 +13,24 @@ jobs:
     environment: Test
 
     container:
-      image: fedora:44
+      image: fedora:${{ vars.VER }}
 
     env:
-      CCACHE_DIR: ${{ github.workspace }}/.ccache
-      CCACHE_COMPILERCHECK: content
+      # --- Rust / sccache ---
+      RUSTC_WRAPPER: sccache
+      CARGO_INCREMENTAL: "0"
+      SCCACHE_DIR: ${{ github.workspace }}/.sccache
+      
+      # --- C/C++ / ccache ---
       CC: "ccache clang"
       CXX: "ccache clang++"
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CCACHE_COMPILERCHECK: content
+      
+      # --- Global ---
+      DNF_OPT: "--color=always"
       TERM: xterm-256color
+      FORCE_COLOR: "1"
       CFLAGS: "-fcolor-diagnostics"
       CXXFLAGS: "-fcolor-diagnostics"
 
@@ -30,24 +40,23 @@ jobs:
         with:
           submodules: false
 
-      - name: Install Build Tools
-        run: |
-          dnf install $DNF_OPT -y 'dnf-command(builddep)' rpm-build rpmdevtools git nodejs ccache
-
-      - name: Restore Ccache
-        uses: actions/cache/restore@v5
-        id: cache-restore
+      - name: Unified Cache (Rust, C, and Tools)
+        uses: Swatinem/rust-cache@v2
         with:
-          path: .ccache
-          key: ccache-fedora-llvm-${{ github.sha }}
-          restore-keys: |
-            ccache-fedora-llvm-${{ github.ref_name }}-
-            ccache-fedora-llvm-
+          shared-key: "fedora-build-cache"
+          cache-on-failure: "true"
+          cache-directories: |
+            .sccache
+            .ccache
 
-      - name: Install Dependencies for ${{ vars.APP }}
+      - name: Install Build Tools and Dependencies
         run: |
+          dnf install $DNF_OPT -y 'dnf-command(builddep)' rpm-build rpmdevtools git nodejs ccache sccache
           cd "${{ vars.APP }}"
           dnf builddep $DNF_OPT -y *.spec
+
+      - name: Start sccache
+        run: sccache --start-server
 
       - name: Execute RPM Build
         run: |
@@ -62,17 +71,16 @@ jobs:
           GIT_CONFIG_KEY_0: safe.directory
           GIT_CONFIG_VALUE_0: "*"
 
-      - name: Save Ccache
+      - name: Show Performance Stats
         if: always()
-        uses: actions/cache/save@v5
-        with:
-          path: .ccache
-          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+        run: |
+          sccache --show-stats
+          ccache -s
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ vars.APP }}-fc44-rpm
+          name: ${{ vars.APP }}-fc${{ vars.VER }}-rpm
           path: |
             rpmbuild/RPMS/*/*.rpm
             rpmbuild/SRPMS/*.rpm
