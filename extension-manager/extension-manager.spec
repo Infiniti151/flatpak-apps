@@ -42,7 +42,7 @@ A native desktop application for managing GNOME Shell Extensions.
 %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --check %{buildroot}%{_datadir}/glib-2.0/schemas/
+glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 %files -f %{name}.lang
 %license COPYING
