@@ -1,5 +1,7 @@
 %global         debug_package %{nil}
 %define         __spec_install_post /usr/lib/rpm/brp-compress
+%define         build_cc clang
+%define         build_cxx clang++
 
 Name:           missioncenter
 Version:        1.1.0
@@ -16,8 +18,6 @@ Source0:        %{url}/-/archive/v%{version}/mission-center-v%{version}.tar.gz
 BuildRequires:  meson
 BuildRequires:  cmake
 BuildRequires:  gcc
-BuildRequires:  sccache
-BuildRequires:  ccache
 BuildRequires:  upx
 BuildRequires:  clang
 BuildRequires:  lld
@@ -61,10 +61,9 @@ git checkout -f FETCH_HEAD
 git submodule update --init --recursive
 
 %build
-export RUSTC_WRAPPER=sccache
 export CARGO_NET_OFFLINE=false
-export CC="${CC:-ccache clang}"
-export CXX="${CXX:-ccache clang++}"
+export CC=%{build_cc}
+export CXX=%{build_cxx}
 export LDFLAGS="-fuse-ld=lld"
 export RUSTFLAGS="-C linker=clang -C link-arg=-fuse-ld=lld -C lto=fat -C embed-bitcode=yes -C opt-level=z -C strip=symbols"
 

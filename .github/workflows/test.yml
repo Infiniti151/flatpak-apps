@@ -13,26 +13,12 @@ jobs:
     environment: Test
 
     container:
-      image: fedora:${{ vars.VER }}
+      image: ghcr.io/infiniti151/flatpak2rpm-builder:latest
 
     env:
-      # --- Rust / sccache ---
       RUSTC_WRAPPER: sccache
-      CARGO_INCREMENTAL: "0"
-      SCCACHE_DIR: ${{ github.workspace }}/.sccache
-
-      # --- C/C++ / ccache ---
       CC: "ccache clang"
       CXX: "ccache clang++"
-      CCACHE_DIR: ${{ github.workspace }}/.ccache
-      CCACHE_COMPILERCHECK: content
-      
-      # --- Global ---
-      DNF_OPT: "--color=always -y --setopt=max_parallel_downloads=10 --setopt=deltarpm=false"
-      TERM: xterm-256color
-      FORCE_COLOR: "1"
-      CFLAGS: "-fcolor-diagnostics"
-      CXXFLAGS: "-fcolor-diagnostics"
 
     steps:
       - name: Checkout Repository
@@ -51,12 +37,6 @@ jobs:
           cache-directories: |
             .sccache
             .ccache
-
-      - name: Install Build Tools and Dependencies
-        run: |
-          dnf install $DNF_OPT 'dnf-command(builddep)' rpm-build rpmdevtools git nodejs ccache sccache
-          cd "${{ vars.APP }}"
-          dnf builddep $DNF_OPT *.spec
 
       - name: Start sccache
         run: sccache --start-server
@@ -86,4 +66,3 @@ jobs:
           name: ${{ vars.APP }}-fc${{ vars.VER }}-rpm
           path: |
             rpmbuild/RPMS/*/*.rpm
-            rpmbuild/SRPMS/*.rpm

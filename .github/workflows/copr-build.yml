@@ -17,8 +17,14 @@ jobs:
         include:
           - app_name: text-compare
             upstream_repo: josephmawa/TextCompare
+            provider: github
           - app_name: concessio
             upstream_repo: ronniedroid/concessio
+            provider: github
+          - app_name: missioncenter
+            upstream_repo: mission-center-devs/mission-center
+            provider: gitlab
+
     steps:
       - name: Checkout Subdirectory
         uses: actions/checkout@v6
@@ -31,7 +37,16 @@ jobs:
       - name: Get Latest Upstream Tag
         id: upstream
         run: |
-          TAG=$(curl -s "https://api.github.com/repos/${{ matrix.upstream_repo }}/tags" | jq -r '.[0].name')
+          if [ "${{ matrix.provider }}" = "github" ]; then
+            TAG=$(curl -s "https://api.github.com/repos/${{ matrix.upstream_repo }}/tags" | jq -r '.[0].name // empty')
+          elif [ "${{ matrix.provider }}" = "gitlab" ]; then
+            ENCODED=$(echo "${{ matrix.upstream_repo }}" | sed 's/\//%2F/g')
+            TAG=$(curl -s "https://gitlab.com/api/v4/projects/${ENCODED}/repository/tags" | jq -r '.[0].name // empty')
+          fi
+          if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
+            echo "Error: Could not fetch tag for ${{ matrix.upstream_repo }}"
+            exit 1
+          fi
           echo "version=${TAG#v}" >> $GITHUB_OUTPUT
 
       - name: Check and Trigger COPR Build
