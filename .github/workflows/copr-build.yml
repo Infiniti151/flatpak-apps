@@ -17,8 +17,14 @@ jobs:
         include:
           - app_name: text-compare
             upstream_repo: josephmawa/TextCompare
+            provider: github
           - app_name: concessio
             upstream_repo: ronniedroid/concessio
+            provider: github
+          - app_name: missioncenter
+            upstream_repo: mission-center-devs/mission-center
+            provider: gitlab
+
     steps:
       - name: Checkout Subdirectory
         uses: actions/checkout@v6
@@ -31,7 +37,16 @@ jobs:
       - name: Get Latest Upstream Tag
         id: upstream
         run: |
-          TAG=$(curl -s "https://api.github.com/repos/${{ matrix.upstream_repo }}/tags" | jq -r '.[0].name')
+          if [ "${{ matrix.provider }}" = "github" ]; then
+            TAG=$(curl -s "https://api.github.com/repos/${{ matrix.upstream_repo }}/tags" | jq -r '.[0].name // empty')
+          elif [ "${{ matrix.provider }}" = "gitlab" ]; then
+            ENCODED=$(echo "${{ matrix.upstream_repo }}" | sed 's/\//%2F/g')
+            TAG=$(curl -s "https://gitlab.com/api/v4/projects/${ENCODED}/repository/tags" | jq -r '.[0].name // empty')
+          fi
+          if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
+            echo "Error: Could not fetch tag for ${{ matrix.upstream_repo }}"
+            exit 1
+          fi
           echo "version=${TAG#v}" >> $GITHUB_OUTPUT
 
       - name: Check and Trigger COPR Build
@@ -56,7 +71,7 @@ jobs:
 
             DATE=$(date +"%a %b %d %Y")
             AUTHOR="Infiniti151 <43163551+Infiniti151@users.noreply.github.com>"
-            
+
             echo "* $DATE $AUTHOR - $NEW_VER-1" > entry.tmp
             echo "- Update to $NEW_VER" >> entry.tmp
             echo "" >> entry.tmp
@@ -67,7 +82,7 @@ jobs:
                 printf "\n%%changelog\n" >> "$SPEC"
                 cat entry.tmp >> "$SPEC"
             fi
-            
+
             rm entry.tmp
 
             if [ -f "$README" ]; then

@@ -1,0 +1,85 @@
+---
+name: Test RPM Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+    paths:
+      - "**/*.spec"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: Test
+
+    container:
+      image: ghcr.io/infiniti151/flatpak2rpm-builder:latest
+
+    env:
+      RUSTC_WRAPPER: sccache
+      RUSTFLAGS: "--remap-path-prefix=${{ github.workspace }}=/project"
+      SCCACHE_DIR: ${{ github.workspace }}/.sccache
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CC: "ccache clang"
+      CXX: "ccache clang++"
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          submodules: false
+
+      - name: Unified Cache (Rust, C, and Tools)
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: "fedora-build-cache"
+          cache-on-failure: "true"
+          cache-targets: "false"
+          add-rust-environment-hash-key: "false"
+          cmd-format: "true ; # {0}"
+          cache-directories: |
+            .sccache
+            .ccache
+            /github/home/.cargo
+
+      - name: Start sccache
+        run: sccache --start-server
+
+      - name: Execute RPM Build
+        run: |
+          mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR" "CARGO_HOME"
+
+          cd "${{ vars.APP }}"
+          spectool -g *.spec
+
+          rpmbuild -ba *.spec \
+            --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
+            --define "_sourcedir $(pwd)"
+
+          echo "--- DEBUG START ---"
+          echo ".sccache size: $(du -sh $SCCACHE_DIR | cut -f1)"
+          echo ".sccache total items: $(find $SCCACHE_DIR -type f | wc -l)"
+          echo ".ccache size: $(du -sh $CCACHE_DIR | cut -f1)"
+          echo ".ccache total items: $(find $CCACHE_DIR -type f | wc -l)"
+          echo ".cargo size: $(du -sh $CARGO_HOME | cut -f1)"
+          echo ".cargo total items: $(find $CARGO_HOME -type f | wc -l)"
+          echo "--- DEBUG END ---"
+        env:
+          GIT_CONFIG_COUNT: 1
+          GIT_CONFIG_KEY_0: safe.directory
+          GIT_CONFIG_VALUE_0: "*"
+
+      - name: Show Performance Stats
+        if: always()
+        run: |
+          sccache --show-stats
+          ccache -s
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ vars.APP }}-fc${{ vars.VER }}-rpm
+          path: |
+            rpmbuild/RPMS/*/*.rpm
