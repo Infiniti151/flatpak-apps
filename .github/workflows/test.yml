@@ -51,7 +51,11 @@ jobs:
         run: |
           mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR" "$CARGO_HOME"
           cd "${{ vars.APP }}"
-          spectool -g *.spec         
+          spectool -g *.spec  
+          
+          mkdir -p /__w/flatpak-apps/flatpak-apps/rpmbuild/BUILD/${{ vars.APP }}-1.1.0-build/mission-center-v1.1.0/redhat-linux-build
+
+          ln -sf /github/home/.cargo /__w/flatpak-apps/flatpak-apps/rpmbuild/BUILD/${{ vars.APP }}-1.1.0-build/mission-center-v1.1.0/redhat-linux-build/cargo-home
 
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
