@@ -4,6 +4,8 @@ FROM fedora:${FEDORA_VER}
 
 RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
 
+RUN dnf copr enable -y @vaniiiiii/extension-manager
+
 RUN dnf install -y \
     # --- 1. Build Systems & Language Toolchains ---
     meson cmake gcc gcc-c++ sccache ccache upx clang lld \
