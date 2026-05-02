@@ -15,11 +15,13 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 Source0:        %{url}/-/archive/v%{version}/mission-center-v%{version}.tar.gz
 
 # 1. Build Systems & Language Toolchains
+%if 0%{?fedora} && ! 0%{?eln}
+BuildRequires:  upx
+%endif
 BuildRequires:  git-core
 BuildRequires:  meson
 BuildRequires:  cmake
 BuildRequires:  gcc
-BuildRequires:  upx
 BuildRequires:  clang
 BuildRequires:  lld
 BuildRequires:  compiler-rt
@@ -79,8 +81,10 @@ export RUSTFLAGS="$RUSTFLAGS -C linker=clang -C link-arg=$LDFLAGS -C lto=fat -C 
 %meson_install
 strip --strip-unneeded %{buildroot}%{_bindir}/%{name}
 strip --strip-unneeded %{buildroot}%{_bindir}/%{name}-magpie
+%if 0%{?fedora} && ! 0%{?eln}
 upx --best --lzma %{buildroot}%{_bindir}/%{name}
 upx --best --lzma %{buildroot}%{_bindir}/%{name}-magpie
+%endif
 %find_lang %{name}
 
 %check
