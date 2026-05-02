@@ -15,7 +15,7 @@ RUN dnf install -y \
     
     # --- 3. System Libraries (Explicitly added from your Meson file) ---
     systemd-devel libinput-devel mesa-libgbm-devel libdrm-devel \
-    libxkbcommon-devel libadwaita-devel libbacktrace-devel \
+    libxkbcommon-devel libadwaita-devel \
     json-glib-devel libsoup3-devel libxml2-devel \
     
     # --- Extras for CI/CD Utility ---
