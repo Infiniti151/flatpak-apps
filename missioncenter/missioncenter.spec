@@ -15,6 +15,7 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 Source0:        %{url}/-/archive/v%{version}/mission-center-v%{version}.tar.gz
 
 # 1. Build Systems & Language Toolchains
+BuildRequires:  git-core
 BuildRequires:  meson
 BuildRequires:  cmake
 BuildRequires:  gcc
