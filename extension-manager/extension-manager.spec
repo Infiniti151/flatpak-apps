@@ -19,7 +19,6 @@ BuildRequires:  pkgconfig(libsoup-3.0)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  blueprint-compiler
-BuildRequires:  libbacktrace-devel
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
@@ -31,7 +30,7 @@ A native desktop application for managing GNOME Shell Extensions.
 %autosetup -n %{name}-%{version}
 
 %build
-%meson
+%meson -Dbacktrace=false
 %meson_build
 
 %install
