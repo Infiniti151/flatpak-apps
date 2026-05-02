@@ -22,8 +22,10 @@ jobs:
       RUSTFLAGS: "--remap-path-prefix=${{ github.workspace }}=/project"
       SCCACHE_DIR: ${{ github.workspace }}/.sccache
       CCACHE_DIR: ${{ github.workspace }}/.ccache
-      CC: "ccache clang"
-      CXX: "ccache clang++"
+      #CC: "ccache clang"
+      #CXX: "ccache clang++"
+      CC: "ccache"
+      CXX: "ccache"
 
     steps:
       - name: Checkout Repository
