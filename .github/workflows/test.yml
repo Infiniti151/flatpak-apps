@@ -24,8 +24,8 @@ jobs:
       CCACHE_DIR: ${{ github.workspace }}/.ccache
       #CC: "ccache clang"
       #CXX: "ccache clang++"
-      CC: "ccache"
-      CXX: "ccache"
+      CC: "sccache gcc"
+      CXX: "sccache g++"
 
     steps:
       - name: Checkout Repository
