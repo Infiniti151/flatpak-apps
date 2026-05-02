@@ -79,10 +79,10 @@ echo "--- SPEC DEBUG END ---"
 %meson_build
 
 echo "--- SPEC DEBUG START ---"
-echo ".sccache size: $(du -sh .sccache | cut -f1)"
-echo ".sccache total items: $(ls .sccache | wc -l)"
-echo ".ccache size: $(du -sh .ccache | cut -f1)"
-echo ".ccache total items: $(ls .ccache | wc -l)"
+echo ".sccache size: $(du -sh $SCCACHE_DIR | cut -f1)"
+echo ".sccache total items: $(find $SCCACHE_DIR -type f | wc -l)"
+echo ".ccache size: $(du -sh $CCACHE_DIR | cut -f1)"
+echo ".ccache total items: $(find $CCACHE_DIR -type f | wc -l)"
 echo "--- SPEC DEBUG END ---"
 
 %install
