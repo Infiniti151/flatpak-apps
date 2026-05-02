@@ -61,6 +61,7 @@ jobs:
           git-fetch-with-cli = true
           EOF
 
+          mkdir -p "$GITHUB_WORKSPACE/.cargo"
           cat <<EOF > $GITHUB_WORKSPACE/.cargo/config.toml
           [registry]
           directory = "$PERSISTENT_CARGO/registry"
