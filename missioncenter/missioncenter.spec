@@ -65,7 +65,12 @@ export CARGO_NET_OFFLINE=false
 export CC=%{build_cc}
 export CXX=%{build_cxx}
 export LDFLAGS="-fuse-ld=lld"
-export RUSTFLAGS="-C linker=clang -C link-arg=-fuse-ld=lld -C lto=fat -C embed-bitcode=yes -C opt-level=z -C strip=symbols"
+export RUSTFLAGS="%{?env_rustflags} -C linker=clang -C link-arg=-fuse-ld=lld -C lto=fat -C embed-bitcode=yes -C opt-level=z -C strip=symbols"
+
+echo "--- DEBUG START ---"
+echo "RUSTC_WRAPPER is: ${RUSTC_WRAPPER:-NOT SET}"
+echo "RUSTFLAGS is: ${RUSTFLAGS:-NOT SET}"
+echo "--- DEBUG END ---"
 
 %meson \
   -Db_lto=true \

@@ -19,6 +19,7 @@ jobs:
 
     env:
       RUSTC_WRAPPER: sccache
+      RUSTFLAGS: "--remap-path-prefix=${{ github.workspace }}=/project"
       CC: "ccache clang"
       CXX: "ccache clang++"
 
@@ -46,7 +47,7 @@ jobs:
       - name: Execute RPM Build
         run: |
           cd "${{ vars.APP }}"
-          spectool -g *.spec
+          spectool -g *.spec         
 
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
