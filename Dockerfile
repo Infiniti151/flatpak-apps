@@ -1,4 +1,6 @@
-FROM fedora:${{ vars.VER }}
+ARG FEDORA_VER=version
+
+FROM fedora:${FEDORA_VER}
 
 RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
 

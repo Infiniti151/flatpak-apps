@@ -48,5 +48,7 @@ jobs:
           tags: |
             ${{ steps.prep.outputs.image_name }}:latest
             ${{ steps.prep.outputs.image_name }}:${{ github.sha }}
+          build-args: |
+            FEDORA_VER=${{ vars.VER }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
