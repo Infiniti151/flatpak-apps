@@ -24,6 +24,9 @@ jobs:
           - app_name: missioncenter
             upstream_repo: mission-center-devs/mission-center
             provider: gitlab
+          - app_name: extension-manager
+            upstream_repo: mjakeman/extension-manager
+            provider: github
 
     steps:
       - name: Checkout Subdirectory
