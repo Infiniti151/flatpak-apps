@@ -49,7 +49,7 @@ jobs:
 
       - name: Execute RPM Build
         run: |
-          mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR"
+          mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR" "$CARGO_HOME"
           cd "${{ vars.APP }}"
           spectool -g *.spec         
 
