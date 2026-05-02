@@ -49,14 +49,19 @@ jobs:
 
       - name: Execute RPM Build
         run: |
-          mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR" "$CARGO_HOME" ~/.cargo
-          cat <<EOF > ~/.cargo/config.toml
-          [registry]
-          directory = "/github/home/.cargo/registry"
+          mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR"
+          PERSISTENT_CARGO="/github/home/.cargo"
+          mkdir -p "$PERSISTENT_CARGO"
+
+          export CARGO_TARGET_DIR="$GITHUB_WORKSPACE/target"
+          export CARGO_INSTALL_ROOT="$PERSISTENT_CARGO"
           
-          [net]
-          git-fetch-with-cli = true
-          EOF
+          MESON_CARGO_HOME="/__w/flatpak-apps/flatpak-apps/rpmbuild/BUILD/${{ vars.APP }}-1.1.0-build/mission-center-v1.1.0/redhat-linux-build/cargo-home"
+          
+          mkdir -p "$MESON_CARGO_HOME"
+          
+          ln -sf "$PERSISTENT_CARGO/registry" "$MESON_CARGO_HOME/registry"
+          ln -sf "$PERSISTENT_CARGO/git" "$MESON_CARGO_HOME/git"
 
           cd "${{ vars.APP }}"
           spectool -g *.spec         
