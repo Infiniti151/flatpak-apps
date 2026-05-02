@@ -65,12 +65,11 @@ export CARGO_NET_OFFLINE=false
 export CC=%{build_cc}
 export CXX=%{build_cxx}
 export LDFLAGS="-fuse-ld=lld"
-export RUSTFLAGS="%{?env_rustflags} -C linker=clang -C link-arg=-fuse-ld=lld -C lto=fat -C embed-bitcode=yes -C opt-level=z -C strip=symbols"
-
-echo "--- DEBUG START ---"
+export RUSTFLAGS="$RUSTFLAGS -C linker=clang -C link-arg=$LDFLAGS -C lto=fat -C embed-bitcode=yes -C opt-level=z -C strip=symbols"
+echo "--- SPEC DEBUG START ---"
 echo "RUSTC_WRAPPER is: ${RUSTC_WRAPPER:-NOT SET}"
 echo "RUSTFLAGS is: ${RUSTFLAGS:-NOT SET}"
-echo "--- DEBUG END ---"
+echo "--- SPEC DEBUG END ---"
 
 %meson \
   -Db_lto=true \
@@ -78,6 +77,13 @@ echo "--- DEBUG END ---"
   --wrap-mode=nodownload
 
 %meson_build
+
+echo "--- SPEC DEBUG START ---"
+echo ".sccache size: $(du -sh .sccache | cut -f1)"
+echo ".sccache total items: $(ls .sccache | wc -l)"
+echo ".ccache size: $(du -sh .ccache | cut -f1)"
+echo ".ccache total items: $(ls .ccache | wc -l)"
+echo "--- SPEC DEBUG END ---"
 
 %install
 %meson_install

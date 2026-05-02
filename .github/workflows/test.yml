@@ -52,6 +52,13 @@ jobs:
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
             --define "_sourcedir $(pwd)"
+
+          echo "--- DEBUG START ---"
+          echo ".sccache size: $(du -sh .sccache | cut -f1)"
+          echo ".sccache total items: $(ls .sccache | wc -l)"
+          echo ".ccache size: $(du -sh .ccache | cut -f1)"
+          echo ".ccache total items: $(ls .ccache | wc -l)"
+          echo "--- DEBUG END ---"
         env:
           GIT_CONFIG_COUNT: 1
           GIT_CONFIG_KEY_0: safe.directory
