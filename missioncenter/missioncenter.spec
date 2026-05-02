@@ -4,7 +4,7 @@
 %define         build_cxx clang++
 
 Name:           missioncenter
-Version:        1.1.0
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        Monitor your CPU, Memory, Disk, Network and GPU usage
 
@@ -66,17 +66,6 @@ export CC=%{build_cc}
 export CXX=%{build_cxx}
 export LDFLAGS="-fuse-ld=lld"
 export RUSTFLAGS="$RUSTFLAGS -C linker=clang -C link-arg=$LDFLAGS -C lto=fat -C embed-bitcode=yes -C opt-level=z -C strip=symbols"
-echo "--- SPEC PRE-DEBUG START ---"
-echo "RUSTC_WRAPPER is: ${RUSTC_WRAPPER:-NOT SET}"
-echo "RUSTFLAGS is: ${RUSTFLAGS:-NOT SET}"
-echo "CARGO_HOME is: ${CARGO_HOME:-NOT SET}"
-echo ".sccache size: $(du -sh $SCCACHE_DIR | cut -f1)"
-echo ".sccache total items: $(find $SCCACHE_DIR -type f | wc -l)"
-echo ".ccache size: $(du -sh $CCACHE_DIR | cut -f1)"
-echo ".ccache total items: $(find $CCACHE_DIR -type f | wc -l)"
-echo ".cargo size: $(du -sh $CARGO_HOME | cut -f1)"
-echo ".cargo total items: $(find $CARGO_HOME -type f | wc -l)"
-echo "--- SPEC PRE-DEBUG END ---"
 
 %meson \
   -Db_lto=true \
@@ -84,15 +73,6 @@ echo "--- SPEC PRE-DEBUG END ---"
   --wrap-mode=nodownload
 
 %meson_build
-
-echo "--- SPEC POST-DEBUG START ---"
-echo ".sccache size: $(du -sh $SCCACHE_DIR | cut -f1)"
-echo ".sccache total items: $(find $SCCACHE_DIR -type f | wc -l)"
-echo ".ccache size: $(du -sh $CCACHE_DIR | cut -f1)"
-echo ".ccache total items: $(find $CCACHE_DIR -type f | wc -l)"
-echo ".cargo size: $(du -sh $CARGO_HOME | cut -f1)"
-echo ".cargo total items: $(find $CARGO_HOME -type f | wc -l)"
-echo "--- SPEC POST-DEBUG END ---"
 
 %install
 %meson_install
@@ -115,7 +95,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.xml
 %doc README.md
-
-%changelog
-* Thu Apr 30 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.0-1
-- Initial RPM release for Fedora from GitLab source

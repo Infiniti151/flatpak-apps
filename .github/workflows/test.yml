@@ -49,21 +49,14 @@ jobs:
 
       - name: Execute RPM Build
         run: |
-          mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR"
-          PERSISTENT_CARGO="/github/home/.cargo"
-          mkdir -p "$PERSISTENT_CARGO/registry" "$PERSISTENT_CARGO/git"
+          mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR" "CARGO_HOME"
 
           cd "${{ vars.APP }}"
           spectool -g *.spec
-          
-          env CARGO_HOME="$PERSISTENT_CARGO" \
-              CARGO_REGISTRY_DIR="$PERSISTENT_CARGO/registry" \
-              CARGO_NET_GIT_FETCH_WITH_CLI=true \
+
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
-            --define "_sourcedir $(pwd)" \
-            --define "__cargo %{_bindir}/cargo" \
-            --define "_cargo_home $PERSISTENT_CARGO"
+            --define "_sourcedir $(pwd)"
 
           echo "--- DEBUG START ---"
           echo ".sccache size: $(du -sh $SCCACHE_DIR | cut -f1)"
