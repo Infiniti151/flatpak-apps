@@ -86,7 +86,7 @@ jobs:
             rm entry.tmp
 
             if [ -f "$README" ]; then
-               sed -i "/| $APP |/ s/| [0-9.]* |/| $NEW_VER |/" "$README"
+               sed -i "/| $APP[^|]*|/ s/| [0-9.]* |/| $NEW_VER |/" "$README"
             fi
 
             git config --global user.name "github-actions[bot]"
