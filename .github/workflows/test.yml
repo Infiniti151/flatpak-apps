@@ -16,6 +16,8 @@ jobs:
 
     container:
       image: ghcr.io/infiniti151/flatpak2rpm-builder:latest
+      volumes:
+        - /github/home/.cargo:/__w/flatpak-apps/flatpak-apps/rpmbuild/BUILD/missioncenter-1.1.0-build/mission-center-v1.1.0/redhat-linux-build/cargo-home
 
     env:
       RUSTC_WRAPPER: sccache
@@ -49,7 +51,7 @@ jobs:
 
       - name: Execute RPM Build
         run: |
-          mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR" "$CARGO_HOME"
+          mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR"
           cd "${{ vars.APP }}"
           spectool -g *.spec  
           
