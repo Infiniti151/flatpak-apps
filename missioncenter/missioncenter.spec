@@ -4,7 +4,7 @@
 %define         build_cxx clang++
 
 Name:           missioncenter
-Version:        0.0.0
+Version:        1.1.0
 Release:        1%{?dist}
 Summary:        Monitor your CPU, Memory, Disk, Network and GPU usage
 
@@ -96,3 +96,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.xml
 %doc README.md
+
+%changelog
+* Sat May 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.0-1
+- Update to 1.1.0
+
