@@ -6,7 +6,7 @@ License:        GPL-3.0-or-later
 URL:            https://github.com/marhkb/Pods
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{name}-%{version}.tar.gz
+Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildRequires:  meson >= 0.59
 BuildRequires:  gcc
@@ -55,5 +55,5 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 
 %changelog
-* Thu May 3 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.0.0-1
+* Sun May 03 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.0.0-1
 - Update to 3.0.0

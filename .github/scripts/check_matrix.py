@@ -37,7 +37,7 @@ def check_matrix():
         print(f"❌ Commit Blocked: New app folders detected but not added to CI matrix:")
         for folder in missing:
             print(f"  - {folder}")
-        print(f"\nUpdate the 'include' section in {WORKFLOW_PATH} to proceed.")
+        print(f"\nUpdate the 'include' section in {WORKFLOW_PATH} to proceed and update the APP variable in Github Actions.")
         sys.exit(1)
     
     print("✅ CI matrix matches root app folders.")
