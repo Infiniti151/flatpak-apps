@@ -1,3 +1,6 @@
+%define         debug_package %{nil}
+%global         _enable_debug_package 0
+
 Name:           pods
 Version:        3.0.0
 Release:        1%{?dist}
