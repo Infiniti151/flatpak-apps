@@ -18,14 +18,14 @@ jobs:
       image: ghcr.io/infiniti151/flatpak2rpm-builder:latest
 
     env:
-      RUSTC_WRAPPER: sccache
-      RUSTFLAGS: "--remap-path-prefix=${{ github.workspace }}=/project"
+      #RUSTC_WRAPPER: sccache
+      #RUSTFLAGS: "--remap-path-prefix=${{ github.workspace }}=/project"
       SCCACHE_DIR: ${{ github.workspace }}/.sccache
       CCACHE_DIR: ${{ github.workspace }}/.ccache
       #CC: "ccache clang"
       #CXX: "ccache clang++"
-      CC: "sccache gcc"
-      CXX: "sccache g++"
+      #CC: "sccache gcc"
+      #CXX: "sccache g++"
 
     steps:
       - name: Checkout Repository
@@ -38,13 +38,13 @@ jobs:
         with:
           shared-key: "fedora-build-cache"
           cache-on-failure: "true"
-          cache-targets: "false"
+          cache-targets: "true"
           add-rust-environment-hash-key: "false"
           cmd-format: "true ; # {0}"
-          cache-directories: |
-            .sccache
-            .ccache
-            /github/home/.cargo
+          #cache-directories: |
+           # .sccache
+            #.ccache
+            #/github/home/.cargo
 
       - name: Start sccache
         run: sccache --start-server
