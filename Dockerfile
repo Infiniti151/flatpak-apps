@@ -11,13 +11,13 @@ RUN dnf install -y \
     
     # --- 2. GNOME / Desktop Integration Tools ---
     desktop-file-utils gettext glib2-devel gtk-update-icon-cache \
-    libappstream-glib gjs \
+    libappstream-glib gjs appstream \
     
     # --- 3. System Libraries ---
     systemd-devel libinput-devel mesa-libgbm-devel libdrm-devel \
     libxkbcommon-devel libadwaita-devel \
     json-glib-devel libsoup3-devel libxml2-devel \
-    vte291-gtk4-devel gtksourceview5-devel \
+    vte291-gtk4-devel gtksourceview5-devel python3-devel \
     
     # --- Extras for CI/CD Utility ---
     dnf-plugins-core rpm-build rpmdevtools git-core nodejs \

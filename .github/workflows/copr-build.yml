@@ -30,6 +30,9 @@ jobs:
           - app_name: pods
             upstream_repo: marhkb/pods
             provider: github
+          - app_name: tomatillo
+            upstream_repo: diegopvlk/Tomatillo
+            provider: github
 
     steps:
       - name: Checkout Subdirectory
