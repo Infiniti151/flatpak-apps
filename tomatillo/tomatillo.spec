@@ -32,7 +32,7 @@ Requires:       hicolor-icon-theme
 Tomatillo helps to set individual timer durations for focus sessions, short breaks, and long breaks. It can also adjust the amount of cycles before a long break and automatically begin the next focus/break cycle.
 
 %prep
-%autosetup
+%autosetup -n Tomatillo-%{version}
 
 %build
 %meson
