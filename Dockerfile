@@ -2,6 +2,8 @@ ARG FEDORA_VER=version
 
 FROM fedora:${FEDORA_VER}
 
+ENV TERM="xterm-256color"
+RUN echo "color=always" >> /etc/dnf/dnf.conf
 RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
 
 RUN dnf install -y \
