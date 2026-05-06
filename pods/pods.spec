@@ -2,7 +2,7 @@
 %global         _enable_debug_package 0
 
 Name:           pods
-Version:        0.0.0
+Version:        3.0.0
 Release:        1%{?dist}
 Summary:        A powerful Podman manager for GNOME
 License:        GPL-3.0-or-later
@@ -56,3 +56,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/symbolic/apps/*.svg
 %{_metainfodir}/*.metainfo.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
+%changelog
+* Wed May 06 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.0.0-1
+- Update to 3.0.0
+
