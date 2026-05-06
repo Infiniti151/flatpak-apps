@@ -22,8 +22,6 @@ BuildRequires:  libappstream-glib
 BuildRequires:  appstream
 
 # Runtime Requirements
-Requires:       python3
-Requires:       python3-gobject
 Requires:       gtk4
 Requires:       libadwaita
 Requires:       hicolor-icon-theme
@@ -40,6 +38,7 @@ Tomatillo helps to set individual timer durations for focus sessions, short brea
 
 %install
 %meson_install
+pathfix.py -pni "%{__python3}" %{buildroot}%{_bindir}/tomatillo
 %find_lang %{name}
 
 %check
