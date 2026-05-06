@@ -38,7 +38,7 @@ Tomatillo helps to set individual timer durations for focus sessions, short brea
 
 %install
 %meson_install
-pathfix.py -pni "%{__python3}" %{buildroot}%{_bindir}/tomatillo
+python3 %{_rpmconfigdir}/redhat/pathfix.py -pni "%{__python3}" %{buildroot}%{_bindir}/tomatillo
 %find_lang %{name}
 
 %check
