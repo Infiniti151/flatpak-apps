@@ -1,0 +1,11 @@
+repos:
+- repo: local
+  hooks:
+    - id: check-ci-matrix
+      name: Ensure root app folders are in CI matrix
+      entry: python3 .github/scripts/check_matrix.py
+      language: python
+      additional_dependencies: [PyYAML]
+      # Only run if a directory is added/changed in the root (ignoring hidden files)
+      files: ^[^.]+/ 
+      pass_filenames: false

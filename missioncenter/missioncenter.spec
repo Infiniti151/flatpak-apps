@@ -104,4 +104,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %changelog
 * Sat May 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.0-1
 - Update to 1.1.0
-

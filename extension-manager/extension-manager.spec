@@ -50,6 +50,7 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/icons/hicolor/symbolic/apps/*.svg
 %{_metainfodir}/*.metainfo.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
+
 %changelog
 * Sat May 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.6.5-1
 - Update to 0.6.5

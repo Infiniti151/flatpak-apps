@@ -27,6 +27,9 @@ jobs:
           - app_name: extension-manager
             upstream_repo: mjakeman/extension-manager
             provider: github
+          - app_name: pods
+            upstream_repo: marhkb/pods
+            provider: github
 
     steps:
       - name: Checkout Subdirectory
