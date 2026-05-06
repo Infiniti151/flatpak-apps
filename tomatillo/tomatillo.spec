@@ -3,7 +3,7 @@ Version:        0.1.0
 Release:        1%{?dist}
 Summary:        Tomatillo is a Pomodoro Timer app for your productivity tasks.
 License:        GPL-3.0-or-later
-URL:            https://github.com/Infiniti151/tomatillo
+URL:            https://github.com/diegopvlk/Tomatillo
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/archive/v%{version}.tar.gz

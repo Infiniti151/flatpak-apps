@@ -24,8 +24,8 @@ jobs:
       CCACHE_DIR: ${{ github.workspace }}/.ccache
       #CC: "ccache clang"
       #CXX: "ccache clang++"
-      #CC: "sccache gcc"
-      #CXX: "sccache g++"
+      CC: "sccache gcc"
+      CXX: "sccache g++"
 
     steps:
       - name: Checkout Repository
@@ -41,10 +41,10 @@ jobs:
           cache-targets: "true"
           add-rust-environment-hash-key: "false"
           cmd-format: "true ; # {0}"
-          #cache-directories: |
-           # .sccache
-            #.ccache
-            #/github/home/.cargo
+          cache-directories: |
+            .sccache
+            .ccache
+            /github/home/.cargo
 
       - name: Start sccache
         run: sccache --start-server
