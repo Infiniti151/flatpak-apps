@@ -26,16 +26,22 @@ jobs:
       - name: Verify Spec Version
         id: check
         run: |
-          cd "${{ vars.APP }}"
+          SPEC_FILE=$(find . -maxdepth 3 -name "${{ vars.APP }}.spec" | head -n 1)
           
-          VERSION=$(grep -i "^Version:" *.spec | awk '{print $2}' | xargs)
+          if [ -z "$SPEC_FILE" ]; then
+            echo -e "\e[1;31m [ERROR] No .spec file found in the repository!\e[0m"
+            echo "should_build=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          VERSION=$(grep -i "^Version:" "$SPEC_FILE" | awk '{print $2}' | xargs)
           echo "Detected version: $VERSION"
           
           if [ "$VERSION" = "0.0.0" ] || [ -z "$VERSION" ]; then
-            echo "Version is a placeholder (0.0.0) or empty. Skipping build."
+            echo -e "\e[1;33m [WARNING] Version is a placeholder (0.0.0) or empty. Skipping build.\e[0m"
             echo "should_build=false" >> $GITHUB_OUTPUT
           else
-            echo "Version is valid ($VERSION). Proceeding to build."
+            echo -e "\e[1;32mVersion is valid ($VERSION). Proceeding to build.\e[0m"
             echo "should_build=true" >> $GITHUB_OUTPUT
           fi
   
