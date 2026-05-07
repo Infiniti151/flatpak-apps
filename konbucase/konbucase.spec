@@ -36,6 +36,8 @@ various cases like camelCase, snake_case, and PascalCase.
 mkdir -p subprojects/chcase
 tar -xf %{SOURCE1} -C subprojects/chcase --strip-components=1
 
+sed -i "s/allow_fallback: get_option('use_submodule')/allow_fallback: true/" meson.build
+
 %build
 %meson \
     -Dgranite=disabled \
