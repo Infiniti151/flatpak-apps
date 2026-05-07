@@ -60,10 +60,10 @@ jobs:
         id: upstream
         run: |
           if [ "${{ matrix.provider }}" = "github" ]; then
-            TAG=$(curl -s "https://api.github.com/repos/${{ matrix.upstream_repo }}/tags" | jq -r '.[0].name // empty')
+            TAG=$(curl -s "https://api.github.com/repos/${{ matrix.upstream_repo }}/tags" | jq -r '.[].name // empty' | grep -E '^[0-9]' | sort -V | tail -n 1')
           elif [ "${{ matrix.provider }}" = "gitlab" ]; then
             ENCODED=$(echo "${{ matrix.upstream_repo }}" | sed 's/\//%2F/g')
-            TAG=$(curl -s "https://gitlab.com/api/v4/projects/${ENCODED}/repository/tags" | jq -r '.[0].name // empty')
+            TAG=$(curl -s "https://gitlab.com/api/v4/projects/${ENCODED}/repository/tags?order_by=version&sort=desc" | jq -r '.[0].name // empty')
           fi
           if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
             echo "Error: Could not fetch tag for ${{ matrix.upstream_repo }}"
