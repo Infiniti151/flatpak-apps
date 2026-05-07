@@ -51,6 +51,10 @@ sed -i "s/allow_fallback: get_option('use_submodule')/allow_fallback: true/" mes
 %meson_install
 %find_lang %{app_id}
 
+rm -rf %{buildroot}%{_includedir}/chcase.h
+rm -rf %{buildroot}%{_libdir}/pkgconfig/chcase.pc
+rm -rf %{buildroot}%{_datadir}/vala/vapi/chcase.*
+
 %check
 %meson_test
 
@@ -58,6 +62,7 @@ sed -i "s/allow_fallback: get_option('use_submodule')/allow_fallback: true/" mes
 %license LICENSE
 %doc README.md
 %{_bindir}/%{app_id}
+%{_libdir}/libchcase.so
 %{_datadir}/applications/%{app_id}.desktop
 %{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*
