@@ -37,7 +37,10 @@ mkdir -p subprojects/chcase
 tar -xf %{SOURCE1} -C subprojects/chcase --strip-components=1
 
 %build
-%meson -Dgranite=false --wrap-mode=nodownload
+%meson \
+    -Dgranite=disabled \
+    -Duse_submodule=false \
+    --wrap-mode=nodownload
 %meson_build
 
 %install
