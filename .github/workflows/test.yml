@@ -15,14 +15,37 @@ on:
       - "**/*.spec"
 
 jobs:
-  build:
+  check-version:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
-    environment: Test
+    outputs:
+      should_build: ${{ steps.check.outputs.should_build }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
 
+      - name: Verify Spec Version
+        id: check
+        run: |
+          cd "${{ vars.APP }}"
+          
+          VERSION=$(grep -i "^Version:" *.spec | awk '{print $2}' | xargs)
+          echo "Detected version: $VERSION"
+          
+          if [ "$VERSION" = "0.0.0" ] || [ -z "$VERSION" ]; then
+            echo "Version is a placeholder (0.0.0) or empty. Skipping build."
+            echo "should_build=false" >> $GITHUB_OUTPUT
+          else
+            echo "Version is valid ($VERSION). Proceeding to build."
+            echo "should_build=true" >> $GITHUB_OUTPUT
+          fi
+  
+  build:
+    needs: check-version
+    if: needs.check-version.outputs.should_build == 'true' && github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    environment: Test
     container:
       image: ghcr.io/infiniti151/flatpak2rpm-builder:latest
-
     env:
       #RUSTC_WRAPPER: sccache
       #RUSTFLAGS: "--remap-path-prefix=${{ github.workspace }}=/project"
