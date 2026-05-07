@@ -8,10 +8,16 @@ on:
       - dev
     paths:
       - "**/*.spec"
+  pull_request:
+    branches:
+      - dev
+    paths:
+      - "**/*.spec"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
     environment: Test
 
     container:
