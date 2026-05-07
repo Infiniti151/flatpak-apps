@@ -17,6 +17,7 @@ on:
 jobs:
   check-version:
     runs-on: ubuntu-latest
+    environment: Test
     outputs:
       should_build: ${{ steps.check.outputs.should_build }}
     steps:
