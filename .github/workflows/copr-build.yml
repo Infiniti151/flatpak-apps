@@ -78,7 +78,7 @@ jobs:
           README="README.md"
 
           if [ ! -f "$SPEC" ]; then
-            echo -e "\e[1;31m==> Error: $SPEC not found!\e[0m"
+            echo -e "\e[1;31m==> [ERROR] $SPEC not found!\e[0m"
             exit 1
           fi
 
@@ -118,16 +118,25 @@ jobs:
             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add "$SPEC" "$README"
             git commit -m "chore($APP): bump version to $NEW_VER"
-            git pull --rebase --autostash
-            git push
-
-            sleep 5
+            MAX_RETRIES=5
+            for i in $(seq 1 $MAX_RETRIES); do
+              echo -e "\e[1;36m==> Push attempt $i...\e[0m"
+              if git pull --rebase origin main && git push origin main; then
+                echo -e "\e[1;32m==> Successfully pushed $APP update.\e[0m"
+                break
+              fi
+              if [ $i -eq $MAX_RETRIES ]; then
+                echo -e "\e[1;31m==> [ERROR] Failed to push after $MAX_RETRIES attempts.\e[0m"
+                exit 1
+              fi
+              sleep $(( (RANDOM % 10) + 1 ))
+            done
 
             BASE_URL=$(echo "${{ secrets.COPR_BASE_WEBHOOK_URL }}" | xargs)
             FINAL_URL="${BASE_URL%/}/$APP/"
 
             echo -e "\e[1;36m==> Triggering COPR for $APP...\e[0m"
-            curl -s -X POST "$FINAL_URL"
+            curl -fsS -X POST "$FINAL_URL" || echo -e "\e[1;33m==> [WARNING] Webhook might have failed, but push was successful.\e[0m"
           else
             echo -e "\e[1;32m==> $APP is already up to date ($OLD_VER).\e[0m"
           fi
