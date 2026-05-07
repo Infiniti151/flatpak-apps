@@ -6,7 +6,7 @@ License:        GPL-3.0-or-later
 URL:            https://github.com/ryonakano/konbucase
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+Source0:        %{url}/archive/%{version}.tar.gz
 Source1:        https://github.com/ryonakano/chcase/archive/2.4.0/chcase-2.4.0.tar.gz
 
 # Compilers and Build Tools
