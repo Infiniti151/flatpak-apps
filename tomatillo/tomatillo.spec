@@ -1,5 +1,5 @@
 Name:           tomatillo
-Version:        1.0.4
+Version:        1.0.0
 Release:        1%{?dist}
 Summary:        Tomatillo is a Pomodoro Timer app for your productivity tasks.
 License:        GPL-3.0-or-later
@@ -10,21 +10,28 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildArch:      noarch
 
-# Build Requirements
+# Compilers and Build Tools
 BuildRequires:  meson
 BuildRequires:  gcc
 BuildRequires:  gettext
-BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  blueprint-compiler
 BuildRequires:  python3-devel
+
+# Desktop Libraries (Development Files)
+BuildRequires:  pkgconfig(gio-2.0)
+BuildRequires:  pkgconfig(gtk4)
+BuildRequires:  pkgconfig(libadwaita-1)
+
+# Validation and Integration Tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  appstream
+BuildRequires:  gtk-update-icon-cache
 
 # Runtime Requirements
-Requires:       gtk4
-Requires:       libadwaita
-Requires:       hicolor-icon-theme
+Requires:  pkgconfig(gtk4)
+Requires:  pkgconfig(libadwaita-1)
+Requires:  hicolor-icon-theme
 
 %description
 Tomatillo helps to set individual timer durations for focus sessions, short breaks, and long breaks. It can also adjust the amount of cycles before a long break and automatically begin the next focus/break cycle.
@@ -52,7 +59,3 @@ python3 %{_rpmconfigdir}/redhat/pathfix.py -pni "%{__python3}" %{buildroot}%{_bi
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
-%changelog
-* Thu May 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.4-1
-- Update to 1.0.4
-

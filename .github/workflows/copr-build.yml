@@ -99,8 +99,13 @@ jobs:
             if grep -q "^%changelog" "$SPEC"; then
                 sed -i "/^%changelog/r entry.tmp" "$SPEC"
             else
-                printf "\n%%changelog\n" >> "$SPEC"
-                cat entry.tmp >> "$SPEC"
+                sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$SPEC"
+
+                {
+                    echo ""
+                    echo "%changelog"
+                    cat entry.tmp
+                } >> "$SPEC"
             fi
 
             rm entry.tmp
