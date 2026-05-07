@@ -2,6 +2,8 @@ ARG FEDORA_VER=version
 
 FROM fedora:${FEDORA_VER}
 
+ENV TERM="xterm-256color"
+RUN echo "color=always" >> /etc/dnf/dnf.conf
 RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
 
 RUN dnf install -y \
@@ -11,13 +13,13 @@ RUN dnf install -y \
     
     # --- 2. GNOME / Desktop Integration Tools ---
     desktop-file-utils gettext glib2-devel gtk-update-icon-cache \
-    libappstream-glib gjs \
+    libappstream-glib gjs appstream \
     
     # --- 3. System Libraries ---
     systemd-devel libinput-devel mesa-libgbm-devel libdrm-devel \
     libxkbcommon-devel libadwaita-devel \
     json-glib-devel libsoup3-devel libxml2-devel \
-    vte291-gtk4-devel gtksourceview5-devel \
+    vte291-gtk4-devel gtksourceview5-devel python3-devel \
     
     # --- Extras for CI/CD Utility ---
     dnf-plugins-core rpm-build rpmdevtools git-core nodejs \
