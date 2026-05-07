@@ -50,16 +50,15 @@ sed -i "s/allow_fallback: get_option('use_submodule')/allow_fallback: true/" mes
 %find_lang %{name}
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
+%meson_test
 
-%files -f %{name}.lang
+%files -f com.github.ryonakano.%{name}.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/icons/hicolor/scalable/apps/*.svg
+%{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/metainfo/*.xml
 
 %changelog
