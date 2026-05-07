@@ -91,24 +91,17 @@ jobs:
           fi
 
           OLD_VER=$(grep -m1 '^Version:' "$SPEC" | awk '{print $2}')
-          echo -e "\e[1;36m==> Current: $OLD_VER | Upstream: $NEW_VER\e[0m"
+          
+          CLEAN_NEW_VER=$(echo "$NEW_VER" | sed 's/^[vV]//')
 
-          if [ "$OLD_VER" != "$NEW_VER" ]; then
+          echo -e "\e[1;36m==> Current: $OLD_VER | Upstream: $CLEAN_NEW_VER\e[0m"
+
+          if [ "$OLD_VER" != "$CLEAN_NEW_VER" ]; then
             echo "update_needed=true" >> $GITHUB_OUTPUT
           else
             echo "update_needed=false" >> $GITHUB_OUTPUT
             echo -e "\e[1;32m==> $APP is already up to date.\e[0m"
           fi
-
-      - name: Import GPG key
-        if: steps.check.outputs.update_needed == 'true'
-        uses: crazy-max/ghaction-import-gpg@v7
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
-          git_config_global: true
 
       - name: Bump Version and Push
         if: steps.check.outputs.update_needed == 'true'
