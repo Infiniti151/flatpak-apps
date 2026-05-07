@@ -1,3 +1,5 @@
+%global app_id com.github.ryonakano.konbucase
+
 Name:           konbucase
 Version:        4.5.1
 Release:        1%{?dist}
@@ -47,19 +49,19 @@ sed -i "s/allow_fallback: get_option('use_submodule')/allow_fallback: true/" mes
 
 %install
 %meson_install
-%find_lang %{name}
+%find_lang %{app_id}
 
 %check
 %meson_test
 
-%files -f com.github.ryonakano.%{name}.lang
+%files -f %{app_id}.lang
 %license LICENSE
 %doc README.md
-%{_bindir}/%{name}
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_bindir}/%{app_id}
+%{_datadir}/applications/%{app_id}.desktop
+%{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*
-%{_datadir}/metainfo/*.xml
+%{_datadir}/metainfo/%{app_id}.metainfo.xml
 
 %changelog
 * Thu May 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.5.1-1
