@@ -21,7 +21,6 @@ BuildRequires:  pkgconfig(libadwaita-1) >= 1.5
 BuildRequires:  pkgconfig(glib-2.0) >= 2.74
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(gtksourceview-5)
-BuildRequires:  pkgconfig(chcase) >= 2.4.0
 
 # Validation and Integration Tools
 BuildRequires:  desktop-file-utils
