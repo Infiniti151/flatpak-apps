@@ -1,7 +1,7 @@
 %global app_id com.github.ryonakano.konbucase
 
 Name:           konbucase
-Version:        4.5.0
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        A tool for case conversion and string manipulation
 License:        GPL-3.0-or-later
