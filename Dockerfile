@@ -8,7 +8,7 @@ RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
 
 RUN dnf install -y \
     # --- 1. Build Systems & Language Toolchains ---
-    meson cmake gcc gcc-c++ sccache ccache upx clang lld \
+    meson cmake gcc gcc-c++ vala sccache ccache upx clang lld \
     compiler-rt rust cargo cargo-rpm-macros blueprint-compiler \
     
     # --- 2. GNOME / Desktop Integration Tools ---

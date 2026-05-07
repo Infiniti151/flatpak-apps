@@ -43,6 +43,9 @@ jobs:
           - app_name: tomatillo
             upstream_repo: diegopvlk/Tomatillo
             provider: github
+          - app_name: konbucase
+            upstream_repo: ryonakano/konbucase
+            provider: github
 
     steps:
       - name: Checkout Subdirectory
@@ -87,6 +90,19 @@ jobs:
             echo -e "\e[1;36m==> Bumping $APP from $OLD_VER to $NEW_VER...\e[0m"
 
             sed -i "s/^Version:.*/Version:        $NEW_VER/" "$SPEC"
+
+            if [ "$APP" = "konbucase" ]; then
+                CHCASE_LATEST=$(curl -s "https://api.github.com/repos/ryonakano/chcase/tags" | jq -r '.[0].name')
+                
+                CHCASE_CURRENT=$(grep "Source1:" "$SPEC" | sed -n 's|.*/archive/\([^/]*\)/.*|\1|p')
+
+                if [ "$CHCASE_LATEST" != "$CHCASE_CURRENT" ]; then
+                    echo -e "\e[1;36m==> Updating chcase from $CHCASE_CURRENT to $CHCASE_LATEST...\e[0m"
+                    sed -i "s|Source1:.*|Source1:        https://github.com/ryonakano/chcase/archive/$CHCASE_LATEST/chcase-$CHCASE_LATEST.tar.gz|" "$SPEC"
+                else
+                    echo -e "\e[1;32m==> chcase is already up to date ($CHCASE_LATEST).\e[0m"
+                fi
+            fi
 
             DATE=$(date +"%a %b %d %Y")
             AUTHOR="Infiniti151 <43163551+Infiniti151@users.noreply.github.com>"
