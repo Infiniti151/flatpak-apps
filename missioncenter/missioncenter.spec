@@ -102,5 +102,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %doc README.md
 
 %changelog
+* Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.1.0-1
+- Release notes available [here](https://gitlab.com/mission-center-devs/mission-center/-/wikis/Release-Notes/v1.1.0)
+
 * Sat May 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.0-1
 - Update to 1.1.0
