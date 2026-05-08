@@ -12,7 +12,7 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildRequires:  meson
 BuildRequires:  gcc
-BuildRequires:  rust-desktop-devel
+BuildRequires:  rust
 BuildRequires:  cargo
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
