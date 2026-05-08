@@ -1,5 +1,5 @@
 # flatpak-apps
-Collection of Flatpak apps available as RPM through [COPR]() (for Fedora Linux)
+Collection of Flatpak apps available as RPM through [COPR](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/) (for Fedora Linux). My main motivation for doing this was to get away from the ridiculous storage hogging by Flatpak apps. Since these apps may build for different versions of Gnome, Flatpak needs to download dependencies (runtimes, drivers, extras) for each version. Each of these versions can take up 1 GB+ of storage. Even if apps build for the same version of Gnome as you may already be on, Flatpak needs to download dependencies for it due to its sandboxed model. It can't use your system's packages. So even though an app may be a few kilobytes/megabytes, it needs gigabytes of total dependencies. Appimage does solve this to an extent by using compression, but the same compression leads to delays in starting some apps. My repo aims to provide Flatpak apps as RPMs in their original size (and even reduced size in some cases with [upx](https://upx.github.io/)) for Fedora Linux.
 
 ## App List
 
