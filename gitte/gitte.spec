@@ -15,8 +15,8 @@ BuildRequires:  cargo
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
 BuildRequires:  pkgconfig(libgit2)
-BuildRequires:  libssh2-devel
-BuildRequires:  zlib-ng-compat-devel
+BuildRequires:  pkgconfig(libssh2)
+BuildRequires:  pkgconfig(zlib)
 BuildRequires:  openssl-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
@@ -32,6 +32,9 @@ and stashes.
 %setup -q -n %{name}
 
 %build
+export LIBGIT2_NO_VENDOR=1
+export LIBSSH2_SYS_USE_PKG_CONFIG=1
+
 %meson
 %meson_build
 
