@@ -77,4 +77,3 @@ rm -rf %{buildroot}%{_datadir}/vala/vapi/chcase.*
 %changelog
 * Thu May 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.5.1-1
 - Update to 4.5.1
-
