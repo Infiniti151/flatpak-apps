@@ -26,7 +26,7 @@ intuitive interface for managing repositories, branches,
 and stashes.
 
 %prep
-%autosetup
+%setup -q -n %{name}
 
 %build
 %meson -Dsandboxed=false
