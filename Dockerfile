@@ -8,7 +8,7 @@ RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
 
 RUN dnf install -y \
     # --- 1. Build Systems & Language Toolchains ---
-    meson cmake gcc gcc-c++ vala sccache ccache upx clang lld \
+    meson ninja-build cmake gcc gcc-c++ vala sccache ccache upx clang lld \
     compiler-rt rust cargo cargo-rpm-macros blueprint-compiler \
     
     # --- 2. GNOME / Desktop Integration Tools ---
@@ -17,9 +17,9 @@ RUN dnf install -y \
     
     # --- 3. System Libraries ---
     systemd-devel libinput-devel mesa-libgbm-devel libdrm-devel \
-    libxkbcommon-devel libadwaita-devel \
-    json-glib-devel libsoup3-devel libxml2-devel \
-    vte291-gtk4-devel gtksourceview5-devel python3-devel \
+    libxkbcommon-devel libadwaita-devel libgit2-devel openssl-devel \
+    json-glib-devel libsoup3-devel libxml2-devel libssh2-devel zlib-ng-compat-devel \
+    vte291-gtk4-devel gtk4-devel gtksourceview5-devel python3-devel \
     
     # --- Extras for CI/CD Utility ---
     dnf-plugins-core rpm-build rpmdevtools git-core nodejs \

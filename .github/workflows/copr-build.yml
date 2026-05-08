@@ -49,6 +49,9 @@ jobs:
           - app_name: keypunch
             upstream_repo: bragefuglseth/keypunch
             provider: github
+          - app_name: gitte
+            upstream_repo: ckruse/Gitte
+            provider: codeberg
 
     steps:
       - name: Checkout Subdirectory
@@ -70,6 +73,8 @@ jobs:
           elif [ "$PROVIDER" = "gitlab" ]; then
             ENCODED=$(echo "$REPO" | sed 's/\//%2F/g')
             TAG=$(curl -s "https://gitlab.com/api/v4/projects/${ENCODED}/repository/tags?order_by=version&sort=desc" | jq -r '.[0].name // empty')
+          elif [ "$PROVIDER" = "codeberg" ]; then
+            TAG=$(curl -s "https://codeberg.org/api/v1/repos/$REPO/tags" | jq -r '.[0].name // empty')
           fi
           
           if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
@@ -122,6 +127,8 @@ jobs:
           elif [ "$PROVIDER" = "gitlab" ]; then
             ENCODED=$(echo "$REPO" | sed 's/\//%2F/g')
             CHANGELOG_BODY=$(curl -s "https://gitlab.com/api/v4/projects/${ENCODED}/releases/${NEW_VER}" | jq -r '.description // empty')
+          elif [ "$PROVIDER" = "codeberg" ]; then
+            CHANGELOG_BODY=$(curl -s "https://codeberg.org/api/v1/repos/$REPO/releases/latest" | jq -r '.body // empty')
           fi
 
           if [ -z "$CHANGELOG_BODY" ] || [ "$CHANGELOG_BODY" = "null" ]; then

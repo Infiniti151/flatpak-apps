@@ -80,7 +80,7 @@ jobs:
           cache-directories: |
             .sccache
             .ccache
-            /github/home/.cargo
+            **/rpmbuild/BUILD/**/redhat-linux-build/cargo-home
 
       - name: Start sccache
         run: sccache --start-server
@@ -121,3 +121,5 @@ jobs:
           name: ${{ vars.APP }}-fc${{ vars.VER }}-rpm
           path: |
             rpmbuild/RPMS/*/*.rpm
+            !rpmbuild/RPMS/*/*-debuginfo-*.rpm
+            !rpmbuild/RPMS/*/*-debugsource-*.rpm
