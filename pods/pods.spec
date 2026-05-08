@@ -57,6 +57,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_metainfodir}/*.metainfo.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %changelog
+* Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v3.0.0-1
+- Pods 3.0.0 contains the following changes:
+- Implemented a new backend architecture to support multiple container engines. (#927)
+- Experimental Docker support &#x2013; please report any issues on GitHub. (#927)
+
 * Wed May 06 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.0.0-1
 - Update to 3.0.0
 
