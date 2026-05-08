@@ -18,7 +18,7 @@ RUN dnf install -y \
     # --- 3. System Libraries ---
     systemd-devel libinput-devel mesa-libgbm-devel libdrm-devel \
     libxkbcommon-devel libadwaita-devel libgit2-devel openssl-devel \
-    json-glib-devel libsoup3-devel libxml2-devel libssh2 zlib-ng-compat-devel \
+    json-glib-devel libsoup3-devel libxml2-devel libssh2-devel zlib-ng-compat-devel \
     vte291-gtk4-devel gtk4-devel gtksourceview5-devel python3-devel \
     
     # --- Extras for CI/CD Utility ---
