@@ -1,7 +1,5 @@
-%global app_id dev.bragefuglseth.Keypunch
-
 Name:           keypunch
-Version:        6.3
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        A GTK4/Adwaita typing practice application
 License:        GPL-3.0-or-later
@@ -51,7 +49,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*.svg
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Fri May 8 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 6.3-1
-- Update to 6.3
