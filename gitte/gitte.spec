@@ -1,7 +1,5 @@
-%define         __spec_install_post /usr/lib/rpm/brp-compress
-
 Name:           gitte
-Version:        0.2.0
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        A GTK4/libadwaita Git client for the GNOME desktop
 License:        GPL-3.0-or-later
@@ -10,9 +8,6 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/archive/%{version}.tar.gz
 
-%if 0%{?fedora} && ! 0%{?eln}
-BuildRequires:  upx
-%endif
 BuildRequires:  meson
 BuildRequires:  ninja-build
 BuildRequires:  rust
@@ -45,11 +40,6 @@ export LIBSSH2_SYS_USE_PKG_CONFIG=1
 
 %install
 %meson_install
-
-%if 0%{?fedora} && ! 0%{?eln}
-upx --best --lzma %{buildroot}%{_bindir}/%{name}
-%endif
-
 %find_lang gitte
 
 %check
@@ -69,8 +59,4 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/icons/hicolor/*/apps/*.svg
 %{_datadir}/metainfo/*.metainfo.xml
 %{_datadir}/dbus-1/services/*.service
-
-%changelog
-* Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.2.0-1
-- Update to 0.2.0
 
