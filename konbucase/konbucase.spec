@@ -9,7 +9,6 @@ URL:            https://github.com/ryonakano/konbucase
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/archive/%{version}.tar.gz
-Source1:        https://github.com/ryonakano/chcase/archive/2.4.0/chcase-2.4.0.tar.gz
 
 # Compilers and Build Tools
 BuildRequires:  meson >= 0.58.0
@@ -34,9 +33,16 @@ Konbucase is a native Linux application for converting strings between
 various cases like camelCase, snake_case, and PascalCase.
 
 %prep
-%setup -q
-mkdir -p subprojects/chcase
-tar -xf %{SOURCE1} -C subprojects/chcase --strip-components=1
+%setup -q -n konbucase-%{version}
+
+git init
+
+W_URL=$(sed -n 's/^url = //p' subprojects/chcase.wrap)
+W_REV=$(sed -n 's/^revision = //p' subprojects/chcase.wrap)
+
+git clone --depth 1 -b "$W_REV" "$W_URL" subprojects/chcase
+
+rm -f subprojects/blueprint-compiler.wrap
 
 sed -i "s/allow_fallback: get_option('use_submodule')/allow_fallback: true/" meson.build
 
@@ -67,10 +73,7 @@ rm -rf %{buildroot}%{_datadir}/vala/vapi/chcase.*
 %{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/metainfo/%{app_id}.metainfo.xml
+
 %changelog
 * Thu May 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.5.1-1
 - Update to 4.5.1
-
-* Thu May 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - original-1
-- Update to original
-
