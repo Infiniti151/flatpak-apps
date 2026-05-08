@@ -39,18 +39,18 @@ and accuracy through a clean, modern interface.
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/%{app_id}.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{app_id}.metainfo.xml
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 %files -f keypunch.lang
 %license COPYING
 %doc README.md
 %{_bindir}/keypunch
-%{_datadir}/applications/%{app_id}.desktop
-%{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
-%{_datadir}/icons/hicolor/*/apps/%{app_id}*.svg
-%{_metainfodir}/%{app_id}.metainfo.xml
+%{_datadir}/applications/*.desktop
+%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_datadir}/icons/hicolor/*/apps/*.svg
+%{_metainfodir}/*.metainfo.xml
 
 %changelog
 * Fri May 8 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 6.3-1
