@@ -15,6 +15,9 @@ BuildRequires:  cargo
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
 BuildRequires:  pkgconfig(libgit2)
+BuildRequires:  pkgconfig(libssh2)
+BuildRequires:  pkgconfig(zlib)
+BuildRequires:  openssl-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  gettext
