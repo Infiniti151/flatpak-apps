@@ -1,5 +1,5 @@
 Name:           keypunch
-Version:        0.0.0
+Version:        6.3
 Release:        1%{?dist}
 Summary:        A GTK4/Adwaita typing practice application
 License:        GPL-3.0-or-later
@@ -49,3 +49,12 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*.svg
 %{_metainfodir}/*.metainfo.xml
+
+%changelog
+* Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v6.3-1
+- Miscellaneous bug fixes and improvements:
+- The “Enable Entry” button is now shown whenever it should be
+- Greek tests now use proper Greek punctuation in advanced mode
+- Kabyle tests now use the proper “open E” letter in all cases
+- Updated user interface translations
+
