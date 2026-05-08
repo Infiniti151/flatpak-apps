@@ -61,6 +61,9 @@ python3 %{_rpmconfigdir}/redhat/pathfix.py -pni "%{__python3}" %{buildroot}%{_bi
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.0.4-1
+- Update to v1.0.4
+
 * Thu May 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.4-1
 - Update to 1.0.4
 
