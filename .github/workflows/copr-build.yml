@@ -49,6 +49,9 @@ jobs:
           - app_name: keypunch
             upstream_repo: bragefuglseth/keypunch
             provider: github
+          - app_name: gitte
+            upstream_repo: ckruse/Gitte
+            provider: codeberg
 
     steps:
       - name: Checkout Subdirectory
