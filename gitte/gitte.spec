@@ -29,7 +29,7 @@ and stashes.
 %setup -q -n %{name}
 
 %build
-%meson -Dsandboxed=false
+%meson
 %meson_build
 
 %install
@@ -42,14 +42,17 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
-%files -f gitte.lang
+%files -f %{name}.lang
 %license COPYING
 %doc README.md
-%{_bindir}/gitte
+%{_bindir}/%{name}
+%{_libexecdir}/%{name}/
+%{_datadir}/%{name}/
 %{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*.svg
-%{_metainfodir}/*.metainfo.xml
+%{_datadir}/metainfo/*.metainfo.xml
+%{_datadir}/dbus-1/services/*.service
 
 %changelog
 * Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.2.0-1
