@@ -1,3 +1,5 @@
+%define         __spec_install_post /usr/lib/rpm/brp-compress
+
 Name:           gitte
 Version:        0.2.0
 Release:        1%{?dist}
@@ -8,6 +10,9 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/archive/%{version}.tar.gz
 
+%if 0%{?fedora} && ! 0%{?eln}
+BuildRequires:  upx
+%endif
 BuildRequires:  meson
 BuildRequires:  ninja-build
 BuildRequires:  rust
@@ -40,6 +45,11 @@ export LIBSSH2_SYS_USE_PKG_CONFIG=1
 
 %install
 %meson_install
+
+%if 0%{?fedora} && ! 0%{?eln}
+upx --best --lzma %{buildroot}%{_bindir}/%{name}
+%endif
+
 %find_lang gitte
 
 %check
