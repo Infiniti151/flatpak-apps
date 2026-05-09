@@ -1,5 +1,5 @@
 Name:           eyedropper
-Version:        0.0.0
+Version:        2.2.1
 Release:        1%{?dist}
 Summary:        Pick and format colors from your desktop
 License:        GPL-3.0-or-later
@@ -54,3 +54,11 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_metainfodir}/*.metainfo.xml
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/gnome-shell/search-providers/*.search-provider.ini
+%changelog
+* Sat May 09 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v2.2.1-1
+- What's Changed
+- * fix(i18n/it): remove additional translation in app name @espositofabian in https://github.com/FineFindus/eyedropper/pull/227
+- New Contributors
+- * @espositofabian made their first contribution in https://github.com/FineFindus/eyedropper/pull/227
+- **Full Changelog**: https://github.com/FineFindus/eyedropper/compare/v2.2.0...v2.2.1
+
