@@ -1,3 +1,7 @@
+%if 0%{?eln}
+%define _empty_manifest_terminate_build 0
+%endif
+
 Name:           eyedropper
 Version:        2.2.1
 Release:        1%{?dist}
@@ -21,7 +25,7 @@ BuildRequires:  libappstream-glib
 BuildRequires:  gettext
 
 %description
-A powerful color picker for the GNOME desktop that allows you to pick colors 
+A powerful color picker for the GNOME desktop that allows you to pick colors
 from any pixel on your screen and format them for your development needs.
 
 %prep
@@ -54,6 +58,7 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_metainfodir}/*.metainfo.xml
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/gnome-shell/search-providers/*.search-provider.ini
+
 %changelog
 * Sat May 09 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v2.2.1-1
 - What's Changed

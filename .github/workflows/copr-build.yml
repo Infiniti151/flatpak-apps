@@ -137,15 +137,21 @@ jobs:
           if [ -z "$CHANGELOG_BODY" ] || [ "$CHANGELOG_BODY" = "null" ]; then
             CHANGELOG="- Update to $NEW_VER"
           else
-            CHANGELOG=$(echo "$CHANGELOG_BODY" | \
+            CHANGELOG_RAW=$(echo "$CHANGELOG_BODY" | \
               sed 's/<[^>]*>//g' | \
               sed 's/^#* //g' | \
               sed 's/^[[:space:]]*//' | \
-              sed '/^$/d' | \
-              head -n 10 | \
-              sed 's/^/- /')
-          fi
+              sed '/^$/d')
 
+            LINE_COUNT=$(echo "$CHANGELOG_RAW" | wc -l)
+
+            if [ "$LINE_COUNT" -gt 10 ]; then
+              CHANGELOG=$(echo "$CHANGELOG_RAW" | head -n 10 | sed 's/^/- /')
+              CHANGELOG="$CHANGELOG"$'\n- ... (see upstream for full release notes)'
+            else
+              CHANGELOG=$(echo "$CHANGELOG_RAW" | sed 's/^/- /')
+            fi
+          fi
           DATE=$(date +"%a %b %d %Y")
           AUTHOR="Infiniti151 <43163551+Infiniti151@users.noreply.github.com>"
           echo "* $DATE $AUTHOR - $NEW_VER-1" > entry.tmp
@@ -157,8 +163,7 @@ jobs:
           else
             sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$SPEC"
             {
-              echo ""
-              echo "%changelog"
+              echo -e "\n%changelog"
               cat entry.tmp
             } >> "$SPEC"
           fi
