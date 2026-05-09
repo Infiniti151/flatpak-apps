@@ -63,6 +63,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 * Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.0-1
 - Update to v0.3.0
 
-* Thu Apr 30 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.0-1
-- Update to 0.3.0
-

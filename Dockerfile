@@ -7,27 +7,30 @@ RUN echo "color=always" >> /etc/dnf/dnf.conf
 RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
 
 RUN dnf install -y \
-    # --- 1. Build Systems & Language Toolchains ---
-    meson ninja-build cmake gcc gcc-c++ vala sccache ccache upx clang lld \
-    compiler-rt rust cargo cargo-rpm-macros blueprint-compiler \
-    
-    # --- 2. GNOME / Desktop Integration Tools ---
-    desktop-file-utils gettext glib2-devel gtk-update-icon-cache \
-    libappstream-glib gjs appstream \
-    
-    # --- 3. System Libraries ---
-    systemd-devel libinput-devel mesa-libgbm-devel libdrm-devel \
-    libxkbcommon-devel libadwaita-devel libgit2-devel openssl-devel \
-    json-glib-devel libsoup3-devel libxml2-devel libssh2-devel zlib-ng-compat-devel \
-    vte291-gtk4-devel gtk4-devel gtksourceview5-devel python3-devel \
-    
-    # --- Extras for CI/CD Utility ---
-    dnf-plugins-core rpm-build rpmdevtools git-core nodejs \
+    ccache \
+    dnf-plugins-core \
+    git-core \
+    npm \
+    rpm-build \
+    rpmdevtools \
+    sccache \
+    # --- eyedropper dependencies --- \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    blueprint-compiler \
+    cargo \
+    desktop-file-utils \
+    gcc \
+    gettext \
+    libappstream-glib \
+    meson \
+    rust \
     && dnf clean all
 
 ENV CCACHE_DIR=/github/workspace/.ccache \
     SCCACHE_DIR=/github/workspace/.sccache \
-    CARGO_HOME=/github/home/.cargo \
+    CARGO_HOME=**/rpmbuild/BUILD/**/redhat-linux-build/cargo-home \
     CARGO_INCREMENTAL=0 \
     CCACHE_COMPILERCHECK=content
 
