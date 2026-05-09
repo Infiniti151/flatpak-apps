@@ -14,7 +14,8 @@ RUN dnf install -y \
     rpm-build \
     rpmdevtools \
     sccache \
-    # --- keypunch dependencies --- \
+    # --- eyedropper dependencies --- \
+    'pkgconfig(glib-2.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
     blueprint-compiler \
@@ -24,12 +25,12 @@ RUN dnf install -y \
     gettext \
     libappstream-glib \
     meson \
-    rust
+    rust \
     && dnf clean all
 
 ENV CCACHE_DIR=/github/workspace/.ccache \
     SCCACHE_DIR=/github/workspace/.sccache \
-    CARGO_HOME=/github/home/.cargo \
+    CARGO_HOME=**/rpmbuild/BUILD/**/redhat-linux-build/cargo-home \
     CARGO_INCREMENTAL=0 \
     CCACHE_COMPILERCHECK=content
 

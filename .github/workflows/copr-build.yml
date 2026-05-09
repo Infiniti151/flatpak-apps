@@ -15,8 +15,8 @@ on:
 jobs:
   check-and-build:
     if: |
-      github.event_name == 'schedule' || 
-      github.event_name == 'workflow_dispatch' || 
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     permissions:
@@ -79,7 +79,7 @@ jobs:
           elif [ "$PROVIDER" = "codeberg" ]; then
             TAG=$(curl -s "https://codeberg.org/api/v1/repos/$REPO/tags" | jq -r '.[0].name // empty')
           fi
-          
+
           if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
             echo -e "\e[1;31m==> [ERROR] Could not fetch tag for $REPO\e[0m"
             exit 1
@@ -99,7 +99,7 @@ jobs:
           fi
 
           OLD_VER=$(grep -m1 '^Version:' "$SPEC" | awk '{print $2}')
-          
+
           CLEAN_NEW_VER=$(echo "$NEW_VER" | sed 's/^[vV]//')
 
           echo -e "\e[1;36m==> Current: $OLD_VER | Upstream: $CLEAN_NEW_VER\e[0m"
@@ -151,7 +151,7 @@ jobs:
           echo "* $DATE $AUTHOR - $NEW_VER-1" > entry.tmp
           echo "$CHANGELOG" >> entry.tmp
           echo "" >> entry.tmp
-          
+
           if grep -q "^%changelog" "$SPEC"; then
             sed -i "/^%changelog/r entry.tmp" "$SPEC"
           else

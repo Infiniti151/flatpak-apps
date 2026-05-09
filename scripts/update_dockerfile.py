@@ -4,7 +4,6 @@ import sys
 import os
 
 # Foundation tools. 
-# We only list 'npm' because it correctly pulls nodejs24 on Fedora 44.
 PROTECTED_DEPS = {
     'dnf-plugins-core', 'rpm-build', 'rpmdevtools', 'git-core', 
     'npm', 'sccache', 'ccache'
@@ -32,8 +31,6 @@ def update_dockerfile(app_name):
                 if '(' in dep:
                     dep = f"'{dep}'"
                 
-                # Deduplication: Don't add to app section if it's protected
-                # Also handle the common case where spec might say nodejs but we use npm
                 if dep not in PROTECTED_DEPS and dep != 'nodejs':
                     app_deps.add(dep)
 
@@ -41,6 +38,7 @@ def update_dockerfile(app_name):
     with open(dockerfile_path, 'r') as f:
         content = f.read()
 
+    # Capture: (prefix), (the package list), (the cleanup command)
     dnf_pattern = re.compile(r'(dnf install -y\s+)(.*?)(\s+&& dnf clean all)', re.DOTALL)
     match = dnf_pattern.search(content)
     
@@ -54,16 +52,18 @@ def update_dockerfile(app_name):
     protected_list = sorted(list(PROTECTED_DEPS))
     app_list = sorted(list(app_deps))
 
+    # Join the lists with backslashes
     formatted_block = " \\\n    ".join(protected_list)
     formatted_block += f" \\\n    # --- {app_name} dependencies --- \\\n    "
-    formatted_block += " \\\n    ".join(app_list)
+    formatted_block += " \\\n    ".join(app_list)  
+    formatted_block += " \\"
 
     # 4. Write back
     new_content = dnf_pattern.sub(f"{prefix}\\\n    {formatted_block}{suffix}", content)
     with open(dockerfile_path, 'w') as f:
         f.write(new_content)
 
-    print(f"✅ Success! Dockerfile synced for {app_name} using Node.js 24 via npm.")
+    print(f"✅ Success! Dockerfile synced for {app_name}.")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
