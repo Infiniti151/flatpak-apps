@@ -52,6 +52,9 @@ jobs:
           - app_name: gitte
             upstream_repo: ckruse/Gitte
             provider: codeberg
+          - app_name: eyedropper
+            upstream_repo: FineFindus/eyedropper
+            provider: github
 
     steps:
       - name: Checkout Subdirectory

@@ -55,7 +55,7 @@ jobs:
       image: ghcr.io/infiniti151/flatpak2rpm-builder:latest
     env:
       RUSTC_WRAPPER: sccache
-      RUSTFLAGS: "--remap-path-prefix=${{ github.workspace }}=/project"
+      #RUSTFLAGS: "--remap-path-prefix=${{ github.workspace }}=/project"
       SCCACHE_DIR: ${{ github.workspace }}/.sccache
       CCACHE_DIR: ${{ github.workspace }}/.ccache
       #CC: "ccache clang"
