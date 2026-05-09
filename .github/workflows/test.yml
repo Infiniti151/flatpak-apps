@@ -7,12 +7,12 @@ on:
     branches:
       - dev
     paths:
-      - "**/*.spec"
+      - "apps/**/*.spec"
   pull_request:
     branches:
       - dev
     paths:
-      - "**/*.spec"
+      - "apps/**/*.spec"
 
 jobs:
   check-version:
@@ -27,7 +27,7 @@ jobs:
       - name: Verify Spec Version
         id: check
         run: |
-          SPEC_FILE=$(find . -maxdepth 3 -name "${{ vars.APP }}.spec" | head -n 1)
+          SPEC_FILE=$(find apps/${{ vars.APP }} -maxdepth 1 -name "${{ vars.APP }}.spec" | head -n 1)
           
           if [ -z "$SPEC_FILE" ]; then
             echo -e "\e[1;31m [ERROR] No .spec file found in the repository!\e[0m"
@@ -89,7 +89,7 @@ jobs:
         run: |
           mkdir -p "$SCCACHE_DIR" "$CCACHE_DIR" "CARGO_HOME"
 
-          cd "${{ vars.APP }}"
+          cd "apps/${{ vars.APP }}"
           spectool -g *.spec
 
           rpmbuild -ba *.spec \

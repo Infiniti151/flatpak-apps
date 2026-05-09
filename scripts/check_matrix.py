@@ -26,21 +26,28 @@ def check_matrix():
         print("Error: Could not find matrix 'include' list in workflow.")
         sys.exit(1)
 
-    root_entities = os.listdir('.')
+    apps_dir = 'apps'
+    if not os.path.exists(apps_dir):
+        print(f"Error: Apps directory '{apps_dir}' not found.")
+        sys.exit(1)
+
+    # Scan the apps/ folder
+    app_entities = os.listdir(apps_dir)
     actual_app_folders = {
-        d for d in root_entities 
-        if os.path.isdir(d) and d not in IGNORE_LIST
+        d for d in app_entities 
+        if os.path.isdir(os.path.join(apps_dir, d)) and d not in IGNORE_LIST
     }
+    # ------------------------------
 
     missing = actual_app_folders - configured_apps
     if missing:
-        print(f"❌ Commit Blocked: New app folders detected but not added to CI matrix:")
+        print(f"❌ Commit Blocked: New app folders detected in '{apps_dir}/' but not added to CI matrix:")
         for folder in missing:
             print(f"  - {folder}")
-        print(f"\nUpdate the 'include' section in {WORKFLOW_PATH} to proceed and update the APP variable in Github Actions.")
+        print(f"\nUpdate the 'include' section in {WORKFLOW_PATH} to proceed.")
         sys.exit(1)
     
-    print("✅ CI matrix matches root app folders.")
+    print(f"✅ CI matrix matches app folders in '{apps_dir}/'.")
 
 if __name__ == "__main__":
     check_matrix()

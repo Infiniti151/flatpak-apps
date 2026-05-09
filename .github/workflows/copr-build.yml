@@ -10,7 +10,7 @@ on:
     types:
       - closed
     paths:
-      - "**/*.spec"
+      - "apps/**/*.spec"
 
 jobs:
   check-and-build:
@@ -62,7 +62,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           sparse-checkout: |
-            ${{ matrix.app_name }}
+            apps/${{ matrix.app_name }}
             README.md
 
       - name: Get Latest Upstream Tag
@@ -90,7 +90,7 @@ jobs:
         id: check
         env:
           APP: ${{ matrix.app_name }}
-          SPEC: ${{ matrix.app_name }}/${{ matrix.app_name }}.spec
+          SPEC: apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec
           NEW_VER: ${{ steps.upstream.outputs.version }}
         run: |
           if [ ! -f "$SPEC" ]; then
@@ -117,7 +117,7 @@ jobs:
           PROVIDER: "${{ matrix.provider }}"
           REPO: "${{ matrix.upstream_repo }}"
           APP: "${{ matrix.app_name }}"
-          SPEC: "${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
+          SPEC: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
           README: "README.md"
           NEW_VER: ${{ steps.upstream.outputs.version }}
         run: |
