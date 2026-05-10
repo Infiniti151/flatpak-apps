@@ -1,9 +1,10 @@
 Name:           amberol
-Version:        2026.1
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        A small and simple music player
 License:        GPL-3.0-or-later AND CC-BY-SA-3.0 AND CC0-1.0
 URL:            https://gitlab.gnome.org/World/amberol
+BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/-/archive/%{version}/%{name}-%{version}.tar.gz
 
@@ -64,7 +65,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/metainfo/*.metainfo.xml
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/icons/hicolor/*/apps/*.*
-
-%changelog
-* Sun May 10 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2026.1-1
-- Initial RPM release for Amberol on Fedora 44
