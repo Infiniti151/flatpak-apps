@@ -14,16 +14,21 @@ RUN dnf install -y \
     rpm-build \
     rpmdevtools \
     sccache \
-    # --- spellingbee dependencies --- \
-    'pkgconfig(gio-2.0)' \
-    'pkgconfig(gjs-1.0)' \
+    # --- amberol dependencies --- \
+    'pkgconfig(gstreamer-1.0)' \
+    'pkgconfig(gstreamer-audio-1.0)' \
+    'pkgconfig(gstreamer-play-1.0)' \
+    'pkgconfig(gstreamer-plugins-bad-1.0)' \
+    'pkgconfig(gstreamer-plugins-base-1.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
+    cargo \
     desktop-file-utils \
     gcc \
     gettext \
     libappstream-glib \
     meson \
+    rust \
     && dnf clean all
 
 ENV CCACHE_DIR=/github/workspace/.ccache \
