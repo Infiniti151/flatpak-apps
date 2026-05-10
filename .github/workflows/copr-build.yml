@@ -55,6 +55,9 @@ jobs:
           - app_name: eyedropper
             upstream_repo: FineFindus/eyedropper
             provider: github
+          - app_name: spellingbee
+            upstream_repo: josephmawa/SpellingBee
+            provider: github
 
     steps:
       - name: Checkout Subdirectory
