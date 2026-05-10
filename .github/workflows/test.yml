@@ -98,6 +98,13 @@ jobs:
         run: |
           APP_DIR="apps/${{ vars.APP }}"
           SPEC_FILE="$APP_DIR/${{ vars.APP }}.spec"
+          RPM_SOURCES="$GITHUB_WORKSPACE/rpmbuild/SOURCES"
+          mkdir -p "$RPM_SOURCES"
+
+          cd "$APP_DIR"
+
+          echo -e "\e[1;33m📥 Downloading sources...\e[0m"
+          spectool -g -C "$RPM_SOURCES" *.spec
 
           # 1. GCC / G++ Logic
           if grep -qiE "gcc|gcc-c\+\+" "$SPEC_FILE"; then
@@ -117,8 +124,8 @@ jobs:
             export CXX="ccache clang++"
           fi
 
-          # 3. Rust / Cargo Logic
-          if grep -qiE "rust|cargo" "$SPEC_FILE"; then
+          # 4. Rust / Cargo Logic
+          if grep -qiE "rust|cargo" "../../$SPEC_FILE"; then
             echo -e "\e[1;36m🦀 Rust detected. Enabling sccache and deep-linking cargo-home...\e[0m"
             export SCCACHE_DIR="${{ github.workspace }}/.sccache"
             export RUSTC_WRAPPER="sccache"
@@ -128,15 +135,10 @@ jobs:
             STABLE_CARGO_CACHE="${{ github.workspace }}/.cargo_cache"
             mkdir -p "$STABLE_CARGO_CACHE"
 
-            mkdir -p "$GITHUB_WORKSPACE/rpmbuild/SOURCES"
-
-            cd "$APP_DIR"
-            echo -e "\e[1;33m📥 Downloading sources to allow %prep...\e[0m"
-            spectool -g *.spec --define "_sourcedir $GITHUB_WORKSPACE/rpmbuild/SOURCES"
-
-            echo -e "\e[1;33m📦 Preparing source for Rust project...\e[0m"
-            rpmbuild -bp *.spec --define "_topdir $GITHUB_WORKSPACE/rpmbuild"
-            cd "$GITHUB_WORKSPACE"
+            echo -e "\e[1;33m📦 Preparing source for Rust cache linking...\e[0m"
+            rpmbuild -bp *.spec \
+              --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
+              --define "_sourcedir $RPM_SOURCES"
 
             ACTUAL_CARGO_DIR=$(find $GITHUB_WORKSPACE/rpmbuild/BUILD -type d -name "cargo-home" | head -n 1)
             if [ -n "$ACTUAL_CARGO_DIR" ]; then
@@ -146,14 +148,38 @@ jobs:
             fi
           fi
 
-          # Final Build Execution
-          cd "$APP_DIR"
-          spectool -g *.spec --define "_sourcedir $GITHUB_WORKSPACE/rpmbuild/SOURCES"
+          # 5. Final Build Execution
+          echo -e "\e[1;32m🚀 Starting Final RPM Build...\e[0m"
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
-            --define "_sourcedir $(pwd)"
+            --define "_sourcedir $RPM_SOURCES"
 
           echo -e "\e[1;32m--- DEBUG START ---\e[0m"
+          # Check sccache
+          if [ -d "$SCCACHE_DIR" ]; then
+              echo -e "\e[1;32m.sccache size: $(du -sh "$SCCACHE_DIR" | cut -f1)\e[0m"
+              echo -e "\e[1;32m.sccache total items: $(find "$SCCACHE_DIR" -type f | wc -l)\e[0m"
+          else
+              echo -e "\e[1;33m.sccache: Not used for this build.\e[0m"
+          fi
+
+          # Check ccache
+          if [ -d "$CCACHE_DIR" ]; then
+              echo -e "\e[1;32m.ccache size: $(du -sh "$CCACHE_DIR" | cut -f1)\e[0m"
+              echo -e "\e[1;32m.ccache total items: $(find "$CCACHE_DIR" -type f | wc -l)\e[0m"
+          else
+              echo -e "\e[1;33m.ccache: Not used for this build.\e[0m"
+          fi
+
+          # Check Cargo
+          STABLE_CARGO="${{ github.workspace }}/.cargo_cache"
+          if [ -d "$STABLE_CARGO" ]; then
+              echo -e "\e[1;32m.cargo size: $(du -sh "$STABLE_CARGO" | cut -f1)\e[0m"
+              echo -e "\e[1;32m.cargo total items: $(find "$STABLE_CARGO" -type f | wc -l)\e[0m"
+          else
+              echo -e "\e[1;33m.cargo: Not used for this build.\e[0m"
+          fi
+          echo -e "\e[1;32m--- DEBUG END ---\e[0m"
 
       - name: Show Performance Stats
         if: always()
