@@ -22,7 +22,7 @@ BuildRequires:  gettext
 
 Requires:       gjs
 Requires:       gtk4
-Requires:       libadwaita-1
+Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description

@@ -34,7 +34,7 @@ def check_matrix():
     # Scan the apps/ folder
     app_entities = os.listdir(apps_dir)
     actual_app_folders = {
-        d for d in app_entities 
+        d for d in app_entities
         if os.path.isdir(os.path.join(apps_dir, d)) and d not in IGNORE_LIST
     }
     # ------------------------------
@@ -44,9 +44,9 @@ def check_matrix():
         print(f"❌ Commit Blocked: New app folders detected in '{apps_dir}/' but not added to CI matrix:")
         for folder in missing:
             print(f"  - {folder}")
-        print(f"\nUpdate the 'include' section in {WORKFLOW_PATH} to proceed.")
+        print(f"\nUpdate the 'include' section in {WORKFLOW_PATH} to proceed. Also update the APP variable for the Test environment.")
         sys.exit(1)
-    
+
     print(f"✅ CI matrix matches app folders in '{apps_dir}/'.")
 
 if __name__ == "__main__":

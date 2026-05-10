@@ -32,7 +32,7 @@ jobs:
           git fetch origin main
 
           if git merge-base --is-ancestor HEAD origin/main; then
-            echo "::notice::This commit exists on main. Skipping RPM build for sync."
+            echo -e "\e[1;33m [WARNING] This commit exists on main. Skipping RPM build for sync.\e[0m"
             echo "is_sync=true" >> $GITHUB_OUTPUT
           else
             echo "is_sync=false" >> $GITHUB_OUTPUT
