@@ -165,10 +165,9 @@ jobs:
             sed -i "/^%changelog/r entry.tmp" "$SPEC"
           else
             sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$SPEC"
-            {
-              echo -e "\n%changelog"
-              cat entry.tmp
-            } >> "$SPEC"
+
+            echo -e "\n\n%changelog" >> "$SPEC"
+            cat entry.tmp >> "$SPEC"
           fi
 
           rm entry.tmp

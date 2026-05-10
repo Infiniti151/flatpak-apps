@@ -55,6 +55,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 %{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
+
 %changelog
 * Sun May 10 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.1.5-1
 - Update to v0.1.5
