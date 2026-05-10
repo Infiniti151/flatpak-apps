@@ -22,6 +22,7 @@ RUN dnf install -y \
     'pkgconfig(gstreamer-plugins-base-1.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
+    blueprint-compiler \
     cargo \
     desktop-file-utils \
     gcc \
