@@ -1,3 +1,7 @@
+%if 0%{?eln}
+%define _empty_manifest_terminate_build 0
+%endif
+
 Name:           amberol
 Version:        2026.1
 Release:        1%{?dist}
