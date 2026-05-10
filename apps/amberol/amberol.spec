@@ -1,5 +1,5 @@
 Name:           amberol
-Version:        0.0.0
+Version:        2026.1
 Release:        1%{?dist}
 Summary:        A small and simple music player
 License:        GPL-3.0-or-later AND CC-BY-SA-3.0 AND CC0-1.0
@@ -65,3 +65,18 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/metainfo/*.metainfo.xml
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/icons/hicolor/*/apps/*.*
+
+%changelog
+* Sun May 10 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2026.1-1
+- Amberol 2026.1
+- Changes since 2025.1
+- ====================
+- Changed
+- -------
+- - Update dependencies [!171, !184, !187]
+- - Switch to Blueprint for UI definition files
+- - Use AdwShortcutsDialog instead of GtkShortcutsWindow
+- Fixed
+- -----
+- ... (see upstream for full release notes)
+
