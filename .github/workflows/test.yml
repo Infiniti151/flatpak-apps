@@ -128,8 +128,13 @@ jobs:
             STABLE_CARGO_CACHE="${{ github.workspace }}/.cargo_cache"
             mkdir -p "$STABLE_CARGO_CACHE"
 
-            echo -e "\e[1;33m📦 Preparing source for Rust project...\e[0m"
+            mkdir -p "$GITHUB_WORKSPACE/rpmbuild/SOURCES"
+
             cd "$APP_DIR"
+            echo -e "\e[1;33m📥 Downloading sources to allow %prep...\e[0m"
+            spectool -g *.spec --define "_sourcedir $GITHUB_WORKSPACE/rpmbuild/SOURCES"
+
+            echo -e "\e[1;33m📦 Preparing source for Rust project...\e[0m"
             rpmbuild -bp *.spec --define "_topdir $GITHUB_WORKSPACE/rpmbuild"
             cd "$GITHUB_WORKSPACE"
 
@@ -143,7 +148,7 @@ jobs:
 
           # Final Build Execution
           cd "$APP_DIR"
-          spectool -g *.spec
+          spectool -g *.spec --define "_sourcedir $GITHUB_WORKSPACE/rpmbuild/SOURCES"
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
             --define "_sourcedir $(pwd)"
