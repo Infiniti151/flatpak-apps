@@ -50,6 +50,8 @@ python3 %{_rpmconfigdir}/redhat/pathfix.py -pni "%{__python3}" %{buildroot}%{_bi
 
 %check
 %meson_test
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 %files -f %{name}.lang
 %{_bindir}/tomatillo

@@ -77,22 +77,32 @@ jobs:
         with:
           submodules: false
 
-      - name: Unified Cache (Rust, C, and Tools)
-        uses: Swatinem/rust-cache@v2
+      - name: Restore Cache
+        uses: actions/cache/restore@v5
         with:
-          shared-key: "fedora-cache-${{ vars.APP }}"
-          cache-on-failure: "true"
-          cache-targets: "true"
-          add-rust-environment-hash-key: "false"
-          cmd-format: "true ; # {0}"
-          cache-directories: |
-            .sccache
+          path: |
             .ccache
+            .sccache
             .cargo_cache
+          key: ${{ runner.os }}-build-cache-${{ vars.APP }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-build-cache-${{ vars.APP }}-
 
       - name: Execute RPM Build
+        env:
+          GIT_CONFIG_COUNT: 1
+          GIT_CONFIG_KEY_0: safe.directory
+          GIT_CONFIG_VALUE_0: "*"
         run: |
-          SPEC_FILE="apps/${{ vars.APP }}/${{ vars.APP }}.spec"
+          APP_DIR="apps/${{ vars.APP }}"
+          SPEC_FILE="$APP_DIR/${{ vars.APP }}.spec"
+          RPM_SOURCES="$GITHUB_WORKSPACE/rpmbuild/SOURCES"
+          mkdir -p "$RPM_SOURCES"
+
+          cd "$APP_DIR"
+
+          echo -e "\e[1;33m📥 Downloading sources...\e[0m"
+          spectool -g -C "$RPM_SOURCES" *.spec
 
           # 1. GCC / G++ Logic
           if grep -qiE "gcc|gcc-c\+\+" "$SPEC_FILE"; then
@@ -112,34 +122,35 @@ jobs:
             export CXX="ccache clang++"
           fi
 
-          # 3. Rust / Cargo Logic
-          if grep -qiE "rust|cargo" "$SPEC_FILE"; then
+          # 4. Rust / Cargo Logic
+          if grep -qiE "rust|cargo" "../../$SPEC_FILE"; then
             echo -e "\e[1;36m🦀 Rust detected. Enabling sccache and deep-linking cargo-home...\e[0m"
             export SCCACHE_DIR="${{ github.workspace }}/.sccache"
             export RUSTC_WRAPPER="sccache"
             mkdir -p "$SCCACHE_DIR"
             sccache --start-server
 
-            # Deep-link logic for the messy RPM build path
             STABLE_CARGO_CACHE="${{ github.workspace }}/.cargo_cache"
             mkdir -p "$STABLE_CARGO_CACHE"
 
-            echo -e "\e[1;33m📦 Building source for Rust project...\e[0m"
-            rpmbuild -bp *.spec --define "_topdir $GITHUB_WORKSPACE/rpmbuild"
+            echo -e "\e[1;33m📦 Preparing source for Rust cache linking...\e[0m"
+            rpmbuild -bp *.spec \
+              --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
+              --define "_sourcedir $RPM_SOURCES"
 
-            ACTUAL_CARGO_DIR=$(find $GITHUB_WORKSPACE/rpmbuild/BUILD -type d -path "*/redhat-linux-build/cargo-home" | head -n 1)
+            ACTUAL_CARGO_DIR=$(find $GITHUB_WORKSPACE/rpmbuild/BUILD -type d -name "cargo-home" | head -n 1)
             if [ -n "$ACTUAL_CARGO_DIR" ]; then
+              echo "Found cargo-home at $ACTUAL_CARGO_DIR, linking to cache..."
               rm -rf "$ACTUAL_CARGO_DIR"
               ln -s "$STABLE_CARGO_CACHE" "$ACTUAL_CARGO_DIR"
             fi
           fi
 
-          # Final Build Execution
-          cd "apps/${{ vars.APP }}"
-          spectool -g *.spec
+          # 5. Final Build Execution
+          echo -e "\e[1;32m🚀 Starting Final RPM Build...\e[0m"
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
-            --define "_sourcedir $(pwd)"
+            --define "_sourcedir $RPM_SOURCES"
 
           echo -e "\e[1;32m--- DEBUG START ---\e[0m"
           # Check sccache
@@ -167,10 +178,16 @@ jobs:
               echo -e "\e[1;33m.cargo: Not used for this build.\e[0m"
           fi
           echo -e "\e[1;32m--- DEBUG END ---\e[0m"
-        env:
-          GIT_CONFIG_COUNT: 1
-          GIT_CONFIG_KEY_0: safe.directory
-          GIT_CONFIG_VALUE_0: "*"
+
+      - name: Save Cache
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            .ccache
+            .sccache
+            .cargo_cache
+          key: ${{ runner.os }}-build-cache-${{ vars.APP }}-${{ github.sha }}
 
       - name: Show Performance Stats
         if: always()
