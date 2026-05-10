@@ -11,6 +11,7 @@ BuildRequires:  meson >= 0.59.0
 BuildRequires:  gcc
 BuildRequires:  rust
 BuildRequires:  cargo
+BuildRequires:  blueprint-compiler
 BuildRequires:  pkgconfig(gtk4) >= 4.19.5
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8
 BuildRequires:  pkgconfig(gstreamer-1.0) >= 1.20
@@ -38,7 +39,7 @@ to play music and nothing else, Amberol is the right tool.
 
 %build
 export CARGO_HOME="$(pwd)/cargo-home"
-%meson -Dprofile=default
+%meson -Dprofile=default --wrap-mode=nodownload
 %meson_build
 
 %install
