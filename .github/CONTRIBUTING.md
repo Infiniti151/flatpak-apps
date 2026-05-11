@@ -60,8 +60,9 @@ Before submitting a Pull Request, ensure your changes build correctly on a Fedor
 ## ⤴️ Submitting a Pull Request
 1. Fork the repository.
 2. Create a feature branch (`git checkout -b feat/add-new-app`).
-3. Commit your changes. If you are fixing a bug, reference the issue number in the commit message.
-4. Push to your fork and open a Pull Request.
+3. If you're adding a new app, you'll also need to update the CI matrix in `copr-build` workflow in .github/workflows and add an entry for the app in the README App List (App, Icon, Source, version, COPR Badge). The badge would show `unknown` status when the PR is open as there's no COPR package existing at that time (I'll create it after testing your changes locally. The badge may take upto 24 hrs to update status due to Github's image caching).
+4. Commit your changes. If you are fixing a bug, reference the issue number in the commit message or PR title.
+5. Push to your fork and open a Pull Request.
 
 ---
 
