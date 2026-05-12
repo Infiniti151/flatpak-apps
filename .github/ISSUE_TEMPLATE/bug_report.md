@@ -15,15 +15,15 @@ assignees: ''
 <!-- e.g., text-compare -->
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+<!-- A clear and concise description of what the bug is. -->
 
 **Environment Details**
-- **Fedora Version:** <!-- e.g., 44 -->
+- **Fedora Version:** <!-- e.g., 43, 44, ELN, or Rawhide -->
 - **Session Type:** <!-- Wayland or X11 -->
 - **Kernel Version:** `uname -r`
 
 **Steps to Reproduce**
-- Write detailed steps on how you encountered the bug
+<!-- Write detailed steps on how you encountered the bug -->
 
 **Terminal Checks**
 Please run the following commands and paste the output:
