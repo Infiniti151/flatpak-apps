@@ -63,6 +63,9 @@ jobs:
             upstream_repo: World/amberol
             provider: gitlab
             instance: gitlab.gnome.org
+          - app_name: bobby
+            upstream_repo: hbons/bobby
+            provider: github
 
     steps:
       - name: Checkout Subdirectory
