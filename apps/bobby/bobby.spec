@@ -37,7 +37,12 @@ export CARGO_HOME="$(pwd)/cargo-home"
 %install
 export CARGO_HOME="$(pwd)/cargo-home"
 %meson_install
-%find_lang %{name}
+
+if [ -d %{buildroot}%{_datadir}/locale ]; then
+  %find_lang %{name}
+else
+  touch %{name}.lang
+fi
 
 %check
 %meson_test
