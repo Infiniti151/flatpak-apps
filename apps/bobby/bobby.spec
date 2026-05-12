@@ -44,7 +44,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 %files
-%license LICENSE
+%license LICENSE.txt
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
