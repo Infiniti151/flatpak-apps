@@ -14,15 +14,10 @@ RUN dnf install -y \
     rpm-build \
     rpmdevtools \
     sccache \
-    # --- amberol dependencies --- \
-    'pkgconfig(gstreamer-1.0)' \
-    'pkgconfig(gstreamer-audio-1.0)' \
-    'pkgconfig(gstreamer-play-1.0)' \
-    'pkgconfig(gstreamer-plugins-bad-1.0)' \
-    'pkgconfig(gstreamer-plugins-base-1.0)' \
+    # --- bobby dependencies --- \
+    'pkgconfig(glib-2.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
-    blueprint-compiler \
     cargo \
     desktop-file-utils \
     gcc \
