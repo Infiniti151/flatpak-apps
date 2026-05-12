@@ -81,9 +81,9 @@ jobs:
         uses: actions/cache/restore@v5
         with:
           path: |
-            .ccache
-            .sccache
-            .cargo_cache
+            ${{ github.workspace }}/.ccache
+            ${{ github.workspace }}/.sccache
+            ${{ github.workspace }}/.cargo_cache
           key: ${{ runner.os }}-build-cache-${{ vars.APP }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-build-cache-${{ vars.APP }}-
@@ -95,14 +95,14 @@ jobs:
           GIT_CONFIG_VALUE_0: "*"
         run: |
           APP_DIR="apps/${{ vars.APP }}"
-          SPEC_FILE="$APP_DIR/${{ vars.APP }}.spec"
+          SPEC_FILE="${{ vars.APP }}.spec"
           RPM_SOURCES="$GITHUB_WORKSPACE/rpmbuild/SOURCES"
           mkdir -p "$RPM_SOURCES"
 
           cd "$APP_DIR"
 
           echo -e "\e[1;33m📥 Downloading sources...\e[0m"
-          spectool -g -C "$RPM_SOURCES" *.spec
+          spectool -g -C "$RPM_SOURCES" "$SPEC_FILE"
 
           # 1. GCC / G++ Logic
           if grep -qiE "gcc|gcc-c\+\+" "$SPEC_FILE"; then
@@ -184,9 +184,9 @@ jobs:
         uses: actions/cache/save@v5
         with:
           path: |
-            .ccache
-            .sccache
-            .cargo_cache
+            ${{ github.workspace }}/.ccache
+            ${{ github.workspace }}/.sccache
+            ${{ github.workspace }}/.cargo_cache
           key: ${{ runner.os }}-build-cache-${{ vars.APP }}-${{ github.sha }}
 
       - name: Show Performance Stats

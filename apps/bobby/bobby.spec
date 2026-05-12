@@ -3,7 +3,7 @@
 %endif
 
 Name:           bobby
-Version:        50.0.2
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        A Rust-based SQLite database viewer for GNOME
 License:        GPL-3.0-or-later
@@ -52,7 +52,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/metainfo/*.metainfo.xml
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 %{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
-
-%changelog
-* Tue May 12 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 50.0.2-1
-- Update to version 50.0.2
