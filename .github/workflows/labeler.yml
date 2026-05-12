@@ -1,0 +1,31 @@
+---
+name: PR Labeler
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, edited]
+
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-label PR based on checkboxes
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const body = context.payload.pull_request.body;
+            const labels = [];
+
+            if (body.includes('- [x] **New App**')) labels.push('enhancement');
+            if (body.includes('- [x] **Bug Fix**')) labels.push('bugfix');
+            if (body.includes('- [x] **Optimization**')) labels.push('optimization');
+
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                labels: labels
+              });
+            }
