@@ -38,18 +38,12 @@ export CARGO_HOME="$(pwd)/cargo-home"
 export CARGO_HOME="$(pwd)/cargo-home"
 %meson_install
 
-if [ -d %{buildroot}%{_datadir}/locale ]; then
-  %find_lang %{name}
-else
-  touch %{name}.lang
-fi
-
 %check
 %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
-%files -f %{name}.lang
+%files
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
