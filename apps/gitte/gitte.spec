@@ -24,15 +24,15 @@ BuildRequires:  gettext
 
 %description
 A modern, feature-rich Git client designed for the GNOME desktop.
-Built with GTK4 and libadwaita, it provides a seamless and 
-intuitive interface for managing repositories, branches, 
+Built with GTK4 and libadwaita, it provides a seamless and
+intuitive interface for managing repositories, branches,
 and stashes.
 
 %prep
 %setup -q -n %{name}
 
 %build
-export LIBGIT2_NO_VENDOR=1
+export LIBGIT2_SYS_USE_PKG_CONFIG=0
 export LIBSSH2_SYS_USE_PKG_CONFIG=1
 
 %meson
