@@ -83,19 +83,43 @@ jobs:
           REPO: ${{ matrix.upstream_repo }}
           INSTANCE: ${{ matrix.instance }}
         run: |
+          fetch_tag() {
+            local url=$1
+            local attempt=1
+            local max_attempts=3
+            local result=""
+
+            while [ $attempt -le $max_attempts ]; do
+              result=$(curl -sSf "$url" 2>/dev/null)
+              if [ $? -eq 0 ] && [ -n "$result" ] && [ "$result" != "[]" ]; then
+                echo "$result"
+                return 0
+              fi
+              echo -e "\e[1;33m==> [RETRY] Attempt $attempt failed for $url. Retrying in 5s...\e[0m" >&2
+              sleep 5
+              ((attempt++))
+            done
+            return 1
+          }
+
           if [ "$PROVIDER" = "github" ]; then
-            TAG=$(curl -s "https://api.github.com/repos/$REPO/tags" | jq -r '.[].name // empty' | grep -Ei '^v?[0-9]' | sort -V | tail -n 1)
+            DATA=$(fetch_tag "https://api.github.com/repos/$REPO/tags")
+            TAG=$(echo "$DATA" | jq -r '.[].name // empty' | grep -Ei '^v?[0-9]' | sort -V | tail -n 1)
           elif [ "$PROVIDER" = "gitlab" ]; then
             ENCODED=$(echo "$REPO" | sed 's/\//%2F/g')
-            TAG=$(curl -s "https://$INSTANCE/api/v4/projects/${ENCODED}/repository/tags?order_by=version&sort=desc" | jq -r '.[0].name // empty')
+            DATA=$(fetch_tag "https://$INSTANCE/api/v4/projects/${ENCODED}/repository/tags?order_by=version&sort=desc")
+            TAG=$(echo "$DATA" | jq -r '.[0].name // empty')
           elif [ "$PROVIDER" = "codeberg" ]; then
-            TAG=$(curl -s "https://codeberg.org/api/v1/repos/$REPO/tags" | jq -r '.[0].name // empty')
+            DATA=$(fetch_tag "https://codeberg.org/api/v1/repos/$REPO/tags")
+            TAG=$(echo "$DATA" | jq -r '.[0].name // empty')
           fi
 
           if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
-            echo -e "\e[1;31m==> [ERROR] Could not fetch tag for $REPO\e[0m"
+            echo -e "\e[1;31m==> [ERROR] Could not fetch tag for $REPO after multiple attempts\e[0m"
             exit 1
           fi
+
+          echo -e "\e[1;32m==> [SUCCESS] Found tag: $TAG\e[0m"
           echo "version=$TAG" >> $GITHUB_OUTPUT
 
       - name: Check for Updates
