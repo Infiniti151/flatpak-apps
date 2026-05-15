@@ -33,7 +33,7 @@ RustDiff is a graphical tool to compare files and directories,
 built with Rust and GTK4. It features syntax highlighting via gtksourceview5.
 
 %prep
-%autosetup -n RustDiff-%{version}
+%autosetup -n rustdiff-%{version}
 mkdir -p cargo-home
 
 %build
