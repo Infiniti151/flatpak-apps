@@ -66,6 +66,9 @@ jobs:
           - app_name: bobby
             upstream_repo: hbons/bobby
             provider: github
+          - app_name: rustdiff
+            upstream_repo: jereok91/rustdiff
+            provider: github
 
     steps:
       - name: Checkout Subdirectory

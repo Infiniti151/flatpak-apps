@@ -14,16 +14,13 @@ RUN dnf install -y \
     rpm-build \
     rpmdevtools \
     sccache \
-    # --- bobby dependencies --- \
-    'pkgconfig(glib-2.0)' \
+    # --- rustdiff dependencies --- \
     'pkgconfig(gtk4)' \
+    'pkgconfig(gtksourceview-5)' \
     'pkgconfig(libadwaita-1)' \
     cargo \
     desktop-file-utils \
-    gcc \
-    gettext \
     libappstream-glib \
-    meson \
     rust \
     && dnf clean all
 
