@@ -49,16 +49,18 @@ install -Dm644 data/%{app_id}.metainfo.xml \
 install -Dm644 data/icons/%{app_id}.svg \
     %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{app_id}.svg
 
-%find_lang %{name} || touch %{name}.lang
+mkdir -p %{buildroot}%{_datadir}/%{name}/locales
+install -m 644 locales/*.yml %{buildroot}%{_datadir}/%{name}/locales/
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
-%files -f %{name}.lang
+%files
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
+%{_datadir}/%{name}/
 %{_datadir}/applications/%{app_id}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/%{app_id}.svg
 %{_metainfodir}/%{app_id}.metainfo.xml

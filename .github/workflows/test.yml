@@ -97,7 +97,7 @@ jobs:
           APP_DIR="apps/${{ vars.APP }}"
           SPEC_FILE="${{ vars.APP }}.spec"
           RPM_SOURCES="$GITHUB_WORKSPACE/rpmbuild/SOURCES"
-          mkdir -p "$RPM_SOURCES"
+          mkdir -p "$RPM_SOURCES" "${{ github.workspace }}/.ccache" "${{ github.workspace }}/.sccache" "${{ github.workspace }}/.cargo_cache"
 
           cd "$APP_DIR"
 
@@ -108,7 +108,6 @@ jobs:
           if grep -qiE "gcc|gcc-c\+\+" "$SPEC_FILE"; then
             echo -e "\e[1;36m🛠️ GCC detected. Enabling CC/CXX wrappers...\e[0m"
             export CCACHE_DIR="${{ github.workspace }}/.ccache"
-            mkdir -p "$CCACHE_DIR"
             export CC="ccache gcc"
             export CXX="ccache g++"
           fi
@@ -117,21 +116,18 @@ jobs:
           if grep -qiE "clang|clang\+\+" "$SPEC_FILE"; then
             echo -e "\e[1;36m🪄 Clang detected. Enabling Clang wrappers...\e[0m"
             export CCACHE_DIR="${{ github.workspace }}/.ccache"
-            mkdir -p "$CCACHE_DIR"
             export CC="ccache clang"
             export CXX="ccache clang++"
           fi
 
           # 4. Rust / Cargo Logic
-          if grep -qiE "rust|cargo" "../../$SPEC_FILE"; then
+          if grep -qiE "rust|cargo" "$SPEC_FILE"; then
             echo -e "\e[1;36m🦀 Rust detected. Enabling sccache and deep-linking cargo-home...\e[0m"
             export SCCACHE_DIR="${{ github.workspace }}/.sccache"
             export RUSTC_WRAPPER="sccache"
-            mkdir -p "$SCCACHE_DIR"
             sccache --start-server
 
             STABLE_CARGO_CACHE="${{ github.workspace }}/.cargo_cache"
-            mkdir -p "$STABLE_CARGO_CACHE"
 
             echo -e "\e[1;33m📦 Preparing source for Rust cache linking...\e[0m"
             rpmbuild -bp *.spec \
@@ -151,6 +147,11 @@ jobs:
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
             --define "_sourcedir $RPM_SOURCES"
+
+          [ -n "${RUSTC_WRAPPER:-}" ] && sccache --stop-server || true
+
+          echo -e "\e[1;33m🔓 Handing ownership back to GitHub Runner...\e[0m"
+          chown -R 1001:1001 ${{ github.workspace }}/.ccache ${{ github.workspace }}/.sccache ${{ github.workspace }}/.cargo_cache || true
 
           echo -e "\e[1;32m--- DEBUG START ---\e[0m"
           # Check sccache
