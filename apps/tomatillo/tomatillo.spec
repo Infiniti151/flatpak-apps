@@ -29,8 +29,8 @@ BuildRequires:  appstream
 BuildRequires:  gtk-update-icon-cache
 
 # Runtime Requirements
-Requires:  pkgconfig(gtk4)
-Requires:  pkgconfig(libadwaita-1)
+Requires:  gtk4
+Requires:  libadwaita
 Requires:  hicolor-icon-theme
 
 %description
