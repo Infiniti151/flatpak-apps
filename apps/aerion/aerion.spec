@@ -6,9 +6,9 @@ Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
 License:        GPLv3
 URL:            https://github.com/hkdb/aerion
-BugURL:	        https://github.com/Infiniti151/flatpak-apps/issues
+BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-BuildArch:      x86_64
+ExclusiveArch:      x86_64
 
 Source0:        https://github.com/hkdb/aerion/releases/download/v%{version}/aerion-v%{version}-linux-x86_64
 Source1:        https://raw.githubusercontent.com/hkdb/aerion/main/brand/icon-beautyline.png
@@ -23,6 +23,13 @@ release.
 %prep
 cp %{SOURCE0} .
 cp %{SOURCE1} .
+
+%build
+# No-op: packaging a prebuilt binary
+
+%check
+echo "==> Checking dynamic library dependencies..."
+ldd %{buildroot}%{_bindir}/aerion
 
 %install
 mkdir -p %{buildroot}%{_bindir}
