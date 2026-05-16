@@ -184,6 +184,7 @@ jobs:
               sed 's/<[^>]*>//g' | \
               sed 's/^#* //g' | \
               sed 's/^[[:space:]]*//' | \
+              sed 's/^[*-•][[:space:]]*//' | \
               sed '/^$/d')
 
             LINE_COUNT=$(echo "$CHANGELOG_RAW" | wc -l)
