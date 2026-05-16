@@ -110,7 +110,7 @@ jobs:
 
           if [ "$PROVIDER" = "github" ]; then
             DATA=$(fetch_tag "https://api.github.com/repos/$REPO/tags")
-            TAG=$(echo "$DATA" | jq -r '.[].name // empty' | grep -Ei '^v?[0-9]' | sort -V | tail -n 1)
+            TAG=$(echo "$DATA" | jq -r '.[].name // empty' | grep -Ex '[vV]?[0-9]+(\.[0-9]+)*' | sort -V | tail -n 1)
           elif [ "$PROVIDER" = "gitlab" ]; then
             ENCODED=$(echo "$REPO" | sed 's/\//%2F/g')
             DATA=$(fetch_tag "https://$INSTANCE/api/v4/projects/${ENCODED}/repository/tags?order_by=version&sort=desc")
