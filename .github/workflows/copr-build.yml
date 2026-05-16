@@ -69,6 +69,9 @@ jobs:
           - app_name: rustdiff
             upstream_repo: jereok91/rustdiff
             provider: github
+          - app_name: aerion
+            upstream_repo: hkdb/aerion
+            provider: github
 
     steps:
       - name: Checkout Subdirectory
