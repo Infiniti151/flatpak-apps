@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           aerion
-Version:        0.0.0
+Version:        0.2.3
 Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
 License:        GPLv3
@@ -66,3 +66,8 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_bindir}/aerion
 %{_datadir}/applications/io.github.hkdb.Aerion.desktop
 %{_datadir}/icons/hicolor/256x256/apps/aerion.png
+
+%changelog
+* Sat May 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.3-1
+- 
+
