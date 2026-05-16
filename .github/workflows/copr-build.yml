@@ -183,8 +183,8 @@ jobs:
             CHANGELOG_RAW=$(echo "$CHANGELOG_BODY" | \
               sed 's/<[^>]*>//g' | \
               sed 's/^#* //g' | \
+              sed -E 's/^[[:space:]]*[-*•][[:space:]]*//' | \
               sed 's/^[[:space:]]*//' | \
-              sed 's/^[*-•][[:space:]]*//' | \
               sed '/^$/d')
 
             LINE_COUNT=$(echo "$CHANGELOG_RAW" | wc -l)
