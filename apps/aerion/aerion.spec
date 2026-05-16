@@ -66,5 +66,3 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_bindir}/aerion
 %{_datadir}/applications/io.github.hkdb.Aerion.desktop
 %{_datadir}/icons/hicolor/256x256/apps/aerion.png
-
-
