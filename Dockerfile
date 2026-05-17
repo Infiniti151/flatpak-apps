@@ -15,6 +15,7 @@ RUN dnf install -y \
     rpmdevtools \
     sccache \
     # --- morse dependencies --- \
+    'pkgconfig(alsa)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
     blueprint-compiler \
