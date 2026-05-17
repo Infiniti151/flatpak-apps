@@ -1,3 +1,5 @@
+%global debug_package %{nil}
+
 Name:           sudoku
 Version:        1.7.0
 Release:        1%{?dist}
