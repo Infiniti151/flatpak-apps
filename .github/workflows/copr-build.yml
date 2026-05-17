@@ -78,6 +78,9 @@ jobs:
           - app_name: morse
             upstream_repo: teacond/morse
             provider: github
+          - app_name: sudoku
+            upstream_repo: sepehr-rs/sudoku
+            provider: github
 
     steps:
       - name: Checkout Subdirectory
