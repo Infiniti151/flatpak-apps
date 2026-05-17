@@ -49,7 +49,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
 %files -f %{name}.lang
-%license COPYING
+%license COPYING.md
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
