@@ -42,6 +42,7 @@ A beautiful, modern Sudoku application featuring classic and diagonal variants.
 %meson_install
 sed -i 's|/usr/sbin/python3|/usr/bin/python3|g' %{buildroot}%{_bindir}/sudokugame
 find %{buildroot}%{_datadir}/sudokugame/ -type f -name "*.py" -exec sed -i 's|/usr/sbin/python3|/usr/bin/python3|g' {} +
+ln -s sudokugame %{buildroot}%{_datadir}/sudoku
 
 %find_lang sudokugame
 
@@ -53,12 +54,13 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %license COPYING
 %doc README.md
 %{_bindir}/sudokugame
+%{_datadir}/sudokugame/
+%{_datadir}/sudoku
 %{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 %{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
 %{_datadir}/metainfo/*.xml
-%{_datadir}/sudokugame/
 
 %changelog
 * Sun May 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.7.0-1
