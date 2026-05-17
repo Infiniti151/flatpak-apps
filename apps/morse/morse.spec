@@ -3,7 +3,7 @@
 %endif
 
 Name:           morse
-Version:        1.3.0
+Version:        0.0.0
 Release:        1%{?dist}
 Summary:        Morse is an open-source program for learning Morse code
 License:        GPL-3.0-only
@@ -59,7 +59,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
 %{_datadir}/metainfo/*.xml
 %{_datadir}/morse/
-
-%changelog
-* Sun May 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.3.0-1
-- Initial packaging for morse version 1.3.0
