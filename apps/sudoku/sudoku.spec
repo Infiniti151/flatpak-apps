@@ -33,7 +33,6 @@ A beautiful, modern Sudoku application featuring classic and diagonal variants.
 
 %prep
 %autosetup -n Sudoku-%{version}
-%py3_shebang_fix .
 
 %build
 %meson
@@ -41,6 +40,8 @@ A beautiful, modern Sudoku application featuring classic and diagonal variants.
 
 %install
 %meson_install
+sed -i 's|/usr/sbin/python3|/usr/bin/python3|g' %{buildroot}%{_bindir}/sudokugame
+find %{buildroot}%{_datadir}/sudokugame/ -type f -name "*.py" -exec sed -i 's|/usr/sbin/python3|/usr/bin/python3|g' {} +
 
 %find_lang sudokugame
 
