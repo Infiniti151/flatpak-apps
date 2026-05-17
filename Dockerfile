@@ -14,18 +14,22 @@ RUN dnf install -y \
     rpm-build \
     rpmdevtools \
     sccache \
-    # --- morse dependencies --- \
-    'pkgconfig(alsa)' \
+    # --- sudoku dependencies --- \
+    'pkgconfig(glib-2.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
     blueprint-compiler \
-    cargo \
     desktop-file-utils \
+    gcc \
     gettext \
     libappstream-glib \
     meson \
     pkgconfig \
-    rustc \
+    python3-devel \
+    python3-iniconfig \
+    python3-packaging \
+    python3-pluggy \
+    python3-pytest \
     && dnf clean all
 
 ENV CCACHE_DIR=/github/workspace/.ccache \
