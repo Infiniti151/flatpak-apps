@@ -22,6 +22,7 @@ BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  python3-devel
+BuildRequires:  python3-pip
 BuildRequires:  python3-pytest
 BuildRequires:  python3-iniconfig
 BuildRequires:  python3-packaging
