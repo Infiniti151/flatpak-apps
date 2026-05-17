@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        A word game application
 License:        GPL-3.0-or-later
 URL:            https://github.com/josephmawa/SpellingBee
-BugURL:	        https://github.com/Infiniti151/flatpak-apps/issues
+BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/archive/v%{version}.tar.gz
 
@@ -47,7 +47,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %files -f %{name}.lang
 %license COPYING
 %doc README.md
-%{_bindir}/*
+%{_bindir}/io.github.josephmawa.SpellingBee
 %{_datadir}/%{name}/
 %{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml

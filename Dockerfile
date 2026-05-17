@@ -14,9 +14,11 @@ RUN dnf install -y \
     rpm-build \
     rpmdevtools \
     sccache \
-    # --- mundi dependencies --- \
+    # --- morse dependencies --- \
+    'pkgconfig(alsa)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
+    blueprint-compiler \
     cargo \
     desktop-file-utils \
     gettext \
