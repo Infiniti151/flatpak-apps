@@ -11,6 +11,8 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 BuildRequires:  meson >= 1.4.0
 BuildRequires:  gcc
 BuildRequires:  pkgconfig
+BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
