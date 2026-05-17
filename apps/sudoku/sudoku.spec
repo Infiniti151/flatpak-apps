@@ -85,5 +85,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 - [![Download on Flathub](https://flathub.org/api/badge?svg&locale=en)](https://flathub.org/apps/io.github.sepehr_rs.Sudoku)
 - ... (see upstream for full release notes)
 
-* Sun May 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.7.0-1
-- Initial packaging for sudoku version 1.7.0
