@@ -72,6 +72,9 @@ jobs:
           - app_name: aerion
             upstream_repo: hkdb/aerion
             provider: github
+          - app_name: mundi
+            upstream_repo: nacho/mundi
+            provider: github
 
     steps:
       - name: Checkout Subdirectory
