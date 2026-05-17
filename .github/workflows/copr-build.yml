@@ -75,6 +75,9 @@ jobs:
           - app_name: mundi
             upstream_repo: nacho/mundi
             provider: github
+          - app_name: morse
+            upstream_repo: teacond/morse
+            provider: github
 
     steps:
       - name: Checkout Subdirectory

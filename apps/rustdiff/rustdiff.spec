@@ -10,7 +10,7 @@ Release:        1%{?dist}
 Summary:        A simple GTK-based diff viewer written in Rust
 License:        GPLv3
 URL:            https://github.com/jereok91/rustdiff
-BugURL:	        https://github.com/Infiniti151/flatpak-apps/issues
+BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/archive/v%{version}.tar.gz
 

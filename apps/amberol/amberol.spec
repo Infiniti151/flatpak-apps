@@ -62,7 +62,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %license LICENSES/CC0-1.0.txt
 %license LICENSES/GPL-3.0-or-later.txt
 %doc README.md
-%{_bindir}/*
+%{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml

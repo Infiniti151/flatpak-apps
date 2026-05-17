@@ -8,7 +8,7 @@ Release:        1%{?dist}
 Summary:        Pick and format colors from your desktop
 License:        GPL-3.0-or-later
 URL:            https://github.com/finefindus/eyedropper
-BugURL:	        https://github.com/Infiniti151/flatpak-apps/issues
+BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/archive/v%{version}.tar.gz
 
