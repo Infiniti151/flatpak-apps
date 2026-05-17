@@ -17,6 +17,7 @@ RUN dnf install -y \
     # --- sudoku dependencies --- \
     'pkgconfig(glib-2.0)' \
     'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
     blueprint-compiler \
     desktop-file-utils \
     gcc \
