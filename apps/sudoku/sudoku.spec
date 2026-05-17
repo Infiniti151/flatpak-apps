@@ -13,6 +13,7 @@ BuildRequires:  gcc
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gtk4)
+BuildRequires:  pkgconfig(libadwaita-1)
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
