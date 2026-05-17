@@ -17,6 +17,7 @@ RUN dnf install -y \
     # --- sudoku dependencies --- \
     blueprint-compiler \
     desktop-file-utils \
+    gcc \
     gettext \
     libappstream-glib \
     meson \
