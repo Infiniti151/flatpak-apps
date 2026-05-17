@@ -9,6 +9,7 @@ URL:            https://github.com/sepehr-rs/Sudoku
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/archive/v%{version}.tar.gz
+Source1:        https://files.pythonhosted.org/packages/0c/4f/e5de816646174cdd8c5db5e2422d4b3eb7cd38bcc398aa0e57047ece6db8/sudoku_engine-2.0.0-py3-none-any.whl
 
 BuildRequires:  meson >= 1.4.0
 BuildRequires:  gcc
@@ -22,6 +23,8 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  python3-devel
 BuildRequires:  python3-pytest
+
+Provides:       python3-sudoku-engine = %{version}-%{release}
 
 Requires:       gtk4
 Requires:       libadwaita
@@ -42,7 +45,7 @@ A beautiful, modern Sudoku application featuring classic and diagonal variants.
 %meson_install
 sed -i 's|/usr/sbin/python3|/usr/bin/python3|g' %{buildroot}%{_bindir}/sudokugame
 find %{buildroot}%{_datadir}/sudokugame/ -type f -name "*.py" -exec sed -i 's|/usr/sbin/python3|/usr/bin/python3|g' {} +
-ln -s sudokugame %{buildroot}%{_datadir}/sudoku
+pip3 install --no-deps --ignore-installed --prefix=%{buildroot}%{_prefix} %{SOURCE1}
 
 %find_lang sudokugame
 
@@ -55,7 +58,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %doc README.md
 %{_bindir}/sudokugame
 %{_datadir}/sudokugame/
-%{_datadir}/sudoku
+%{python3_sitelib}/sudoku/
+%{python3_sitelib}/sudoku_engine-*.dist-info/
 %{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
