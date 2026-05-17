@@ -14,14 +14,16 @@ RUN dnf install -y \
     rpm-build \
     rpmdevtools \
     sccache \
-    # --- rustdiff dependencies --- \
+    # --- mundi dependencies --- \
     'pkgconfig(gtk4)' \
-    'pkgconfig(gtksourceview-5)' \
     'pkgconfig(libadwaita-1)' \
     cargo \
     desktop-file-utils \
+    gettext \
     libappstream-glib \
-    rust \
+    meson \
+    pkgconfig \
+    rustc \
     && dnf clean all
 
 ENV CCACHE_DIR=/github/workspace/.ccache \
