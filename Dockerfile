@@ -26,6 +26,9 @@ RUN dnf install -y \
     meson \
     pkgconfig \
     python3-devel \
+    python3-iniconfig \
+    python3-packaging \
+    python3-pluggy \
     python3-pytest \
     && dnf clean all
 
