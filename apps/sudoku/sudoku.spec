@@ -54,7 +54,7 @@ pip3 install --no-deps --ignore-installed --prefix=%{buildroot}%{_prefix} %{SOUR
 
 %check
 export PYTHONPATH="%{buildroot}%{python3_sitelib}:src:."
-meson test -C %{_vpath_builddir} --skip-test "Validate appstream file"
+%meson_test --suite unit
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
