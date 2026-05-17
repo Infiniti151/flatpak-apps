@@ -15,6 +15,8 @@ RUN dnf install -y \
     rpmdevtools \
     sccache \
     # --- sudoku dependencies --- \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gtk4)' \
     blueprint-compiler \
     desktop-file-utils \
     gcc \
