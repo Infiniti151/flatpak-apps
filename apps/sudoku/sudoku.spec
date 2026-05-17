@@ -9,6 +9,7 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildRequires:  meson >= 1.4.0
+BuildRequires:  gcc
 BuildRequires:  pkgconfig
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
