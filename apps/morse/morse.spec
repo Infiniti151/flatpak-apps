@@ -33,6 +33,7 @@ Morse is an app for learning Morse code and training High Speed Telegraphy skill
 
 %prep
 %autosetup -n Morse-%{version}
+sed -i "/run_command('git'/d" meson.build
 
 %build
 export CARGO_HOME=$(pwd)/cargo-home
