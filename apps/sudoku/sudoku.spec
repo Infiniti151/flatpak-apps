@@ -42,10 +42,12 @@ A beautiful, modern Sudoku application featuring classic and diagonal variants.
 %find_lang sudokugame
 
 %check
-export PYTHONPATH="%{buildroot}%{python3_sitelib}:src:."
+ln -s src sudoku
+export PYTHONPATH="%{buildroot}%{python3_sitelib}:."
 %meson_test --no-suite appstream || %meson_test --no-suite validate || %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
+rm sudoku
 
 %files -f sudokugame.lang
 %license COPYING
