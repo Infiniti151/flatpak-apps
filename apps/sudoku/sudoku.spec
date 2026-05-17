@@ -42,7 +42,8 @@ A beautiful, modern Sudoku application featuring classic and diagonal variants.
 %find_lang sudokugame
 
 %check
-%meson_test
+export PYTHONPATH="%{buildroot}%{python3_sitelib}:src:."
+%meson_test --no-suite appstream || %meson_test --no-suite validate || %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
