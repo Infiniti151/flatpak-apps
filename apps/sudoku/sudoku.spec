@@ -33,6 +33,7 @@ A beautiful, modern Sudoku application featuring classic and diagonal variants.
 
 %prep
 %autosetup -n Sudoku-%{version}
+%py3_shebang_fix .
 
 %build
 %meson
