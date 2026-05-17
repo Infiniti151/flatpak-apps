@@ -23,6 +23,9 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  python3-devel
 BuildRequires:  python3-pytest
+BuildRequires:  python3-iniconfig
+BuildRequires:  python3-packaging
+BuildRequires:  python3-pluggy
 
 Provides:       python3-sudoku-engine = %{version}-%{release}
 
@@ -50,6 +53,8 @@ pip3 install --no-deps --ignore-installed --prefix=%{buildroot}%{_prefix} %{SOUR
 %find_lang sudokugame
 
 %check
+export PYTHONPATH="%{buildroot}%{python3_sitelib}:src:."
+%meson_test --no-suite appstream || %meson_test --no-suite validate || %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
