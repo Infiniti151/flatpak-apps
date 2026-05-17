@@ -3,7 +3,7 @@
 %endif
 
 Name:           morse
-Version:        0.0.0
+Version:        1.3.0
 Release:        1%{?dist}
 Summary:        Morse is an open-source program for learning Morse code
 License:        GPL-3.0-only
@@ -59,3 +59,17 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
 %{_datadir}/metainfo/*.xml
 %{_datadir}/morse/
+
+%changelog
+* Sun May 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.3.0-1
+- What's Changed
+- Small PL l10n cleanups by @dawkagaming in https://github.com/teacond/Morse/pull/6
+- Initial packaging for Debian/Ubuntu by @dawkagaming in https://github.com/teacond/Morse/pull/7
+- Add Debian packaging to workflow by @teacond in https://github.com/teacond/Morse/pull/8
+- Add saving latest text speed to the gschema by @teacond in https://github.com/teacond/Morse/pull/14
+- Add alphabet playing ability by @teacond in https://github.com/teacond/Morse/pull/15
+- Alphabet enhancement by @teacond in https://github.com/teacond/Morse/pull/16
+- New Contributors
+- @dawkagaming made their first contribution in https://github.com/teacond/Morse/pull/6
+- *Full Changelog**: https://github.com/teacond/Morse/compare/v1.2.0...v1.3.0
+
