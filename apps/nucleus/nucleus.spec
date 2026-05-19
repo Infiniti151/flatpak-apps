@@ -3,7 +3,7 @@ Version:        3
 Release:        1%{?dist}
 Summary:        A GNOME application to explore periodic table data
 License:        GPLv3+
-URL:            https://codeberg.org/lo_vely/Nucleus
+URL:            https://codeberg.org/lo_vely/nucleus
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}
