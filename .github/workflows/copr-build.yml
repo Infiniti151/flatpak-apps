@@ -81,6 +81,9 @@ jobs:
           - app_name: sudoku
             upstream_repo: sepehr-rs/sudoku
             provider: github
+          - app_name: nucleus
+            upstream_repo: lo_vely/Nucleus
+            provider: codeberg
 
     steps:
       - name: Checkout Subdirectory
