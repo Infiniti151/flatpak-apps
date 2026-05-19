@@ -37,6 +37,8 @@ periodic table data, element information, and electron shell configurations.
 git clone %{url} .
 git checkout v%{version}
 
+sed -i "s|python.find_installation('python3').full_path()|'/usr/bin/python3'|g" src/meson.build
+
 %build
 %meson
 %meson_build
