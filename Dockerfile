@@ -14,22 +14,16 @@ RUN dnf install -y \
     rpm-build \
     rpmdevtools \
     sccache \
-    # --- sudoku dependencies --- \
+    # --- nucleus dependencies --- \
     'pkgconfig(glib-2.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
     blueprint-compiler \
     desktop-file-utils \
-    gcc \
     gettext \
     libappstream-glib \
     meson \
-    pkgconfig \
     python3-devel \
-    python3-iniconfig \
-    python3-packaging \
-    python3-pluggy \
-    python3-pytest \
     && dnf clean all
 
 ENV CCACHE_DIR=/github/workspace/.ccache \
