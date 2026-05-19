@@ -53,8 +53,8 @@ jobs:
           VERSION=$(grep -i "^Version:" "$SPEC_FILE" | awk '{print $2}' | xargs)
           echo "Detected version: $VERSION"
 
-          if [ "$VERSION" = "0.0.0" ] || [ -z "$VERSION" ]; then
-            echo -e "\e[1;33m [WARNING] Version is a placeholder (0.0.0) or empty. Skipping build.\e[0m"
+          if [ "$VERSION" = "0" ] || [ -z "$VERSION" ]; then
+            echo -e "\e[1;33m [WARNING] Version is a placeholder (0) or empty. Skipping build.\e[0m"
             echo "should_build=false" >> $GITHUB_OUTPUT
           else
             echo -e "\e[1;32mVersion is valid ($VERSION). Proceeding to build.\e[0m"

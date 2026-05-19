@@ -1,5 +1,5 @@
 Name:           nucleus
-Version:        3
+Version:        0
 Release:        1%{?dist}
 Summary:        A GNOME application to explore periodic table data
 License:        GPLv3+
@@ -60,7 +60,3 @@ sed -i "s|python.find_installation('python3').full_path()|'/usr/bin/python3'|g" 
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/icons/hicolor/*/apps/*.svg
-
-%changelog
-* Mon May 18 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3-1
-- Test build
