@@ -86,6 +86,8 @@ def main():
         readme_lines = f.readlines()
 
     existing_entry_pattern = re.compile(r"^\|\s*" + re.escape(name) + r"\s*\|", re.IGNORECASE)
+    table_row_pattern = re.compile(r"^\|\s*[^: ]+.*\|$")
+    table_separator_pattern = re.compile(r"^\|(\s*:?-+:?\s*\|)+$")
 
     entry_exists = False
     new_readme_lines = []
@@ -99,20 +101,35 @@ def main():
 
     if not entry_exists:
         final_readme_lines = []
-        target_found = False
+        matrix_rows = []
+        in_matrix_block = False
+        separator_index = -1
 
-        for line in new_readme_lines:
-            if "> [!WARNING]" in line and not target_found:
-                while final_readme_lines and not final_readme_lines[-1].strip():
-                    final_readme_lines.pop()
+        for idx, line in enumerate(new_readme_lines):
+            if table_separator_pattern.match(line.strip()):
+                final_readme_lines.append(line)
+                in_matrix_block = True
+                separator_index = len(final_readme_lines)
+                continue
 
-                final_readme_lines.append(markdown_entry)
-                final_readme_lines.append("\n")
-                target_found = True
-            final_readme_lines.append(line)
+            if in_matrix_block:
+                if table_row_pattern.match(line.strip()):
+                    matrix_rows.append(line)
+                else:
+                    matrix_rows.append(markdown_entry)
+                    matrix_rows.sort(key=lambda x: x.split('|')[1].strip().lower())
 
-        if not target_found:
-            final_readme_lines.append("\n" + markdown_entry)
+                    final_readme_lines.extend(matrix_rows)
+                    final_readme_lines.append(line)
+                    in_matrix_block = False
+            else:
+                final_readme_lines.append(line)
+
+        if in_matrix_block:
+            matrix_rows.append(markdown_entry)
+            matrix_rows.sort(key=lambda x: x.split('|')[1].strip().lower())
+            final_readme_lines.extend(matrix_rows)
+
         new_readme_lines = final_readme_lines
 
     with open(readme_path, "w", encoding="utf-8") as f:
@@ -121,7 +138,7 @@ def main():
     if entry_exists:
         print(f"Successfully updated existing entry for '{name}' to v{version} in README.md!")
     else:
-        print(f"Successfully added new entry for '{name}' (v{version}) into README.md!")
+        print(f"Successfully inserted and sorted new entry for '{name}' (v{version}) into README.md!")
 
 if __name__ == "__main__":
     main()
