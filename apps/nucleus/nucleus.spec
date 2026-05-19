@@ -1,5 +1,5 @@
 Name:           nucleus
-Version:        0
+Version:        3
 Release:        1%{?dist}
 Summary:        A GNOME application to explore periodic table data
 License:        GPLv3+
@@ -60,3 +60,14 @@ sed -i "s|python.find_installation('python3').full_path()|'/usr/bin/python3'|g" 
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/icons/hicolor/*/apps/*.svg
+
+%changelog
+* Tue May 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v3-1
+- Aligned the "no-results" page to the top
+- Added theoretical indicator to Ununennium
+- Updated boil, electronegativity pauling and ionization energies properties for Ununennium
+- Add Chemistry, Science and Education categories to the desktop file, by @radmorecameron
+- Updated to GNOME 50 runtime
+- Added French Translation, by @MXC480
+- Added Italian translation, by Davide Ferracin
+
