@@ -32,7 +32,7 @@ Nucleus is a modern GNOME application designed to display interactive
 periodic table data, element information, and electron shell configurations.
 
 %prep
-%setup -c -T -b 0
+%setup -c -T
 
 git clone %{url} .
 git checkout v%{version}
