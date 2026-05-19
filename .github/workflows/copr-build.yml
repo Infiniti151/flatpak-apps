@@ -82,7 +82,7 @@ jobs:
             upstream_repo: sepehr-rs/sudoku
             provider: github
           - app_name: nucleus
-            upstream_repo: lo_vely/nucleus
+            upstream_repo: lo-vely/nucleus
             provider: codeberg
 
     steps:
