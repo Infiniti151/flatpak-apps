@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           aerion
-Version:        0.2.3
+Version:        0.2.4
 Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
 License:        GPLv3
@@ -58,6 +58,16 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %changelog
+* Wed May 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.4-1
+- Improved oAuth browser open - [#120](https://github.com/hkdb/aerion/issues/120)
+- Added copy link for oAuth - [#120](https://github.com/hkdb/aerion/issues/120)
+- Added dark mail content option - [#49](https://github.com/hkdb/aerion/issues/49)
+- Use desktop portal for email links first and fallback to xdg-open if it fails
+- Added -version flag - [#167](https://github.com/hkdb/aerion/issues/167)
+- Added setup exe and default app registration for Windows - [#149](https://github.com/hkdb/aerion/issues/149)
+- Added Norwegian translation - [#150](https://github.com/hkdb/aerion/issues/150)
+- Fixed dark to light core theme switch bug - [#187](https://github.com/hkdb/aerion/issues/187)
+
 * Sat May 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.3-1
 - Added Czech translation
 - Added drag-and-drop to move messages to another folder
