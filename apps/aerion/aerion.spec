@@ -8,10 +8,11 @@ License:        GPLv3
 URL:            https://github.com/hkdb/aerion
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-ExclusiveArch:      x86_64
+ExclusiveArch:  x86_64
 
 Source0:        https://github.com/hkdb/aerion/releases/download/v%{version}/aerion-v%{version}-linux-x86_64
 Source1:        https://raw.githubusercontent.com/hkdb/aerion/main/brand/icon-beautyline.png
+Source2:        https://raw.githubusercontent.com/hkdb/aerion/main/build/linux/aerion.desktop
 
 Requires:       desktop-file-utils
 Requires:       shared-mime-info
@@ -23,13 +24,10 @@ release.
 %prep
 cp %{SOURCE0} .
 cp %{SOURCE1} .
+cp %{SOURCE2} .
 
 %build
 # No-op: packaging a prebuilt binary
-
-%check
-echo "==> Checking dynamic library dependencies..."
-ldd %{buildroot}%{_bindir}/aerion
 
 %install
 mkdir -p %{buildroot}%{_bindir}
@@ -38,21 +36,13 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
 
 install -m 755 aerion-v%{version}-linux-x86_64 %{buildroot}%{_bindir}/aerion
 
-install -m 644 icon-beautyline.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/aerion.png
+install -m 644 icon-beautyline.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
-cat <<EOF > %{buildroot}%{_datadir}/applications/io.github.hkdb.Aerion.desktop
-[Desktop Entry]
-Name=Aerion
-Comment=Desktop Mail Client
-Exec=aerion
-Icon=aerion
-Type=Application
-Terminal=false
-Categories=Network;Email;
-StartupWMClass=Aerion
-X-GNOME-UsesNotifications=true
-MimeType=x-scheme-handler/mailto;message/rfc822;application/x-extension-eml;
-EOF
+install -m 644 aerion.desktop %{buildroot}%{_datadir}/applications/io.github.hkdb.Aerion.desktop
+
+%check
+echo "==> Checking dynamic library dependencies..."
+ldd %{buildroot}%{_bindir}/aerion
 
 %post
 update-desktop-database &> /dev/null || :
@@ -65,7 +55,7 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %files
 %{_bindir}/aerion
 %{_datadir}/applications/io.github.hkdb.Aerion.desktop
-%{_datadir}/icons/hicolor/256x256/apps/aerion.png
+%{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %changelog
 * Sat May 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.3-1
