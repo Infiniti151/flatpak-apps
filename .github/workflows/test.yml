@@ -125,6 +125,7 @@ jobs:
             echo -e "\e[1;36m🦀 Rust detected. Enabling sccache and deep-linking cargo-home...\e[0m"
             echo -e "\e[1;33m🔍 Evaluating spec file for dynamic Rust dependencies...\e[0m"
             rpmbuild -bs "$SPEC_FILE" \
+              --nodeps \
               --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
               --define "_sourcedir $RPM_SOURCES"
 
