@@ -6,7 +6,7 @@ License:        GPLv3+
 URL:            https://codeberg.org/lo-vely/nucleus
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}
+Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -32,10 +32,7 @@ Nucleus is a modern GNOME application designed to display interactive
 periodic table data, element information, and electron shell configurations.
 
 %prep
-%setup -c -T
-
-git clone %{url} .
-git checkout v%{version}
+%setup -q -n %{name}
 
 sed -i "s|python.find_installation('python3').full_path()|'/usr/bin/python3'|g" src/meson.build
 
