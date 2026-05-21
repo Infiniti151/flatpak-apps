@@ -1,5 +1,5 @@
 Name:           gitte
-Version:        0.4.0
+Version:        0.4.1
 Release:        1%{?dist}
 Summary:        A GTK4/libadwaita Git client for the GNOME desktop
 License:        GPL-3.0-or-later
@@ -61,6 +61,9 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Thu May 21 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.4.1-1
+- Update to 0.4.1
+
 * Wed May 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.4.0-1
 - Update to 0.4.0
 
