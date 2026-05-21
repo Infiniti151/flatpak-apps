@@ -157,17 +157,15 @@ jobs:
             fi
           fi
 
-          # 5. Final Build Execution
-          echo -e "\e[1;32m🚀 Starting Final RPM Build...\e[0m"
+          # 5. Final Build Execution (Handling Dynamic Build Requirements)
+          echo -e "\e[1;32m🚀 Starting RPM Build Dependency Generation...\e[0m"
 
-          set +e
+          TOP_CODE=0
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
-            --define "_sourcedir $RPM_SOURCES"
-          RPM_EXIT_CODE=$?
-          set -e
+            --define "_sourcedir $RPM_SOURCES" || TOP_CODE=$?
 
-          if [ $RPM_EXIT_CODE -eq 11 ]; then
+          if [ $TOP_CODE -eq 11 ]; then
             echo -e "\e[1;33m📥 Exit code 11 detected. Installing dynamically discovered crate packages...\e[0m"
 
             dnf builddep -y $GITHUB_WORKSPACE/rpmbuild/SRPMS/${{ vars.APP }}-*.buildreqs.nosrc.rpm
@@ -176,9 +174,9 @@ jobs:
             rpmbuild -ba *.spec \
               --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
               --define "_sourcedir $RPM_SOURCES"
-          elif [ $RPM_EXIT_CODE -ne 0 ]; then
-            echo -e "\e[1;31m❌ rpmbuild failed with exit code $RPM_EXIT_CODE\e[0m"
-            exit $RPM_EXIT_CODE
+          elif [ $TOP_CODE -ne 0 ]; then
+            echo -e "\e[1;31m❌ rpmbuild failed with exit code $TOP_CODE\e[0m"
+            exit $TOP_CODE
           fi
 
           [ -n "${RUSTC_WRAPPER:-}" ] && sccache --stop-server || true
