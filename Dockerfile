@@ -19,9 +19,11 @@ RUN dnf install -y \
     'pkgconfig(glib-2.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
+    appstream \
     cargo \
     desktop-file-utils \
     gcc \
+    gettext \
     libappstream-glib \
     meson \
     rust \
