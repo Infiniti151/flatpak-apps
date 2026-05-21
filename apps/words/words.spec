@@ -14,9 +14,10 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildRequires:  meson >= 1.1.0
 BuildRequires:  gcc
+BuildRequires:  rust
+BuildRequires:  cargo
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
-BuildRequires:  cargo-rpm-macros >= 24
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
 BuildRequires:  pkgconfig(gio-2.0) >= 2.66
 BuildRequires:  pkgconfig(gtk4) >= 4.18.0
@@ -28,10 +29,6 @@ Rust, GTK4, and Libadwaita.
 
 %prep
 %autosetup -n %{name} -p1
-%cargo_prep
-
-%generate_buildrequires
-%cargo_generate_buildrequires
 
 %build
 export CARGO_HOME=$(pwd)/cargo-home

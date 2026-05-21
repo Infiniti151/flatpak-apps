@@ -123,21 +123,6 @@ jobs:
           # 4. Rust / Cargo Logic
           if grep -qiE "rust|cargo" "$SPEC_FILE"; then
             echo -e "\e[1;36m🦀 Rust detected. Enabling sccache and deep-linking cargo-home...\e[0m"
-            echo -e "\e[1;33m🔍 Evaluating spec file for dynamic Rust dependencies...\e[0m"
-            rpmbuild -bs "$SPEC_FILE" \
-              --nodeps \
-              --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
-              --define "_sourcedir $RPM_SOURCES"
-
-            REQ_RPM=$(ls $GITHUB_WORKSPACE/rpmbuild/SRPMS/${{ vars.APP }}-*.buildreqs.nosrc.rpm 2>/dev/null | head -n 1)
-
-            if [ -f "$REQ_RPM" ]; then
-              echo -e "\e[1;32m📥 Installing discovered crate packages via DNF...\e[0m"
-              dnf builddep -y "$REQ_RPM"
-            else
-              echo -e "\e[1;33mℹ️ No dynamic buildreqs RPM found. Skipping dynamic crate installation.\e[0m"
-            fi
-
             export SCCACHE_DIR="${{ github.workspace }}/.sccache"
             export RUSTC_WRAPPER="sccache"
             sccache --start-server
@@ -157,27 +142,11 @@ jobs:
             fi
           fi
 
-          # 5. Final Build Execution (Handling Dynamic Build Requirements)
-          echo -e "\e[1;32m🚀 Starting RPM Build Dependency Generation...\e[0m"
-
-          TOP_CODE=0
+          # 5. Final Build Execution
+          echo -e "\e[1;32m🚀 Starting Final RPM Build...\e[0m"
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
-            --define "_sourcedir $RPM_SOURCES" || TOP_CODE=$?
-
-          if [ $TOP_CODE -eq 11 ]; then
-            echo -e "\e[1;33m📥 Exit code 11 detected. Installing dynamically discovered crate packages...\e[0m"
-
-            dnf builddep -y $GITHUB_WORKSPACE/rpmbuild/SRPMS/${{ vars.APP }}-*.buildreqs.nosrc.rpm
-
-            echo -e "\e[1;32m🔄 Re-starting final RPM compilation...\e[0m"
-            rpmbuild -ba *.spec \
-              --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
-              --define "_sourcedir $RPM_SOURCES"
-          elif [ $TOP_CODE -ne 0 ]; then
-            echo -e "\e[1;31m❌ rpmbuild failed with exit code $TOP_CODE\e[0m"
-            exit $TOP_CODE
-          fi
+            --define "_sourcedir $RPM_SOURCES"
 
           [ -n "${RUSTC_WRAPPER:-}" ] && sccache --stop-server || true
 
