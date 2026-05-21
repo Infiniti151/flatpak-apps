@@ -2,7 +2,7 @@
 %define _empty_manifest_terminate_build 0
 %endif
 
-Name:           words
+Name:           words-game
 Version:        0.7.9
 Release:        1%{?dist}
 Summary:        A word puzzle game
@@ -30,7 +30,7 @@ An elegant word game puzzle built natively using
 Rust, GTK4, and Libadwaita.
 
 %prep
-%autosetup -n %{name} -p1
+%autosetup -n words -p1
 find . -name "*metainfo.xml*" -exec sed -i '/<releases>/,/<\/releases>/d' {} +
 
 %build
@@ -40,19 +40,19 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %install
 %meson_install
-%find_lang %{name}
+%find_lang words
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
-%files -f %{name}.lang
+%files -f words.lang
 %doc README.md
-%{_bindir}/%{name}
+%{_bindir}/words
 %{_datadir}/applications/*.desktop
 %{_datadir}/metainfo/*.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/%{name}/
+%{_datadir}/words/
 %{_datadir}/word-lists/
 %{_datadir}/icons/hicolor/*/*/*
 
