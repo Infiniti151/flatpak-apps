@@ -19,11 +19,12 @@ RUN dnf install -y \
     'pkgconfig(glib-2.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
-    cargo-rpm-macros \
+    cargo \
     desktop-file-utils \
     gcc \
     libappstream-glib \
     meson \
+    rust \
     && dnf clean all
 
 ENV CCACHE_DIR=/github/workspace/.ccache \
