@@ -31,7 +31,7 @@ Rust, GTK4, and Libadwaita.
 
 %prep
 %autosetup -n %{name} -p1
-find data/ -name "*metainfo.xml*" -exec sed -i 's/\xca\xa0/ /g; s/\xc2\xa0/ /g' {} +
+find . -name "*metainfo.xml*" -exec sed -i '/<releases>/,/<\/releases>/d' {} +
 
 %build
 export CARGO_HOME=$(pwd)/cargo-home
