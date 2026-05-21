@@ -17,6 +17,8 @@ BuildRequires:  gcc
 BuildRequires:  rust
 BuildRequires:  cargo
 BuildRequires:  desktop-file-utils
+BuildRequires:  gettext
+BuildRequires:  appstream
 BuildRequires:  libappstream-glib
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
 BuildRequires:  pkgconfig(gio-2.0) >= 2.66
@@ -29,6 +31,7 @@ Rust, GTK4, and Libadwaita.
 
 %prep
 %autosetup -n %{name} -p1
+sed -i 's/\xca\xa0/ /g; s/\xc2\xa0/ /g' data/page.codeberg.petsoi.words.metainfo.xml.in
 
 %build
 export CARGO_HOME=$(pwd)/cargo-home
