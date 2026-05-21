@@ -31,7 +31,7 @@ Rust, GTK4, and Libadwaita.
 
 %prep
 %autosetup -n %{name} -p1
-sed -i 's/\xca\xa0/ /g; s/\xc2\xa0/ /g' data/page.codeberg.petsoi.words.metainfo.xml.in.in
+find data/ -name "*metainfo.xml*" -exec sed -i 's/\xca\xa0/ /g; s/\xc2\xa0/ /g' {} +
 
 %build
 export CARGO_HOME=$(pwd)/cargo-home
