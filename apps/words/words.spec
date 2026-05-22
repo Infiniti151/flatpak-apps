@@ -3,7 +3,7 @@
 %endif
 
 Name:           words-game
-Version:        0.7.9
+Version:        0
 Release:        1%{?dist}
 Summary:        A word puzzle game
 License:        GPL-3.0-only
@@ -54,8 +54,4 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/words/
 %{_datadir}/word-lists/
-%{_datadir}/icons/hicolor/*/*/*
-
-%changelog
-* Thu May 21 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.7.9-1
-- Initial release 0.7.9
+%{_datadir}/icons/hicolor/*/apps/*
