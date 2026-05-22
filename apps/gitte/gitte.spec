@@ -40,7 +40,7 @@ export LIBSSH2_SYS_USE_PKG_CONFIG=1
 
 %install
 %meson_install
-%find_lang gitte
+%find_lang %{name}
 
 %check
 %meson_test

@@ -14,16 +14,19 @@ RUN dnf install -y \
     rpm-build \
     rpmdevtools \
     sccache \
-    # --- nucleus dependencies --- \
+    # --- words dependencies --- \
+    'pkgconfig(gio-2.0)' \
     'pkgconfig(glib-2.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
-    blueprint-compiler \
+    appstream \
+    cargo \
     desktop-file-utils \
+    gcc \
     gettext \
     libappstream-glib \
     meson \
-    python3-devel \
+    rust \
     && dnf clean all
 
 ENV CCACHE_DIR=/github/workspace/.ccache \

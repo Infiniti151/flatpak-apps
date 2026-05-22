@@ -84,6 +84,9 @@ jobs:
           - app_name: nucleus
             upstream_repo: lo-vely/nucleus
             provider: codeberg
+          - app_name: words-game
+            upstream_repo: petsoi/words
+            provider: codeberg
 
     steps:
       - name: Checkout Subdirectory
