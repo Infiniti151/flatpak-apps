@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           aerion
-Version:        0.2.4
+Version:        0.2.5
 Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
 License:        GPLv3
@@ -58,6 +58,19 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %changelog
+* Wed May 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.5-1
+- Sync progress indication redesign and shifting folder tree fix - [#204](https://github.com/hkdb/aerion/issues/204)
+- Added German translation - PR [#194](https://github.com/hkdb/aerion/pull/194)
+- Added Italian translation - PR [#208](https://github.com/hkdb/aerion/pull/208)
+- Dark content auto bg color and overrides - [#195](https://github.com/hkdb/aerion/issues/195)
+- Added guard rails to prevent accidental close of dialogs - [#201](https://github.com/hkdb/aerion/issues/201) - [#198](https://github.com/hkdb/aerion/issues/198)
+- Fixed message list on folder switch bug - [#200](https://github.com/hkdb/aerion/issues/200)
+- Fixed detached composer draft ops - [#213](https://github.com/hkdb/aerion/issues/213) - [#214](https://github.com/hkdb/aerion/issues/214)
+- Fixed send receipt feature
+- Fixed dark themes composer lists - [#215](https://github.com/hkdb/aerion/issues/215)
+- Fixed setting dialog layout - [#203](https://github.com/hkdb/aerion/issues/203)
+- ... (see upstream for full release notes)
+
 * Wed May 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.4-1
 - Improved oAuth browser open - [#120](https://github.com/hkdb/aerion/issues/120)
 - Added copy link for oAuth - [#120](https://github.com/hkdb/aerion/issues/120)
