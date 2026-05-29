@@ -1,5 +1,5 @@
 Name:           spellingbee
-Version:        0.1.5
+Version:        0.1.6
 Release:        1%{?dist}
 Summary:        A word game application
 License:        GPL-3.0-or-later
@@ -57,6 +57,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
 
 %changelog
+* Fri May 29 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.1.6-1
+- Update to v0.1.6
+
 * Sun May 10 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.1.5-1
 - Update to v0.1.5
 
