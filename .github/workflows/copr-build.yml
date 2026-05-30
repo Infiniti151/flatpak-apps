@@ -21,43 +21,17 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      COLOR_INFO: "\e[1;36m"
+      COLOR_SUCCESS: "\e[1;32m"
+      COLOR_WARN: "\e[1;33m"
+      COLOR_RESET: "\e[0m"
     strategy:
       fail-fast: false
       matrix:
         include:
-          - app_name: text-compare
-            upstream_repo: josephmawa/TextCompare
-            provider: github
-          - app_name: concessio
-            upstream_repo: ronniedroid/concessio
-            provider: github
-          - app_name: missioncenter
-            upstream_repo: mission-center-devs/mission-center
-            provider: gitlab
-            instance: gitlab.com
-          - app_name: extension-manager
-            upstream_repo: mjakeman/extension-manager
-            provider: github
-          - app_name: pods
-            upstream_repo: marhkb/pods
-            provider: github
-          - app_name: tomatillo
-            upstream_repo: diegopvlk/Tomatillo
-            provider: github
-          - app_name: konbucase
-            upstream_repo: ryonakano/konbucase
-            provider: github
-          - app_name: keypunch
-            upstream_repo: bragefuglseth/keypunch
-            provider: github
-          - app_name: gitte
-            upstream_repo: ckruse/Gitte
-            provider: codeberg
-          - app_name: eyedropper
-            upstream_repo: FineFindus/eyedropper
-            provider: github
-          - app_name: spellingbee
-            upstream_repo: josephmawa/SpellingBee
+          - app_name: aerion
+            upstream_repo: hkdb/aerion
             provider: github
           - app_name: amberol
             upstream_repo: World/amberol
@@ -66,31 +40,62 @@ jobs:
           - app_name: bobby
             upstream_repo: hbons/bobby
             provider: github
-          - app_name: rustdiff
-            upstream_repo: jereok91/rustdiff
+          - app_name: concessio
+            upstream_repo: ronniedroid/concessio
             provider: github
-          - app_name: aerion
-            upstream_repo: hkdb/aerion
+          - app_name: extension-manager
+            upstream_repo: mjakeman/extension-manager
+            provider: github
+          - app_name: eyedropper
+            upstream_repo: FineFindus/eyedropper
+            provider: github
+          - app_name: gitte
+            upstream_repo: ckruse/Gitte
+            provider: codeberg
+          - app_name: keypunch
+            upstream_repo: bragefuglseth/keypunch
+            provider: github
+          - app_name: konbucase
+            upstream_repo: ryonakano/konbucase
+            provider: github
+          - app_name: missioncenter
+            upstream_repo: mission-center-devs/mission-center
+            provider: gitlab
+            instance: gitlab.com
+          - app_name: morse
+            upstream_repo: teacond/morse
             provider: github
           - app_name: mundi
             upstream_repo: nacho/mundi
             provider: github
-          - app_name: morse
-            upstream_repo: teacond/morse
+          - app_name: nucleus
+            upstream_repo: lo-vely/nucleus
+            provider: codeberg
+          - app_name: pods
+            upstream_repo: marhkb/pods
+            provider: github
+          - app_name: rustdiff
+            upstream_repo: jereok91/rustdiff
+            provider: github
+          - app_name: spellingbee
+            upstream_repo: josephmawa/SpellingBee
             provider: github
           - app_name: sudoku
             upstream_repo: sepehr-rs/sudoku
             provider: github
-          - app_name: nucleus
-            upstream_repo: lo-vely/nucleus
-            provider: codeberg
+          - app_name: text-compare
+            upstream_repo: josephmawa/TextCompare
+            provider: github
+          - app_name: tomatillo
+            upstream_repo: diegopvlk/Tomatillo
+            provider: github
           - app_name: words-game
             upstream_repo: petsoi/words
             provider: codeberg
 
     steps:
       - name: Checkout Subdirectory
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           sparse-checkout: |
@@ -116,7 +121,7 @@ jobs:
                 echo "$result"
                 return 0
               fi
-              echo -e "\e[1;33m==> [RETRY] Attempt $attempt failed for $url. Retrying in 5s...\e[0m" >&2
+              echo -e "${COLOR_WARN}==> [WARN] Retry attempt $attempt failed for $url. Retrying in 5s...${COLOR_RESET}" >&2
               sleep 5
               ((attempt++))
             done
@@ -136,11 +141,11 @@ jobs:
           fi
 
           if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
-            echo -e "\e[1;31m==> [ERROR] Could not fetch tag for $REPO after multiple attempts\e[0m"
+            echo "::error::==> [ERROR] Could not fetch tag for $REPO after multiple attempts"
             exit 1
           fi
 
-          echo -e "\e[1;32m==> [SUCCESS] Found tag: $TAG\e[0m"
+          echo -e "${COLOR_SUCCESS}==> [SUCCESS] Found tag: $TAG${COLOR_RESET}"
           echo "version=$TAG" >> $GITHUB_OUTPUT
 
       - name: Check for Updates
@@ -151,21 +156,21 @@ jobs:
           NEW_VER: ${{ steps.upstream.outputs.version }}
         run: |
           if [ ! -f "$SPEC" ]; then
-            echo -e "\e[1;31m==> [ERROR] $SPEC not found!\e[0m"
+            echo "::error::==> [ERROR] $SPEC not found!"
             exit 1
           fi
 
-          OLD_VER=$(grep -m1 '^Version:' "$SPEC" | awk '{print $2}')
+          OLD_VER=$(awk '/^Version:/ {print $2}' "$SPEC")
 
-          CLEAN_NEW_VER=$(echo "$NEW_VER" | sed 's/^[vV]//')
+          CLEAN_NEW_VER="${NEW_VER#[vV]}"
 
-          echo -e "\e[1;36m==> Current: $OLD_VER | Upstream: $CLEAN_NEW_VER\e[0m"
+          echo -e "${COLOR_INFO}==> [INFO] Current: $OLD_VER | Upstream: $CLEAN_NEW_VER${COLOR_RESET}"
 
           if [ "$OLD_VER" != "$CLEAN_NEW_VER" ]; then
             echo "update_needed=true" >> $GITHUB_OUTPUT
           else
             echo "update_needed=false" >> $GITHUB_OUTPUT
-            echo -e "\e[1;32m==> $APP is already up to date.\e[0m"
+            echo -e "${COLOR_SUCCESS}==> [SUCCESS] $APP is already up to date.${COLOR_RESET}"
           fi
 
       - name: Bump Version and Push
@@ -179,12 +184,12 @@ jobs:
           README: "README.md"
           NEW_VER: ${{ steps.upstream.outputs.version }}
         run: |
-          echo -e "\e[1;36m==> Bumping $APP to $NEW_VER...\e[0m"
-          CLEAN_VER=$(echo "$NEW_VER" | sed 's/^[vV]//')
-          sed -i "s/^Version:.*/Version:        $CLEAN_VER/" "$SPEC"
+          echo -e "${COLOR_INFO}==> [INFO] Bumping $APP to $NEW_VER...${COLOR_RESET}"
+          CLEAN_NEW_VER="${NEW_VER#[vV]}"
+          sed -i "s/^Version:.*/Version:        $CLEAN_NEW_VER/" "$SPEC"
 
           if [ "$APP" = "sudoku" ]; then
-            echo -e "\e[1;36m==> [SUDOKU] Fetching external python3-requirements.json...\e[0m"
+            echo -e "${COLOR_INFO}==> [INFO] Fetching external python3-requirements.json...${COLOR_RESET}"
 
             REQ_URL="https://raw.githubusercontent.com/${REPO}/${NEW_VER}/python3-requirements.json"
             REQ_DATA=$(curl -sSf "$REQ_URL" 2>/dev/null)
@@ -193,14 +198,14 @@ jobs:
               ENGINE_URL=$(echo "$REQ_DATA" | jq -r '.sources[]? | select(.url | contains("sudoku_engine"))? | .url // empty')
 
               if [ -n "$ENGINE_URL" ] && [ "$ENGINE_URL" != "null" ]; then
-                echo -e "\e[1;32m==> [SUDOKU] Found engine URL: $ENGINE_URL\e[0m"
                 ESC_URL=$(echo "$ENGINE_URL" | sed 's/\//\\\//g')
                 sed -i "s/^Source1:.*/Source1:        $ESC_URL/" "$SPEC"
+                echo -e "${COLOR_SUCCESS}==> [SUCCESS] Updated sudoku-engine URL: $ENGINE_URL.${COLOR_RESET}"
               else
-                echo -e "\e[1;33m==> [WARNING] Could not parse sudoku-engine URL from requirements file. Keeping existing Source1.\e[0m"
+                echo -e "${COLOR_WARN}==> [WARNING] Could not parse sudoku-engine URL from requirements file. Keeping existing Source1.${COLOR_RESET}"
               fi
             else
-              echo -e "\e[1;33m==> [WARNING] Failed to fetch external requirements file. Keeping existing Source1.\e[0m"
+              echo -e "${COLOR_WARN}==> [WARNING] Failed to fetch external requirements file. Keeping existing Source1.${COLOR_RESET}"
             fi
           fi
 
@@ -250,7 +255,7 @@ jobs:
           rm entry.tmp
 
           if [ -f "$README" ]; then
-            sed -i "/| $APP[^|]*|/ s/| [0-9.]* |/| $CLEAN_VER |/" "$README"
+            sed -i "/| $APP[^|]*|/ s/| [0-9.]* |/| $CLEAN_NEW_VER |/" "$README"
           fi
 
           git config --global user.name "github-actions[bot]"
@@ -259,13 +264,13 @@ jobs:
           git commit -m "chore($APP): bump version to $NEW_VER"
           MAX_RETRIES=5
           for i in $(seq 1 $MAX_RETRIES); do
-            echo -e "\e[1;36m==> Push attempt $i...\e[0m"
+            echo -e "${COLOR_INFO}==> [INFO] Push attempt $i...${COLOR_RESET}"
             if git pull --rebase origin main && git push origin main; then
-              echo -e "\e[1;32m==> Successfully pushed $APP update.\e[0m"
+              echo -e "${COLOR_SUCCESS}==> [SUCCESS] Updated readme and spec file.${COLOR_RESET}"
               break
             fi
             if [ $i -eq $MAX_RETRIES ]; then
-              echo -e "\e[1;31m==> [ERROR] Failed to push after $MAX_RETRIES attempts.\e[0m"
+              echo "::error::==> [ERROR] Failed to push after $MAX_RETRIES attempts."
               exit 1
             fi
             sleep $(( (RANDOM % 10) + 1 ))
@@ -277,13 +282,12 @@ jobs:
           APP: ${{ matrix.app_name }}
           COPR_URL: ${{ secrets.COPR_BASE_WEBHOOK_URL }}
         run: |
-          BASE_URL=$(echo "$COPR_URL" | xargs)
-          FINAL_URL="${BASE_URL%/}/$APP/"
+          FINAL_URL="$COPR_URL/$APP/"
 
-          echo -e "\e[1;36m==> Triggering COPR for $APP...\e[0m"
+          echo -e "${COLOR_INFO}==> [INFO] Triggering COPR build...${COLOR_RESET}"
           if curl -fsS -X POST "$FINAL_URL"; then
-            echo -e "\e[1;32m==> COPR build triggered successfully for $APP!\e[0m"
+            echo -e "${COLOR_SUCCESS}==> [SUCCESS] Triggered COPR build!${COLOR_RESET}"
           else
-            echo -e "\e[1;31m==> [ERROR] Webhook failed to trigger COPR.\e[0m"
+            echo "::error::==> [ERROR] Webhook failed to trigger COPR build."
             exit 1
           fi

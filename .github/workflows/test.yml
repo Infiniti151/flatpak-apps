@@ -20,9 +20,14 @@ jobs:
     environment: Test
     outputs:
       should_build: ${{ steps.check.outputs.should_build }}
+    env:
+      COLOR_INFO: "\e[1;36m"
+      COLOR_SUCCESS: "\e[1;32m"
+      COLOR_WARN: "\e[1;33m"
+      COLOR_RESET: "\e[0m"
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
 
@@ -32,7 +37,7 @@ jobs:
           git fetch origin main
 
           if git merge-base --is-ancestor HEAD origin/main; then
-            echo -e "\e[1;33m [WARNING] This commit exists on main. Skipping RPM build for sync.\e[0m"
+            echo -e "${COLOR_WARN}==> [WARNING] This commit exists on main. Skipping RPM build for sync.${COLOR_RESET}"
             echo "is_sync=true" >> $GITHUB_OUTPUT
           else
             echo "is_sync=false" >> $GITHUB_OUTPUT
@@ -45,7 +50,7 @@ jobs:
           SPEC_FILE=$(find apps/${{ vars.APP }} -maxdepth 1 -name "${{ vars.APP }}.spec" | head -n 1)
 
           if [ -z "$SPEC_FILE" ]; then
-            echo -e "\e[1;31m [ERROR] No .spec file found in the repository!\e[0m"
+            echo "::error::==> [ERROR] No spec file found in the repository!"
             echo "should_build=false" >> $GITHUB_OUTPUT
             exit 0
           fi
@@ -54,10 +59,10 @@ jobs:
           echo "Detected version: $VERSION"
 
           if [ "$VERSION" = "0" ] || [ -z "$VERSION" ]; then
-            echo -e "\e[1;33m [WARNING] Version is a placeholder (0) or empty. Skipping build.\e[0m"
+            echo -e "${COLOR_WARN}==> [WARNING] Version is a placeholder (0) or empty. Skipping build.${COLOR_RESET}"
             echo "should_build=false" >> $GITHUB_OUTPUT
           else
-            echo -e "\e[1;32mVersion is valid ($VERSION). Proceeding to build.\e[0m"
+            echo -e "${COLOR_SUCCESS}==> Version is valid ($VERSION). Proceeding to build.${COLOR_RESET}"
             echo "should_build=true" >> $GITHUB_OUTPUT
           fi
 
@@ -68,17 +73,22 @@ jobs:
       'refs/heads/dev'
     runs-on: ubuntu-latest
     environment: Test
+    env:
+      COLOR_INFO: "\e[1;36m"
+      COLOR_SUCCESS: "\e[1;32m"
+      COLOR_WARN: "\e[1;33m"
+      COLOR_RESET: "\e[0m"
     container:
       image: ghcr.io/infiniti151/flatpak2rpm-builder:latest
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           submodules: false
 
       - name: Restore Cache
-        uses: actions/cache/restore@v5
+        uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: |
             ${{ github.workspace }}/.ccache
@@ -101,12 +111,12 @@ jobs:
 
           cd "$APP_DIR"
 
-          echo -e "\e[1;33m📥 Downloading sources...\e[0m"
+          echo -e "${COLOR_WARN}📥 Downloading sources...${COLOR_RESET}"
           spectool -g -C "$RPM_SOURCES" "$SPEC_FILE"
 
           # 1. GCC / G++ Logic
           if grep -qiE "gcc|gcc-c\+\+" "$SPEC_FILE"; then
-            echo -e "\e[1;36m🛠️ GCC detected. Enabling CC/CXX wrappers...\e[0m"
+            echo -e "${COLOR_INFO}🛠️ GCC detected. Enabling CC/CXX wrappers...${COLOR_RESET}"
             export CCACHE_DIR="${{ github.workspace }}/.ccache"
             export CC="ccache gcc"
             export CXX="ccache g++"
@@ -114,7 +124,7 @@ jobs:
 
           # 2. Clang / Clang++ Logic
           if grep -qiE "clang|clang\+\+" "$SPEC_FILE"; then
-            echo -e "\e[1;36m🪄 Clang detected. Enabling Clang wrappers...\e[0m"
+            echo -e "${COLOR_INFO}🪄 Clang detected. Enabling Clang wrappers...${COLOR_RESET}"
             export CCACHE_DIR="${{ github.workspace }}/.ccache"
             export CC="ccache clang"
             export CXX="ccache clang++"
@@ -122,67 +132,56 @@ jobs:
 
           # 4. Rust / Cargo Logic
           if grep -qiE "rust|cargo" "$SPEC_FILE"; then
-            echo -e "\e[1;36m🦀 Rust detected. Enabling sccache and deep-linking cargo-home...\e[0m"
+            echo -e "${COLOR_INFO}🦀 Rust detected. Enabling sccache and deep-linking cargo-home...${COLOR_RESET}"
             export SCCACHE_DIR="${{ github.workspace }}/.sccache"
             export RUSTC_WRAPPER="sccache"
             sccache --start-server
 
             STABLE_CARGO_CACHE="${{ github.workspace }}/.cargo_cache"
 
-            echo -e "\e[1;33m📦 Preparing source for Rust cache linking...\e[0m"
+            echo -e "${COLOR_WARN}📦 Preparing source for Rust cache linking...${COLOR_RESET}"
             rpmbuild -bp *.spec \
               --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
               --define "_sourcedir $RPM_SOURCES"
 
             ACTUAL_CARGO_DIR=$(find $GITHUB_WORKSPACE/rpmbuild/BUILD -type d -name "cargo-home" | head -n 1)
             if [ -n "$ACTUAL_CARGO_DIR" ]; then
-              echo "Found cargo-home at $ACTUAL_CARGO_DIR, linking to cache..."
+              echo -e "${COLOR_INFO}==> Found cargo-home at $ACTUAL_CARGO_DIR, linking to cache...${COLOR_RESET}"
               rm -rf "$ACTUAL_CARGO_DIR"
               ln -s "$STABLE_CARGO_CACHE" "$ACTUAL_CARGO_DIR"
             fi
           fi
 
           # 5. Final Build Execution
-          echo -e "\e[1;32m🚀 Starting Final RPM Build...\e[0m"
+          echo -e "${COLOR_SUCCESS}🚀 Starting Final RPM Build...${COLOR_RESET}"
           rpmbuild -ba *.spec \
             --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
             --define "_sourcedir $RPM_SOURCES"
 
           [ -n "${RUSTC_WRAPPER:-}" ] && sccache --stop-server || true
 
-          echo -e "\e[1;33m🔓 Handing ownership back to GitHub Runner...\e[0m"
+          echo -e "${COLOR_WARN}🔓 Handing ownership back to GitHub Runner...${COLOR_RESET}"
           chown -R 1001:1001 ${{ github.workspace }}/.ccache ${{ github.workspace }}/.sccache ${{ github.workspace }}/.cargo_cache || true
 
-          echo -e "\e[1;32m--- DEBUG START ---\e[0m"
-          # Check sccache
-          if [ -d "$SCCACHE_DIR" ]; then
-              echo -e "\e[1;32m.sccache size: $(du -sh "$SCCACHE_DIR" | cut -f1)\e[0m"
-              echo -e "\e[1;32m.sccache total items: $(find "$SCCACHE_DIR" -type f | wc -l)\e[0m"
-          else
-              echo -e "\e[1;33m.sccache: Not used for this build.\e[0m"
+          echo "::group::Cache Folder Statistics"
+          # Check sccache and cargo cache
+          if grep -qiE "rust|cargo" "$SPEC_FILE"; then
+              echo -e "${COLOR_SUCCESS}==> .sccache size: $(du -sh "$SCCACHE_DIR" | cut -f1)${COLOR_RESET}"
+              echo -e "${COLOR_SUCCESS}==> .sccache total items: $(find "$SCCACHE_DIR" -type f | wc -l)${COLOR_RESET}"
+              echo -e "${COLOR_SUCCESS}==> .cargo size: $(du -sh "$STABLE_CARGO" | cut -f1)${COLOR_RESET}"
+              echo -e "${COLOR_SUCCESS}==> .cargo total items: $(find "$STABLE_CARGO" -type f | wc -l)${COLOR_RESET}"
           fi
 
           # Check ccache
-          if [ -d "$CCACHE_DIR" ]; then
-              echo -e "\e[1;32m.ccache size: $(du -sh "$CCACHE_DIR" | cut -f1)\e[0m"
-              echo -e "\e[1;32m.ccache total items: $(find "$CCACHE_DIR" -type f | wc -l)\e[0m"
-          else
-              echo -e "\e[1;33m.ccache: Not used for this build.\e[0m"
+          if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
+              echo -e "${COLOR_SUCCESS}==> .ccache size: $(du -sh "$CCACHE_DIR" | cut -f1)${COLOR_RESET}"
+              echo -e "${COLOR_SUCCESS}==> .ccache total items: $(find "$CCACHE_DIR" -type f | wc -l)${COLOR_RESET}"
           fi
-
-          # Check Cargo
-          STABLE_CARGO="${{ github.workspace }}/.cargo_cache"
-          if [ -d "$STABLE_CARGO" ]; then
-              echo -e "\e[1;32m.cargo size: $(du -sh "$STABLE_CARGO" | cut -f1)\e[0m"
-              echo -e "\e[1;32m.cargo total items: $(find "$STABLE_CARGO" -type f | wc -l)\e[0m"
-          else
-              echo -e "\e[1;33m.cargo: Not used for this build.\e[0m"
-          fi
-          echo -e "\e[1;32m--- DEBUG END ---\e[0m"
+          echo "::endgroup::"
 
       - name: Save Cache
         if: always()
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: |
             ${{ github.workspace }}/.ccache
@@ -190,31 +189,33 @@ jobs:
             ${{ github.workspace }}/.cargo_cache
           key: ${{ runner.os }}-build-cache-${{ vars.APP }}-${{ github.sha }}
 
-      - name: Show Performance Stats
+      - name: Show Cache Stats
         if: always()
         run: |
-          echo -e "\e[1;36m📊 --- Compilation Performance Summary ---\e[0m"
+          APP_DIR="apps/${{ vars.APP }}"
+          SPEC_FILE="${{ vars.APP }}.spec"
+          echo -e "${COLOR_INFO}📊 --- Cache PerformanceStatistics ---${COLOR_RESET}"
 
           # Check sccache (Rust)
-          if [ -d "${{ github.workspace }}/.sccache" ]; then
-            echo -e "\e[1;32m🦀 Rust/sccache stats:\e[0m"
+          if grep -qiE "rust|cargo" "$SPEC_FILE"; then
+            echo -e "${COLOR_SUCCESS}🦀 Rust/sccache stats:${COLOR_RESET}"
             sccache --show-stats
           else
-            echo -e "\e[1;33m⚠️ sccache directory not found. Rust was likely not cached.\e[0m"
+            echo -e "${COLOR_WARN}⚠️ sccache directory not found. Rust was likely not cached.${COLOR_RESET}"
           fi
 
           echo ""
 
           # Check ccache (C/C++)
-          if [ -d "${{ github.workspace }}/.ccache" ]; then
-            echo -e "\e[1;32m🛠️ C/C++ / ccache stats:\e[0m"
+          if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
+            echo -e "${COLOR_SUCCESS}🛠️ C/C++ / ccache stats:${COLOR_RESET}"
             ccache -s
           else
-            echo -e "\e[1;33m⚠️ ccache directory not found. C/C++ was likely not cached.\e[0m"
+            echo -e "${COLOR_WARN}⚠️ ccache directory not found. C/C++ was likely not cached.${COLOR_RESET}"
           fi
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: ${{ vars.APP }}-fc${{ vars.VER }}-rpm
           path: |
