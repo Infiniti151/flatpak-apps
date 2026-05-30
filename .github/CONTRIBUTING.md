@@ -4,33 +4,52 @@ First off, thank you for helping maintain and expand this repository! Your contr
 
 ## ⚒️ How You Can Help
 
-### 1. Adding New Apps
-- Open an **App Request** issue first to discuss the feasibility.
+### 1. Add New Apps
+- Open an [App Request](https://github.com/Infiniti151/flatpak-apps/issues/new?template=app_request.md) issue first to discuss the feasibility.
 - Ensure the app is available via a stable source (GitHub or a Flatpak manifest).
 - Submit a PR with the new spec file and any necessary patches.
 
-### 2. Improving Existing App Packaging
-- Optimize existing sections of the spec file like `%build` or `%install`.
-- Add new sections to the spec file like `%pre` or `%post`.
-- Fix missing dependencies found via `rpmlint`.
-- Submit a PR with the updated spec file with a detailed description of the updates.
+### 2. Fix Bugs
+- Comment on the [Bug Report](https://github.com/Infiniti151/flatpak-apps/issues?q=state%3Aopen%20label%3Abug) issue first to discuss the bug fix.
+- Update the app's spec file to fix the bug
+- Submit a PR with the updated spec file.
+
+### 3. Optimize Existing App Packaging
+- Open an [Optimize App Packaging](https://github.com/Infiniti151/flatpak-apps/issues/new?template=optimize_app_spec.md) issue first to discuss the optimization.
+- Update an app's spec file to optimize packaging. Optimizations can include:
+   - Optimize existing sections of the spec file like `%build` or `%install`.
+   - Add new scriptlets to the spec file like `%pre` or `%post`.
+   - Fix spec file syntax issues found with `rpmlint`.
+- Submit a PR with the updated spec file.
 
 ---
 
 ## 📝 Packaging Guidelines
 - **Clean Specs:** Focus on the build logic and metadata. Follow [Fedora Packaging Guidelines](https://docs.fedoraproject.org/en-US/packaging-guidelines/).
-- **Naming:** Name files `app-name.spec`.
-- **No Manual Changelogs:** **Do not edit the `%changelog` section for updates to an existing app.** We use a custom script in our GitHub Actions workflow to automatically inject changelogs from the upstream source into the spec file. Although, for a new app you'll need to add
-a test changelog for the build to succeed.
+- **Naming:** Name files \<app-name\>.spec.
+- **No Manual Changelogs:** **Do not edit the `%changelog` section for updates to an existing app.** We use a custom script in our GitHub Actions workflow to automatically inject changelogs from the upstream source into the spec file. Although, for a new app you'll need to add a test changelog for your local build to succeed.
 - **ELN Specific Config:** If you're adding a spec file for a Rust app, you need to add this to the top of the file for the build to pass on ELN
   ```
   %if 0%{?eln}
   %define _empty_manifest_terminate_build 0
   %endif
   ```
-- **PR Descriptions:** Describe your packaging tweaks clearly in your Pull Request.
 
 ---
+
+## 👨‍💻 Make your changes
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feat/add-new-app`).
+3. For an existing app, update its spec file. For a new app, add the spec file in the appropriate directory (apps/\<app-name\>/\<app-name\>.spec)
+4. If you're adding a new app, you'll also need to update the [CI matrix](/.github/workflows/copr-build.yml#L31) in `copr-build` workflow and add an entry for the app in the [README App List](/README.md#app-list) (App, Icon, Source, version, COPR Badge). You can easily update both with our helper script:
+```
+# Install ruamel.yaml Python package
+pip install ruamel.yaml
+
+# Run the update script
+scripts/update_readme_workflow.py <app-name>
+```
+The COPR badge would show `unknown` status when the PR is open as there's no COPR package existing at that time (I'll create it after testing your changes locally. The badge may take upto 24 hrs to update status due to Github Camo image caching).
 
 ## 🚀 Local Testing
 Before submitting a Pull Request, ensure your changes build correctly on a Fedora system.
@@ -58,11 +77,9 @@ Before submitting a Pull Request, ensure your changes build correctly on a Fedor
 ---
 
 ## ⤴️ Submitting a Pull Request
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feat/add-new-app`).
-3. If you're adding a new app, you'll also need to update the [CI matrix](./workflows/copr-build.yml#L26) in `copr-build` workflow and add an entry for the app in the [README App List](../README.md#app-list) (App, Icon, Source, version, COPR Badge). The badge would show `unknown` status when the PR is open as there's no COPR package existing at that time (I'll create it after testing your changes locally. The badge may take upto 24 hrs to update status due to Github's image caching).
-4. Commit your changes. If you are fixing a bug, reference the issue number in the commit message or PR title.
-5. Push to your fork and open a Pull Request.
+1. Commit your changes.
+2. Push to your fork.
+3. Create a Pull Request. Select the appropriate type of change. Make sure all items in the checklist are checked. List the issue number. Add any optional screenshots.
 
 ---
 

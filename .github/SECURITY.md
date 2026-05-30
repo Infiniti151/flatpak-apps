@@ -15,7 +15,7 @@ This project focuses on providing native RPM packaging for Fedora and Enterprise
 
 ## Security Model & Scope
 
-This repository converts applications from the **Flatpak** ecosystem into native **RPM** packages via `.spec` files.
+This repository converts applications from the **Flatpak** ecosystem into native **RPM** packages via spec files.
 
 ### 🛡️ Sandboxing Disclaimer
 By design, **Flatpaks** run in a containerized sandbox (using `bubblewrap`). By converting these to **RPMs**, the application runs with **native system permissions**.
@@ -23,7 +23,7 @@ By design, **Flatpaks** run in a containerized sandbox (using `bubblewrap`). By 
 - Native execution allows for better system integration but removes the isolation layer provided by the Flatpak runtime.
 
 ### 🔍 Supply Chain Security
-*   **Sources:** All `.spec` files pull directly from official upstream GitHub/GitLab releases or verified Flatpak manifests.
+*   **Sources:** All spec files pull directly from official upstream GitHub/GitLab releases or verified Flatpak manifests.
 *   **Build Process:** Packages are intended to be built in clean environments (like `mock` or Fedora COPR) to ensure no host-system contamination.
 *   **No Binary Blobs:** I prioritize building from source. If a pre-compiled binary is used (e.g., for proprietary tools), it is clearly defined in the `Source` of the spec file.
 
@@ -45,6 +45,6 @@ If the vulnerability exists within the application code itself (not the RPM pack
 ---
 
 ## Best Practices for Users
-*   **Audit the Spec:** I encourage users to inspect the `%build` and `%install` sections of the `.spec` files in this repo.
+*   **Audit the Spec:** I encourage users to inspect the `%build` and `%install` sections of the spec files in this repo.
 *   **Verify GPG:** When installing from my COPR, always verify the GPG key when prompted by `dnf`.
 *   **Runtime Monitoring:** Use tools like `systemd-coredump` or `strace` if you suspect an application is behaving unexpectedly.
