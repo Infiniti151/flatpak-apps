@@ -13,20 +13,8 @@ RUN dnf install -y \
     npm \
     rpm-build \
     rpmdevtools \
+    rpmlint \
     sccache \
-    # --- words dependencies --- \
-    'pkgconfig(gio-2.0)' \
-    'pkgconfig(glib-2.0)' \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(libadwaita-1)' \
-    appstream \
-    cargo \
-    desktop-file-utils \
-    gcc \
-    gettext \
-    libappstream-glib \
-    meson \
-    rust \
     && dnf clean all
 
 ENV CCACHE_DIR=/github/workspace/.ccache \

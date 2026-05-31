@@ -59,20 +59,21 @@ Before submitting a Pull Request, ensure your changes build correctly on a Fedor
    sudo dnf install mock rpm-build rpmlint rpmdevtools
    sudo usermod -aG mock $USER  # Requires a re-login to take effect
    ```
-2. **Download Sources:**
+
+2. **Lint the Spec:**
+   `rpmlint -s <app-name>.spec`
+
+3. **Download Sources:**
    Download the files defined in the `Source` tags of your spec:
-   `spectool -g -R app-name.spec`
+   `spectool -g -R <app-name>.spec`
 
-3. **Build Source RPM:**
+4. **Build Source RPM:**
    Generate the `.src.rpm` needed for mock:
-   `rpmbuild -bs app-name.spec`
+   `rpmbuild -bs <app-name>.spec`
 
-4. **Mock Build:**
+5. **Mock Build:**
    Verify the build in a clean environment (change 44 to your target version):
-   `mock -r fedora-44-x86_64 rebuild ~/rpmbuild/SRPMS/app-name-*.src.rpm`
-
-5. **Lint the Spec:**
-   `rpmlint app-name.spec`
+   `mock -r fedora-44-x86_64 rebuild ~/rpmbuild/SRPMS/<app-name>-*.src.rpm`
 
 ---
 

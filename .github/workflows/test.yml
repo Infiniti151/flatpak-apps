@@ -111,6 +111,12 @@ jobs:
 
           cd "$APP_DIR"
 
+          echo -e "${COLOR_WARN}📝 Linting the spec file...${COLOR_RESET}"
+          rpmlint -s "$SPEC_FILE" || {
+              echo "::error::==> [ERROR] rpmlint found issues in the spec file. Please review the warnings above."
+              exit 1
+          }
+
           echo -e "${COLOR_WARN}📥 Downloading sources...${COLOR_RESET}"
           spectool -g -C "$RPM_SOURCES" "$SPEC_FILE"
 
