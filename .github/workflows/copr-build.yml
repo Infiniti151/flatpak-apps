@@ -92,7 +92,6 @@ jobs:
           - app_name: words-game
             upstream_repo: petsoi/words
             provider: codeberg
-
     steps:
       - name: Checkout Subdirectory
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -198,7 +197,7 @@ jobs:
               ENGINE_URL=$(echo "$REQ_DATA" | jq -r '.sources[]? | select(.url | contains("sudoku_engine"))? | .url // empty')
 
               if [ -n "$ENGINE_URL" ] && [ "$ENGINE_URL" != "null" ]; then
-                ESC_URL=$(echo "$ENGINE_URL" | sed 's/\//\\\//g')
+                ESC_URL="${ENGINE_URL//\//\\\/}"
                 sed -i "s/^Source1:.*/Source1:        $ESC_URL/" "$SPEC"
                 echo -e "${COLOR_SUCCESS}==> [SUCCESS] Updated sudoku-engine URL: $ENGINE_URL.${COLOR_RESET}"
               else
@@ -228,13 +227,13 @@ jobs:
               sed 's/^[[:space:]]*//' | \
               sed '/^$/d')
 
-            LINE_COUNT=$(echo "$CHANGELOG_RAW" | wc -l)
+            LINE_COUNT=$(wc -l <<< "$CHANGELOG_RAW")
 
             if [ "$LINE_COUNT" -gt 10 ]; then
               CHANGELOG=$(echo "$CHANGELOG_RAW" | head -n 10 | sed 's/^/- /')
               CHANGELOG="$CHANGELOG"$'\n- ... (see upstream for full release notes)'
             else
-              CHANGELOG=$(echo "$CHANGELOG_RAW" | sed 's/^/- /')
+              CHANGELOG="- ${CHANGELOG_RAW//$'\n'/$'\n'- }"
             fi
           fi
           DATE=$(date +"%a %b %d %Y")
@@ -277,6 +276,7 @@ jobs:
           done
 
       - name: Trigger COPR Build
+        id: copr-trigger
         if: steps.check.outputs.update_needed == 'true'
         env:
           APP: ${{ matrix.app_name }}
@@ -291,3 +291,10 @@ jobs:
             echo "::error::==> [ERROR] Webhook failed to trigger COPR build."
             exit 1
           fi
+
+      - name: Add to Workflow Summary
+        if: steps.copr-trigger.outcome == 'success'
+        run: |
+          echo "### 🚀 COPR Build Triggered" >> $GITHUB_STEP_SUMMARY
+          echo "**App:** `${{ matrix.app_name }}`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
