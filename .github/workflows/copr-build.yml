@@ -211,7 +211,7 @@ jobs:
           if [ "$PROVIDER" = "github" ]; then
             CHANGELOG_BODY=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | jq -r '.body // empty')
           elif [ "$PROVIDER" = "gitlab" ]; then
-            ENCODED=$(echo "$REPO" | sed 's/\//%2F/g')
+            ENCODED="${REPO//\//%2F}"
             CHANGELOG_BODY=$(curl -s "https://$INSTANCE/api/v4/projects/${ENCODED}/releases/${NEW_VER}" | jq -r '.description // empty')
           elif [ "$PROVIDER" = "codeberg" ]; then
             CHANGELOG_BODY=$(curl -s "https://codeberg.org/api/v1/repos/$REPO/releases/latest" | jq -r '.body // empty')
