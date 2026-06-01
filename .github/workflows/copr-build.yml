@@ -294,7 +294,9 @@ jobs:
 
       - name: Add to Workflow Summary
         if: steps.copr-trigger.outcome == 'success'
+        env:
+          APP: ${{ matrix.app_name }}
         run: |
           echo "### 🚀 COPR Build Triggered" >> $GITHUB_STEP_SUMMARY
-          echo "**App:** `${{ matrix.app_name }}`" >> $GITHUB_STEP_SUMMARY
+          echo "**App:** `$APP`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
