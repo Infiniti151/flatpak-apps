@@ -47,6 +47,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
 %files -f words.lang
+%license LICENSE
 %doc README.md
 %{_bindir}/words
 %{_datadir}/applications/*.desktop

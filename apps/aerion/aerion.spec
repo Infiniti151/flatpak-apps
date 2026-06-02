@@ -4,7 +4,7 @@ Name:           aerion
 Version:        0.2.5
 Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
-License:        GPLv3
+License:        Apache-2.0
 URL:            https://github.com/hkdb/aerion
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -13,6 +13,10 @@ ExclusiveArch:  x86_64
 Source0:        https://github.com/hkdb/aerion/releases/download/v%{version}/aerion-v%{version}-linux-x86_64
 Source1:        https://raw.githubusercontent.com/hkdb/aerion/main/brand/icon-beautyline.png
 Source2:        https://raw.githubusercontent.com/hkdb/aerion/main/build/linux/aerion.desktop
+Source3:        https://raw.githubusercontent.com/hkdb/aerion/main/LICENSE
+Source4:        https://raw.githubusercontent.com/hkdb/aerion/main/README.md
+
+BuildRequires:  desktop-file-utils
 
 Requires:       desktop-file-utils
 Requires:       shared-mime-info
@@ -22,9 +26,9 @@ Aerion is a desktop mail client. This package contains the official binary
 release.
 
 %prep
-cp %{SOURCE0} .
-cp %{SOURCE1} .
-cp %{SOURCE2} .
+for src in %{sources}; do
+    cp "$src" .
+done
 
 %build
 # No-op: packaging a prebuilt binary
@@ -35,13 +39,11 @@ mkdir -p %{buildroot}%{_datadir}/applications
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
 
 install -m 755 aerion-v%{version}-linux-x86_64 %{buildroot}%{_bindir}/aerion
-
 install -m 644 icon-beautyline.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
-
 install -m 644 aerion.desktop %{buildroot}%{_datadir}/applications/io.github.hkdb.Aerion.desktop
 
 %check
-echo "==> Checking dynamic library dependencies..."
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 ldd %{buildroot}%{_bindir}/aerion
 
 %post
@@ -53,6 +55,8 @@ update-desktop-database &> /dev/null || :
 update-mime-database %{_datadir}/mime &> /dev/null || :
 
 %files
+%license LICENSE
+%doc README.md
 %{_bindir}/aerion
 %{_datadir}/applications/io.github.hkdb.Aerion.desktop
 %{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png

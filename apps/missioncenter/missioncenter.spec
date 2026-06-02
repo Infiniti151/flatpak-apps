@@ -51,7 +51,7 @@ Requires:       hicolor-icon-theme
 
 %description
 Mission Center is a system monitor written in Rust using GTK4 and Libadwaita.
-It provides a highly detailed view of system performance, including per-thread 
+It provides a highly detailed view of system performance, including per-thread
 CPU usage and hardware-accelerated GPU monitoring.
 
 %prep
@@ -92,6 +92,8 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 
 %files -f %{name}.lang
+%license COPYING
+%doc README.md
 %{_bindir}/%{name}
 %{_bindir}/%{name}-magpie
 %{_datadir}/%{name}/
@@ -99,7 +101,6 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.xml
-%doc README.md
 
 %changelog
 * Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.1.0-1

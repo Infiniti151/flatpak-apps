@@ -29,7 +29,7 @@ Requires:       hicolor-icon-theme
 
 %description
 Concessio is a simple utility to help you understand UNIX file permissions.
-It allows you to convert between symbolic and numeric representations 
+It allows you to convert between symbolic and numeric representations
 (e.g., rwx------ to 700) using an intuitive GTK4 interface.
 
 %prep
@@ -48,6 +48,8 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
 %files -f %{name}.lang
+%license LICENSE
+%doc README.md
 %{_bindir}/io.github.ronniedroid.concessio
 %{_datadir}/io.github.ronniedroid.concessio/
 %{_datadir}/applications/*.desktop
@@ -56,8 +58,6 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/metainfo/*.xml
 %{_datadir}/dbus-1/services/*.service
-%license LICENSE
-%doc README.md
 
 %changelog
 * Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.0-1

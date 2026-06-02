@@ -45,6 +45,8 @@ A simple text comparison tool built with GJS and Adwaita.
 %meson_test
 
 %files -f %{name}.lang
+%license COPYING
+%doc README.md
 %{_bindir}/io.github.josephmawa.TextCompare
 %{_datadir}/TextCompare/
 %{_datadir}/applications/*.desktop

@@ -54,6 +54,8 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 %files -f %{name}.lang
+%license LICENSE
+%doc README.md
 %{_bindir}/tomatillo
 %{_datadir}/tomatillo/
 %{_datadir}/applications/*.desktop

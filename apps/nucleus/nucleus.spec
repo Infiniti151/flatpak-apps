@@ -48,8 +48,8 @@ sed -i "s|python.find_installation('python3').full_path()|'/usr/bin/python3'|g" 
 %meson_test
 
 %files -f %{name}.lang
-%doc README.md
 %license COPYING
+%doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_datadir}/applications/*.desktop
