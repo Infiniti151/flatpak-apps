@@ -61,28 +61,17 @@ The %{name}-devel package contains libraries, header files, and Vala bindings
 for developing applications that use Planify's core API.
 
 %prep
-%setup -q -T -c -n %{name}-%{version}
-
-echo "=== 1. TARBALL INTERNAL STRUCTURE ==="
-tar -tf %{SOURCE0} | head -n 25
-echo "====================================="
-
-# Extract it
-tar -xf %{SOURCE0} --strip-components=1
-
-echo "=== 2. CURRENT DIRECTORY FILES ==="
-ls -la
-echo "=================================="
-
-echo "=== 3. SUBPROJECTS DIRECTORY (IF ANY) ==="
-ls -la subprojects/ 2>/dev/null || echo "No subprojects folder found here!"
-echo "========================================="
+%setup -q -n %{name}-%{version}
 
 git init
 
-CHRONO_URL=$(sed -n 's/^url=//p' subprojects/chrono.wrap)
-CHRONO_REV=$(sed -n 's/^revision=//p' subprojects/chrono.wrap)
-git clone --depth 1 -b "$CHRONO_REV" "$CHRONO_URL" subprojects/chrono
+if [ -f "subprojects/chrono.wrap" ]; then
+    CHRONO_URL=$(sed -n 's/^url=//p' subprojects/chrono.wrap)
+    CHRONO_REV=$(sed -n 's/^revision=//p' subprojects/chrono.wrap)
+    git clone --depth 1 -b "$CHRONO_REV" "$CHRONO_URL" subprojects/chrono
+else
+    echo "Notice: subprojects/chrono.wrap not found for this version. Skipping."
+fi
 
 GXML_URL=$(sed -n 's/^url=//p' subprojects/gxml-0.20.wrap)
 GXML_REV=$(sed -n 's/^revision=//p' subprojects/gxml-0.20.wrap)
