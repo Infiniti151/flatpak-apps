@@ -61,20 +61,11 @@ The %{name}-devel package contains libraries, header files, and Vala bindings
 for developing applications that use Planify's core API.
 
 %prep
-%setup -q -c -n %{name}-%{version}
+%setup -q -c -n %{name}-%{version} -T -b 0
 
-echo "=== Listing extracted contents ==="
-ls -la
-echo "=================================="
-
-mv %{name}-*/* . 2>/dev/null ||:
-
-if [ ! -f "meson.build" ]; then
-    echo "==> meson.build not found here. Checking parent directory..."
-    if [ -f "../meson.build" ]; then
-        cd ..
-    fi
-fi
+mv %{name}-%{version}/* . 2>/dev/null ||:
+mv %{name}-%{version}/.* . 2>/dev/null ||:
+rm -rf %{name}-%{version}
 
 git init
 
