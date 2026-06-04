@@ -91,9 +91,9 @@ jobs:
         uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: |
-            ${{ github.workspace }}/.ccache
-            ${{ github.workspace }}/.sccache
-            ${{ github.workspace }}/.cargo_cache
+            /github/home/.ccache
+            /github/home/.sccache
+            /github/home/.cargo_cache
           key: ${{ runner.os }}-build-cache-${{ vars.APP }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-build-cache-${{ vars.APP }}-
@@ -178,9 +178,9 @@ jobs:
         uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: |
-            ${{ github.workspace }}/.ccache
-            ${{ github.workspace }}/.sccache
-            ${{ github.workspace }}/.cargo_cache
+            /github/home/.ccache
+            /github/home/.sccache
+            /github/home/.cargo_cache
           key: ${{ runner.os }}-build-cache-${{ vars.APP }}-${{ github.sha }}
 
       - name: Show Cache Stats
