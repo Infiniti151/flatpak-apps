@@ -151,12 +151,15 @@ jobs:
 
           if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
             echo -e "${COLOR_INFO}🛠️ C/C++ Compiler detected. Injecting ccache variables...${COLOR_RESET}"
+
             export CCACHE_DIR="/github/home/.ccache"
+            export CC="ccache gcc"
+            export CXX="ccache g++"
 
             rpmbuild -ba *.spec \
               --define "configure_options %{?_configure_options} -Dccache=true" \
-              --define "__cc '/usr/bin/ccache gcc'" \
-              --define "__cxx '/usr/bin/ccache g++'"
+              --define "__cc ccache gcc" \
+              --define "__cxx ccache g++"
           else
             rpmbuild -ba *.spec
           fi

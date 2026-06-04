@@ -1,6 +1,3 @@
-%global __requires_exclude ^libgxml-0.20.*$
-%global __provides_exclude ^libgxml-0.20.*$
-
 Name:           planify
 Version:        4.19.4
 Release:        1%{?dist}
@@ -10,6 +7,9 @@ URL:            https://github.com/alainm23/%{name}
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 %global app_id io.github.alainm23.%{name}
+%global __requires_exclude ^libgxml-0.20.*$
+%global __provides_exclude ^libgxml-0.20.*$
+
 Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildRequires:  meson
@@ -79,7 +79,9 @@ GXML_URL=$(sed -n 's/^url=//p' subprojects/gxml-0.20.wrap)
 GXML_REV=$(sed -n 's/^revision=//p' subprojects/gxml-0.20.wrap)
 git clone --depth 1 -b "$GXML_REV" "$GXML_URL" subprojects/gxml-0.20
 
-python3 scripts/update-translations.py ||:
+if [ -f scripts/update-translations.py ]; then
+    python3 scripts/update-translations.py
+fi
 
 %build
 %meson \
@@ -98,7 +100,6 @@ python3 scripts/update-translations.py ||:
 
 rm -rf %{buildroot}%{_includedir}/gxml-0.20/
 rm -rf %{buildroot}%{_libdir}/pkgconfig/gxml-0.20.pc
-rm -rf %{buildroot}%{_libdir}/libgxml-0.20.so*
 rm -rf %{buildroot}%{_datadir}/vala/vapi/gxml-0.20.*
 
 %check
@@ -116,7 +117,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/applications/%{app_id}.desktop
 %{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
 %{_datadir}/metainfo/%{app_id}.metainfo.xml
-%{_datadir}/icons/hicolor/*/apps/%{app_id}*.*
+%{_datadir}/icons/hicolor/*/apps/*.{svg,png}
 
 %{_datadir}/dbus-1/services/%{app_id}.SearchProvider.service
 %{_datadir}/gnome-shell/search-providers/%{app_id}.SearchProvider.ini
@@ -127,6 +128,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
 %files libs
 %{_libdir}/libplanify.so.*
+%{_libdir}/libgxml-0.20.so.*
 
 %files devel
 %{_includedir}/%{name}/
