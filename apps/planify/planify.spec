@@ -61,11 +61,9 @@ The %{name}-devel package contains libraries, header files, and Vala bindings
 for developing applications that use Planify's core API.
 
 %prep
-%setup -q -c -n %{name}-%{version} -T -b 0
+%setup -q -T -c -n %{name}-%{version}
 
-mv %{name}-%{version}/* . 2>/dev/null ||:
-mv %{name}-%{version}/.* . 2>/dev/null ||:
-rm -rf %{name}-%{version}
+tar -xf %{SOURCE0} --strip-components=1
 
 git init
 
