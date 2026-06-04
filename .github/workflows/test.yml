@@ -108,7 +108,7 @@ jobs:
           SPEC_FILE="${{ vars.APP }}.spec"
 
           RPM_SOURCES="$HOME/rpmbuild/SOURCES"
-          mkdir -p "$RPM_SOURCES" "$HOME/.ccache" "$HOME/.sccache" "$HOME/.cargo_cache"
+          mkdir -p "$RPM_SOURCES" /github/home/.ccache /github/home/.sccache /github/home/.cargo_cache
 
           cd "$APP_DIR"
 
@@ -121,57 +121,66 @@ jobs:
           echo -e "${COLOR_WARN}📥 Downloading sources...${COLOR_RESET}"
           spectool -g -C "$RPM_SOURCES" "$SPEC_FILE"
 
-          # 1. Configure the RPM Environment
-          echo "_topdir %(echo $HOME)/rpmbuild" > ~/.rpmmacros
-          echo "_sourcedir %(echo $HOME)/rpmbuild/SOURCES" >> ~/.rpmmacros
+          # 1. Base topdir/sourcedir layout configuration
+          echo "_topdir /github/home/rpmbuild" > ~/.rpmmacros
+          echo "_sourcedir /github/home/rpmbuild/SOURCES" >> ~/.rpmmacros
 
-          # 2. GCC / G++ / Clang Logic via clean configuration file overrides
-          if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
-            echo -e "${COLOR_INFO}🛠️ Compiler detected. Injecting ccache into RPM environment...${COLOR_RESET}"
-            echo "__ccache_dir %(echo $HOME)/.ccache" >> ~/.rpmmacros
-            echo "build_cc_wrapper ccache" >> ~/.rpmmacros
-            echo "build_cxx_wrapper ccache" >> ~/.rpmmacros
-          fi
-
-          # 3. Rust / Cargo Logic
+          # 2. Rust / Cargo Logic
           if grep -qiE "rust|cargo" "$SPEC_FILE"; then
             echo -e "${COLOR_INFO}🦀 Rust detected. Enabling sccache...${COLOR_RESET}"
-            export SCCACHE_DIR="$HOME/.sccache"
+            export SCCACHE_DIR="/github/home/.sccache"
             export RUSTC_WRAPPER="sccache"
             sccache --start-server
 
-            STABLE_CARGO_CACHE="$HOME/.cargo_cache"
+            export CARGO_HOME="/github/home/.cargo_cache"
 
             echo -e "${COLOR_WARN}📦 Preparing source for Rust cache linking...${COLOR_RESET}"
             rpmbuild -bp *.spec
 
-            ACTUAL_CARGO_DIR=$(find $HOME/rpmbuild/BUILD -type d -name "cargo-home" | head -n 1)
+            ACTUAL_CARGO_DIR=$(find /github/home/rpmbuild/BUILD -type d -name "cargo-home" | head -n 1)
+
             if [ -n "$ACTUAL_CARGO_DIR" ]; then
-              echo -e "${COLOR_INFO}==> Found cargo-home at $ACTUAL_CARGO_DIR, linking to cache...${COLOR_RESET}"
+              echo -e "${COLOR_INFO}==> Linking RPM cargo-home to persistent cache...${COLOR_RESET}"
               rm -rf "$ACTUAL_CARGO_DIR"
-              ln -s "$STABLE_CARGO_CACHE" "$ACTUAL_CARGO_DIR"
+              ln -sfn "$CARGO_HOME" "$ACTUAL_CARGO_DIR"
             fi
           fi
 
-          # 4. Final Build Execution
+          # 3. C/C++ Detection and Build Execution
           echo -e "${COLOR_SUCCESS}🚀 Starting Final RPM Build...${COLOR_RESET}"
-          rpmbuild -ba *.spec
+
+          if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
+            echo -e "${COLOR_INFO}🛠️ C/C++ Compiler detected. Injecting ccache variables...${COLOR_RESET}"
+            export CCACHE_DIR="/github/home/.ccache"
+
+            rpmbuild -ba *.spec \
+              --define "configure_options %{?_configure_options} -Dccache=true" \
+              --define "__cc '/usr/bin/ccache gcc'" \
+              --define "__cxx '/usr/bin/ccache g++'"
+          else
+            rpmbuild -ba *.spec
+          fi
 
           [ -n "${RUSTC_WRAPPER:-}" ] && sccache --stop-server || true
 
           echo -e "${COLOR_WARN}🔓 Handing ownership back to GitHub Runner...${COLOR_RESET}"
-          chown -R 1001:1001 $HOME/.ccache $HOME/.sccache $HOME/.cargo_cache || true
+          RUNNER_UID=$(stat -c '%u:%g' /github/home 2>/dev/null || echo "1001:1001")
+          chown -R "$RUNNER_UID" /github/home/.ccache /github/home/.sccache /github/home/.cargo_cache || true
 
           echo "::group::Cache Folder Statistics"
           if grep -qiE "rust|cargo" "$SPEC_FILE"; then
-              echo -e "${COLOR_SUCCESS}==> .sccache size: $(du -sh "$HOME/.sccache" | cut -f1)${COLOR_RESET}"
-              echo -e "${COLOR_SUCCESS}==> .cargo size: $(du -sh "$HOME/.cargo_cache" | cut -f1)${COLOR_RESET}"
+              echo -e "${COLOR_SUCCESS}==> .sccache size: $(du -sh "/github/home/.sccache" | cut -f1)${COLOR_RESET}"
+              echo -e "${COLOR_SUCCESS}==> .cargo size: $(du -sh "/github/home/.cargo_cache" | cut -f1)${COLOR_RESET}"
           fi
 
           if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
-              echo -e "${COLOR_SUCCESS}==> .ccache size: $(du -sh "$HOME/.ccache" | cut -f1)${COLOR_RESET}"
+              echo -e "${COLOR_SUCCESS}==> .ccache size: $(du -sh "/github/home/.ccache" | cut -f1)${COLOR_RESET}"
           fi
           echo "::endgroup::"
+
+      - name: Locate Built GXml Binaries
+        run: |
+          find $HOME/rpmbuild/BUILD -name "libgxml-0.20.so*"
 
       - name: Save Cache
         if: always()
