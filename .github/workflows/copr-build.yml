@@ -1,4 +1,3 @@
----
 name: Trigger COPR Build
 on:
   schedule:
@@ -71,6 +70,9 @@ jobs:
           - app_name: nucleus
             upstream_repo: lo-vely/nucleus
             provider: codeberg
+          - app_name: planify
+            upstream_repo: alainm23/planify
+            provider: github
           - app_name: pods
             upstream_repo: marhkb/pods
             provider: github
