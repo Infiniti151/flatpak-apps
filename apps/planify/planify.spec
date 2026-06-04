@@ -1,5 +1,5 @@
 Name:           planify
-Version:        0
+Version:        4.19.4
 Release:        1%{?dist}
 Summary:        Task manager with Todoist and CalDAV support
 License:        GPL-3.0-or-later
@@ -136,3 +136,12 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_libdir}/libplanify.so
 %{_libdir}/pkgconfig/%{name}.pc
 %{_datadir}/vala/vapi/%{name}.*
+
+%changelog
+* Thu Jun 04 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v4.19.4-1
+- Planify 4.19.4 is a maintenance release focused on bug fixes.
+- Bug Fixes:
+- Fixed a crash when updating a task with no priority set on Mailbox.org and Open-Xchange servers.
+- Fixed completed tasks generating an ambiguous local timestamp in the VTODO — now uses UTC with the Z suffix, fixing sync errors with DAVx5 on Android.
+- Fixed inconsistent accent colors across the app — accent color logic is now centralized and correctly follows the system accent color setting.
+
