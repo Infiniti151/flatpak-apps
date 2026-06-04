@@ -63,7 +63,20 @@ for developing applications that use Planify's core API.
 %prep
 %setup -q -T -c -n %{name}-%{version}
 
+echo "=== 1. TARBALL INTERNAL STRUCTURE ==="
+tar -tf %{SOURCE0} | head -n 25
+echo "====================================="
+
+# Extract it
 tar -xf %{SOURCE0} --strip-components=1
+
+echo "=== 2. CURRENT DIRECTORY FILES ==="
+ls -la
+echo "=================================="
+
+echo "=== 3. SUBPROJECTS DIRECTORY (IF ANY) ==="
+ls -la subprojects/ 2>/dev/null || echo "No subprojects folder found here!"
+echo "========================================="
 
 git init
 
