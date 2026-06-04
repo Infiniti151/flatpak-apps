@@ -212,6 +212,6 @@ jobs:
         with:
           name: ${{ vars.APP }}-fc${{ vars.VER }}-rpm
           path: |
-            rpmbuild/RPMS/*/*.rpm
-            !rpmbuild/RPMS/*/*-debuginfo-*.rpm
-            !rpmbuild/RPMS/*/*-debugsource-*.rpm
+            /github/home/rpmbuild/RPMS/*/*.rpm
+            !/github/home/rpmbuild/RPMS/*/*-debuginfo-*.rpm
+            !/github/home/rpmbuild/RPMS/*/*-debugsource-*.rpm
