@@ -96,7 +96,6 @@ jobs:
       - name: Checkout Subdirectory
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           sparse-checkout: |
             apps/${{ matrix.app_name }}
             README.md
@@ -107,21 +106,47 @@ jobs:
           PROVIDER: ${{ matrix.provider }}
           REPO: ${{ matrix.upstream_repo }}
           INSTANCE: ${{ matrix.instance }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           fetch_tag() {
             local url=$1
             local attempt=1
-            local max_attempts=3
+            local max_attempts=4
+            local wait_time=3
             local result=""
+            local response_code=""
 
             while [ $attempt -le $max_attempts ]; do
-              result=$(curl -sSf "$url" 2>/dev/null)
-              if [ $? -eq 0 ] && [ -n "$result" ] && [ "$result" != "[]" ]; then
+              local body_file=$(mktemp)
+
+              if [[ "$url" == *"api.github.com"* ]]; then
+                response_code=$(curl -sS -L -w "%{http_code}" -o "$body_file" \
+                  -H "Authorization: Bearer $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github+json" "$url")
+              else
+                response_code=$(curl -sS -L -w "%{http_code}" -o "$body_file" "$url")
+              fi
+
+              result=$(cat "$body_file")
+              rm -f "$body_file"
+
+              if [ "$response_code" -eq 200 ] && [ -n "$result" ] && [ "$result" != "[]" ]; then
                 echo "$result"
                 return 0
               fi
-              echo -e "${COLOR_WARN}==> [WARN] Retry attempt $attempt failed for $url. Retrying in 5s...${COLOR_RESET}" >&2
-              sleep 5
+
+              echo -e "${COLOR_WARN}==> [WARN] Attempt $attempt failed (HTTP $response_code) for $url.${COLOR_RESET}" >&2
+
+              if [ $attempt -eq $max_attempts ]; then
+                break
+              fi
+
+              local jitter=$(( RANDOM % 4 ))
+              local sleep_duration=$(( wait_time + jitter ))
+              echo -e "${COLOR_INFO}==> [INFO] Retrying in ${sleep_duration}s...${COLOR_RESET}" >&2
+              sleep $sleep_duration
+
+              wait_time=$(( wait_time * 2 ))
               ((attempt++))
             done
             return 1
@@ -172,7 +197,7 @@ jobs:
             echo -e "${COLOR_SUCCESS}==> [SUCCESS] $APP is already up to date.${COLOR_RESET}"
           fi
 
-      - name: Bump Version and Commit Changes
+      - name: Bump Version and Push
         if: steps.check.outputs.update_needed == 'true'
         env:
           PROVIDER: "${{ matrix.provider }}"
@@ -262,6 +287,20 @@ jobs:
           git add "$SPEC" "$README"
           git commit -m "chore($APP): bump version to $NEW_VER"
 
+          MAX_RETRIES=5
+          for i in $(seq 1 $MAX_RETRIES); do
+            echo -e "${COLOR_INFO}==> [INFO] Push attempt $i...${COLOR_RESET}"
+            if git pull --rebase origin main && git push origin main; then
+              echo -e "${COLOR_SUCCESS}==> [SUCCESS] Updated readme and spec file.${COLOR_RESET}"
+              break
+            fi
+            if [ $i -eq $MAX_RETRIES ]; then
+              echo "::error::==> [ERROR] Failed to push after $MAX_RETRIES attempts."
+              exit 1
+            fi
+            sleep $(( (RANDOM % 10) + 1 ))
+          done
+
       - name: Trigger COPR Build
         if: steps.check.outputs.update_needed == 'true'
         env:
@@ -278,23 +317,6 @@ jobs:
             echo "::error::==> [ERROR] Webhook failed to trigger COPR build."
             exit 1
           fi
-
-      - name: Push Changes to GitHub
-        if: steps.check.outputs.update_needed == 'true'
-        run: |
-          MAX_RETRIES=5
-          for i in $(seq 1 $MAX_RETRIES); do
-            echo -e "${COLOR_INFO}==> [INFO] Push attempt $i...${COLOR_RESET}"
-            if git pull --rebase origin main && git push origin main; then
-              echo -e "${COLOR_SUCCESS}==> [SUCCESS] Updated readme and spec file.${COLOR_RESET}"
-              break
-            fi
-            if [ $i -eq $MAX_RETRIES ]; then
-              echo "::error::==> [ERROR] Failed to push after $MAX_RETRIES attempts."
-              exit 1
-            fi
-            sleep $(( (RANDOM % 10) + 1 ))
-          done
 
       - name: Add to Workflow Summary
         if: steps.check.outputs.update_needed == 'true'
