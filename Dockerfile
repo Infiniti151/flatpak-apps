@@ -42,10 +42,8 @@ RUN dnf install -y \
     vala \
     && dnf clean all
 
-ENV CCACHE_DIR=/github/workspace/.ccache \
-    SCCACHE_DIR=/github/workspace/.sccache \
-    CARGO_HOME=**/rpmbuild/BUILD/**/redhat-linux-build/cargo-home \
-    CARGO_INCREMENTAL=0 \
-    CCACHE_COMPILERCHECK=content
+ENV CCACHE_COMPILERCHECK=content
+ENV CCACHE_MAXSIZE=2G
+ENV CARGO_INCREMENTAL=0
 
 WORKDIR /github/workspace
