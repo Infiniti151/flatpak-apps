@@ -75,7 +75,7 @@ fi
 
 GXML_URL=$(sed -n 's/^url=//p' subprojects/gxml-0.20.wrap)
 GXML_REV=$(sed -n 's/^revision=//p' subprojects/gxml-0.20.wrap)
-git clone --depth 1 -b "$GXML_REV" "$GXML_URL" subprojects/gxml
+git clone --depth 1 -b "$GXML_REV" "$GXML_URL" subprojects/gxml-0.20
 
 python3 scripts/update-translations.py ||:
 
