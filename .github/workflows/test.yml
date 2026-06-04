@@ -120,25 +120,17 @@ jobs:
           echo -e "${COLOR_WARN}📥 Downloading sources...${COLOR_RESET}"
           spectool -g -C "$RPM_SOURCES" "$SPEC_FILE"
 
-          # 1. GCC / G++ Logic
-          if grep -qiE "gcc|gcc-c\+\+" "$SPEC_FILE"; then
-            echo -e "${COLOR_INFO}🛠️ GCC detected. Enabling CC/CXX wrappers...${COLOR_RESET}"
-            export CCACHE_DIR="${{ github.workspace }}/.ccache"
-            export CC="ccache gcc"
-            export CXX="ccache g++"
+          RPM_MACROS="--define '_topdir $GITHUB_WORKSPACE/rpmbuild' --define '_sourcedir $RPM_SOURCES'"
+
+          # 1. GCC / G++ / Clang Logic via RPM Macro overrides
+          if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
+            echo -e "${COLOR_INFO}🛠️ Compiler detected. Injecting ccache into RPM environment...${COLOR_RESET}"
+            RPM_MACROS="$RPM_MACROS --define '__ccache_dir ${{ github.workspace }}/.ccache' --define 'build_cc_wrapper ccache' --define 'build_cxx_wrapper ccache'"
           fi
 
-          # 2. Clang / Clang++ Logic
-          if grep -qiE "clang|clang\+\+" "$SPEC_FILE"; then
-            echo -e "${COLOR_INFO}🪄 Clang detected. Enabling Clang wrappers...${COLOR_RESET}"
-            export CCACHE_DIR="${{ github.workspace }}/.ccache"
-            export CC="ccache clang"
-            export CXX="ccache clang++"
-          fi
-
-          # 4. Rust / Cargo Logic
+          # 2. Rust / Cargo Logic
           if grep -qiE "rust|cargo" "$SPEC_FILE"; then
-            echo -e "${COLOR_INFO}🦀 Rust detected. Enabling sccache and deep-linking cargo-home...${COLOR_RESET}"
+            echo -e "${COLOR_INFO}🦀 Rust detected. Enabling sccache...${COLOR_RESET}"
             export SCCACHE_DIR="${{ github.workspace }}/.sccache"
             export RUSTC_WRAPPER="sccache"
             sccache --start-server
@@ -146,9 +138,7 @@ jobs:
             STABLE_CARGO_CACHE="${{ github.workspace }}/.cargo_cache"
 
             echo -e "${COLOR_WARN}📦 Preparing source for Rust cache linking...${COLOR_RESET}"
-            rpmbuild -bp *.spec \
-              --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
-              --define "_sourcedir $RPM_SOURCES"
+            rpmbuild -bp *.spec $RPM_MACROS
 
             ACTUAL_CARGO_DIR=$(find $GITHUB_WORKSPACE/rpmbuild/BUILD -type d -name "cargo-home" | head -n 1)
             if [ -n "$ACTUAL_CARGO_DIR" ]; then
@@ -158,11 +148,9 @@ jobs:
             fi
           fi
 
-          # 5. Final Build Execution
+          # 3. Final Build Execution
           echo -e "${COLOR_SUCCESS}🚀 Starting Final RPM Build...${COLOR_RESET}"
-          rpmbuild -ba *.spec \
-            --define "_topdir $GITHUB_WORKSPACE/rpmbuild" \
-            --define "_sourcedir $RPM_SOURCES"
+          rpmbuild -ba *.spec $RPM_MACROS
 
           [ -n "${RUSTC_WRAPPER:-}" ] && sccache --stop-server || true
 
@@ -170,18 +158,13 @@ jobs:
           chown -R 1001:1001 ${{ github.workspace }}/.ccache ${{ github.workspace }}/.sccache ${{ github.workspace }}/.cargo_cache || true
 
           echo "::group::Cache Folder Statistics"
-          # Check sccache and cargo cache
           if grep -qiE "rust|cargo" "$SPEC_FILE"; then
-              echo -e "${COLOR_SUCCESS}==> .sccache size: $(du -sh "$SCCACHE_DIR" | cut -f1)${COLOR_RESET}"
-              echo -e "${COLOR_SUCCESS}==> .sccache total items: $(find "$SCCACHE_DIR" -type f | wc -l)${COLOR_RESET}"
-              echo -e "${COLOR_SUCCESS}==> .cargo size: $(du -sh "$STABLE_CARGO" | cut -f1)${COLOR_RESET}"
-              echo -e "${COLOR_SUCCESS}==> .cargo total items: $(find "$STABLE_CARGO" -type f | wc -l)${COLOR_RESET}"
+              echo -e "${COLOR_SUCCESS}==> .sccache size: $(du -sh "${{ github.workspace }}/.sccache" | cut -f1)${COLOR_RESET}"
+              echo -e "${COLOR_SUCCESS}==> .cargo size: $(du -sh "${{ github.workspace }}/.cargo_cache" | cut -f1)${COLOR_RESET}"
           fi
 
-          # Check ccache
           if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
-              echo -e "${COLOR_SUCCESS}==> .ccache size: $(du -sh "$CCACHE_DIR" | cut -f1)${COLOR_RESET}"
-              echo -e "${COLOR_SUCCESS}==> .ccache total items: $(find "$CCACHE_DIR" -type f | wc -l)${COLOR_RESET}"
+              echo -e "${COLOR_SUCCESS}==> .ccache size: $(du -sh "${{ github.workspace }}/.ccache" | cut -f1)${COLOR_RESET}"
           fi
           echo "::endgroup::"
 
@@ -197,17 +180,18 @@ jobs:
 
       - name: Show Cache Stats
         if: always()
+        working-directory: apps/${{ vars.APP }}
         run: |
-          APP_DIR="apps/${{ vars.APP }}"
           SPEC_FILE="${{ vars.APP }}.spec"
-          echo -e "${COLOR_INFO}📊 --- Cache PerformanceStatistics ---${COLOR_RESET}"
+          echo -e "${COLOR_INFO}📊 --- Cache Performance Statistics ---${COLOR_RESET}"
+
+          export CCACHE_DIR="${{ github.workspace }}/.ccache"
+          export SCCACHE_DIR="${{ github.workspace }}/.sccache"
 
           # Check sccache (Rust)
           if grep -qiE "rust|cargo" "$SPEC_FILE"; then
             echo -e "${COLOR_SUCCESS}🦀 Rust/sccache stats:${COLOR_RESET}"
             sccache --show-stats
-          else
-            echo -e "${COLOR_WARN}⚠️ sccache directory not found. Rust was likely not cached.${COLOR_RESET}"
           fi
 
           echo ""
@@ -216,8 +200,6 @@ jobs:
           if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
             echo -e "${COLOR_SUCCESS}🛠️ C/C++ / ccache stats:${COLOR_RESET}"
             ccache -s
-          else
-            echo -e "${COLOR_WARN}⚠️ ccache directory not found. C/C++ was likely not cached.${COLOR_RESET}"
           fi
 
       - name: Upload Build Artifacts
