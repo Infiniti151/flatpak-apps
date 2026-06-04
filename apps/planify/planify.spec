@@ -86,6 +86,7 @@ python3 scripts/update-translations.py ||:
     -Devolution=true \
     -Dspelling=enabled \
     -Dmanpage=false \
+    -Dgxml:default_library=static \
     --wrap-mode=nodownload
 %meson_build
 
@@ -124,7 +125,6 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
 %files libs
 %{_libdir}/libplanify.so.*
-%{_libdir}/libgxml-0.20.so.*
 
 %files devel
 %{_includedir}/planify/
