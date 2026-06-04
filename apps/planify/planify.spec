@@ -61,16 +61,29 @@ The %{name}-devel package contains libraries, header files, and Vala bindings
 for developing applications that use Planify's core API.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -c -n %{name}-%{version}
+
+echo "=== Listing extracted contents ==="
+ls -la
+echo "=================================="
+
+mv %{name}-*/* . 2>/dev/null ||:
+
+if [ ! -f "meson.build" ]; then
+    echo "==> meson.build not found here. Checking parent directory..."
+    if [ -f "../meson.build" ]; then
+        cd ..
+    fi
+fi
 
 git init
 
-CHRONO_URL=$(sed -n 's/^url=//p' < subprojects/chrono.wrap)
-CHRONO_REV=$(sed -n 's/^revision=//p' < subprojects/chrono.wrap)
+CHRONO_URL=$(sed -n 's/^url=//p' subprojects/chrono.wrap)
+CHRONO_REV=$(sed -n 's/^revision=//p' subprojects/chrono.wrap)
 git clone --depth 1 -b "$CHRONO_REV" "$CHRONO_URL" subprojects/chrono
 
-GXML_URL=$(sed -n 's/^url=//p' < subprojects/gxml-0.20.wrap)
-GXML_REV=$(sed -n 's/^revision=//p' < subprojects/gxml-0.20.wrap)
+GXML_URL=$(sed -n 's/^url=//p' subprojects/gxml-0.20.wrap)
+GXML_REV=$(sed -n 's/^revision=//p' subprojects/gxml-0.20.wrap)
 git clone --depth 1 -b "$GXML_REV" "$GXML_URL" subprojects/gxml
 
 python3 scripts/update-translations.py ||:
