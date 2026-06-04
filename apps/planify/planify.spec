@@ -8,7 +8,7 @@ License:        GPL-3.0-or-later
 URL:            https://github.com/alainm23/planify
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/%{version}.tar.gz
+Source0:        %{url}/archive/v%{version}.tar.gz
 
 BuildRequires:  meson
 BuildRequires:  vala
