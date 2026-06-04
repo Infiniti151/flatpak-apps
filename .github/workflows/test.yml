@@ -120,15 +120,19 @@ jobs:
           echo -e "${COLOR_WARN}📥 Downloading sources...${COLOR_RESET}"
           spectool -g -C "$RPM_SOURCES" "$SPEC_FILE"
 
-          RPM_MACROS="--define '_topdir $GITHUB_WORKSPACE/rpmbuild' --define '_sourcedir $RPM_SOURCES'"
+          # 1. Base topdir/sourcedir routing configuration
+          echo "_topdir $GITHUB_WORKSPACE/rpmbuild" > ~/.rpmmacros
+          echo "_sourcedir $RPM_SOURCES" >> ~/.rpmmacros
 
-          # 1. GCC / G++ / Clang Logic via RPM Macro overrides
+          # 2. GCC / G++ / Clang Logic via clean configuration file overrides
           if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
             echo -e "${COLOR_INFO}🛠️ Compiler detected. Injecting ccache into RPM environment...${COLOR_RESET}"
-            RPM_MACROS="$RPM_MACROS --define '__ccache_dir ${{ github.workspace }}/.ccache' --define 'build_cc_wrapper ccache' --define 'build_cxx_wrapper ccache'"
+            echo "__ccache_dir ${{ github.workspace }}/.ccache" >> ~/.rpmmacros
+            echo "build_cc_wrapper ccache" >> ~/.rpmmacros
+            echo "build_cxx_wrapper ccache" >> ~/.rpmmacros
           fi
 
-          # 2. Rust / Cargo Logic
+          # 3. Rust / Cargo Logic
           if grep -qiE "rust|cargo" "$SPEC_FILE"; then
             echo -e "${COLOR_INFO}🦀 Rust detected. Enabling sccache...${COLOR_RESET}"
             export SCCACHE_DIR="${{ github.workspace }}/.sccache"
@@ -138,7 +142,7 @@ jobs:
             STABLE_CARGO_CACHE="${{ github.workspace }}/.cargo_cache"
 
             echo -e "${COLOR_WARN}📦 Preparing source for Rust cache linking...${COLOR_RESET}"
-            rpmbuild -bp *.spec $RPM_MACROS
+            rpmbuild -bp *.spec
 
             ACTUAL_CARGO_DIR=$(find $GITHUB_WORKSPACE/rpmbuild/BUILD -type d -name "cargo-home" | head -n 1)
             if [ -n "$ACTUAL_CARGO_DIR" ]; then
@@ -148,9 +152,9 @@ jobs:
             fi
           fi
 
-          # 3. Final Build Execution
+          # 4. Final Build Execution
           echo -e "${COLOR_SUCCESS}🚀 Starting Final RPM Build...${COLOR_RESET}"
-          rpmbuild -ba *.spec $RPM_MACROS
+          rpmbuild -ba *.spec
 
           [ -n "${RUSTC_WRAPPER:-}" ] && sccache --stop-server || true
 
