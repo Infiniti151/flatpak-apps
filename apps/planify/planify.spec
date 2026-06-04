@@ -124,6 +124,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
 %files libs
 %{_libdir}/libplanify.so.*
+%{_libdir}/libgxml-0.20.so.*
 
 %files devel
 %{_includedir}/planify/
