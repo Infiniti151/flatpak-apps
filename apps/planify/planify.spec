@@ -106,17 +106,21 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %files -f %{app_id}.lang
 %license LICENSE
 %doc README.md
-%{_bindir}/%{app_id}
+
+%{_bindir}/%{app_id}*
 %{_libexecdir}/%{app_id}-search-provider
+
+%{_datadir}/applications/%{app_id}.desktop
+%{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
+%{_datadir}/metainfo/%{app_id}.metainfo.xml
+%{_datadir}/icons/hicolor/*/apps/%{app_id}*.*
+
 %{_datadir}/dbus-1/services/%{app_id}.SearchProvider.service
 %{_datadir}/gnome-shell/search-providers/%{app_id}.SearchProvider.ini
+
 %{_libdir}/girepository-1.0/GXml-*.typelib
 %{_datadir}/gir-1.0/GXml-*.gir
 %{_datadir}/locale/*/LC_MESSAGES/GXml-*.mo
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/icons/hicolor/*/apps/*.{svg,png}
-%{_datadir}/metainfo/*.xml
 
 %files libs
 %{_libdir}/libplanify.so.*
