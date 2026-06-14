@@ -194,6 +194,8 @@ jobs:
 
           if [ "$OLD_VER" != "$CLEAN_NEW_VER" ]; then
             echo "update_needed=true" >> $GITHUB_OUTPUT
+            echo "old_version=$OLD_VER" >> $GITHUB_OUTPUT
+            echo "new_version=$CLEAN_NEW_VER" >> $GITHUB_OUTPUT
           else
             echo "update_needed=false" >> $GITHUB_OUTPUT
             echo -e "${COLOR_SUCCESS}==> [SUCCESS] $APP is already up to date.${COLOR_RESET}"
@@ -201,6 +203,7 @@ jobs:
 
       - name: Bump Version and Push
         if: steps.check.outputs.update_needed == 'true'
+        id: update
         env:
           PROVIDER: "${{ matrix.provider }}"
           REPO: "${{ matrix.upstream_repo }}"
@@ -263,6 +266,9 @@ jobs:
               CHANGELOG="- ${CHANGELOG_RAW//$'\n'/$'\n'- }"
             fi
           fi
+
+          echo "changelog="$CHANGELOG" >> $GITHUB_OUTPUT
+          
           DATE=$(date +"%a %b %d %Y")
           AUTHOR="Infiniti151 <43163551+Infiniti151@users.noreply.github.com>"
           echo "* $DATE $AUTHOR - $NEW_VER-1" > entry.tmp
@@ -324,7 +330,12 @@ jobs:
         if: steps.check.outputs.update_needed == 'true'
         env:
           APP: ${{ matrix.app_name }}
+          OLD_VERSION: ${{ steps.check.outputs.old_version }}
+          NEW_VERSION: ${{ steps.check.outputs.new_version }}
+          CHANGELOG: ${{ steps.update.outputs.changelog }}
         run: |
           echo "### 🚀 COPR Build Triggered" >> $GITHUB_STEP_SUMMARY
-          echo "**App:** `$APP`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**App:** $APP" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** $OLD_VERSION -> $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
+          echo "**Changelog:**" >> $GITHUB_STEP_SUMMARY
+          echo "$CHANGELOG" >> $GITHUB_STEP_SUMMARY
