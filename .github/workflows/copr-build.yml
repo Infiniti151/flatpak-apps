@@ -267,7 +267,9 @@ jobs:
             fi
           fi
 
-          echo "changelog="$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "changelog<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$CHANGELOG" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
           
           DATE=$(date +"%a %b %d %Y")
           AUTHOR="Infiniti151 <43163551+Infiniti151@users.noreply.github.com>"
@@ -334,8 +336,10 @@ jobs:
           NEW_VERSION: ${{ steps.check.outputs.new_version }}
           CHANGELOG: ${{ steps.update.outputs.changelog }}
         run: |
-          echo "### 🚀 COPR Build Triggered" >> $GITHUB_STEP_SUMMARY
-          echo "**App:** $APP" >> $GITHUB_STEP_SUMMARY
-          echo "**Version:** $OLD_VERSION -> $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
-          echo "**Changelog:**" >> $GITHUB_STEP_SUMMARY
-          echo "$CHANGELOG" >> $GITHUB_STEP_SUMMARY
+          cat <<EOF >> $GITHUB_STEP_SUMMARY
+          ### 🚀 COPR Build Triggered
+          **App:** $APP
+          **Version:** $OLD_VERSION -> $NEW_VERSION
+          **Changelog:**
+          $CHANGELOG
+          EOF
