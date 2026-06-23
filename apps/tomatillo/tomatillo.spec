@@ -1,5 +1,5 @@
 Name:           tomatillo
-Version:        1.1.0
+Version:        1.1.1
 Release:        1%{?dist}
 Summary:        Tomatillo is a Pomodoro Timer app for your productivity tasks.
 License:        GPL-3.0-or-later
@@ -65,6 +65,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Tue Jun 23 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.1.1-1
+- Update to v1.1.1
+
 * Thu May 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.1.0-1
 - Update to v1.1.0
 
