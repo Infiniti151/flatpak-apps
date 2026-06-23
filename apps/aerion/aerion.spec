@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           aerion
-Version:        0.2.5
+Version:        0.3.0
 Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
 License:        Apache-2.0
@@ -62,6 +62,19 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %changelog
+* Tue Jun 23 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.0-1
+- Prepared CardDav infra for extensibility
+- Added Extension infrastructure
+- ALPHA: Added Contacts extension - shipped disabled
+- ALPHA: Added Calendar extension - shipped disabled - [#28](https://github.com/hkdb/aerion/issues/28)
+- Updated extension translations:
+- Czech
+- French
+- German
+- Italian
+- Vietnamese
+- ... (see upstream for full release notes)
+
 * Wed May 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.5-1
 - Sync progress indication redesign and shifting folder tree fix - [#204](https://github.com/hkdb/aerion/issues/204)
 - Added German translation - PR [#194](https://github.com/hkdb/aerion/pull/194)
