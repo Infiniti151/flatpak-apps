@@ -5,7 +5,7 @@
 %global app_id com.digitalgex.RustDiff
 
 Name:           rustdiff
-Version:        0.1.8
+Version:        0.2.1
 Release:        1%{?dist}
 Summary:        A simple GTK-based diff viewer written in Rust
 License:        GPLv3
@@ -66,6 +66,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
 
 %changelog
+* Fri Jul 03 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.1-1
+- *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.2.0...v0.2.1
+
 * Thu May 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.1.8-1
 - *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.1.7...v0.1.8
 
