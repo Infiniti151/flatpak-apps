@@ -2,7 +2,7 @@
 %global         _enable_debug_package 0
 
 Name:           pods
-Version:        3.0.0
+Version:        3.1.0
 Release:        1%{?dist}
 Summary:        A powerful Podman manager for GNOME
 License:        GPL-3.0-or-later
@@ -58,6 +58,19 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 
 %changelog
+* Wed Jul 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v3.1.0-1
+- Pods 3.1.0 contains the following changes:
+- Features
+- Overhauled the internal background action system to use a dedicated modal dialog and stateful, editable actions. (#961)
+- Implemented an AutoScrolledWindow widget and ported the container log view to it, improving automatic terminal scrolling. (#932)
+- Introduced the ImageSuggestionEntryRow widget, featuring focus-leave handling, Ctrl+Space activation, and increased width alignment. (#933, #934, #943)
+- Added bi-directional timestamp synchronization and a visually improved numeric layout style to the date-time row widget. (#947, #951)
+- Updated the connection creation view with dynamic descriptions and modified the default podman-tcp.service template to bind strictly to localhost (127.0.0.1). (Thanks to @anli5005, #948)
+- Added interactive documentation links for podman-system-service configurations when setting up rootful instances. (Thanks to @anli5005, #946)
+- Enhanced image search result rows by ellipsizing long image names in the UI. (#945)
+- Fixes
+- ... (see upstream for full release notes)
+
 * Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v3.0.0-1
 - Pods 3.0.0 contains the following changes:
 - Implemented a new backend architecture to support multiple container engines. (#927)
