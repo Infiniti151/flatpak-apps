@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           aerion
-Version:        0.3.0
+Version:        0.3.1
 Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
 License:        Apache-2.0
@@ -62,6 +62,19 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %changelog
+* Thu Jul 09 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.1-1
+- Added custom oauth for imap, cardav, and caldav (designed for and tested with [Stalwart](https://stalw.art))
+- Custom oauth refresh token handling fix
+- Use TOFU cert store for DAV certs
+- Added Google meet link support
+- Timezone config fix
+- Multi-day week and day view fix
+- Multi-day monthly view fix - [#304](https://github.com/hkdb/aerion/issues/304)
+- Composer body config - [#216](https://github.com/hkdb/aerion/issues/216)
+- Attachment parsing improvements - [#307](https://github.com/hkdb/aerion/issues/307)
+- Fixed eplying with correct identity [#325](https://github.com/hkdb/aerion/issues/325)
+- ... (see upstream for full release notes)
+
 * Tue Jun 23 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.0-1
 - Prepared CardDav infra for extensibility
 - Added Extension infrastructure
