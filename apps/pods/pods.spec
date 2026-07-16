@@ -2,7 +2,7 @@
 %global         _enable_debug_package 0
 
 Name:           pods
-Version:        3.1.0
+Version:        3.1.1
 Release:        1%{?dist}
 Summary:        A powerful Podman manager for GNOME
 License:        GPL-3.0-or-later
@@ -58,6 +58,13 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 
 %changelog
+* Thu Jul 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v3.1.1-1
+- Pods 3.1.1 contains the following changes:
+- Fixed an issue where active terminal exec sessions were unexpectedly terminated when the window was resized and the sidebar collapsed. (#965)
+- Removed empty image tag markup in the search response row when using Podman. (#967)
+- Improved text alignment for errors in the action dialog and increased the height of the repo tag push view. (#968)
+- Added a link to the source repository in the application metainfo. (Thanks to @salim-b, #884)
+
 * Wed Jul 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v3.1.0-1
 - Pods 3.1.0 contains the following changes:
 - Features
