@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           aerion
-Version:        0.3.1
+Version:        0.3.2
 Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
 License:        Apache-2.0
@@ -62,6 +62,18 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %changelog
+* Fri Jul 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.2-1
+- Added Spellcheck for languages using Latin alphabet - [#277](https://github.com/hkdb/aerion/issues/277) 
+- Improved profile pic support - [#183](https://github.com/hkdb/issues/183) - Requires force resync of contacts
+- Added re-auth button to contact write
+- Improved unread count and IDLE sync - [#327](https://github.com/hkdb/aerion/issues/327)
+- True fix for duplicate e-mail add error - [#318](https://github.com/hkdb/aerion/issues/318)
+- Fixed calendar auth on add - [#337](https://github.com/hkdb/aerion/issues/337)
+- Added guard against wails bridge saturation dervied from calendar rapid view switch
+- Fixed CarDAV sync profile pic bug - May require a force resync of contacts
+- Fixed toast cutoff in mobile layout - [#339](https://github.com/hkdb/aerion/issues/339)
+- Updated i18n translation
+
 * Thu Jul 09 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.1-1
 - Added custom oauth for imap, cardav, and caldav (designed for and tested with [Stalwart](https://stalw.art))
 - Custom oauth refresh token handling fix
