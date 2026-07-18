@@ -1,5 +1,5 @@
 Name:           keypunch
-Version:        6.3
+Version:        7.0
 Release:        1%{?dist}
 Summary:        A GTK4/Adwaita typing practice application
 License:        GPL-3.0-or-later
@@ -51,6 +51,14 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
+* Sat Jul 18 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v7.0-1
+- Language additions and various modernizations:
+- Text generation for programming languages: C++, JavaScript, Python, and Rust
+- New and modern keyboard shortcuts dialog
+- Minor text generation corrections for various languages
+- Basque text generation
+- User interface translations for Cornish, Esperanto, Greek, Kazakh, and Uzbek, making Keypunch available in a total of 38 languages
+
 * Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v6.3-1
 - Miscellaneous bug fixes and improvements:
 - The “Enable Entry” button is now shown whenever it should be
