@@ -115,7 +115,6 @@ fi
 rm -rf %{buildroot}%{_includedir}/gxml-0.20/
 rm -rf %{buildroot}%{_libdir}/pkgconfig/gxml-0.20.pc
 rm -rf %{buildroot}%{_datadir}/vala/vapi/gxml-0.20.*
-rm -f %{buildroot}%{_libdir}/libgxml-0.20.so*
 
 rm -f %{buildroot}%{_includedir}/chrono.h
 rm -f %{buildroot}%{_libdir}/libchrono.so*
