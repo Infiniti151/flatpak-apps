@@ -65,34 +65,6 @@ for developing applications that use Planify's core API.
 %prep
 %setup -q -n %{name}-%{version}
 
-git init
-
-CHRONO_REV=$(meson wrap resolve subprojects/chrono.wrap)
-CHRONO_URL=$(sed -n 's/^url=//p' subprojects/chrono.wrap)
-
-rm -rf subprojects/chrono
-git clone "$CHRONO_URL" subprojects/chrono
-git -C subprojects/chrono checkout "$CHRONO_REV"
-
-rm -f subprojects/chrono.wrap
-
-cat > subprojects/chrono/meson.override << 'EOF'
-[project options]
-default_library = static
-EOF
-
-GXML_REV=$(meson wrap resolve subprojects/gxml-0.20.wrap)
-GXML_URL=$(sed -n 's/^url=//p' subprojects/gxml-0.20.wrap)
-
-rm -rf subprojects/gxml-0.20
-git clone "$GXML_URL" subprojects/gxml-0.20
-git -C subprojects/gxml-0.20 checkout "$GXML_REV"
-
-cat > subprojects/gxml-0.20/meson.override << 'EOF'
-[project options]
-default_library = static
-EOF
-
 if [ -f scripts/update-translations.py ]; then
     python3 scripts/update-translations.py
 fi
@@ -105,8 +77,8 @@ fi
     -Dspelling=enabled \
     -Dmanpage=false \
     -Dgxml:default_library=static \
-    -Dchrono:default_library=static \
-    --wrap-mode=nodownload
+    -Dchrono:default_library=static
+
 %meson_build
 
 %install
