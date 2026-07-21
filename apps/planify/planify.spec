@@ -127,13 +127,6 @@ rm -rf %{buildroot}/usr/lib/debug/usr/lib64/libchrono*
 # Remove chrono metainfo
 rm -f %{buildroot}%{_datadir}/metainfo/io.github.alainm23.chrono.metainfo.xml
 
-# === Prevent RPM from generating requires for chrono ===
-cat > %{buildroot}%{_libdir}/rpm/chrono.filter << 'EOF'
-^libchrono\.so.*$
-EOF
-
-%global __requires_exclude_from %{_libdir}/rpm/chrono.filter
-
 %check
 %meson_test --suite cli
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
