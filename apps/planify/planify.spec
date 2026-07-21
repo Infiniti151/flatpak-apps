@@ -7,8 +7,8 @@ URL:            https://github.com/alainm23/%{name}
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 %global app_id io.github.alainm23.%{name}
-%global __requires_exclude ^libgxml-0.20.*$
-%global __provides_exclude ^libgxml-0.20.*$
+%global __requires_exclude ^(libgxml-0.20.*|libchrono.*)$
+%global __provides_exclude ^(libgxml-0.20.*|libchrono.*)$
 
 Source0:        %{url}/archive/v%{version}.tar.gz
 
@@ -111,17 +111,28 @@ fi
 %meson_install
 %find_lang %{app_id}
 
+# === Clean up unwanted bundled libraries ===
 rm -rf %{buildroot}%{_includedir}/gxml-0.20/
 rm -rf %{buildroot}%{_libdir}/pkgconfig/gxml-0.20.pc
 rm -rf %{buildroot}%{_datadir}/vala/vapi/gxml-0.20.*
-rm -f %{buildroot}%{_libdir}/libgxml-0.20.so
+rm -f %{buildroot}%{_libdir}/libgxml-0.20.so*
+
 rm -f %{buildroot}%{_includedir}/chrono.h
 rm -f %{buildroot}%{_libdir}/libchrono.so*
 rm -f %{buildroot}%{_libdir}/pkgconfig/chrono.pc
-rm -f %{buildroot}%{_datadir}/vala/vapi/chrono.vapi
-rm -f %{buildroot}%{_datadir}/vala/vapi/chrono.deps
-rm -rf %{buildroot}/usr/lib/debug/usr/lib64/libchrono.so*
+rm -f %{buildroot}%{_datadir}/vala/vapi/chrono.*
+rm -rf %{buildroot}%{_libdir}/girepository-1.0/Chrono*
+rm -rf %{buildroot}/usr/lib/debug/usr/lib64/libchrono*
+
+# Remove chrono metainfo
 rm -f %{buildroot}%{_datadir}/metainfo/io.github.alainm23.chrono.metainfo.xml
+
+# === Prevent RPM from generating requires for chrono ===
+cat > %{buildroot}%{_libdir}/rpm/chrono.filter << 'EOF'
+^libchrono\.so.*$
+EOF
+
+%global __requires_exclude_from %{_libdir}/rpm/chrono.filter
 
 %check
 %meson_test --suite cli
