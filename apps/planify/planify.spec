@@ -67,17 +67,29 @@ for developing applications that use Planify's core API.
 
 git init
 
-if [ -f "subprojects/chrono.wrap" ]; then
-    CHRONO_URL=$(sed -n 's/^url=//p' subprojects/chrono.wrap)
-    CHRONO_REV=$(sed -n 's/^revision=//p' subprojects/chrono.wrap)
-    git clone --depth 1 -b "$CHRONO_REV" "$CHRONO_URL" subprojects/chrono
-else
-    echo "Notice: subprojects/chrono.wrap not found for this version. Skipping."
-fi
+CHRONO_URL=$(sed -n 's/^url=//p' subprojects/chrono.wrap)
+CHRONO_REV=$(sed -n 's/^revision=//p' subprojects/chrono.wrap)
+
+rm -rf subprojects/chrono
+git clone --depth 1 -b "$CHRONO_REV" "$CHRONO_URL" subprojects/chrono
+
+rm -f subprojects/chrono.wrap
+
+cat > subprojects/chrono/meson.override << 'EOF'
+[project options]
+default_library = static
+EOF
 
 GXML_URL=$(sed -n 's/^url=//p' subprojects/gxml-0.20.wrap)
 GXML_REV=$(sed -n 's/^revision=//p' subprojects/gxml-0.20.wrap)
+
+rm -rf subprojects/gxml-0.20
 git clone --depth 1 -b "$GXML_REV" "$GXML_URL" subprojects/gxml-0.20
+
+cat > subprojects/gxml-0.20/meson.override << 'EOF'
+[project options]
+default_library = static
+EOF
 
 if [ -f scripts/update-translations.py ]; then
     python3 scripts/update-translations.py
@@ -89,19 +101,30 @@ fi
     -Dportal=true \
     -Devolution=true \
     -Dspelling=enabled \
-    -Dmanpage=false \
-    -Dgxml:default_library=static \
-    --wrap-mode=nodownload
+    -Dmanpage=false
+
 %meson_build
 
 %install
 %meson_install
 %find_lang %{app_id}
 
+# Cleanup subproject devel files
 rm -rf %{buildroot}%{_includedir}/gxml-0.20/
 rm -rf %{buildroot}%{_libdir}/pkgconfig/gxml-0.20.pc
 rm -rf %{buildroot}%{_datadir}/vala/vapi/gxml-0.20.*
-rm -f %{buildroot}%{_libdir}/libgxml-0.20.so
+
+rm -f %{buildroot}%{_includedir}/chrono.h
+rm -f %{buildroot}%{_libdir}/pkgconfig/chrono.pc
+rm -f %{buildroot}%{_datadir}/vala/vapi/chrono.*
+rm -rf %{buildroot}%{_libdir}/girepository-1.0/Chrono*
+
+# Remove debug files for subprojects
+rm -rf %{buildroot}/usr/lib/debug/*libgxml*
+rm -rf %{buildroot}/usr/lib/debug/*libchrono*
+
+# Remove unwanted metainfo
+rm -f %{buildroot}%{_datadir}/metainfo/io.github.alainm23.chrono.metainfo.xml
 
 %check
 %meson_test --suite cli
@@ -129,7 +152,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
 %files libs
 %{_libdir}/libplanify.so.*
-%{_libdir}/libgxml-0.20.so.*
+%{_libdir}/libgxml-0.20.so*
+%{_libdir}/libchrono.so*
 
 %files devel
 %{_includedir}/%{name}/
