@@ -67,17 +67,35 @@ for developing applications that use Planify's core API.
 
 git init
 
-if [ -f "subprojects/chrono.wrap" ]; then
+if [ -f subprojects/chrono.wrap ]; then
     CHRONO_URL=$(sed -n 's/^url=//p' subprojects/chrono.wrap)
     CHRONO_REV=$(sed -n 's/^revision=//p' subprojects/chrono.wrap)
-    git clone --depth 1 -b "$CHRONO_REV" "$CHRONO_URL" subprojects/chrono
 else
-    echo "Notice: subprojects/chrono.wrap not found for this version. Skipping."
+    echo "chrono.wrap missing — cannot extract revision"
+    exit 1
 fi
 
-GXML_URL=$(sed -n 's/^url=//p' subprojects/gxml-0.20.wrap)
-GXML_REV=$(sed -n 's/^revision=//p' subprojects/gxml-0.20.wrap)
+rm -rf subprojects/chrono
+git clone --depth 1 -b "$CHRONO_REV" "$CHRONO_URL" subprojects/chrono
+
+rm -f subprojects/chrono.wrap
+
+cat > subprojects/chrono/meson.override << 'EOF'
+[project options]
+default_library = static
+EOF
+
+if [ -f subprojects/gxml-0.20.wrap ]; then
+    GXML_URL=$(sed -n 's/^url=//p' subprojects/gxml-0.20.wrap)
+    GXML_REV=$(sed -n 's/^revision=//p' subprojects/gxml-0.20.wrap)
+else
+    echo "gxml-0.20.wrap missing — cannot extract revision"
+    exit 1
+fi
+
+rm -rf subprojects/gxml-0.20
 git clone --depth 1 -b "$GXML_REV" "$GXML_URL" subprojects/gxml-0.20
+rm -f subprojects/gxml-0.20.wrap
 
 if [ -f scripts/update-translations.py ]; then
     python3 scripts/update-translations.py
