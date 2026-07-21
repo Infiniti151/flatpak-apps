@@ -7,8 +7,8 @@ URL:            https://github.com/alainm23/%{name}
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 %global app_id io.github.alainm23.%{name}
-%global __requires_exclude ^(libgxml-0.20.*|libchrono.*)$
-%global __provides_exclude ^(libgxml-0.20.*|libchrono.*)$
+%global __requires_exclude ^libgxml-0.20.*$
+%global __provides_exclude ^libgxml-0.20.*$
 
 Source0:        %{url}/archive/v%{version}.tar.gz
 
@@ -101,9 +101,7 @@ fi
     -Dportal=true \
     -Devolution=true \
     -Dspelling=enabled \
-    -Dmanpage=false \
-    -Dgxml:default_library=static \
-    -Dchrono:default_library=static
+    -Dmanpage=false
 
 %meson_build
 
@@ -111,19 +109,21 @@ fi
 %meson_install
 %find_lang %{app_id}
 
-# === Clean up unwanted bundled libraries ===
+# Cleanup subproject devel files
 rm -rf %{buildroot}%{_includedir}/gxml-0.20/
 rm -rf %{buildroot}%{_libdir}/pkgconfig/gxml-0.20.pc
 rm -rf %{buildroot}%{_datadir}/vala/vapi/gxml-0.20.*
 
 rm -f %{buildroot}%{_includedir}/chrono.h
-rm -f %{buildroot}%{_libdir}/libchrono.so*
 rm -f %{buildroot}%{_libdir}/pkgconfig/chrono.pc
 rm -f %{buildroot}%{_datadir}/vala/vapi/chrono.*
 rm -rf %{buildroot}%{_libdir}/girepository-1.0/Chrono*
-rm -rf %{buildroot}/usr/lib/debug/usr/lib64/libchrono*
 
-# Remove chrono metainfo
+# Remove debug files for subprojects
+rm -rf %{buildroot}/usr/lib/debug/*libgxml*
+rm -rf %{buildroot}/usr/lib/debug/*libchrono*
+
+# Remove unwanted metainfo
 rm -f %{buildroot}%{_datadir}/metainfo/io.github.alainm23.chrono.metainfo.xml
 
 %check
@@ -153,6 +153,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %files libs
 %{_libdir}/libplanify.so.*
 %{_libdir}/libgxml-0.20.so*
+%{_libdir}/libchrono.so*
 
 %files devel
 %{_includedir}/%{name}/
