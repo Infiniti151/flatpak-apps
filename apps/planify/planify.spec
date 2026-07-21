@@ -91,6 +91,7 @@ fi
     -Dspelling=enabled \
     -Dmanpage=false \
     -Dgxml:default_library=static \
+    -Dchrono:default_library=static \
     --wrap-mode=nodownload
 %meson_build
 
