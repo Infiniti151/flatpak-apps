@@ -65,6 +65,32 @@ for developing applications that use Planify's core API.
 %prep
 %setup -q -n %{name}-%{version}
 
+git init
+
+CHRONO_URL=$(sed -n 's/^url=//p' subprojects/chrono.wrap)
+CHRONO_REV=$(sed -n 's/^revision=//p' subprojects/chrono.wrap)
+
+rm -rf subprojects/chrono
+git clone --depth 1 -b "$CHRONO_REV" "$CHRONO_URL" subprojects/chrono
+
+rm -f subprojects/chrono.wrap
+
+cat > subprojects/chrono/meson.override << 'EOF'
+[project options]
+default_library = static
+EOF
+
+GXML_URL=$(sed -n 's/^url=//p' subprojects/gxml-0.20.wrap)
+GXML_REV=$(sed -n 's/^revision=//p' subprojects/gxml-0.20.wrap)
+
+rm -rf subprojects/gxml-0.20
+git clone --depth 1 -b "$GXML_REV" "$GXML_URL" subprojects/gxml-0.20
+
+cat > subprojects/gxml-0.20/meson.override << 'EOF'
+[project options]
+default_library = static
+EOF
+
 if [ -f scripts/update-translations.py ]; then
     python3 scripts/update-translations.py
 fi
