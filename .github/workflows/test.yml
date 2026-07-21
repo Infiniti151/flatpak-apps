@@ -68,9 +68,16 @@ jobs:
 
   build:
     needs: check-version
-    if:
-      needs.check-version.outputs.should_build == 'true' && github.ref ==
-      'refs/heads/dev'
+    if: >
+      github.ref == 'refs/heads/dev' &&
+      (
+        (
+          (github.event_name == 'push' || github.event_name == 'pull_request') &&
+          needs.check-version.outputs.should_build == 'true'
+        )
+        ||
+        github.event_name == 'workflow_dispatch'
+      )
     runs-on: ubuntu-latest
     environment: Test
     env:
