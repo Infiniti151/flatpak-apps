@@ -7,7 +7,7 @@ assignees: ''
 ---
 
 > [!IMPORTANT]
-> Please do not request apps which have native RPMs available either through the Fedora repo (ex. Firefox) or app's own repo/website (ex. Edge/Discord)
+> Please do not request apps which have native RPMs available either through the Fedora repo (ex. Firefox) or app's own repo/website (ex. Edge/Discord). This repo focuses on small indie apps and games.
 
 **App Name:**
 <!-- Name of the app -->
