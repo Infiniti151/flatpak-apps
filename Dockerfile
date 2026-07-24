@@ -24,10 +24,13 @@ RUN dnf install -y \
     meson \
     ninja-build \
     python3-devel \
+    glibc-langpack-en \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
 ENV CCACHE_MAXSIZE=2G
 ENV CARGO_INCREMENTAL=0
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
 
 WORKDIR /github/workspace
