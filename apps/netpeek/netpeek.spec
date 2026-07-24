@@ -42,6 +42,8 @@ NetPeek is a modern network scanner designed for the GNOME desktop, built with P
 %install
 %meson_install
 
+%py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name}/
+
 %find_lang %{name}
 
 %check
