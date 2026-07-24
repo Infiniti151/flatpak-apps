@@ -15,6 +15,14 @@ RUN dnf install -y \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- netpeek dependencies --- \
+    'pkgconfig(glib-2.0)' \
+    desktop-file-utils \
+    gettext \
+    libappstream-glib \
+    meson \
+    ninja-build \
+    python3-devel \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
