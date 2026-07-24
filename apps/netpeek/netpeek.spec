@@ -1,7 +1,7 @@
 %define app_id io.github.zingytomato.netpeek
 
 Name:           netpeek
-Version:        0.2.9
+Version:        0
 Release:        1%{?dist}
 Summary:        Modern network scanner for GNOME
 
