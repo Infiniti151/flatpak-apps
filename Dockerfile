@@ -15,6 +15,24 @@ RUN dnf install -y \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- sudoku dependencies --- \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    blueprint-compiler \
+    desktop-file-utils \
+    gcc \
+    gettext \
+    libappstream-glib \
+    meson \
+    pkgconfig \
+    python3-devel \
+    python3-iniconfig \
+    python3-packaging \
+    python3-pip \
+    python3-pluggy \
+    python3-pytest \
+    python3-wheel \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
