@@ -20,6 +20,7 @@ BuildRequires:  python3-devel
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  gtk-update-icon-cache
 
 Requires:       python3
 Requires:       python3-gobject
