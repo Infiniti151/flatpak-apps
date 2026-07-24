@@ -21,10 +21,12 @@ BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  gtk-update-icon-cache
+BuildRequires:  glibc-langpack-en
 
 Requires:       python3
 Requires:       python3-gobject
 Requires:       python3-nmap
+Requires:       nmap
 Requires:       gtk4
 Requires:       libadwaita
 Requires:       hicolor-icon-theme
@@ -60,7 +62,3 @@ NetPeek is a modern network scanner designed for the GNOME desktop, built with P
 %{_datadir}/metainfo/%{app_id}.metainfo.xml
 %{_datadir}/icons/hicolor/scalable/apps/%{app_id}.svg
 %{_datadir}/icons/hicolor/symbolic/apps/%{app_id}-symbolic.svg
-
-%changelog
-* Fri Jul 24 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.2.9-1
-- Release 0.2.9
