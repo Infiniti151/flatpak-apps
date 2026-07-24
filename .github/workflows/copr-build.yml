@@ -67,6 +67,9 @@ jobs:
           - app_name: mundi
             upstream_repo: nacho/mundi
             provider: github
+          - app_name: netpeek
+            upstream_repo: ZingyTomato/NetPeek
+            provider: github
           - app_name: nucleus
             upstream_repo: lo-vely/nucleus
             provider: codeberg
@@ -270,7 +273,7 @@ jobs:
           echo "changelog<<EOF" >> "$GITHUB_OUTPUT"
           echo "$CHANGELOG" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
-          
+
           DATE=$(date +"%a %b %d %Y")
           AUTHOR="Infiniti151 <43163551+Infiniti151@users.noreply.github.com>"
           echo "* $DATE $AUTHOR - $NEW_VER-1" > entry.tmp
