@@ -19,6 +19,7 @@ RUN dnf install -y \
     'pkgconfig(glib-2.0)' \
     desktop-file-utils \
     gettext \
+    gtk-update-icon-cache \
     libappstream-glib \
     meson \
     ninja-build \
