@@ -1,7 +1,7 @@
 %define app_id io.github.zingytomato.netpeek
 
 Name:           netpeek
-Version:        0
+Version:        0.2.9
 Release:        1%{?dist}
 Summary:        Modern network scanner for GNOME
 
@@ -62,3 +62,18 @@ NetPeek is a modern network scanner designed for the GNOME desktop, built with P
 %{_datadir}/metainfo/%{app_id}.metainfo.xml
 %{_datadir}/icons/hicolor/scalable/apps/%{app_id}.svg
 %{_datadir}/icons/hicolor/symbolic/apps/%{app_id}-symbolic.svg
+
+%changelog
+* Fri Jul 24 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.9-1
+- What's Changed?
+- New app icon.
+- Redesigned the light, dark and system style switcher.
+- Cockpit instances are now detected and shown alongside SMB shares in a combined Services row instead of the old SMB row.
+- Header actions move into a bottom bar when the window is narrow to better assist with smaller screens.
+- Custom device names now apply retroactively to previous scans.
+- Added an Open Folder shortcut to the CSV export notification.
+- Removed most toast notifications, keeping only copy, export and error messages.
+- The active sort option is now highlighted and shows its direction.
+- Sorting is disabled while scanning and when no devices are found.
+- ... (see upstream for full release notes)
+
