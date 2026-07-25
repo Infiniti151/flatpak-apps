@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           sudoku
-Version:        1.7.0
+Version:        1.8.0
 Release:        1%{?dist}
 Summary:        Sudoku Game application
 License:        GPL-3.0-or-later
@@ -73,6 +73,19 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/metainfo/*.xml
 
 %changelog
+* Sat Jul 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.8.0-1
+- What's New ?
+- You can now place pencil marks automatically with Shift + P.
+- You can now set a mistake limit in Preferences.
+- The Continue Game button is now disabled when the current game is complete.
+- You can now disable popovers in Preferences.
+- Plus many more improvements and bug fixes!
+- 📦 Installation
+- The recommended way to install Sudoku is through Flathub:
+- [![Download on Flathub](https://flathub.org/api/badge?svg&locale=en)](https://flathub.org/apps/io.github.sepehr_rs.Sudoku)
+- ```bash
+- ... (see upstream for full release notes)
+
 * Sun May 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.7.0-1
 - What's New ?
 - Pencil notes affected by a correct entry are now automatically removed
