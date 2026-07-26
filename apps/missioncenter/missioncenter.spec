@@ -1,7 +1,9 @@
 %global         debug_package %{nil}
-%define         __spec_install_post /usr/lib/rpm/brp-compress
-%define         build_cc clang
-%define         build_cxx clang++
+%global         __spec_install_post /usr/lib/rpm/brp-compress
+%global         build_cc clang
+%global         build_cxx clang++
+%global         nethogs_bin %{_bindir}/nethogs
+%global         powercap_rules %{_sysconfdir}/udev/rules.d/99-powercap.rules
 
 Name:           missioncenter
 Version:        1.2.0
@@ -45,6 +47,8 @@ BuildRequires:  libdrm-devel
 BuildRequires:  libxkbcommon-devel
 BuildRequires:  libadwaita-devel
 
+Requires:       nethogs
+Requires:       lm_sensors
 Requires:       gtk4
 Requires:       libadwaita
 Requires:       hicolor-icon-theme
@@ -90,6 +94,19 @@ upx --best --lzma %{buildroot}%{_bindir}/%{name}-magpie
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+
+%postun
+if [ $1 -eq 0 ]; then
+    if [ -x %{nethogs_bin} ]; then
+        setcap -r %{nethogs_bin} 2>/dev/null || :
+    fi
+
+    if [ -f %{powercap_rules} ]; then
+        rm -f %{powercap_rules}
+        udevadm control --reload-rules 2>/dev/null || :
+        udevadm trigger --subsystem-match=powercap 2>/dev/null || :
+    fi
+fi
 
 %files -f %{name}.lang
 %license COPYING
