@@ -1,0 +1,109 @@
+name: Validate PR Requirements
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  validate-checklist:
+    name: Check PR Description & Spec Standards
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Validate PR Description Checklist
+        id: checklist
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          TYPE_SECTION=$(echo "$PR_BODY" | sed -n '/## ⚒️ Type of Change/,/## 🧪 Quality Checklist/p')
+          TYPE_CHECKED=$(echo "$TYPE_SECTION" | grep -c '^[[:space:]]*-[[:space:]]*\[[xX]\]' || true)
+
+          if [ "$TYPE_CHECKED" -ne 1 ]; then
+            echo "❌ ERROR: You must select EXACTLY ONE 'Type of Change' (found $TYPE_CHECKED)."
+            exit 1
+          fi
+
+          if echo "$TYPE_SECTION" | grep -iq '\[[xX]\].*New App:'; then
+            echo "pr_type=new_app" >> "$GITHUB_OUTPUT"
+            echo "ℹ️ PR Type: New App"
+          else
+            echo "pr_type=update" >> "$GITHUB_OUTPUT"
+            echo "ℹ️ PR Type: Bug Fix / Optimization"
+          fi
+
+          QUALITY_SECTION=$(echo "$PR_BODY" | sed -n '/## 🧪 Quality Checklist/,/## 🔗 Related Issue/p')
+          QUALITY_TOTAL=$(echo "$QUALITY_SECTION" | grep -c '^[[:space:]]*-[[:space:]]*\[' || true)
+          QUALITY_CHECKED=$(echo "$QUALITY_SECTION" | grep -c '^[[:space:]]*-[[:space:]]*\[[xX]\]' || true)
+
+          if [ "$QUALITY_CHECKED" -ne 4 ] || [ "$QUALITY_CHECKED" -ne "$QUALITY_TOTAL" ]; then
+            echo "❌ ERROR: All items in 'Quality Checklist' MUST be checked ($QUALITY_CHECKED/$QUALITY_TOTAL)."
+            exit 1
+          fi
+
+      - name: Validate New App Spec File Standards
+        if: steps.checklist.outputs.pr_type == 'new_app'
+        run: |
+          # Get list of added/modified .spec files in this PR
+          SPEC_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep '\.spec$' || true)
+
+          if [ -z "$SPEC_FILES" ]; then
+            echo "⚠️ Warning: 'New App' selected, but no .spec file was found in the diff."
+            exit 1
+          fi
+
+          for SPEC in $SPEC_FILES; do
+            echo "==> Checking $SPEC for New App compliance..."
+
+            # 1. Verify Version starts with 0
+            VERSION_VAL=$(grep -i '^[[:space:]]*Version:' "$SPEC" | awk '{print $2}')
+
+            if [[ ! "$VERSION_VAL" =~ ^0(\.|$)* ]]; then
+              echo "❌ ERROR in $SPEC: New App initial Version must be 0 (found Version: $VERSION_VAL)."
+              echo "Please set 'Version: 0' in the spec file."
+              exit 1
+            else
+              echo "✅ Version validation passed ($VERSION_VAL)."
+            fi
+
+            # 2. Verify %changelog is NOT present at all
+            if grep -q '^[[:space:]]*%changelog' "$SPEC"; then
+              echo "❌ ERROR in $SPEC: Found '%changelog' section."
+              echo "Changelogs are handled automatically in our workflow. Please remove the %changelog section."
+              exit 1
+            else
+              echo "✅ No %changelog section found."
+            fi
+          done
+
+      - name: Validate Bug Fix / Optimization Diff Standards
+        if: steps.checklist.outputs.pr_type == 'update'
+        run: |
+          # Get list of modified .spec files in this PR
+          SPEC_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep '\.spec$' || true)
+
+          if [ -z "$SPEC_FILES" ]; then
+            echo "ℹ️ No .spec files modified in this PR."
+            exit 0
+          fi
+
+          for SPEC in $SPEC_FILES; do
+            echo "==> Verifying no %changelog modifications in $SPEC..."
+
+            # Check if any line starting with '+' inside/after %changelog was added in git diff
+            CHANGELOG_DIFF=$(git diff -U0 origin/${{ github.base_ref }}...HEAD -- "$SPEC" | awk '/^@@/ {in_changelog=0} /^[+-][[:space:]]*%changelog/ {in_changelog=1} in_changelog && /^\+[^\+]/ {print}' || true)
+
+            # Fallback check: ensure no lines were modified in or after the %changelog header
+            CHANGELOG_EDITED=$(git diff origin/${{ github.base_ref }}...HEAD -- "$SPEC" | grep -A 100 '^[+-][[:space:]]*%changelog' | grep '^+[^+]' || true)
+
+            if [ -n "$CHANGELOG_EDITED" ]; then
+              echo "❌ ERROR in $SPEC: Found edits to the '%changelog' section."
+              echo "Changelogs are managed automatically by our release workflows. Please revert any manual edits to %changelog."
+              exit 1
+            else
+              echo "✅ No %changelog edits detected in $SPEC."
+            fi
+          done
