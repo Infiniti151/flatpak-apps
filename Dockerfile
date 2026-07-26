@@ -15,24 +15,29 @@ RUN dnf install -y \
     rpmdevtools \
     rpmlint \
     sccache \
-    # --- sudoku dependencies --- \
-    'pkgconfig(glib-2.0)' \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(libadwaita-1)' \
+    # --- missioncenter dependencies --- \
     blueprint-compiler \
+    cargo \
+    cargo-rpm-macros \
+    clang \
+    cmake \
+    compiler-rt \
     desktop-file-utils \
     gcc \
     gettext \
+    glib2-devel \
+    gtk-update-icon-cache \
+    libadwaita-devel \
     libappstream-glib \
+    libdrm-devel \
+    libinput-devel \
+    libxkbcommon-devel \
+    lld \
+    mesa-libgbm-devel \
     meson \
-    pkgconfig \
-    python3-devel \
-    python3-iniconfig \
-    python3-packaging \
-    python3-pip \
-    python3-pluggy \
-    python3-pytest \
-    python3-wheel \
+    rustc \
+    systemd-devel \
+    upx \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content

@@ -45,6 +45,8 @@ BuildRequires:  libdrm-devel
 BuildRequires:  libxkbcommon-devel
 BuildRequires:  libadwaita-devel
 
+Requires:       nethogs
+Requires:       lm_sensors
 Requires:       gtk4
 Requires:       libadwaita
 Requires:       hicolor-icon-theme
@@ -90,6 +92,19 @@ upx --best --lzma %{buildroot}%{_bindir}/%{name}-magpie
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+
+%postun
+if [ $1 -eq 0 ]; then
+    if [ -x %{_bindir}/nethogs ]; then
+        setcap -r %{_bindir}/nethogs 2>/dev/null || :
+    fi
+
+    if [ -f %{_sysconfdir}/udev/rules.d/99-powercap.rules ]; then
+        rm -f %{_sysconfdir}/udev/rules.d/99-powercap.rules
+        udevadm control --reload-rules 2>/dev/null || :
+        udevadm trigger --subsystem-match=powercap 2>/dev/null || :
+    fi
+fi
 
 %files -f %{name}.lang
 %license COPYING
