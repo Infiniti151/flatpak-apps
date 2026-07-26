@@ -4,7 +4,7 @@
 %define         build_cxx clang++
 
 Name:           missioncenter
-Version:        1.1.0
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Monitor your CPU, Memory, Disk, Network and GPU usage
 
@@ -103,5 +103,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_metainfodir}/*.xml
 
 %changelog
+* Sun Jul 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.2.0-1
+- This release brings a long-requested Battery page, a big overhaul of the graphing backend, per-partition disk usage, and much smarter app detection, alongside a healthy pile of quality-of-life features and bug fixes.
+- Read the full release notes [here](https://gitlab.com/mission-center-devs/mission-center/-/wikis/Release-Notes/v1.2.0).
+
 * Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.1.0-1
 - Release notes available [here](https://gitlab.com/mission-center-devs/mission-center/-/wikis/Release-Notes/v1.1.0)
