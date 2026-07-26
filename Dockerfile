@@ -15,29 +15,6 @@ RUN dnf install -y \
     rpmdevtools \
     rpmlint \
     sccache \
-    # --- missioncenter dependencies --- \
-    blueprint-compiler \
-    cargo \
-    cargo-rpm-macros \
-    clang \
-    cmake \
-    compiler-rt \
-    desktop-file-utils \
-    gcc \
-    gettext \
-    glib2-devel \
-    gtk-update-icon-cache \
-    libadwaita-devel \
-    libappstream-glib \
-    libdrm-devel \
-    libinput-devel \
-    libxkbcommon-devel \
-    lld \
-    mesa-libgbm-devel \
-    meson \
-    rustc \
-    systemd-devel \
-    upx \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
