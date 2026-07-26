@@ -1,4 +1,4 @@
-%global debug_package %{nil}
+%global         debug_package %{nil}
 
 Name:           sudoku
 Version:        1.8.0

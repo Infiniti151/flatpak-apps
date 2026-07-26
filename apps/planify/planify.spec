@@ -1,3 +1,7 @@
+%global         app_id io.github.alainm23.%{name}
+%global         __requires_exclude ^libgxml-0.20.*$
+%global         __provides_exclude ^libgxml-0.20.*$
+
 Name:           planify
 Version:        4.19.5
 Release:        1%{?dist}
@@ -5,10 +9,6 @@ Summary:        Task manager with Todoist and CalDAV support
 License:        GPL-3.0-or-later
 URL:            https://github.com/alainm23/%{name}
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
-
-%global app_id io.github.alainm23.%{name}
-%global __requires_exclude ^libgxml-0.20.*$
-%global __provides_exclude ^libgxml-0.20.*$
 
 Source0:        %{url}/archive/v%{version}.tar.gz
 

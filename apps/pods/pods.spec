@@ -1,4 +1,4 @@
-%define         debug_package %{nil}
+%global         debug_package %{nil}
 %global         _enable_debug_package 0
 
 Name:           pods
@@ -27,7 +27,7 @@ Requires:       podman
 Requires:       hicolor-icon-theme
 
 %description
-Pods is a GTK application that allows you to manage podman 
+Pods is a GTK application that allows you to manage podman
 containers, pods, and images with a clean, native GNOME interface.
 
 %prep

@@ -1,4 +1,4 @@
-%define         debug_package %{nil}
+%global         debug_package %{nil}
 
 Name:           concessio
 Version:        0.3.0

@@ -1,4 +1,4 @@
-%global app_id com.github.ryonakano.konbucase
+%global         app_id com.github.ryonakano.konbucase
 
 Name:           konbucase
 Version:        4.5.1
@@ -29,7 +29,7 @@ BuildRequires:  libappstream-glib
 BuildRequires:  gtk-update-icon-cache
 
 %description
-Konbucase is a native Linux application for converting strings between 
+Konbucase is a native Linux application for converting strings between
 various cases like camelCase, snake_case, and PascalCase.
 
 %prep

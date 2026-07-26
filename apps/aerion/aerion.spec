@@ -1,4 +1,4 @@
-%define debug_package %{nil}
+%global         debug_package %{nil}
 
 Name:           aerion
 Version:        0.3.2
@@ -63,7 +63,7 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 
 %changelog
 * Fri Jul 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.2-1
-- Added Spellcheck for languages using Latin alphabet - [#277](https://github.com/hkdb/aerion/issues/277) 
+- Added Spellcheck for languages using Latin alphabet - [#277](https://github.com/hkdb/aerion/issues/277)
 - Improved profile pic support - [#183](https://github.com/hkdb/issues/183) - Requires force resync of contacts
 - Added re-auth button to contact write
 - Improved unread count and IDLE sync - [#327](https://github.com/hkdb/aerion/issues/327)

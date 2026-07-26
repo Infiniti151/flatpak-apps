@@ -31,7 +31,7 @@ First off, thank you for helping maintain and expand this repository! Your contr
 - **ELN Specific Config:** If you're adding a spec file for a Rust app, you need to add this to the top of the file for the build to pass on ELN
   ```
   %if 0%{?eln}
-  %define _empty_manifest_terminate_build 0
+  %global _empty_manifest_terminate_build 0
   %endif
   ```
 

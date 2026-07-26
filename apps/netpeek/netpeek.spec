@@ -1,4 +1,4 @@
-%define app_id io.github.zingytomato.netpeek
+%global         app_id io.github.zingytomato.netpeek
 
 Name:           netpeek
 Version:        0.3.0

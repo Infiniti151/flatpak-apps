@@ -1,8 +1,8 @@
 %if 0%{?eln}
-%define _empty_manifest_terminate_build 0
+%global         _empty_manifest_terminate_build 0
 %endif
 
-%global app_id com.digitalgex.RustDiff
+%global         app_id com.digitalgex.RustDiff
 
 Name:           rustdiff
 Version:        0.3.3

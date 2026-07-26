@@ -33,11 +33,11 @@ By design, **Flatpaks** run in a containerized sandbox (using `bubblewrap`). By 
 
 **Please do not open a public GitHub issue for security vulnerabilities.**
 
-If you discover a security risk related to the **packaging** (e.g., insecure file permissions, dangerous `%post` scripts, or hardcoded secrets), please report it privately:
+If you discover a security risk related to the **packaging** (e.g., insecure file permissions, dangerous `%post` scripts, or hardcoded secrets), please report it privately using GitHub Security Advisories:
 
-1.  **Contact:** Email me at **[43163551+Infiniti151@users.noreply.github.com]**.
-2.  **Encrypted Communication:** My public key is available on `keyserver.ubuntu.com` under my email address.
-3.  **Timeline:** I will acknowledge your report within 48 hours and work toward a fix as a high priority.
+1. Go to the **Security** tab of this repository.
+2. Click on **Report a vulnerability** to open a private advisory draft.
+3. **Timeline:** I will acknowledge your report within 48 hours and work toward a fix as a high priority.
 
 ### Upstream Application Vulnerabilities
 If the vulnerability exists within the application code itself (not the RPM packaging), please report it directly to the **original upstream developer**. Once they release a patched version, I will update the RPM build here as soon as possible.

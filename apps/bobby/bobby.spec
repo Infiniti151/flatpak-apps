@@ -1,5 +1,5 @@
 %if 0%{?eln}
-%define _empty_manifest_terminate_build 0
+%global         _empty_manifest_terminate_build 0
 %endif
 
 Name:           bobby
