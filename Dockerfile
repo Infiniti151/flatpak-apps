@@ -36,6 +36,7 @@ RUN dnf install -y \
     meson \
     ninja-build \
     rust \
+    upx \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
