@@ -33,7 +33,6 @@ BuildRequires:  pkgconfig(libadwaita-1) >= 1.4.0
 BuildRequires:  pkgconfig(webkitgtk-6.0) >= 2.42.0
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(openssl)
-BuildRequires:  pkgconfig(libpeas-2.0)
 BuildRequires:  pkgconfig(clapper-gtk-0.0)
 
 # Runtime Requirements
