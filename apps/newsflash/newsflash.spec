@@ -8,7 +8,7 @@
 %global         __spec_install_post /usr/lib/rpm/brp-compress
 
 Name:           newsflash
-Version:        0
+Version:        5.2.4
 Release:        1%{?dist}
 Summary:        Modern feed reader designed for the GNOME desktop
 License:        GPLv3
@@ -91,3 +91,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{app_id}.appd
 %{_datadir}/icons/hicolor/symbolic/apps/%{app_id}-symbolic.svg
 %{_datadir}/dbus-1/services/%{app_id}.service
 %{_metainfodir}/%{app_id}.appdata.xml
+
+%changelog
+* Mon Jul 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v.5.2.4-1
+- Update to v.5.2.4
+
