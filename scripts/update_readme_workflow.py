@@ -229,7 +229,7 @@ def update_workflow(workflow_path, app_name, platform, upstream_repo, host):
         'upstream_repo': upstream_repo,
         'provider': platform
     }
-    if platform == "gitlab" and host != "gitlab.com":
+    if platform == "gitlab":
         new_entry['instance'] = host
 
     matrix_include.append(new_entry)

@@ -114,7 +114,7 @@ jobs:
           APP_DIR="apps/${{ vars.APP }}"
           SPEC_FILE="${{ vars.APP }}.spec"
 
-          RPM_SOURCES="$HOME/rpmbuild/SOURCES"
+          RPM_SOURCES="/github/home/rpmbuild/SOURCES"
           mkdir -p "$RPM_SOURCES" /github/home/.ccache /github/home/.sccache /github/home/.cargo_cache
 
           cd "$APP_DIR"
@@ -133,6 +133,7 @@ jobs:
           echo "_sourcedir /github/home/rpmbuild/SOURCES" >> ~/.rpmmacros
 
           # 2. Rust / Cargo Logic
+          BUILD_DEFINES=""
           if grep -qiE "rust|cargo" "$SPEC_FILE"; then
             echo -e "${COLOR_INFO}🦀 Rust detected. Enabling sccache...${COLOR_RESET}"
             export SCCACHE_DIR="/github/home/.sccache"
@@ -140,6 +141,7 @@ jobs:
             sccache --start-server
 
             export CARGO_HOME="/github/home/.cargo_cache"
+            export CARGO_BUILD_JOBS="$(nproc)"
 
             echo -e "${COLOR_WARN}📦 Preparing source for Rust cache linking...${COLOR_RESET}"
             rpmbuild -bp *.spec
@@ -171,26 +173,24 @@ jobs:
             rpmbuild -ba *.spec
           fi
 
-          [ -n "${RUSTC_WRAPPER:-}" ] && sccache --stop-server || true
+          # Print Stats and Stop Server before wrapping up
+          echo "::group::Cache Statistics & Summary"
+          if grep -qiE "rust|cargo" "$SPEC_FILE"; then
+            echo -e "${COLOR_SUCCESS}🦀 Rust/sccache stats:${COLOR_RESET}"
+            sccache --show-stats || true
+            sccache --stop-server || true
+          fi
+
+          if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
+            echo -e "${COLOR_SUCCESS}🛠️ C/C++ / ccache stats:${COLOR_RESET}"
+            export CCACHE_DIR="/github/home/.ccache"
+            ccache -s || true
+          fi
+          echo "::endgroup::"
 
           echo -e "${COLOR_WARN}🔓 Handing ownership back to GitHub Runner...${COLOR_RESET}"
           RUNNER_UID=$(stat -c '%u:%g' /github/home 2>/dev/null || echo "1001:1001")
           chown -R "$RUNNER_UID" /github/home/.ccache /github/home/.sccache /github/home/.cargo_cache || true
-
-          echo "::group::Cache Folder Statistics"
-          if grep -qiE "rust|cargo" "$SPEC_FILE"; then
-              echo -e "${COLOR_SUCCESS}==> .sccache size: $(du -sh "/github/home/.sccache" | cut -f1)${COLOR_RESET}"
-              echo -e "${COLOR_SUCCESS}==> .cargo size: $(du -sh "/github/home/.cargo_cache" | cut -f1)${COLOR_RESET}"
-          fi
-
-          if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
-              echo -e "${COLOR_SUCCESS}==> .ccache size: $(du -sh "/github/home/.ccache" | cut -f1)${COLOR_RESET}"
-          fi
-          echo "::endgroup::"
-
-      - name: Locate Built GXml Binaries
-        run: |
-          find $HOME/rpmbuild/BUILD -name "libgxml-0.20.so*"
 
       - name: Save Cache
         if: always()
@@ -201,30 +201,6 @@ jobs:
             /github/home/.sccache
             /github/home/.cargo_cache
           key: ${{ runner.os }}-build-cache-${{ vars.APP }}-${{ github.sha }}
-
-      - name: Show Cache Stats
-        if: always()
-        working-directory: apps/${{ vars.APP }}
-        run: |
-          SPEC_FILE="${{ vars.APP }}.spec"
-          echo -e "${COLOR_INFO}📊 --- Cache Performance Statistics ---${COLOR_RESET}"
-
-          export CCACHE_DIR="${{ github.workspace }}/.ccache"
-          export SCCACHE_DIR="${{ github.workspace }}/.sccache"
-
-          # Check sccache (Rust)
-          if grep -qiE "rust|cargo" "$SPEC_FILE"; then
-            echo -e "${COLOR_SUCCESS}🦀 Rust/sccache stats:${COLOR_RESET}"
-            sccache --show-stats
-          fi
-
-          echo ""
-
-          # Check ccache (C/C++)
-          if grep -qiE "gcc|gcc-c\+\+|clang|clang\+\+" "$SPEC_FILE"; then
-            echo -e "${COLOR_SUCCESS}🛠️ C/C++ / ccache stats:${COLOR_RESET}"
-            ccache -s
-          fi
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
