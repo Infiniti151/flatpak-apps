@@ -21,11 +21,13 @@ RUN dnf install -y \
     'pkgconfig(glib-2.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
+    'pkgconfig(libxml-2.0)' \
     'pkgconfig(openssl)' \
     'pkgconfig(sqlite3)' \
     'pkgconfig(webkitgtk-6.0)' \
     blueprint-compiler \
     cargo \
+    clang-devel \
     desktop-file-utils \
     gcc \
     gettext \
