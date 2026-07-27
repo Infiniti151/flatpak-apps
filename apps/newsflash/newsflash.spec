@@ -49,6 +49,9 @@ BuildRequires:  pkgconfig(clapper-gtk-0.0)
 # Runtime Requirements
 Requires:       hicolor-icon-theme
 Requires:       xdg-utils
+Requires:       clapper
+Requires:       libmicrodns
+Requires:       libpeas
 
 %description
 NewsFlash is a modern RSS feed reader designed to work with web-based feed accounts.
