@@ -15,6 +15,25 @@ RUN dnf install -y \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- newsflash dependencies --- \
+    'pkgconfig(clapper-gtk-0.0)' \
+    'pkgconfig(gio-2.0)' \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    'pkgconfig(libpeas-2.0)' \
+    'pkgconfig(openssl)' \
+    'pkgconfig(sqlite3)' \
+    'pkgconfig(webkitgtk-6.0)' \
+    blueprint-compiler \
+    cargo \
+    desktop-file-utils \
+    gcc \
+    gettext \
+    libappstream-glib \
+    meson \
+    ninja-build \
+    rust \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
