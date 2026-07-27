@@ -22,6 +22,7 @@ RUN dnf install -y \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
     'pkgconfig(libxml-2.0)' \
+    'pkgconfig(gtksourceview-5)' \
     'pkgconfig(openssl)' \
     'pkgconfig(sqlite3)' \
     'pkgconfig(webkitgtk-6.0)' \
