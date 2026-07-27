@@ -195,7 +195,7 @@ jobs:
 
           OLD_VER=$(awk '/^Version:/ {print $2}' "$SPEC")
 
-          CLEAN_NEW_VER="${NEW_VER#[vV]}"
+          CLEAN_NEW_VER=$(echo "$NEW_VER" | sed -E 's/^[vV]\.?//')
 
           echo -e "${COLOR_INFO}==> [INFO] Current: $OLD_VER | Upstream: $CLEAN_NEW_VER${COLOR_RESET}"
 
@@ -221,7 +221,7 @@ jobs:
           NEW_VER: ${{ steps.upstream.outputs.version }}
         run: |
           echo -e "${COLOR_INFO}==> [INFO] Bumping $APP to $NEW_VER...${COLOR_RESET}"
-          CLEAN_NEW_VER="${NEW_VER#[vV]}"
+          CLEAN_NEW_VER=$(echo "$NEW_VER" | sed -E 's/^[vV]\.?//')
           sed -i "s/^Version:.*/Version:        $CLEAN_NEW_VER/" "$SPEC"
 
           if [ "$APP" = "sudoku" ]; then
