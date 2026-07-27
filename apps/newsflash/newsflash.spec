@@ -8,7 +8,7 @@
 %global         __spec_install_post /usr/lib/rpm/brp-compress
 
 Name:           newsflash
-Version:        5.2.4
+Version:        0
 Release:        1%{?dist}
 Summary:        Modern feed reader designed for the GNOME desktop
 License:        GPLv3
