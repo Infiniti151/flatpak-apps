@@ -17,20 +17,19 @@ jobs:
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           script: |
-            // Determine if this is an issue or a PR
             const payload = context.payload.issue || context.payload.pull_request;
             const body = payload.body;
             if (!body) return;
 
             const labels = [];
 
-            // 1. Technical Type Labels (Checkbox logic)
-            if (body.includes('- [x] **New App**')) labels.push('enhancement');
-            if (body.includes('- [x] **Bug Fix**')) labels.push('bugfix');
-            if (body.includes('- [x] **Optimization**')) labels.push('optimization');
+            // 1. Flexible Regex Checkbox Matching (handles case & extra spaces)
+            if (/-\s*\[[xX]\]\s*\*\*New App\*\*/i.test(body)) labels.push('enhancement');
+            if (/-\s*\[[xX]\]\s*\*\*Bug Fix\*\*/i.test(body)) labels.push('bugfix');
+            if (/-\s*\[[xX]\]\s*\*\*Optimization\*\*/i.test(body)) labels.push('optimization');
 
-            // 2. Fedora Version Regex Logic
-            const versionRegex = /-\s\*\*Fedora Version:\*\*\s*(?:<!--.*?-->\s*)?([0-9a-zA-Z]+)/i;
+            // 2. Fedora Version Regex Matching
+            const versionRegex = /-\s*\*\*Fedora Version:\*\*\s*(?:\s*)?([0-9a-zA-Z]+)/i;
             const match = body.match(versionRegex);
 
             if (match && match[1]) {
@@ -38,7 +37,7 @@ jobs:
               let versionLabel;
 
               if (['rawhide', 'eln'].includes(versionInput.toLowerCase())) {
-                versionLabel = `Fedora ${versionInput.toUpperCase().replace('RAWHIDE', 'Rawhide')}`;
+                versionLabel = `Fedora ${versionInput.charAt(0).toUpperCase() + versionInput.slice(1).toLowerCase()}`;
               } else if (!isNaN(versionInput)) {
                 versionLabel = `Fedora ${versionInput}`;
               }
@@ -46,7 +45,7 @@ jobs:
               if (versionLabel) labels.push(versionLabel);
             }
 
-            // 3. Apply labels
+            // 3. Apply labels if any matched
             if (labels.length > 0) {
               await github.rest.issues.addLabels({
                 owner: context.repo.owner,
