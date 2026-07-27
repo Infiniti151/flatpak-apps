@@ -3,6 +3,7 @@
 %endif
 
 %global         app_id io.gitlab.news_flash.NewsFlash
+%global         __brp_mangle_shebangs %{nil}
 
 Name:           newsflash
 Version:        5.2.4
@@ -39,14 +40,8 @@ BuildRequires:  pkgconfig(openssl)
 BuildRequires:  pkgconfig(clapper-gtk-0.0)
 
 # Runtime Requirements
-Requires:       gtk4 >= 4.12.0
-Requires:       libadwaita >= 1.4.0
-Requires:       gtksourceview5
-Requires:       webkitgtk-6.0 >= 2.42.0
-Requires:       sqlite
-Requires:       openssl
-Requires:       xdg-utils
 Requires:       hicolor-icon-theme
+Requires:       xdg-utils
 
 %description
 NewsFlash is a modern RSS feed reader designed to work with web-based feed accounts.
