@@ -20,6 +20,7 @@ BuildRequires:  ninja-build
 BuildRequires:  gcc
 BuildRequires:  cargo
 BuildRequires:  rust
+BuildRequires:  clang-devel
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
@@ -29,8 +30,10 @@ BuildRequires:  libappstream-glib
 BuildRequires:  pkgconfig(glib-2.0) >= 2.70
 BuildRequires:  pkgconfig(gio-2.0) >= 2.70
 BuildRequires:  pkgconfig(gtk4) >= 4.12.0
+BuildRequires:  pkgconfig(gtksourceview-5)
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.4.0
 BuildRequires:  pkgconfig(webkitgtk-6.0) >= 2.42.0
+BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(openssl)
 BuildRequires:  pkgconfig(clapper-gtk-0.0)
@@ -38,6 +41,7 @@ BuildRequires:  pkgconfig(clapper-gtk-0.0)
 # Runtime Requirements
 Requires:       gtk4 >= 4.12.0
 Requires:       libadwaita >= 1.4.0
+Requires:       gtksourceview5
 Requires:       webkitgtk-6.0 >= 2.42.0
 Requires:       sqlite
 Requires:       openssl
