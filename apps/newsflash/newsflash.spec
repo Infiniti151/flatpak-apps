@@ -4,6 +4,8 @@
 
 %global         app_id io.gitlab.news_flash.NewsFlash
 %global         __brp_mangle_shebangs %{nil}
+%global         debug_package %{nil}
+%global         __spec_install_post /usr/lib/rpm/brp-compress
 
 Name:           newsflash
 Version:        5.2.4
@@ -14,6 +16,11 @@ URL:            https://gitlab.com/news-flash/news_flash_gtk
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 Source0:        %{url}/-/archive/v.%{version}/news_flash_gtk-v.%{version}.tar.gz
+
+# Compression Tools
+%if 0%{?fedora} && ! 0%{?eln}
+BuildRequires:  upx
+%endif
 
 # Build tools & utilities
 BuildRequires:  meson >= 0.59.0
@@ -59,6 +66,13 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %install
 %meson_install
+
+# Strip unneeded symbols and compress binary using UPX
+strip --strip-unneeded %{buildroot}%{_bindir}/%{app_id}
+%if 0%{?fedora} && ! 0%{?eln}
+upx --best --lzma %{buildroot}%{_bindir}/%{app_id}
+%endif
+
 %find_lang %{name}
 
 %check
