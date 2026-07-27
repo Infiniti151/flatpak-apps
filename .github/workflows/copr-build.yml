@@ -70,6 +70,10 @@ jobs:
           - app_name: netpeek
             upstream_repo: ZingyTomato/NetPeek
             provider: github
+          - app_name: newsflash
+            upstream_repo: news-flash/news_flash_gtk
+            provider: gitlab
+            instance: gitlab.com
           - app_name: nucleus
             upstream_repo: lo-vely/nucleus
             provider: codeberg
