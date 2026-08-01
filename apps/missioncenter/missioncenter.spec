@@ -76,7 +76,8 @@ export RUSTFLAGS="$RUSTFLAGS -C linker=clang -C link-arg=$LDFLAGS -C lto=fat -C 
 
 %meson \
   -Db_lto=true \
-  -Dflatpak=false
+  -Dflatpak=false \
+  --wrap-mode=fallback
 
 %meson_build
 
