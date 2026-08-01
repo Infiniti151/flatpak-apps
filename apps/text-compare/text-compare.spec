@@ -1,18 +1,22 @@
-%global         debug_package %{nil}
-%global         forgeurl      https://github.com/josephmawa/TextCompare
+%undefine _disable_source_fetch
 
-Name:           text-compare
-Version:        0.1.11
-Release:        1%{?dist}
-Summary:        A simple text comparison tool
-License:        GPL-3.0-or-later
-BugURL:         https://github.com/Infiniti151/flatpak-apps
-URL:            %{forgeurl}
-Source0:        %{forgesource}
+%global app_id        io.github.josephmawa.TextCompare
+%global forgeurl      https://github.com/josephmawa/TextCompare
+%global tag           v%{version}
+%global               debug_package %{nil}
 
-BuildArch:      noarch
+Name:                 text-compare
+Version:              0.1.11
+Release:              1%{?dist}
+Summary:              A simple text comparison tool
+License:              GPL-3.0-or-later
+BugURL:               https://github.com/Infiniti151/flatpak-apps
+BuildArch:            noarch
 
 %forgemeta
+
+URL:                  %{forgeurl}
+Source0:              %{forgesource}
 
 BuildRequires:  meson
 BuildRequires:  gcc
