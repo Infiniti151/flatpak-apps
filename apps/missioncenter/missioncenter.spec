@@ -1,5 +1,6 @@
 %global         app_id          io.missioncenter.MissionCenter
 %global         forgeurl        https://gitlab.com/mission-center-devs/mission-center
+%global         tag             v%{version}
 
 %global         debug_package   %{nil}
 %global         __spec_install_post /usr/lib/rpm/brp-compress
