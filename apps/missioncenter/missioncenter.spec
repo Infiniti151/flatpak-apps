@@ -67,6 +67,15 @@ CPU usage and hardware-accelerated GPU monitoring.
 %prep
 %forgesetup
 
+# Initialize Git context to fetch submodules (required for CI builds from forge tarballs)
+if [ ! -d ".git" ]; then
+    git init -q
+    git remote add origin %{forgeurl}
+    git fetch -q --depth 1 origin %{tag}
+    git checkout -q -f FETCH_HEAD
+fi
+git submodule update --init --recursive
+
 %build
 export CARGO_NET_OFFLINE=false
 export CC=%{build_cc}
@@ -76,8 +85,7 @@ export RUSTFLAGS="$RUSTFLAGS -C linker=clang -C link-arg=$LDFLAGS -C lto=fat -C 
 
 %meson \
   -Db_lto=true \
-  -Dflatpak=false \
-  --wrap-mode=fallback
+  -Dflatpak=false
 
 %meson_build
 
