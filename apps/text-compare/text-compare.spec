@@ -1,5 +1,3 @@
-%undefine _disable_source_fetch
-
 %global app_id        io.github.josephmawa.TextCompare
 %global forgeurl      https://github.com/josephmawa/TextCompare
 %global               debug_package %{nil}
