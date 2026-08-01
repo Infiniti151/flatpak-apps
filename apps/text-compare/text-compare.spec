@@ -2,7 +2,6 @@
 
 %global app_id        io.github.josephmawa.TextCompare
 %global forgeurl      https://github.com/josephmawa/TextCompare
-%global tag           v%{version}
 %global               debug_package %{nil}
 
 Name:                 text-compare
