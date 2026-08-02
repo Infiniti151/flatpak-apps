@@ -1,7 +1,7 @@
 %global         app_id io.github.zingytomato.netpeek
 
 Name:           netpeek
-Version:        0.3.0
+Version:        0.3.1
 Release:        1%{?dist}
 Summary:        Modern network scanner for GNOME
 
@@ -64,6 +64,17 @@ NetPeek is a modern network scanner designed for the GNOME desktop, built with P
 %{_datadir}/icons/hicolor/symbolic/apps/%{app_id}-symbolic.svg
 
 %changelog
+* Sun Aug 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.1-1
+- What's Changed?
+- Device cards now cap System Information and Services at one line, with expand/collapse buttons to reveal the full text.
+- Moved the thread count picker into the main menu.
+- Added better indication throughout the UI that a deep scan is taking place.
+- Added a Translate link to the About dialog.
+- Now using Weblate for translations - https://hosted.weblate.org/engage/netpeek/
+- New Contributors
+- @weblate made their first contribution in https://github.com/ZingyTomato/NetPeek/pull/34
+- *Full Changelog**: https://github.com/ZingyTomato/NetPeek/compare/v0.3.0...v0.3.1
+
 * Sun Jul 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.0-1
 - What's Changed?
 - New Deep Scan mode for additional information like OS identification, software versions and more.
