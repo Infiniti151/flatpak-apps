@@ -107,7 +107,6 @@ jobs:
         with:
           sparse-checkout: |
             apps/${{ matrix.app_name }}
-            README.md
 
       - name: Get Latest Upstream Tag
         id: upstream
@@ -167,10 +166,10 @@ jobs:
           elif [ "$PROVIDER" = "gitlab" ]; then
             ENCODED=$(echo "$REPO" | sed 's/\//%2F/g')
             DATA=$(fetch_tag "https://$INSTANCE/api/v4/projects/${ENCODED}/repository/tags?order_by=version&sort=desc")
-            TAG=$(echo "$DATA" | jq -r '.[0].name // empty')
+            TAG=$(echo "$DATA" | jq -r '[0].name // empty')
           elif [ "$PROVIDER" = "codeberg" ]; then
             DATA=$(fetch_tag "https://codeberg.org/api/v1/repos/$REPO/tags")
-            TAG=$(echo "$DATA" | jq -r '.[0].name // empty')
+            TAG=$(echo "$DATA" | jq -r '[0].name // empty')
           fi
 
           if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
@@ -194,7 +193,6 @@ jobs:
           fi
 
           OLD_VER=$(awk '/^Version:/ {print $2}' "$SPEC")
-
           CLEAN_NEW_VER=$(echo "$NEW_VER" | sed -E 's/^[vV]\.?//')
 
           echo -e "${COLOR_INFO}==> [INFO] Current: $OLD_VER | Upstream: $CLEAN_NEW_VER${COLOR_RESET}"
@@ -208,7 +206,7 @@ jobs:
             echo -e "${COLOR_SUCCESS}==> [SUCCESS] $APP is already up to date.${COLOR_RESET}"
           fi
 
-      - name: Bump Version and Push
+      - name: Bump Version in Spec File
         if: steps.check.outputs.update_needed == 'true'
         id: update
         env:
@@ -217,7 +215,6 @@ jobs:
           INSTANCE: "${{ matrix.instance }}"
           APP: "${{ matrix.app_name }}"
           SPEC: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
-          README: "README.md"
           NEW_VER: ${{ steps.upstream.outputs.version }}
         run: |
           echo -e "${COLOR_INFO}==> [INFO] Bumping $APP to $NEW_VER...${COLOR_RESET}"
@@ -295,28 +292,16 @@ jobs:
 
           rm entry.tmp
 
-          if [ -f "$README" ]; then
-            sed -i "/| $APP[^|]*|/ s/| [0-9.]* |/| $CLEAN_NEW_VER |/" "$README"
-          fi
-
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "$SPEC" "$README"
-          git commit -m "chore($APP): bump version to $NEW_VER"
-
-          MAX_RETRIES=5
-          for i in $(seq 1 $MAX_RETRIES); do
-            echo -e "${COLOR_INFO}==> [INFO] Push attempt $i...${COLOR_RESET}"
-            if git pull --rebase origin main && git push origin main; then
-              echo -e "${COLOR_SUCCESS}==> [SUCCESS] Updated readme and spec file.${COLOR_RESET}"
-              break
-            fi
-            if [ $i -eq $MAX_RETRIES ]; then
-              echo "::error::==> [ERROR] Failed to push after $MAX_RETRIES attempts."
-              exit 1
-            fi
-            sleep $(( (RANDOM % 10) + 1 ))
-          done
+      - name: Auto-Commit Spec File
+        if: steps.check.outputs.update_needed == 'true'
+        uses: suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f # v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          branch: main
+          commit_message: "chore(${{ matrix.app_name }}): bump spec version to ${{ steps.upstream.outputs.version }}"
+          files: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
+          fail_on_self_push: false
 
       - name: Trigger COPR Build
         if: steps.check.outputs.update_needed == 'true'
@@ -350,3 +335,62 @@ jobs:
           **Changelog:**
           $CHANGELOG
           EOF
+
+  update-readme:
+    needs: check-and-build
+    if: always() && !cancelled()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Sync Changed Spec Versions to README
+        env:
+          START_SHA: ${{ github.sha }}
+        run: |
+          if [ ! -f "README.md" ]; then
+            echo "README.md not found, skipping sync."
+            exit 0
+          fi
+
+          # Get spec files modified between workflow start ($START_SHA) and current HEAD
+          CHANGED_SPECS=$(git diff --name-only "$START_SHA" HEAD -- 'apps/*/*.spec' 2>/dev/null || true)
+
+          if [ -z "$CHANGED_SPECS" ]; then
+            echo "No spec files modified in this workflow run. Skipping README update."
+            exit 0
+          fi
+
+          # Extract unique app names from paths: apps/<app_name>/<app_name>.spec
+          CHANGED_APPS=$(echo "$CHANGED_SPECS" | cut -d'/' -f2 | sort -u)
+
+          echo "Found modified spec files in this run:"
+          echo "$CHANGED_APPS"
+
+          while IFS= read -r APP_NAME; do
+            [ -n "$APP_NAME" ] || continue
+            SPEC="apps/${APP_NAME}/${APP_NAME}.spec"
+
+            if [ -f "$SPEC" ]; then
+              VER=$(awk '/^Version:/ {print $2}' "$SPEC")
+              if [ -n "$VER" ] && grep -q "| $APP_NAME " "README.md"; then
+                echo "Updating README row for $APP_NAME -> $VER"
+                sed -i "/| $APP_NAME[^|]*|/ s/| [0-9.]* |/| $VER |/" "README.md"
+              fi
+            fi
+          done <<< "$CHANGED_APPS"
+
+      - name: Auto-Commit README Changes
+        uses: suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f # v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          branch: main
+          commit_message: "chore: sync updated spec versions to README.md"
+          files: "README.md"
+          fail_on_self_push: false
