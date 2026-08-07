@@ -1,7 +1,7 @@
 %global         debug_package %{nil}
 
 Name:           aerion
-Version:        0.3.2
+Version:        0.3.3
 Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
 License:        Apache-2.0
@@ -62,6 +62,19 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %changelog
+* Fri Aug 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.3-1
+- Message list redesign - [#70](https://github.com/hkdb/aerion/issues/70) + [#340](https://github.com/hkdb/aerion/issues/340)
+- Added swipe gestures - right select and left delete - [#68](https://github.com/hkdb/aerion/issues/68)
+- Added manual config of IMAP/SMTP auth mech
+- Added digest auth for contacts and calendars - [#313](https://github.com/hkdb/aerion/issues/313)
+- Added Polish translation - PR [#374](https://github.com/hkdb/aerion/pull/374)
+- Fixed IMAP/SMTP auto auth mech - [#365](https://github.com/hkdb/aerion/issues/355)
+- Fixed glitch when rapid deleting messages
+- Refactored to engine-level serialization
+- Improved toast notification logic - [#115](https://github.com/hkdb/aerion/issues/115)
+- Added states to fix unwanted message list reset - [#348](https://github.com/hkdb/aerion/issues/348)
+- ... (see upstream for full release notes)
+
 * Fri Jul 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.2-1
 - Added Spellcheck for languages using Latin alphabet - [#277](https://github.com/hkdb/aerion/issues/277)
 - Improved profile pic support - [#183](https://github.com/hkdb/issues/183) - Requires force resync of contacts
