@@ -3,7 +3,7 @@
 %endif
 
 Name:           mundi
-Version:        0.12.0
+Version:        0.13.0
 Release:        1%{?dist}
 Summary:        A geography learning application for GNOME
 License:        GPL-3.0-or-later
@@ -56,6 +56,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/metainfo/*.xml
 
 %changelog
+* Wed Aug 12 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.13.0-1
+- Update to v0.13.0
+
 * Tue Jun 30 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.12.0-1
 - Update to v0.12.0
 
