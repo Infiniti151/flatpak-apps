@@ -1,7 +1,7 @@
 %global         app_id io.github.zingytomato.netpeek
 
 Name:           netpeek
-Version:        0.3.1
+Version:        0.3.2
 Release:        1%{?dist}
 Summary:        Modern network scanner for GNOME
 
@@ -64,6 +64,17 @@ NetPeek is a modern network scanner designed for the GNOME desktop, built with P
 %{_datadir}/icons/hicolor/symbolic/apps/%{app_id}-symbolic.svg
 
 %changelog
+* Sat Aug 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.2-1
+- What's Changed
+- Updated Estonian and Czech translations - @p-bo, Priit Jõerüüt
+- Added search functionality to all scan pages.
+- Implemented a new scan info dialog for current and previous scans.
+- Results view format is now preserved when resizing the window.
+- Updated nmap to version [7.991](https://nmap.org/changelog.html#7.991).
+- Updated screenshots.
+- Removed MAC address collection due to lack of consistent detection.
+- *Full Changelog**: https://github.com/ZingyTomato/NetPeek/compare/v0.3.1...v0.3.2
+
 * Sun Aug 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.1-1
 - What's Changed?
 - Device cards now cap System Information and Services at one line, with expand/collapse buttons to reveal the full text.
