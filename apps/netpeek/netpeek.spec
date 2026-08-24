@@ -1,7 +1,7 @@
 %global         app_id io.github.zingytomato.netpeek
 
 Name:           netpeek
-Version:        0.3.2
+Version:        0.3.3
 Release:        1%{?dist}
 Summary:        Modern network scanner for GNOME
 
@@ -64,6 +64,12 @@ NetPeek is a modern network scanner designed for the GNOME desktop, built with P
 %{_datadir}/icons/hicolor/symbolic/apps/%{app_id}-symbolic.svg
 
 %changelog
+* Mon Aug 24 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.3-1
+- What's Changed
+- Grouped all IP presets into a single button.
+- Added date filters and custom date ranges to scan history.
+- *Full Changelog**: https://github.com/ZingyTomato/NetPeek/compare/v0.3.2...v0.3.3
+
 * Sat Aug 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.2-1
 - What's Changed
 - Updated Estonian and Czech translations - @p-bo, Priit Jõerüüt
