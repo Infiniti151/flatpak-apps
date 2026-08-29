@@ -107,6 +107,7 @@ jobs:
         with:
           sparse-checkout: |
             apps/${{ matrix.app_name }}
+            scripts/changelog_scraper.py
 
       - name: Get Latest Upstream Tag
         id: upstream
@@ -210,6 +211,7 @@ jobs:
         if: steps.check.outputs.update_needed == 'true'
         id: update
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           PROVIDER: "${{ matrix.provider }}"
           REPO: "${{ matrix.upstream_repo }}"
           INSTANCE: "${{ matrix.instance }}"
@@ -242,34 +244,8 @@ jobs:
             fi
           fi
 
-          if [ "$PROVIDER" = "github" ]; then
-            CHANGELOG_BODY=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | jq -r '.body // empty')
-          elif [ "$PROVIDER" = "gitlab" ]; then
-            ENCODED="${REPO//\//%2F}"
-            CHANGELOG_BODY=$(curl -s "https://$INSTANCE/api/v4/projects/${ENCODED}/releases/${NEW_VER}" | jq -r '.description // empty')
-          elif [ "$PROVIDER" = "codeberg" ]; then
-            CHANGELOG_BODY=$(curl -s "https://codeberg.org/api/v1/repos/$REPO/releases/latest" | jq -r '.body // empty')
-          fi
-
-          if [ -z "$CHANGELOG_BODY" ] || [ "$CHANGELOG_BODY" = "null" ]; then
-            CHANGELOG="- Update to $NEW_VER"
-          else
-            CHANGELOG_RAW=$(echo "$CHANGELOG_BODY" | \
-              sed 's/<[^>]*>//g' | \
-              sed 's/^#* //g' | \
-              sed -E 's/^[[:space:]]*[-*•][[:space:]]*//' | \
-              sed 's/^[[:space:]]*//' | \
-              sed '/^$/d')
-
-            LINE_COUNT=$(wc -l <<< "$CHANGELOG_RAW")
-
-            if [ "$LINE_COUNT" -gt 10 ]; then
-              CHANGELOG=$(echo "$CHANGELOG_RAW" | head -n 10 | sed 's/^/- /')
-              CHANGELOG="$CHANGELOG"$'\n- ... (see upstream for full release notes)'
-            else
-              CHANGELOG="- ${CHANGELOG_RAW//$'\n'/$'\n'- }"
-            fi
-          fi
+          APP_ID=$(grep -E '^\s*%global\s+(app_id|rdnn)\s+' "$SPEC" | awk '{print $3}')
+          CHANGELOG=$(python3 scripts/changelog_scraper.py "$PROVIDER" "$INSTANCE" "$REPO" "$APP_ID" "$NEW_VER")
 
           echo "changelog<<EOF" >> "$GITHUB_OUTPUT"
           echo "$CHANGELOG" >> "$GITHUB_OUTPUT"

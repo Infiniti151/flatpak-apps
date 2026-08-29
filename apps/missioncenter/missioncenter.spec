@@ -1,20 +1,25 @@
-%global         debug_package %{nil}
+%global         app_id          io.missioncenter.MissionCenter
+%global         forgeurl        https://gitlab.com/mission-center-devs/mission-center
+%global         tag             v%{version}
+
+%global         debug_package   %{nil}
 %global         __spec_install_post /usr/lib/rpm/brp-compress
-%global         build_cc clang
-%global         build_cxx clang++
-%global         nethogs_bin %{_bindir}/nethogs
-%global         powercap_rules %{_sysconfdir}/udev/rules.d/99-powercap.rules
+%global         build_cc        clang
+%global         build_cxx       clang++
+%global         nethogs_bin     %{_bindir}/nethogs
+%global         powercap_rules  %{_sysconfdir}/udev/rules.d/99-powercap.rules
 
 Name:           missioncenter
 Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Monitor your CPU, Memory, Disk, Network and GPU usage
-
 License:        GPLv3
-URL:            https://gitlab.com/mission-center-devs/mission-center
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/-/archive/v%{version}/mission-center-v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 # 1. Build Systems & Language Toolchains
 %if 0%{?fedora} && ! 0%{?eln}
@@ -30,6 +35,7 @@ BuildRequires:  compiler-rt
 BuildRequires:  rustc
 BuildRequires:  cargo
 BuildRequires:  cargo-rpm-macros
+BuildRequires:  forge-srpm-macros
 BuildRequires:  blueprint-compiler
 
 # 2. GNOME / Desktop Integration Tools
@@ -59,12 +65,15 @@ It provides a highly detailed view of system performance, including per-thread
 CPU usage and hardware-accelerated GPU monitoring.
 
 %prep
-%autosetup -n mission-center-v%{version}
+%forgesetup
 
-git init
-git remote add origin %{url}
-git fetch --depth 1 origin v%{version}
-git checkout -f FETCH_HEAD
+# Initialize Git context to fetch submodules (required for CI builds from forge tarballs)
+if [ ! -d ".git" ]; then
+    git init -q
+    git remote add origin %{forgeurl}
+    git fetch -q --depth 1 origin %{tag}
+    git checkout -q -f FETCH_HEAD
+fi
 git submodule update --init --recursive
 
 %build
@@ -76,8 +85,7 @@ export RUSTFLAGS="$RUSTFLAGS -C linker=clang -C link-arg=$LDFLAGS -C lto=fat -C 
 
 %meson \
   -Db_lto=true \
-  -Dflatpak=false \
-  --wrap-mode=nodownload
+  -Dflatpak=false
 
 %meson_build
 

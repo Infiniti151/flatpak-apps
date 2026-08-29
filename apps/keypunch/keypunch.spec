@@ -1,3 +1,5 @@
+%global         app_id          no.bragefuglseth.Keypunch
+
 Name:           keypunch
 Version:        7.0
 Release:        1%{?dist}

@@ -1,20 +1,24 @@
-%global         debug_package %{nil}
+%global app_id        io.github.josephmawa.TextCompare
+%global forgeurl      https://github.com/josephmawa/TextCompare
+%global               debug_package %{nil}
 
-Name:           text-compare
-Version:        0.1.11
-Release:        1%{?dist}
-Summary:        A simple text comparison tool
-License:        GPL-3.0-or-later
-URL:            https://github.com/josephmawa/TextCompare
-BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
+Name:                 text-compare
+Version:              0.1.11
+Release:              1%{?dist}
+Summary:              A simple text comparison tool
+License:              GPL-3.0-or-later
+BugURL:               https://github.com/Infiniti151/flatpak-apps
+BuildArch:            noarch
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
 
-BuildArch:      noarch
+URL:                  %{forgeurl}
+Source0:              %{forgesource}
 
 BuildRequires:  meson
 BuildRequires:  gcc
 BuildRequires:  gjs
+BuildRequires:  forge-srpm-macros
 BuildRequires:  blueprint-compiler
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
@@ -31,7 +35,7 @@ Requires:       hicolor-icon-theme
 A simple text comparison tool built with GJS and Adwaita.
 
 %prep
-%autosetup -n TextCompare-%{version}
+%forgesetup
 
 %build
 %meson

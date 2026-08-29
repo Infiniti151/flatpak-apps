@@ -1,3 +1,5 @@
+%global         app_id          page.codeberg.lo_vely.Nucleus
+
 Name:           nucleus
 Version:        3
 Release:        1%{?dist}

@@ -1,6 +1,7 @@
 %if 0%{?eln}
 %global         _empty_manifest_terminate_build 0
 %endif
+%global         app_id          io.gitlab.news_flash.NewsFlash
 
 %global         app_id io.gitlab.news_flash.NewsFlash
 %global         __brp_mangle_shebangs %{nil}

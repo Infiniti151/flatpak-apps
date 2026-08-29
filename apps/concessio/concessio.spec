@@ -1,4 +1,5 @@
 %global         debug_package %{nil}
+%global         app_id          io.github.ronniedroid.concessio
 
 Name:           concessio
 Version:        0.3.0

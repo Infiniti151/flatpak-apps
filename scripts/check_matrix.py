@@ -14,6 +14,17 @@
 
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+    ---
+    COPR Matrix Consistency Checker
+
+    Scans the local 'apps/' directory and cross-references folders against
+    the matrix configuration defined in .github/workflows/copr-build.yml.
+    Prevents unconfigured app directories from being committed without
+    CI workflow representation.
+
+    Usage:
+        python3 scripts/check_matrix.py
 """
 import yaml
 import os

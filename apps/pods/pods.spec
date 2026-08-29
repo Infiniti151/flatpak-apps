@@ -1,5 +1,6 @@
 %global         debug_package %{nil}
 %global         _enable_debug_package 0
+%global         app_id          com.github.marhkb.Pods
 
 Name:           pods
 Version:        3.1.1

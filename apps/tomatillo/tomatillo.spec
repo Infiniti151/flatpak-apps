@@ -1,3 +1,5 @@
+%global         app_id          io.github.diegopvlk.Tomatillo
+
 Name:           tomatillo
 Version:        1.1.1
 Release:        1%{?dist}

@@ -1,6 +1,7 @@
 %if 0%{?eln}
 %global         _empty_manifest_terminate_build 0
 %endif
+%global         app_id          io.github.teacond.Morse
 
 Name:           morse
 Version:        1.5.0

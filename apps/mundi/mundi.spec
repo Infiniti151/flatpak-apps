@@ -1,6 +1,7 @@
 %if 0%{?eln}
 %global _empty_manifest_terminate_build 0
 %endif
+%global         app_id          io.github.nacho.mundi
 
 Name:           mundi
 Version:        0.14.0

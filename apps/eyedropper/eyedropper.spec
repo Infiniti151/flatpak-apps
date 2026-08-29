@@ -1,6 +1,7 @@
 %if 0%{?eln}
 %global         _empty_manifest_terminate_build 0
 %endif
+%global         app_id          com.github.finefindus.eyedropper
 
 Name:           eyedropper
 Version:        2.2.1

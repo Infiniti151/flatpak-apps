@@ -1,4 +1,5 @@
 %global         debug_package %{nil}
+%global         app_id          io.github.sepehr_rs.Sudoku
 
 Name:           sudoku
 Version:        1.8.0

@@ -14,6 +14,20 @@
 
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+    ---
+    App Registry & Matrix Sync Utility
+
+    Parses an application's RPM spec file (Name, Version, URL) and queries forge
+    APIs (GitHub, GitLab, Codeberg) to locate high-resolution app icons. Updates
+    README.md and .github/workflows/copr-build.yml with alphabetically sorted
+    entries while preserving formatting.
+
+    Usage:
+        python3 scripts/update_app_list.py <app_name>
+
+    Example:
+        python3 scripts/update_app_list.py netpeek
 """
 import argparse
 import json
@@ -81,7 +95,7 @@ def get_icon_url(url, app_name):
     tree_entries = []
     platform = "github"
 
-    if "github.com" in host:
+    if host == "github.com" or host.endswith(".github.com"):
         platform = "github"
         repo_data = fetch_json(f"https://api.github.com/repos/{owner}/{repo}")
         branch = repo_data.get("default_branch", "main") if repo_data else "main"
@@ -89,7 +103,7 @@ def get_icon_url(url, app_name):
         if tree_data and "tree" in tree_data:
             tree_entries = tree_data["tree"]
 
-    elif "gitlab" in host:
+    elif host == "gitlab.com" or host.endswith(".gitlab.com"):
         platform = "gitlab"
         instance = host
         encoded_project = f"{owner}%2F{repo}"
@@ -99,7 +113,7 @@ def get_icon_url(url, app_name):
         if isinstance(tree_data, list):
             tree_entries = tree_data
 
-    elif "codeberg.org" in host:
+    elif host == "codeberg.org" or host.endswith(".codeberg.org"):
         platform = "codeberg"
         repo_data = fetch_json(f"https://codeberg.org/api/v1/repos/{owner}/{repo}")
         branch = repo_data.get("default_branch", "main") if repo_data else "main"
