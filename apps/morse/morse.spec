@@ -3,7 +3,7 @@
 %endif
 
 Name:           morse
-Version:        1.4.0
+Version:        1.5.0
 Release:        1%{?dist}
 Summary:        Morse is an open-source program for learning Morse code
 License:        GPL-3.0-only
@@ -62,6 +62,14 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/morse/
 
 %changelog
+* Mon Aug 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.5.0-1
+- What's Changed
+- Add toggle button to hide/reveal morse text by @igonzalezb in https://github.com/teacond/Morse/pull/23
+- Update CI/CD by @teacond in https://github.com/teacond/Morse/pull/24
+- New Contributors
+- @igonzalezb made their first contribution in https://github.com/teacond/Morse/pull/23
+- *Full Changelog**: https://github.com/teacond/Morse/compare/v1.4.0...v1.5.0
+
 * Sun Jun 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.4.0-1
 - What's Changed
 - Add a window to display audio errors by @teacond in https://github.com/teacond/Morse/pull/17
