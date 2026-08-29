@@ -1,3 +1,5 @@
+%global         app_id          de.wwwtech.gitte
+
 Name:           gitte
 Version:        0.9.1
 Release:        1%{?dist}

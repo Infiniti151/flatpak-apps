@@ -1,6 +1,7 @@
 %if 0%{?eln}
 %global         _empty_manifest_terminate_build 0
 %endif
+%global         app_id          page.codeberg.petsoi.words
 
 Name:           words-game
 Version:        0.7.9.1
@@ -10,7 +11,7 @@ License:        GPL-3.0-only
 URL:            https://codeberg.org/petsoi/words
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+Source0:        %{url}/archive/v%{version}.tar.gzs
 
 BuildRequires:  meson >= 1.1.0
 BuildRequires:  gcc

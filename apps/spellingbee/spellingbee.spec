@@ -1,3 +1,5 @@
+%global         app_id          io.github.josephmawa.SpellingBee
+
 Name:           spellingbee
 Version:        0.1.6
 Release:        1%{?dist}

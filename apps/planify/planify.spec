@@ -1,4 +1,4 @@
-%global         app_id io.github.alainm23.%{name}
+%global         app_id              io.github.alainm23.planify
 %global         __requires_exclude ^libgxml-0.20.*$
 %global         __provides_exclude ^libgxml-0.20.*$
 

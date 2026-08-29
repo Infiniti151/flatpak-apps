@@ -14,6 +14,20 @@
 
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+    ---
+    App Registry & Matrix Sync Utility
+
+    Parses an application's RPM spec file (Name, Version, URL) and queries forge
+    APIs (GitHub, GitLab, Codeberg) to locate high-resolution app icons. Updates
+    README.md and .github/workflows/copr-build.yml with alphabetically sorted
+    entries while preserving formatting.
+
+    Usage:
+        python3 scripts/update_app_list.py <app_name>
+
+    Example:
+        python3 scripts/update_app_list.py netpeek
 """
 import argparse
 import json

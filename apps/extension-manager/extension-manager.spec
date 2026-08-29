@@ -1,3 +1,5 @@
+%global         app_id          com.mattjakeman.ExtensionManager
+
 Name:           extension-manager
 Version:        0.6.5
 Release:        1%{?dist}
