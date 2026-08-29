@@ -18,6 +18,8 @@ jobs:
   check-version:
     runs-on: ubuntu-latest
     environment: Test
+    permissions:
+      contents: read
     outputs:
       should_build: ${{ steps.check.outputs.should_build }}
     env:
@@ -68,6 +70,8 @@ jobs:
 
   build:
     needs: check-version
+    permissions:
+      contents: read
     if: >
       github.ref == 'refs/heads/dev' &&
       (
