@@ -17,6 +17,7 @@ RUN dnf install -y ccache \
     # --- transition dependencies --- \
     cargo \
     cargo-rpm-macros \
+    cairo-devel \
     desktop-file-utils \
     forge-srpm-macros \
     gettext \
