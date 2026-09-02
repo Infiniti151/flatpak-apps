@@ -109,76 +109,37 @@ jobs:
             apps/${{ matrix.app_name }}
             scripts/changelog_scraper.py
 
-      - name: Get Latest Upstream Tag
+      - name: Get Latest AppStream Version
         id: upstream
         env:
           PROVIDER: ${{ matrix.provider }}
           REPO: ${{ matrix.upstream_repo }}
           INSTANCE: ${{ matrix.instance }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APP: ${{ matrix.app_name }}
+          SPEC: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
         run: |
-          fetch_tag() {
-            local url=$1
-            local attempt=1
-            local max_attempts=4
-            local wait_time=3
-            local result=""
-            local response_code=""
-
-            while [ $attempt -le $max_attempts ]; do
-              local body_file=$(mktemp)
-
-              if [[ "$url" == *"api.github.com"* ]]; then
-                response_code=$(curl -sS -L -w "%{http_code}" -o "$body_file" \
-                  -H "Authorization: Bearer $GITHUB_TOKEN" \
-                  -H "Accept: application/vnd.github+json" "$url")
-              else
-                response_code=$(curl -sS -L -w "%{http_code}" -o "$body_file" "$url")
-              fi
-
-              result=$(cat "$body_file")
-              rm -f "$body_file"
-
-              if [ "$response_code" -eq 200 ] && [ -n "$result" ] && [ "$result" != "[]" ]; then
-                echo "$result"
-                return 0
-              fi
-
-              echo -e "${COLOR_WARN}==> [WARN] Attempt $attempt failed (HTTP $response_code) for $url.${COLOR_RESET}" >&2
-
-              if [ $attempt -eq $max_attempts ]; then
-                break
-              fi
-
-              local jitter=$(( RANDOM % 4 ))
-              local sleep_duration=$(( wait_time + jitter ))
-              echo -e "${COLOR_INFO}==> [INFO] Retrying in ${sleep_duration}s...${COLOR_RESET}" >&2
-              sleep $sleep_duration
-
-              wait_time=$(( wait_time * 2 ))
-              ((attempt++))
-            done
-            return 1
-          }
-
-          if [ "$PROVIDER" = "github" ]; then
-            DATA=$(fetch_tag "https://api.github.com/repos/$REPO/tags")
-            TAG=$(echo "$DATA" | jq -r '.[].name // empty' | grep -Ex '[vV]?[0-9]+(\.[0-9]+)*' | sort -V | tail -n 1)
-          elif [ "$PROVIDER" = "gitlab" ]; then
-            ENCODED=$(echo "$REPO" | sed 's/\//%2F/g')
-            DATA=$(fetch_tag "https://$INSTANCE/api/v4/projects/${ENCODED}/repository/tags?order_by=version&sort=desc")
-            TAG=$(echo "$DATA" | jq -r '.[0].name // empty')
-          elif [ "$PROVIDER" = "codeberg" ]; then
-            DATA=$(fetch_tag "https://codeberg.org/api/v1/repos/$REPO/tags")
-            TAG=$(echo "$DATA" | jq -r '.[0].name // empty')
-          fi
-
-          if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
-            echo "::error::==> [ERROR] Could not fetch tag for $REPO after multiple attempts"
+          if [ ! -f "$SPEC" ]; then
+            echo "::error::==> [ERROR] $SPEC not found!"
             exit 1
           fi
 
-          echo -e "${COLOR_SUCCESS}==> [SUCCESS] Found tag: $TAG${COLOR_RESET}"
+          APP_ID=$(grep -E '^\s*%global\s+(app_id|rdnn)\s+' "$SPEC" | awk '{print $3}')
+
+          if [ -z "$APP_ID" ]; then
+            echo "::error::==> [ERROR] Could not extract app_id or rdnn from $SPEC"
+            exit 1
+          fi
+
+          echo -e "${COLOR_INFO}==> [INFO] Fetching AppStream version for $APP_ID...${COLOR_RESET}"
+
+          TAG=$(python3 scripts/changelog_scraper.py get-version "$PROVIDER" "$INSTANCE" "$REPO" "$APP_ID")
+
+          if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
+            echo "::error::==> [ERROR] Could not fetch version from metainfo for $REPO ($APP_ID)"
+            exit 1
+          fi
+
+          echo -e "${COLOR_SUCCESS}==> [SUCCESS] Found AppStream release version: $TAG${COLOR_RESET}"
           echo "version=$TAG" >> $GITHUB_OUTPUT
 
       - name: Check for Updates
@@ -245,7 +206,7 @@ jobs:
           fi
 
           APP_ID=$(grep -E '^\s*%global\s+(app_id|rdnn)\s+' "$SPEC" | awk '{print $3}')
-          CHANGELOG=$(python3 scripts/changelog_scraper.py "$PROVIDER" "$INSTANCE" "$REPO" "$APP_ID" "$NEW_VER")
+          CHANGELOG=$(python3 scripts/changelog_scraper.py get-changelog "$PROVIDER" "$INSTANCE" "$REPO" "$APP_ID" "$NEW_VER")
 
           echo "changelog<<EOF" >> "$GITHUB_OUTPUT"
           echo "$CHANGELOG" >> "$GITHUB_OUTPUT"
