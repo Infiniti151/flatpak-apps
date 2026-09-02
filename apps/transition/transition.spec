@@ -18,6 +18,13 @@ BuildRequires:  meson >= 1.9
 BuildRequires:  ninja-build
 BuildRequires:  cargo
 BuildRequires:  cargo-rpm-macros
+BuildRequires:  cairo-devel
+BuildRequires:  pango-devel
+BuildRequires:  gdk-pixbuf2-devel
+BuildRequires:  gtk4-devel
+BuildRequires:  libadwaita-devel
+BuildRequires:  gstreamer1-devel
+BuildRequires:  gstreamer1-plugins-base-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gettext
