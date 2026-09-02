@@ -130,7 +130,7 @@ jobs:
           }
 
           echo -e "${COLOR_WARN}📥 Downloading sources...${COLOR_RESET}"
-          rpmspec -P "$SPEC_FILE" | spectool -g -C "$RPM_SOURCES" -
+          spectool -g -C "$RPM_SOURCES" "$SPEC_FILE"
 
           # 1. Base topdir/sourcedir layout configuration
           echo "_topdir /github/home/rpmbuild" > ~/.rpmmacros
@@ -148,7 +148,7 @@ jobs:
             export CARGO_BUILD_JOBS="$(nproc)"
 
             echo -e "${COLOR_WARN}📦 Preparing source for Rust cache linking...${COLOR_RESET}"
-            rpmbuild -bp *.spec
+            rpmbuild -bp "$SPEC_FILE"
 
             ACTUAL_CARGO_DIR=$(find /github/home/rpmbuild/BUILD -type d -name "cargo-home" | head -n 1)
 
