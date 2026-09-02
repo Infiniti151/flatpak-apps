@@ -3,7 +3,7 @@
 %global         __provides_exclude ^libgxml-0.20.*$
 
 Name:           planify
-Version:        4.19.5
+Version:        4.18.0
 Release:        1%{?dist}
 Summary:        Task manager with Todoist and CalDAV support
 License:        GPL-3.0-or-later
@@ -162,6 +162,19 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/vala/vapi/%{name}.*
 
 %changelog
+* Wed Sep 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.18.0-1
+- Refactored Quick Find to use ListView, significantly improving search performance with large result sets, thanks to @byquanton.
+- Improved task rendering performance by lazily loading task details and batching ItemRow creation,reducing UI overhead and improving responsiveness, thanks to @byquanton.
+- Fixed a crash when typing dates with years below 1000 in the due date picker, thanks to @pgrit.
+- Optimized database operations by batching inserts when importing projects and batching deletes when removing them, improving overall performance, thanks to @byquanton.
+- Fixed Quick Find getting stuck in multi-select mode by improving Ctrl key detection during mouse events, thanks to @pgrit.
+- Added support for Todoist assignment filtering in the Today view, allowing filtering by assigned and unassigned tasks, thanks to @alyraffauf.
+- Added a mandatory Todoist API migration flow with a warning and re-login option to ensure continued sync support, thanks to @alainm23.
+- Improved Radicale CalDAV compatibility by accepting HTTP 201 responses for PUT requests, fixing sync issues when updating tasks, thanks to @mntmn.
+- Fixed filtering by labels in Today and other non-project views, thanks to @byquanton.
+- Fixed manual task ordering synchronization with CalDAV and Nextcloud, ensuring consistent ordering after drag and drop actions, thanks to @pgrit.
+- ... (see upstream for full release notes)
+
 * Sat Jul 18 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v4.19.5-1
 - Planify 4.19.5 is a maintenance release focused on bug fixes, reliability improvements, and new features.
 - Bug Fixes:
