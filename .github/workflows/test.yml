@@ -130,7 +130,7 @@ jobs:
           }
 
           echo -e "${COLOR_WARN}📥 Downloading sources...${COLOR_RESET}"
-          spectool -g -C "$RPM_SOURCES" "$SPEC_FILE"
+          rpmspec -P "$SPEC_FILE" | spectool -g -C "$RPM_SOURCES" -
 
           # 1. Base topdir/sourcedir layout configuration
           echo "_topdir /github/home/rpmbuild" > ~/.rpmmacros
