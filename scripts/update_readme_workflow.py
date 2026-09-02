@@ -18,7 +18,7 @@
     ---
     App Registry & Matrix Sync Utility
 
-    Parses an application's RPM spec file (Name, Version, URL) and queries forge
+    Parses an application's RPM spec file (Name, Version, %global forgeurl) and queries forge
     APIs (GitHub, GitLab, Codeberg) to locate high-resolution app icons. Updates
     README.md and .github/workflows/copr-build.yml with alphabetically sorted
     entries while preserving formatting.
@@ -43,7 +43,7 @@ GREEN = "\033[32m"
 RESET = "\033[0m"
 
 def parse_spec_file(spec_path):
-    """Parses Name, Version, and URL from the spec file reliably."""
+    """Parses Name, Version, and %global forgeurl from the spec file reliably."""
     if not os.path.exists(spec_path):
         print(f"Error: Spec file not found at {spec_path}", file=sys.stderr)
         sys.exit(1)
@@ -52,20 +52,30 @@ def parse_spec_file(spec_path):
     with open(spec_path, "r", encoding="utf-8") as f:
         for line in f:
             cleaned_line = line.strip()
-            if not cleaned_line or cleaned_line.startswith(("%", "#")):
+            if not cleaned_line or cleaned_line.startswith("#"):
                 continue
 
-            match = re.match(r"^(Name|Version|URL)\s*:\s*(.+)$", cleaned_line, re.IGNORECASE)
+            # Handle %global forgeurl
+            global_match = re.match(r"^%global\s+forgeurl\s+(.+)$", cleaned_line, re.IGNORECASE)
+            if global_match:
+                metadata["FORGEURL"] = global_match.group(1).strip()
+                continue
+
+            # Skip other % lines
+            if cleaned_line.startswith("%"):
+                continue
+
+            match = re.match(r"^(Name|Version)\s*:\s*(.+)$", cleaned_line, re.IGNORECASE)
             if match:
                 tag = match.group(1).upper()
                 value = match.group(2).strip()
                 metadata[tag] = value
 
-    if not all(k in metadata for k in ["NAME", "VERSION", "URL"]):
-        print(f"Error: Could not find all required tags (Name, Version, URL) in {spec_path}", file=sys.stderr)
+    if not all(k in metadata for k in ["NAME", "VERSION", "FORGEURL"]):
+        print(f"Error: Could not find all required tags (Name, Version, %global forgeurl) in {spec_path}", file=sys.stderr)
         sys.exit(1)
 
-    url = metadata["URL"].replace("%{name}", metadata["NAME"]).replace("%{version}", metadata["VERSION"])
+    url = metadata["FORGEURL"].replace("%{name}", metadata["NAME"]).replace("%{version}", metadata["VERSION"])
     return metadata["NAME"], metadata["VERSION"], url
 
 def get_icon_url(url, app_name):

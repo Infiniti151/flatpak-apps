@@ -98,6 +98,9 @@ jobs:
           - app_name: tomatillo
             upstream_repo: diegopvlk/Tomatillo
             provider: github
+          - app_name: transition
+            upstream_repo: grinka/transition
+            provider: codeberg
           - app_name: words-game
             upstream_repo: petsoi/words
             provider: codeberg
@@ -231,12 +234,14 @@ jobs:
 
       - name: Auto-Commit Spec File
         if: steps.check.outputs.update_needed == 'true'
-        uses: suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f # v1.0.0
+        uses: 
+          suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f     # v1.0.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           branch: main
-          commit_message: "chore(${{ matrix.app_name }}): bump spec version to ${{ steps.upstream.outputs.version }}"
+          commit_message: "chore(${{ matrix.app_name }}): bump spec version to ${{
+            steps.upstream.outputs.version }}"
           files: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
           fail_on_self_push: false
 
@@ -323,7 +328,8 @@ jobs:
           done <<< "$CHANGED_APPS"
 
       - name: Auto-Commit README Changes
-        uses: suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f # v1.0.0
+        uses: 
+          suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f     # v1.0.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
