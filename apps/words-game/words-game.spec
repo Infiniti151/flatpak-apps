@@ -4,7 +4,7 @@
 %global         app_id          page.codeberg.petsoi.words
 
 Name:           words-game
-Version:        0.7.9.1
+Version:        0.7.9
 Release:        1%{?dist}
 Summary:        A word puzzle game
 License:        GPL-3.0-only
@@ -59,6 +59,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/icons/hicolor/*/apps/*
 
 %changelog
+* Wed Sep 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.7.9-1
+- Update to 0.7.9
+
 * Fri May 22 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.7.9.1-1
 - Update to v0.7.9.1
 
