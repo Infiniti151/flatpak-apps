@@ -15,18 +15,24 @@ RUN dnf install -y ccache \
     rpmlint \
     sccache \
     # --- transition dependencies --- \
+    cairo-devel \
     cargo \
     cargo-rpm-macros \
-    cairo-devel \
     desktop-file-utils \
     forge-srpm-macros \
+    gdk-pixbuf2-devel \
     gettext \
     glib2-devel \
     glibc-langpack-en \
+    gstreamer1-devel \
+    gstreamer1-plugins-base-devel \
     gtk-update-icon-cache \
+    gtk4-devel \
+    libadwaita-devel \
     libappstream-glib \
     meson \
     ninja-build \
+    pango-devel \
     rustc \
     && dnf clean all
 
