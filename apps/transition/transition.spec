@@ -74,11 +74,11 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%{_datadir}/applications/%{app_id}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{app_id}*
+%{_datadir}/applications/*.desktop
+%{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
-%{_metainfodir}/%{app_id}.metainfo.xml
+%{_metainfodir}/*.metainfo.xml
 
 %changelog
 * Wed Sep 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.0-1
