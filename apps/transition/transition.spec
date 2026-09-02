@@ -57,7 +57,7 @@ Transition supports converting to:
 %forgesetup
 
 %build
-%meson
+%meson -Dprofile=release
 %meson_build
 
 %install
