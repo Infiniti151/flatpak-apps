@@ -1,6 +1,6 @@
 %global         app_id        page.codeberg.grinka.Transition
 %global         forgeurl      https://codeberg.org/grinka/transition
-%global         tag           %{version}
+%global         tag           v%{version}
 
 Name:           transition
 Version:        3.0
