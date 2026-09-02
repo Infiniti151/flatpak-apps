@@ -1,7 +1,7 @@
 %global         app_id          de.wwwtech.gitte
 
 Name:           gitte
-Version:        0.9.1
+Version:        0.9.0
 Release:        1%{?dist}
 Summary:        A GTK4/libadwaita Git client for the GNOME desktop
 License:        GPL-3.0-or-later
@@ -63,6 +63,19 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Wed Sep 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.9.0-1
+- Rewrite history more freely: reorder commits by drag and drop, edit a commit from the commit log, and squash & fixup, drop or cherry-pick commits (including several at once via multi-selection) directly in the commit graph view
+- Rename stashes
+- New “Discard all” actions in the working copy view and the sync-with-mainline dialog
+- New “Open in external editor” context-menu entries
+- Context menu for stashes in the commit graph view; stashes are shown directly above their parent commit
+- Copy button on error toasts
+- New setting to auto-expand the staged / unstaged lists depending on whether they are empty
+- The branch name is now shown in the success toast when checking out
+- Revamped stashing: a single dialog to choose between tracked and untracked files with a message, plus refined shortcuts (Ctrl+Shift+S and Ctrl+Shift+U) and a new stash action icon
+- Overhauled context menus and menu toggles
+- ... (see upstream for full release notes)
+
 * Wed Jul 22 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.9.1-1
 - Update to 0.9.1
 
