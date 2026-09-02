@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           transition
-Version:        0
+Version:        3.0
 Release:        1%{?dist}
 Summary:        Multimedia to audio conversion
 License:        GPL-3.0-or-later
@@ -79,3 +79,19 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Wed Sep 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.0-1
+- New features:
+- Audio channels, now you can select how much channels converted file would have
+- Persistent settings (2 new settings!)
+- Smart quality: if quality or channels is lower than is currently set it would preserve this quality (you can disable this in settings)
+- UX Improvements:
+- Changed layout to be more accessible for mobile devices
+- Fixes:
+- File paths now displayed correctly
+- Fixed 'Low' quality for OGG/Vorbis
+- Warning banner after conversion in replace mode now hides after clearing file list
+- ... (see upstream for full release notes)
+
