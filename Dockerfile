@@ -14,6 +14,19 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- transition dependencies --- \
+    cargo \
+    cargo-rpm-macros \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gettext \
+    glib2-devel \
+    glibc-langpack-en \
+    gtk-update-icon-cache \
+    libappstream-glib \
+    meson \
+    ninja-build \
+    rustc \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
