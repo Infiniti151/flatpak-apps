@@ -35,8 +35,13 @@ BuildRequires:  libappstream-glib
 BuildRequires:  rustc
 
 Requires:       gtk4
-Requires:       hicolor-icon-theme
 Requires:       libadwaita
+Requires:       hicolor-icon-theme
+Requires:       cairo
+Requires:       pango
+Requires:       gdk-pixbuf2
+Requires:       gstreamer1
+Requires:       gstreamer1-plugins-base
 
 %description
 Transition is a simple application for converting multimedia files to various audio formats, that can handle large amounts of arbitrary input and provides a few output options.
@@ -57,6 +62,13 @@ Transition supports converting to:
 
 %install
 %meson_install
+
+# Manually build and install translations
+for lang in $(cat po/LINGUAS); do
+    mkdir -p %{buildroot}%{_datadir}/locale/$lang/LC_MESSAGES
+    msgfmt po/$lang.po -o %{buildroot}%{_datadir}/locale/$lang/LC_MESSAGES/%{name}.mo
+done
+
 %find_lang %{name}
 
 %check
