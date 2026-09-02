@@ -63,21 +63,13 @@ Transition supports converting to:
 %install
 %meson_install
 
-# Manually build and install translations
-for lang in $(cat po/LINGUAS); do
-    mkdir -p %{buildroot}%{_datadir}/locale/$lang/LC_MESSAGES
-    msgfmt po/$lang.po -o %{buildroot}%{_datadir}/locale/$lang/LC_MESSAGES/%{name}.mo
-done
-
-%find_lang %{name}
-
 %check
 %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
-%files -f %{name}.lang
+%files
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
