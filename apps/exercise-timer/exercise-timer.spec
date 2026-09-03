@@ -4,7 +4,7 @@
 %global         tag           v%{version}
 
 Name:           exercise-timer
-Version:        0
+Version:        1.10.0
 Release:        1%{?dist}
 Summary:        Train and rest with high intensity
 License:        GPL-3.0
@@ -69,3 +69,9 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Thu Sep 03 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.10.0-1
+- Update to 1.10.0
+
