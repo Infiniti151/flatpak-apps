@@ -158,25 +158,34 @@ def main():
     if mode == "get-version":
         if len(sys.argv) < 6:
             sys.exit(1)
+
         provider, instance, repo, app_id = sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
 
-        urls = generate_candidate_urls(provider, instance, repo, app_id)
-        version = fetch_first_valid_match(urls, "get-version") if urls else None
+        version = None
 
-        # Ultimate Fallback: Direct Flathub API
+        # 1. PRIMARY: Flathub Appstream API
+        try:
+            raw = fetch_url(f"https://flathub.org/api/v2/appstream/{app_id}")
+            if raw:
+                data = json.loads(raw)
+                releases = data.get("releases", [])
+                if releases:
+                    version = releases[0].get("version", "").strip()
+        except Exception:
+            pass
+
+        # 2. SECONDARY: AppStream XML from upstream repo
         if not version:
-            try:
-                raw = fetch_url(f"https://flathub.org/api/v2/appstream/{app_id}")
-                if raw:
-                    data = json.loads(raw)
-                    if 'releases' in data and data['releases']:
-                        version = data['releases'][0].get('version', '')
-            except Exception:
-                pass
+            urls = generate_candidate_urls(provider, instance, repo, app_id)
+            if urls:
+                version = fetch_first_valid_match(urls, "get-version")
 
+        # 3. FINAL fallback: nothing found
         if version:
             print(version)
+
         sys.exit(0)
+
 
     elif mode == "get-changelog":
         if len(sys.argv) < 7:
