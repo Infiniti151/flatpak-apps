@@ -1,7 +1,7 @@
 %global         app_id          de.wwwtech.gitte
 
 Name:           gitte
-Version:        0.9.0
+Version:        0.9.1
 Release:        1%{?dist}
 Summary:        A GTK4/libadwaita Git client for the GNOME desktop
 License:        GPL-3.0-or-later
@@ -63,6 +63,9 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Thu Sep 03 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.9.1-1
+- Update to 0.9.1
+
 * Wed Sep 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.9.0-1
 - Rewrite history more freely: reorder commits by drag and drop, edit a commit from the commit log, and squash & fixup, drop or cherry-pick commits (including several at once via multi-selection) directly in the commit graph view
 - Rename stashes
