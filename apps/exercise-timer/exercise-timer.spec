@@ -1,4 +1,5 @@
 %global         app_id        xyz.safeworlds.hiit
+%global         app_name      hiit
 %global         forgeurl      https://gitlab.gnome.org/World/exercise-timer
 %global         tag           v%{version}
 
@@ -52,7 +53,7 @@ Features:
 
 %install
 %meson_install
-%find_lang hiit
+%find_lang %{app_name}
 
 %check
 %meson_test
@@ -60,11 +61,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
-%files -f hiit.lang
+%files -f %{app_name}.lang
 %license LICENSE
 %doc CHANGELOG.md README.md
-%{_bindir}/%{name}
-%{_datadir}/%{name}
+%{_bindir}/%{app_name}
+%{_datadir}/%{app_name}
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
