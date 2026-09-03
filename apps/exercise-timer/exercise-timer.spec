@@ -52,7 +52,7 @@ Features:
 
 %install
 %meson_install
-%find_lang %{name}
+%find_lang hiit
 
 %check
 %meson_test
@@ -60,7 +60,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
-%files -f %{name}.lang
+%files -f hiit.lang
 %license LICENSE
 %doc CHANGELOG.md README.md
 %{_bindir}/%{name}
