@@ -73,5 +73,15 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 
 %changelog
 * Thu Sep 03 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.10.0-1
-- Update to 1.10.0
+- Development of the application was moved from GitHub to GNOME GitLab.
+- Features
+- A visual indicator shows the training progress on the training page
+- Added a toast popup to undo the accidental deletion of trainings
+- Miscellaneous
+- Updated Flatpak runtime to GNOME 50
+- New translations
+- Chinese (Simplified Han script)
+- Kazakh
+- Czech
+- ... (see upstream for full release notes)
 
