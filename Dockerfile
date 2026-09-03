@@ -14,6 +14,22 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- exercise-timer dependencies --- \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(json-glib-1.0)' \
+    'pkgconfig(libadwaita-1)' \
+    blueprint-compiler \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gcc \
+    gettext \
+    glib2-devel \
+    glibc-langpack-en \
+    gtk-update-icon-cache \
+    libappstream-glib \
+    meson \
+    ninja-build \
+    valac \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
