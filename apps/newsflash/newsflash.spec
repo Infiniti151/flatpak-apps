@@ -3,7 +3,6 @@
 %endif
 %global         app_id          io.gitlab.news_flash.NewsFlash
 
-%global         app_id io.gitlab.news_flash.NewsFlash
 %global         __brp_mangle_shebangs %{nil}
 %global         debug_package %{nil}
 %global         __spec_install_post /usr/lib/rpm/brp-compress
