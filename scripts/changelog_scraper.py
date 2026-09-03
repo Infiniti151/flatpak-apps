@@ -51,7 +51,12 @@ def parse_appstream_changelog(xml_content, target_ver):
         for release in tree.findall(".//release"):
             ver = release.get("version", "").strip()
             if ver == target_ver or ver == f"v{target_ver}":
-                items = [f"- {''.join(li.itertext()).strip()}" for li in release.findall(".//li") if ''.join(li.itertext()).strip()]
+                items = []
+                for elem in release.iter():
+                    if elem.tag in ("p", "li"):
+                        text = "".join(elem.itertext()).strip()
+                        if text:
+                            items.append(f"- {text}")
                 if items:
                     return "\n".join(items)
     except Exception:
@@ -87,8 +92,8 @@ def generate_candidate_urls(provider, instance, repo, app_id):
     paths = []
     for name in names:
         paths.extend([
-            f"{name}.metainfo.xml", f"{name}.metainfo.xml.in",
-            f"data/{name}.metainfo.xml", f"data/{name}.metainfo.xml.in",
+            f"{name}.metainfo.xml", f"{name}.metainfo.xml.in", f"{name}.metainfo.xml.in.in",
+            f"data/{name}.metainfo.xml", f"data/{name}.metainfo.xml.in", f"data/{name}.metainfo.xml.in.in",
             f"data/{name}.appdata.xml", f"data/{name}.appdata.xml.in",
             f"data/{name}.appdata.xml.in.in", f"data/metainfo/{name}.metainfo.xml",
             f"data/appdata/{name}.appdata.xml"
