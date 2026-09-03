@@ -33,13 +33,13 @@ import sys
 import re
 import json
 import urllib.request
+import urllib.parse
 import xml.etree.ElementTree as ET
 import concurrent.futures
 
 def fetch_url(url):
     try:
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        # 1.5s timeout drops stalled connections immediately
         with urllib.request.urlopen(req, timeout=1.5) as response:
             return response.read().decode('utf-8')
     except Exception:
@@ -83,17 +83,17 @@ def generate_candidate_urls(provider, instance, repo, app_id):
     if not app_id:
         return []
 
-    # Extract short name variants to catch edge cases
     names = list(dict.fromkeys([app_id, app_id.split('.')[-1].lower(), app_id.split('.')[-1]]))
     paths = []
     for name in names:
         paths.extend([
+            f"{name}.metainfo.xml", f"{name}.metainfo.xml.in",
             f"data/{name}.metainfo.xml", f"data/{name}.metainfo.xml.in",
             f"data/{name}.appdata.xml", f"data/{name}.appdata.xml.in",
             f"data/{name}.appdata.xml.in.in", f"data/metainfo/{name}.metainfo.xml",
             f"data/appdata/{name}.appdata.xml"
         ])
-    paths = list(dict.fromkeys(paths)) # Deduplicate to avoid redundant requests
+    paths = list(dict.fromkeys(paths))
 
     base_urls = {
         "github": f"https://raw.githubusercontent.com/{repo}/{{branch}}/{{path}}",
@@ -108,7 +108,6 @@ def generate_candidate_urls(provider, instance, repo, app_id):
     return [url_template.format(branch=branch, path=path) for branch in ("main", "master") for path in paths]
 
 def fetch_first_valid_match(urls, mode, target_ver=None):
-    # Process in batches of 5 to prevent triggering server-side stalls
     chunk_size = 5
     for i in range(0, len(urls), chunk_size):
         chunk = urls[i:i + chunk_size]
@@ -121,26 +120,42 @@ def fetch_first_valid_match(urls, mode, target_ver=None):
                     return result
     return None
 
-def get_api_changelog(provider, instance, repo):
+def get_api_changelog(provider, instance, repo, target_ver):
     encoded_repo = urllib.parse.quote(repo, safe='')
 
-    # Map providers to their endpoint and payload extraction logic
     api_config = {
-        "github": (f"https://api.github.com/repos/{repo}/releases/latest", lambda data: data.get("body", "")),
-        "gitlab": (f"https://{instance}/api/v4/projects/{encoded_repo}/releases", lambda data: data[0].get("description", "") if isinstance(data, list) and data else ""),
-        "codeberg": (f"https://codeberg.org/api/v1/repos/{repo}/releases/latest", lambda data: data.get("body", ""))
+        "github": (
+            f"https://api.github.com/repos/{repo}/releases/latest",
+            lambda data: (data.get("tag_name", "") or data.get("name", ""), data.get("body", ""))
+        ),
+        "gitlab": (
+            f"https://{instance}/api/v4/projects/{encoded_repo}/releases",
+            lambda data: (data[0].get("tag_name", "") or data[0].get("name", ""), data[0].get("description", "")) if isinstance(data, list) and data else ("", "")
+        ),
+        "codeberg": (
+            f"https://codeberg.org/api/v1/repos/{repo}/releases/latest",
+            lambda data: (data.get("tag_name", "") or data.get("name", ""), data.get("body", ""))
+        )
     }
 
     if provider not in api_config:
         return None
 
-    url, extract_body = api_config[provider]
+    url, extract_info = api_config[provider]
 
     try:
         raw = fetch_url(url)
-        if not raw: return None
-        body = extract_body(json.loads(raw))
-        if not body: return None
+        if not raw:
+            return None
+
+        tag_name, body = extract_info(json.loads(raw))
+        if not tag_name or not body:
+            return None
+
+        # Confirm the forge's latest release tag corresponds to the requested version
+        clean_tag = re.sub(r'^[vV]\.?', '', tag_name).strip()
+        if clean_tag != target_ver:
+            return None
 
         clean_text = re.sub(r'<[^>]*>', '', body)
         clean_text = re.sub(r'^#*\s+', '', clean_text, flags=re.MULTILINE)
@@ -153,9 +168,9 @@ def main():
     if len(sys.argv) < 2:
         sys.exit(1)
 
-    mode = sys.argv[1].lower()
+    first_arg = sys.argv[1].lower()
 
-    if mode == "get-version":
+    if first_arg == "get-version":
         if len(sys.argv) < 6:
             sys.exit(1)
 
@@ -180,24 +195,29 @@ def main():
             if urls:
                 version = fetch_first_valid_match(urls, "get-version")
 
-        # 3. FINAL fallback: nothing found
         if version:
             print(version)
 
         sys.exit(0)
 
+    elif first_arg == "get-changelog" or len(sys.argv) >= 6:
+        if first_arg == "get-changelog":
+            if len(sys.argv) < 7:
+                sys.exit(0)
+            provider, instance, repo, app_id, raw_ver = sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6]
+        else:
+            # Legacy command interface support
+            provider, instance, repo, app_id, raw_ver = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
 
-    elif mode == "get-changelog":
-        if len(sys.argv) < 7:
-            sys.exit(0)
-        provider, instance, repo, app_id, raw_ver = sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6]
         clean_ver = re.sub(r'^[vV]\.?', '', raw_ver)
 
         urls = generate_candidate_urls(provider, instance, repo, app_id)
         changelog = fetch_first_valid_match(urls, "get-changelog", clean_ver) if urls else None
 
-        if not changelog: changelog = get_api_changelog(provider, instance, repo)
-        if not changelog: changelog = f"- Update to {clean_ver}"
+        if not changelog:
+            changelog = get_api_changelog(provider, instance, repo, clean_ver)
+        if not changelog:
+            changelog = f"- Update to {clean_ver}"
 
         lines = changelog.splitlines()
         if len(lines) > 10:
