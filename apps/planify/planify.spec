@@ -3,7 +3,7 @@
 %global         __provides_exclude ^libgxml-0.20.*$
 
 Name:           planify
-Version:        4.18.0
+Version:        4.19.5
 Release:        1%{?dist}
 Summary:        Task manager with Todoist and CalDAV support
 License:        GPL-3.0-or-later
@@ -162,6 +162,19 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/vala/vapi/%{name}.*
 
 %changelog
+* Thu Sep 03 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.19.5-1
+- Planify 4.19.5 is a maintenance release focused on bug fixes, reliability improvements, and new features.
+- Bug Fixes:
+- Fixed missed automatic backup on startup — if Planify was closed at midnight, the scheduled backup was silently skipped. Now, if automatic backup is enabled and no backup has run today, one is triggered immediately on startup.
+- Fixed completing a recurring task from a notification — it was marking the task as fully completed instead of advancing to the next occurrence. Now correctly calls update_next_recurrency() as the UI does.
+- Fixed keyboard navigation UX — Tab in EditableTextView now moves focus to the next widget instead of inserting spaces, and pressing Enter on a focused checkbox now completes the task.
+- Fixed attachment file_size integer overflow — file_size is now treated as a string throughout, preventing unhandled overflow errors for values ≥ 2^63.
+- Fixed drag and drop reliability and visual feedback in ReorderChild — softer background, subtle border, and rounder corners using the accent color.
+- Fixed CalDAV related-to parsing — uses the already known related-id from libical and checks the reltype param to determine if a task is a parent.
+- Fixed reading X-PINNED and X-APPLE-SORT-ORDER from CalDAV — replaced ICal.PropertyKind.from_string() with iteration over X_PROPERTY kind and matching by get_x_name(), fixing pin status and sort order persistence with Radicale and other servers.
+- New Features:
+- ... (see upstream for full release notes)
+
 * Wed Sep 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.18.0-1
 - Refactored Quick Find to use ListView, significantly improving search performance with large result sets, thanks to @byquanton.
 - Improved task rendering performance by lazily loading task details and batching ItemRow creation,reducing UI overhead and improving responsiveness, thanks to @byquanton.
