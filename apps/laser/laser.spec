@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           laser
-Version:        0
+Version:        0.5.0
 Release:        1%{?dist}
 Summary:        Rip CDs with ease
 License:        GPL-3.0-or-later
@@ -84,3 +84,19 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Fri Sep 04 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.5.0-1
+- New features:
+- Rip to binary or audio images with cue file
+- Introduced MP3 variable bitrate option
+- Introduced FLAC compression level option
+- New app icon! Thanks to gnoman and Jakub Steiner
+- Improvements:
+- Rip from mixed CDs
+- Added overall rip progress bar (thanks to tduarte)
+- Accessibility improvements
+- Reintroduced refresh button
+- ... (see upstream for full release notes)
+
