@@ -15,6 +15,8 @@ RUN dnf install -y ccache \
     rpmlint \
     sccache \
     # --- laser dependencies --- \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
     appstream \
     blueprint-compiler \
     cdparanoia-devel \
