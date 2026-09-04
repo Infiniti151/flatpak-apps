@@ -61,6 +61,9 @@ jobs:
           - app_name: konbucase
             upstream_repo: ryonakano/konbucase
             provider: github
+          - app_name: laser
+            upstream_repo: andreasknoben/Laser
+            provider: codeberg
           - app_name: missioncenter
             upstream_repo: mission-center-devs/mission-center
             provider: gitlab
@@ -238,13 +241,13 @@ jobs:
 
       - name: Auto-Commit Spec File
         if: steps.check.outputs.update_needed == 'true'
-        uses: suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f # v1.0.0
+        uses: 
+          suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f     # v1.0.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           branch: main
-          commit_message:
-            "chore(${{ matrix.app_name }}): bump spec version to ${{
+          commit_message: "chore(${{ matrix.app_name }}): bump spec version to ${{
             steps.upstream.outputs.version }}"
           files: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
           fail_on_self_push: false
@@ -332,7 +335,8 @@ jobs:
           done <<< "$CHANGED_APPS"
 
       - name: Auto-Commit README Changes
-        uses: suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f # v1.0.0
+        uses: 
+          suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f     # v1.0.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
