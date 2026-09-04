@@ -1,5 +1,5 @@
 %global         app_id        nl.andreasknoben.Laser
-%global         forgeurl      https://codeberg.org/andreasknoben/Laser
+%global         forgeurl      https://codeberg.org/andreasknoben/laser
 %global         tag           v%{version}
 
 Name:           laser
