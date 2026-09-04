@@ -32,6 +32,8 @@ BuildRequires:  cdparanoia-devel
 BuildRequires:  gstreamer1-plugins-base-devel
 BuildRequires:  libdiscid-devel
 BuildRequires:  swig
+BuildRequires:  pkgconfig(gtk4)
+BuildRequires:  pkgconfig(libadwaita-1)
 
 Requires:       gtk4
 Requires:       hicolor-icon-theme
