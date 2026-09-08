@@ -59,7 +59,6 @@ Features
 %find_lang %{app_id}
 
 %check
-# %meson_test is removed to bypass strict upstream screenshot failures
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/*.appdata.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
