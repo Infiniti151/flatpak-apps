@@ -56,14 +56,14 @@ Features
 
 %install
 %meson_install
-%find_lang %{name}
+%find_lang %{app_id}
 
 %check
 %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
-%files -f %{name}.lang
+%files -f %{app_id}.lang
 %license COPYING
 %doc README.md
 %{_bindir}/%{name}
