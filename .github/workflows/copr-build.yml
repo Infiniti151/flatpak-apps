@@ -99,6 +99,9 @@ jobs:
           - app_name: sudoku
             upstream_repo: sepehr-rs/sudoku
             provider: github
+          - app_name: tags
+            upstream_repo: phastmike/tags
+            provider: github
           - app_name: text-compare
             upstream_repo: josephmawa/TextCompare
             provider: github
