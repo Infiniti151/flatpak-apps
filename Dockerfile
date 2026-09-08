@@ -14,26 +14,21 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
-    # --- laser dependencies --- \
+    # --- tags dependencies --- \
+    'pkgconfig(gee-0.8)' \
     'pkgconfig(gtk4)' \
+    'pkgconfig(json-glib-1.0)' \
     'pkgconfig(libadwaita-1)' \
-    appstream \
-    blueprint-compiler \
-    cdparanoia-devel \
     desktop-file-utils \
     forge-srpm-macros \
+    gcc \
     gettext \
     glib2-devel \
     glibc-langpack-en \
-    gstreamer1-plugins-base-devel \
-    gtk-update-icon-cache \
     libappstream-glib \
-    libcdio-devel \
-    libdiscid-devel \
     meson \
     ninja-build \
-    python3-devel \
-    swig \
+    valac \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
