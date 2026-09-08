@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           tags
-Version:        0
+Version:        2.5
 Release:        1%{?dist}
 Summary:        Color logs based on tags
 License:        MIT
@@ -71,3 +71,17 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/appdata/*.appdata.xml
+
+
+%changelog
+* Tue Sep 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.5-1
+- Tags 2.5 is out
+- What's new:
+- Updated translations
+- Fixed Import tags dialog
+- Increased default window size
+- Fixed search issue when using zh_CN language
+- Changed all Adw.Windows to Adw.PreferencesDialogs
+- Changed Gtk.ShortcutsWindow to Adw.ShortcutsDialog
+- Minor UX and UI changes
+
