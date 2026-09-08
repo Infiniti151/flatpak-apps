@@ -14,21 +14,6 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
-    # --- tags dependencies --- \
-    'pkgconfig(gee-0.8)' \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(json-glib-1.0)' \
-    'pkgconfig(libadwaita-1)' \
-    desktop-file-utils \
-    forge-srpm-macros \
-    gcc \
-    gettext \
-    glib2-devel \
-    glibc-langpack-en \
-    libappstream-glib \
-    meson \
-    ninja-build \
-    valac \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
