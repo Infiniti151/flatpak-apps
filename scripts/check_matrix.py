@@ -19,39 +19,36 @@
     COPR Matrix Consistency Checker
 
     Scans the local 'apps/' directory and cross-references folders against
-    the matrix configuration defined in .github/workflows/copr-build.yml.
+    the matrix configuration defined in apps.json.
     Prevents unconfigured app directories from being committed without
-    CI workflow representation.
+    matrix representation.
 
     Usage:
         python3 scripts/check_matrix.py
 """
-import yaml
+import json
 import os
 import sys
 
-WORKFLOW_PATH = ".github/workflows/copr-build.yml"
+APPS_JSON_PATH = "apps.json"
 IGNORE_LIST = {'.git', '.github', '.vscode', 'scripts', '__pycache__', 'build'}
 
 def check_matrix():
-    if not os.path.exists(WORKFLOW_PATH):
-        print(f"Error: Workflow file not found at {WORKFLOW_PATH}")
+    if not os.path.exists(APPS_JSON_PATH):
+        print(f"Error: apps.json not found at {APPS_JSON_PATH}")
         sys.exit(1)
 
-    with open(WORKFLOW_PATH, 'r') as f:
+    with open(APPS_JSON_PATH, 'r', encoding='utf-8') as f:
         try:
-            data = yaml.safe_load(f)
-        except yaml.YAMLError as e:
-            print(f"Error parsing YAML: {e}")
+            matrix = json.load(f)
+        except json.JSONDecodeError as e:
+            print(f"Error parsing JSON: {e}")
             sys.exit(1)
 
     try:
-        jobs = data.get('jobs', {})
-        target_job = next(job for job in jobs.values() if 'strategy' in job)
-        matrix_include = target_job['strategy']['matrix']['include']
-        configured_apps = {item['app_name'] for item in matrix_include}
-    except (KeyError, StopIteration, TypeError):
-        print("Error: Could not find matrix 'include' list in workflow.")
+        configured_apps = {item['app_name'] for item in matrix}
+    except (KeyError, TypeError):
+        print("Error: Could not find valid 'app_name' entries in apps.json.")
         sys.exit(1)
 
     apps_dir = 'apps'
@@ -65,17 +62,16 @@ def check_matrix():
         d for d in app_entities
         if os.path.isdir(os.path.join(apps_dir, d)) and d not in IGNORE_LIST
     }
-    # ------------------------------
 
     missing = actual_app_folders - configured_apps
     if missing:
-        print(f"❌ Commit Blocked: New app folders detected in '{apps_dir}/' but not added to CI matrix:")
-        for folder in missing:
+        print(f"❌ Commit Blocked: New app folders detected in '{apps_dir}/' but not added to matrix:")
+        for folder in sorted(missing):
             print(f"  - {folder}")
-        print(f"\nUpdate the 'include' section in {WORKFLOW_PATH} to proceed. Also update the APP variable for the Test environment.")
+        print(f"\nUpdate {APPS_JSON_PATH} (or run the update script) to proceed.")
         sys.exit(1)
 
-    print(f"✅ CI matrix matches app folders in '{apps_dir}/'.")
+    print(f"✅ Matrix in {APPS_JSON_PATH} matches app folders in '{apps_dir}/'.")
 
 if __name__ == "__main__":
     check_matrix()

@@ -1,0 +1,164 @@
+[
+    {
+        "app_name": "aerion",
+        "upstream_repo": "hkdb/aerion",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "amberol",
+        "upstream_repo": "World/amberol",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
+        "app_name": "bobby",
+        "upstream_repo": "hbons/bobby",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "concessio",
+        "upstream_repo": "ronniedroid/concessio",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "exercise-timer",
+        "upstream_repo": "World/exercise-timer",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
+        "app_name": "extension-manager",
+        "upstream_repo": "mjakeman/extension-manager",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "eyedropper",
+        "upstream_repo": "FineFindus/eyedropper",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "gitte",
+        "upstream_repo": "ckruse/Gitte",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
+        "app_name": "keypunch",
+        "upstream_repo": "bragefuglseth/keypunch",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "konbucase",
+        "upstream_repo": "ryonakano/konbucase",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "laser",
+        "upstream_repo": "andreasknoben/Laser",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
+        "app_name": "missioncenter",
+        "upstream_repo": "mission-center-devs/mission-center",
+        "provider": "gitlab",
+        "instance": "gitlab.com"
+    },
+    {
+        "app_name": "morse",
+        "upstream_repo": "teacond/morse",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "mundi",
+        "upstream_repo": "nacho/mundi",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "netpeek",
+        "upstream_repo": "ZingyTomato/NetPeek",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "newsflash",
+        "upstream_repo": "news-flash/news_flash_gtk",
+        "provider": "gitlab",
+        "instance": "gitlab.com"
+    },
+    {
+        "app_name": "nucleus",
+        "upstream_repo": "lo-vely/nucleus",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
+        "app_name": "planify",
+        "upstream_repo": "alainm23/planify",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "pods",
+        "upstream_repo": "marhkb/pods",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "rustdiff",
+        "upstream_repo": "jereok91/rustdiff",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "spellingbee",
+        "upstream_repo": "josephmawa/SpellingBee",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "sudoku",
+        "upstream_repo": "sepehr-rs/sudoku",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "tags",
+        "upstream_repo": "phastmike/tags",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "text-compare",
+        "upstream_repo": "josephmawa/TextCompare",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "tomatillo",
+        "upstream_repo": "diegopvlk/Tomatillo",
+        "provider": "github",
+        "instance": ""
+    },
+    {
+        "app_name": "transition",
+        "upstream_repo": "grinka/transition",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
+        "app_name": "words-game",
+        "upstream_repo": "petsoi/words",
+        "provider": "codeberg",
+        "instance": ""
+    }
+]
