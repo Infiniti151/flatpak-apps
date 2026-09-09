@@ -1,4 +1,5 @@
 name: Trigger COPR Build
+
 on:
   schedule:
     - cron: "0 2 * * *"
@@ -12,11 +13,27 @@ on:
       - "apps/**/*.spec"
 
 jobs:
-  check-and-build:
+  # --- JOB 1: PRE-FLIGHT UPDATE DETECTOR ---
+  detect-updates:
     if: |
       github.event_name == 'schedule' ||
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.check.outputs.matrix }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Detect Updates Across All Apps
+        id: check
+        run: python3 scripts/check_updates.py
+
+  # --- JOB 2: DYNAMIC BUILD MATRIX (ONLY RUNS FOR OUTDATED APPS) ---
+  build-updates:
+    needs: detect-updates
+    if: ${{ needs.detect-updates.outputs.matrix != '[]' && needs.detect-updates.outputs.matrix != '' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -28,92 +45,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - app_name: aerion
-            upstream_repo: hkdb/aerion
-            provider: github
-          - app_name: amberol
-            upstream_repo: World/amberol
-            provider: gitlab
-            instance: gitlab.gnome.org
-          - app_name: bobby
-            upstream_repo: hbons/bobby
-            provider: github
-          - app_name: concessio
-            upstream_repo: ronniedroid/concessio
-            provider: github
-          - app_name: exercise-timer
-            upstream_repo: World/exercise-timer
-            provider: gitlab
-            instance: gitlab.gnome.org
-          - app_name: extension-manager
-            upstream_repo: mjakeman/extension-manager
-            provider: github
-          - app_name: eyedropper
-            upstream_repo: FineFindus/eyedropper
-            provider: github
-          - app_name: gitte
-            upstream_repo: ckruse/Gitte
-            provider: codeberg
-          - app_name: keypunch
-            upstream_repo: bragefuglseth/keypunch
-            provider: github
-          - app_name: konbucase
-            upstream_repo: ryonakano/konbucase
-            provider: github
-          - app_name: laser
-            upstream_repo: andreasknoben/Laser
-            provider: codeberg
-          - app_name: missioncenter
-            upstream_repo: mission-center-devs/mission-center
-            provider: gitlab
-            instance: gitlab.com
-          - app_name: morse
-            upstream_repo: teacond/morse
-            provider: github
-          - app_name: mundi
-            upstream_repo: nacho/mundi
-            provider: github
-          - app_name: netpeek
-            upstream_repo: ZingyTomato/NetPeek
-            provider: github
-          - app_name: newsflash
-            upstream_repo: news-flash/news_flash_gtk
-            provider: gitlab
-            instance: gitlab.com
-          - app_name: nucleus
-            upstream_repo: lo-vely/nucleus
-            provider: codeberg
-          - app_name: planify
-            upstream_repo: alainm23/planify
-            provider: github
-          - app_name: pods
-            upstream_repo: marhkb/pods
-            provider: github
-          - app_name: rustdiff
-            upstream_repo: jereok91/rustdiff
-            provider: github
-          - app_name: spellingbee
-            upstream_repo: josephmawa/SpellingBee
-            provider: github
-          - app_name: sudoku
-            upstream_repo: sepehr-rs/sudoku
-            provider: github
-          - app_name: tags
-            upstream_repo: phastmike/tags
-            provider: github
-          - app_name: text-compare
-            upstream_repo: josephmawa/TextCompare
-            provider: github
-          - app_name: tomatillo
-            upstream_repo: diegopvlk/Tomatillo
-            provider: github
-          - app_name: transition
-            upstream_repo: grinka/transition
-            provider: codeberg
-          - app_name: words-game
-            upstream_repo: petsoi/words
-            provider: codeberg
+        include: ${{ fromJson(needs.detect-updates.outputs.matrix) }}
     steps:
       - name: Checkout Subdirectory
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -122,81 +54,28 @@ jobs:
             apps/${{ matrix.app_name }}
             scripts/changelog_scraper.py
 
-      - name: Get Latest AppStream Version
-        id: upstream
-        env:
-          PROVIDER: ${{ matrix.provider }}
-          REPO: ${{ matrix.upstream_repo }}
-          INSTANCE: ${{ matrix.instance }}
-          APP: ${{ matrix.app_name }}
-          SPEC: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
-        run: |
-          if [ ! -f "$SPEC" ]; then
-            echo "::error::==> [ERROR] $SPEC not found!"
-            exit 1
-          fi
-
-          APP_ID=$(grep -E '^\s*%global\s+(app_id|rdnn)\s+' "$SPEC" | awk '{print $3}')
-
-          if [ -z "$APP_ID" ]; then
-            echo "::error::==> [ERROR] Could not extract app_id or rdnn from $SPEC"
-            exit 1
-          fi
-
-          echo -e "${COLOR_INFO}==> [INFO] Fetching AppStream version for $APP_ID...${COLOR_RESET}"
-
-          TAG=$(python3 scripts/changelog_scraper.py get-version "$PROVIDER" "$INSTANCE" "$REPO" "$APP_ID")
-
-          if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
-            echo "::error::==> [ERROR] Could not fetch version from metainfo for $REPO ($APP_ID)"
-            exit 1
-          fi
-
-          echo -e "${COLOR_SUCCESS}==> [SUCCESS] Found AppStream release version: $TAG${COLOR_RESET}"
-          echo "version=$TAG" >> $GITHUB_OUTPUT
-
-      - name: Check for Updates
-        id: check
-        env:
-          APP: ${{ matrix.app_name }}
-          SPEC: apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec
-          NEW_VER: ${{ steps.upstream.outputs.version }}
-        run: |
-          if [ ! -f "$SPEC" ]; then
-            echo "::error::==> [ERROR] $SPEC not found!"
-            exit 1
-          fi
-
-          OLD_VER=$(awk '/^Version:/ {print $2}' "$SPEC")
-          CLEAN_NEW_VER=$(echo "$NEW_VER" | sed -E 's/^[vV]\.?//')
-
-          echo -e "${COLOR_INFO}==> [INFO] Current: $OLD_VER | Upstream: $CLEAN_NEW_VER${COLOR_RESET}"
-
-          if [ "$OLD_VER" != "$CLEAN_NEW_VER" ]; then
-            echo "update_needed=true" >> $GITHUB_OUTPUT
-            echo "old_version=$OLD_VER" >> $GITHUB_OUTPUT
-            echo "new_version=$CLEAN_NEW_VER" >> $GITHUB_OUTPUT
-          else
-            echo "update_needed=false" >> $GITHUB_OUTPUT
-            echo -e "${COLOR_SUCCESS}==> [SUCCESS] $APP is already up to date.${COLOR_RESET}"
-          fi
-
       - name: Bump Version in Spec File
-        if: steps.check.outputs.update_needed == 'true'
         id: update
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PROVIDER: "${{ matrix.provider }}"
           REPO: "${{ matrix.upstream_repo }}"
           INSTANCE: "${{ matrix.instance }}"
-          APP: "${{ matrix.app_name }}"
+          APP: ${{ matrix.app_name }}
           SPEC: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
-          NEW_VER: ${{ steps.upstream.outputs.version }}
+          OLD_VER: ${{ matrix.old_ver }}
+          NEW_VER: ${{ matrix.raw_new_ver }}
+          CLEAN_NEW_VER: ${{ matrix.new_ver }}
         run: |
-          echo -e "${COLOR_INFO}==> [INFO] Bumping $APP to $NEW_VER...${COLOR_RESET}"
-          CLEAN_NEW_VER=$(echo "$NEW_VER" | sed -E 's/^[vV]\.?//')
+          if [ ! -f "$SPEC" ]; then
+            echo "::error::==> [ERROR] $SPEC not found!"
+            exit 1
+          fi
+
+          echo -e "${COLOR_INFO}==> [INFO] Bumping $APP from $OLD_VER to $CLEAN_NEW_VER...${COLOR_RESET}"
           sed -i "s/^Version:.*/Version:        $CLEAN_NEW_VER/" "$SPEC"
 
+          # Special handling for Sudoku python requirements dependency
           if [ "$APP" = "sudoku" ]; then
             echo -e "${COLOR_INFO}==> [INFO] Fetching external python3-requirements.json...${COLOR_RESET}"
 
@@ -243,20 +122,16 @@ jobs:
           rm entry.tmp
 
       - name: Auto-Commit Spec File
-        if: steps.check.outputs.update_needed == 'true'
-        uses: 
-          suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f     # v1.0.0
+        uses: suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f # v1.0.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           branch: main
-          commit_message: "chore(${{ matrix.app_name }}): bump spec version to ${{
-            steps.upstream.outputs.version }}"
+          commit_message: "chore(${{ matrix.app_name }}): bump spec version to ${{ matrix.new_ver }}"
           files: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
           fail_on_self_push: false
 
       - name: Trigger COPR Build
-        if: steps.check.outputs.update_needed == 'true'
         env:
           APP: ${{ matrix.app_name }}
           COPR_URL: ${{ secrets.COPR_BASE_WEBHOOK_URL }}
@@ -273,11 +148,10 @@ jobs:
           fi
 
       - name: Add to Workflow Summary
-        if: steps.check.outputs.update_needed == 'true'
         env:
           APP: ${{ matrix.app_name }}
-          OLD_VERSION: ${{ steps.check.outputs.old_version }}
-          NEW_VERSION: ${{ steps.check.outputs.new_version }}
+          OLD_VERSION: ${{ matrix.old_ver }}
+          NEW_VERSION: ${{ matrix.new_ver }}
           CHANGELOG: ${{ steps.update.outputs.changelog }}
         run: |
           cat <<EOF >> $GITHUB_STEP_SUMMARY
@@ -288,8 +162,9 @@ jobs:
           $CHANGELOG
           EOF
 
+  # --- JOB 3: UPDATE README ---
   update-readme:
-    needs: check-and-build
+    needs: build-updates
     if: always() && !cancelled()
     runs-on: ubuntu-latest
     permissions:
@@ -338,8 +213,7 @@ jobs:
           done <<< "$CHANGED_APPS"
 
       - name: Auto-Commit README Changes
-        uses: 
-          suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f     # v1.0.0
+        uses: suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f # v1.0.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:

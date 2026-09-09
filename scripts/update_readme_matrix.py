@@ -20,8 +20,7 @@
 
     Parses an application's RPM spec file (Name, Version, %global forgeurl) and queries forge
     APIs (GitHub, GitLab, Codeberg) to locate high-resolution app icons. Updates
-    README.md and .github/workflows/copr-build.yml with alphabetically sorted
-    entries while preserving formatting.
+    README.md and apps.json with alphabetically sorted entries while preserving formatting.
 
     Usage:
         python3 scripts/update_app_list.py <app_name>
@@ -36,7 +35,6 @@ import re
 import sys
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
-from ruamel.yaml import YAML
 
 CYAN = "\033[36m"
 GREEN = "\033[32m"
@@ -228,45 +226,34 @@ def update_readme(readme_path, name, version, url, icon_url, app_name):
 
     print(f"{GREEN}[Step 1/2] Successfully inserted sorted entry for '{name}' (v{version}) into README.md.{RESET}")
 
-def update_workflow(workflow_path, app_name, platform, upstream_repo, host):
-    """Step 2: Updates copr-build.yml build matrix preserving style and layout."""
-    yaml = YAML()
-    yaml.preserve_quotes = True
-    yaml.indent(mapping=2, sequence=4, offset=2)
+def update_matrix(apps_json_path, app_name, platform, upstream_repo, host):
+    """Step 2: Updates apps.json matrix preserving style and alphabetical order."""
+    with open(apps_json_path, "r", encoding="utf-8") as f:
+        matrix = json.load(f)
 
-    with open(workflow_path, 'r', encoding='utf-8') as f:
-        workflow_data = yaml.load(f)
-
-    try:
-        matrix_include = workflow_data['jobs']['check-and-build']['strategy']['matrix']['include']
-    except KeyError:
-        print(f"Error: Could not trace target path 'jobs.check-and-build.strategy.matrix.include' in {workflow_path}", file=sys.stderr)
-        sys.exit(1)
-
-    for item in matrix_include:
-        if item.get('app_name') == app_name:
-            print(f"{CYAN}[Step 2/2] Matrix entry for '{app_name}' already exists in workflow. Skipping workflow update.{RESET}")
+    for item in matrix:
+        if item.get("app_name") == app_name:
+            print(f"{CYAN}[Step 2/2] Matrix entry for '{app_name}' already exists in apps.json. Skipping matrix update.{RESET}")
             return
 
     new_entry = {
-        'app_name': app_name,
-        'upstream_repo': upstream_repo,
-        'provider': platform
+        "app_name": app_name,
+        "upstream_repo": upstream_repo,
+        "provider": platform,
+        "instance": host if platform == "gitlab" else "",
     }
-    if platform == "gitlab":
-        new_entry['instance'] = host
 
-    matrix_include.append(new_entry)
+    matrix.append(new_entry)
+    matrix.sort(key=lambda x: x.get("app_name", "").lower())
 
-    matrix_include.sort(key=lambda x: x.get('app_name', '').lower())
+    with open(apps_json_path, "w", encoding="utf-8") as f:
+        json.dump(matrix, f, indent=4)
+        f.write("\n")
 
-    with open(workflow_path, 'w', encoding='utf-8') as f:
-        yaml.dump(workflow_data, f)
-
-    print(f"{GREEN}[Step 2/2] Successfully inserted sorted entry for '{app_name}' into copr-build workflow matrix.{RESET}")
+    print(f"{GREEN}[Step 2/2] Successfully inserted sorted entry for '{app_name}' into apps.json.{RESET}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Update app lists across README and CI configs seamlessly.")
+    parser = argparse.ArgumentParser(description="Update app lists across README and matrix config seamlessly.")
     parser.add_argument("app_name", help="The name of the application directory")
     args = parser.parse_args()
 
@@ -275,20 +262,20 @@ def main():
 
     spec_path = os.path.join(root_dir, "apps", args.app_name, f"{args.app_name}.spec")
     readme_path = os.path.join(root_dir, "README.md")
-    workflow_path = os.path.join(root_dir, ".github", "workflows", "copr-build.yml")
+    apps_json_path = os.path.join(root_dir, "apps.json")
 
     if not os.path.exists(readme_path):
         print(f"Error: README.md not found at {readme_path}", file=sys.stderr)
         sys.exit(1)
-    if not os.path.exists(workflow_path):
-        print(f"Error: Workflow config not found at {workflow_path}", file=sys.stderr)
+    if not os.path.exists(apps_json_path):
+        print(f"Error: apps.json not found at {apps_json_path}", file=sys.stderr)
         sys.exit(1)
 
     name, version, url = parse_spec_file(spec_path)
     icon_url, platform, upstream_repo, host = get_icon_url(url, args.app_name)
 
     update_readme(readme_path, name, version, url, icon_url, args.app_name)
-    update_workflow(workflow_path, args.app_name, platform, upstream_repo, host)
+    update_matrix(apps_json_path, args.app_name, platform, upstream_repo, host)
 
 if __name__ == "__main__":
     main()

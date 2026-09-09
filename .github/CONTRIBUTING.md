@@ -41,13 +41,11 @@ First off, thank you for helping maintain and expand this repository! Your contr
 1. Fork the repository.
 2. Create a feature branch (`git checkout -b feat/add-new-app`).
 3. For an existing app, update its spec file. For a new app, add the spec file in the appropriate directory (apps/\<app-name\>/\<app-name\>.spec)
-4. If you're adding a new app, you'll also need to update the [CI matrix](/.github/workflows/copr-build.yml#L31) in `copr-build` workflow and add an entry for the app in the [README App List](/README.md#app-list) (App, Icon, Source, version, COPR Badge). You can easily update both with our helper script:
+4. If you're adding a new app, you'll also need to update the [CI matrix](/apps.json) and add an entry for the app in the [README App List](/README.md#app-list) (App, Icon, Source, version, COPR Badge). You can easily update both with our helper script:
 ```
-# Install ruamel.yaml Python package
-pip install ruamel.yaml
 
 # Run the update script
-scripts/update_readme_workflow.py <app-name>
+scripts/update_readme_matrix.py <app-name>
 ```
 The COPR badge would show `unknown` status when the PR is open as there's no COPR package existing at that time (I'll create it after testing your changes locally. The badge may take upto 24 hrs to update status due to Github Camo image caching).
 
