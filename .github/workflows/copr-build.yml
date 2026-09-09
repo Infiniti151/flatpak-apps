@@ -165,7 +165,6 @@ jobs:
   # --- JOB 3: UPDATE README ---
   update-readme:
     needs: build-updates
-    if: always() && !cancelled()
     runs-on: ubuntu-latest
     permissions:
       contents: write
