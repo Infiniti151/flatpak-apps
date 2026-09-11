@@ -12,6 +12,9 @@ on:
     paths:
       - "apps/**/*.spec"
 
+permissions:
+  contents: read
+
 jobs:
   # --- JOB 1: PRE-FLIGHT UPDATE DETECTOR ---
   detect-updates:
