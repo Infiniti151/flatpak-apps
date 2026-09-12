@@ -124,15 +124,34 @@ jobs:
 
           rm entry.tmp
 
-      - name: Auto-Commit Spec File
-        uses: suzuki-shunsuke/commit-action@06e3b49d4706498d325d29bd85adc82ecf2f5d8f # v1.0.0
+      - name: Auto-Commit and Push Verified Bot Commit
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        with:
-          branch: main
-          commit_message: "chore(${{ matrix.app_name }}): bump spec version to ${{ matrix.new_ver }}"
-          files: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
-          fail_on_self_push: false
+          APP: ${{ matrix.app_name }}
+          SPEC: "apps/${{ matrix.app_name }}/${{ matrix.app_name }}.spec"
+          NEW_VER: ${{ matrix.raw_new_ver }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add "$SPEC"
+          git commit -m "chore($APP): bump spec version to $NEW_VER [skip ci]" || { echo -e "${COLOR_WARN}==> [WARNING] No changes to commit. Skipping push.${COLOR_RESET}"; exit 0; }
+
+          # Retry loop to handle concurrent matrix push collisions
+          for i in {1..10}; do
+            git pull --rebase origin main
+
+            if git push origin main; then
+              echo -e "${COLOR_SUCCESS}==> [SUCCESS] Pushed verified bot commit successfully!${COLOR_RESET}"
+              exit 0
+            fi
+
+            echo -e "${COLOR_WARN}==> [WARNING] Push rejected by remote. Retrying in a few seconds...${COLOR_RESET}"
+            sleep $((RANDOM % 6 + 2))
+          done
+
+          echo "::error::==> [ERROR] Failed to push after 10 attempts."
+          exit 1
 
       - name: Trigger COPR Build
         env:
