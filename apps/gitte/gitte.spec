@@ -1,7 +1,7 @@
 %global         app_id          de.wwwtech.gitte
 
 Name:           gitte
-Version:        0.9.1
+Version:        0.10.0
 Release:        1%{?dist}
 Summary:        A GTK4/libadwaita Git client for the GNOME desktop
 License:        GPL-3.0-or-later
@@ -63,6 +63,19 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Sat Sep 12 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.10.0-1
+- This release adds side-by-side diffs, Git LFS and submodule support, signing configuration, remote management, and major performance improvements.
+- New features:
+- Side-by-side diffs, configurable independently for the working copy and history views
+- Set up Git LFS, manage tracked patterns, inspect its status, and track files directly from the working copy
+- Add, update, sync, configure, deinitialise and remove submodules
+- Add, rename, delete and fetch individual remotes, and delete remote branches, optionally together with their tracking configuration
+- Configure commit and tag signing per repository, including the signing format and key
+- Open the current repository in a terminal with F4
+- Toggle between showing the whole file and only the changed context in diff views with Ctrl+Shift+E
+- Optionally open a repository found in the current working directory when starting Gitte without a path
+- ... (see upstream for full release notes)
+
 * Thu Sep 03 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.9.1-1
 - Update to 0.9.1
 
