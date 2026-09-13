@@ -1,7 +1,7 @@
 %global         app_id          de.wwwtech.gitte
 
 Name:           gitte
-Version:        0.10.0
+Version:        0.10.1
 Release:        1%{?dist}
 Summary:        A GTK4/libadwaita Git client for the GNOME desktop
 License:        GPL-3.0-or-later
@@ -63,6 +63,17 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Sun Sep 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.10.1-1
+- This bugfix release fixes signing in Flatpak builds and adds small UI improvements.
+- Fixes:
+- Flatpak builds now respect the configured signing program for OpenPGP, SSH and X.509 signatures
+- Git operations now use temporary files accessible to both the Flatpak sandbox and the host system, fixing failures when host programs need to read them
+- UI improvements:
+- Release dates in the release notes dialog now use a human-readable format
+- The remotes button is now vertically centred when it is the only collapsed sidebar section
+- Under the hood:
+- Updated dependencies
+
 * Sat Sep 12 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.10.0-1
 - This release adds side-by-side diffs, Git LFS and submodule support, signing configuration, remote management, and major performance improvements.
 - New features:
