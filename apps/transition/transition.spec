@@ -62,6 +62,7 @@ Transition supports converting to:
 
 %install
 %meson_install
+%find_lang %{name}
 
 %check
 %meson_test
@@ -69,7 +70,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
-%files
+%files -f %{name}.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
