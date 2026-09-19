@@ -2,7 +2,7 @@
 %global         app_id          io.github.hkdb.Aerion
 
 Name:           aerion
-Version:        0.3.3
+Version:        0.3.4
 Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
 License:        Apache-2.0
@@ -63,6 +63,19 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %changelog
+* Sat Sep 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.4-1
+- Added default CC
+- Added default BCC - [#341](https://github.com/hkdb/aerion/issues/341)
+- Added default reply-to - [#404](https://github.com/hkdb/aerion/issues/404)
+- Added merge identical messages in thread - [#222](https://github.com/hkdb/aerion/issues/222)
+- Relabeled spellcheck dictionary English to English (US)
+- Added spellcheck dictionary: English (UK) - [#417](https://github.com/hkdb/aerion/issues/417)
+- Added spellcheck dictionary: Dutch
+- Added dot and glow dot optional accents for unread messages
+- Added window size persistence - [#217](https://github.com/hkdb/aerion/issues/217)
+- Added mini calendar for easier navigation - [#368](https://github.com/hkdb/aerion/issues/368)
+- ... (see upstream for full release notes)
+
 * Fri Aug 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.3-1
 - Message list redesign - [#70](https://github.com/hkdb/aerion/issues/70) + [#340](https://github.com/hkdb/aerion/issues/340)
 - Added swipe gestures - right select and left delete - [#68](https://github.com/hkdb/aerion/issues/68)
