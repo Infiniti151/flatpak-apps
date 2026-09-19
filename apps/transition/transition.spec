@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           transition
-Version:        3.0
+Version:        4.0
 Release:        1%{?dist}
 Summary:        Multimedia to audio conversion
 License:        GPL-3.0-or-later
@@ -82,6 +82,10 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 
 
 %changelog
+* Sat Sep 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.0-1
+- Updated GNOME Runtime to 51
+- Store page can now be translated
+
 * Wed Sep 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.0-1
 - New features:
 - Audio channels, now you can select how much channels converted file would have
