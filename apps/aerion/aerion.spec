@@ -2,7 +2,7 @@
 %global         app_id          io.github.hkdb.Aerion
 
 Name:           aerion
-Version:        0.3.4
+Version:        0.3.5
 Release:        1%{?dist}
 Summary:        Desktop Mail Client (Official Binary)
 License:        Apache-2.0
@@ -63,6 +63,14 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %changelog
+* Tue Sep 22 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.5-1
+- Temp fix for launch crash caused by WebKitGTK 2.54.0 in latest runtime - [#431](https://github.com/hkdb/aerion/issues/431)
+- Bumped wails to 2.16.0
+- Bumped golang.org/x/image v0.41.0
+- Bumped golang.org/x/net v0.56.0
+- Bumped golang.org/x/sys v0.46.0
+- Bumped golang.org/x/text v0.39.0
+
 * Sat Sep 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.4-1
 - Added default CC
 - Added default BCC - [#341](https://github.com/hkdb/aerion/issues/341)
