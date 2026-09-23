@@ -4,7 +4,7 @@
 %global         app_id          studio.planetpeanut.Bobby
 
 Name:           bobby
-Version:        51.0.0
+Version:        51.0.1
 Release:        1%{?dist}
 Summary:        A Rust-based SQLite database viewer for GNOME
 License:        GPL-3.0-or-later
@@ -55,6 +55,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
 
 %changelog
+* Wed Sep 23 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 51.0.1-1
+- Fix copy-to-clipboard regression
+
 * Tue Sep 22 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 51.0.0-1
 - Use GNOME 51
 - Add search (Ctrl+F)
