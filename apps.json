@@ -24,12 +24,6 @@
         "instance": ""
     },
     {
-        "app_name": "decoder",
-        "upstream_repo": "World/decoder",
-        "provider": "gitlab",
-        "instance": "gitlab.gnome.org"
-    },
-    {
         "app_name": "exercise-timer",
         "upstream_repo": "World/exercise-timer",
         "provider": "gitlab",
