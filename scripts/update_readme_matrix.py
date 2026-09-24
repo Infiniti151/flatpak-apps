@@ -111,7 +111,7 @@ def get_icon_url(url, app_name):
         if tree_data and "tree" in tree_data:
             tree_entries = tree_data["tree"]
 
-    elif host == "gitlab.com" or host.endswith(".gitlab.com"):
+    elif "gitlab" in host.split("."):
         platform = "gitlab"
         instance = host
         encoded_project = f"{owner}%2F{repo}"
