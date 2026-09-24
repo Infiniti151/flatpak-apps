@@ -14,6 +14,30 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- decoder dependencies --- \
+    'pkgconfig(gio-2.0)' \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gstreamer-1.0)' \
+    'pkgconfig(gstreamer-base-1.0)' \
+    'pkgconfig(gstreamer-plugins-bad-1.0)' \
+    'pkgconfig(gstreamer-plugins-base-1.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    appstream \
+    cairo-devel \
+    cargo \
+    cargo-rpm-macros \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gdk-pixbuf2-devel \
+    gettext \
+    glibc-langpack-en \
+    gtk-update-icon-cache \
+    libappstream-glib \
+    meson \
+    ninja-build \
+    pango-devel \
+    rustc \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
