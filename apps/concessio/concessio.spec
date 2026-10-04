@@ -2,7 +2,7 @@
 %global         app_id          io.github.ronniedroid.concessio
 
 Name:           concessio
-Version:        0.3.0
+Version:        1.0.0
 Release:        1%{?dist}
 Summary:        Understand and convert UNIX file permissions
 License:        GPL-3.0-or-later
@@ -61,6 +61,15 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Sun Oct 04 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.0.0-1
+- Redesigned the file opening workflow
+- Added drag and drop support for opening files
+- Added support for changing file permissions, with the ability to undo changes
+- Improved the umask calculator to calculate from umask, file, or directory permissions
+- Improved accessibility throughout the app
+- Improved input validation and editing behavior
+- Updated translations
+
 * Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.0-1
 - Update to v0.3.0
 
