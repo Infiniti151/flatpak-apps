@@ -1,7 +1,7 @@
 %global         app_id com.github.ryonakano.konbucase
 
 Name:           konbucase
-Version:        4.5.1
+Version:        5.0.0
 Release:        1%{?dist}
 Summary:        A tool for case conversion and string manipulation
 License:        GPL-3.0-or-later
@@ -75,5 +75,9 @@ rm -rf %{buildroot}%{_datadir}/vala/vapi/chcase.*
 %{_datadir}/metainfo/%{app_id}.metainfo.xml
 
 %changelog
+* Sun Oct 04 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 5.0.0-1
+- Improve mobile support of the keyboard shortcut dialog
+- Update translations
+
 * Thu May 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.5.1-1
 - Update to 4.5.1
