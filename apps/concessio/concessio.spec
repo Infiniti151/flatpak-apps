@@ -20,7 +20,7 @@ BuildRequires:  gjs
 BuildRequires:  blueprint-compiler
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
-BuildRequires:  pkgconfig(libgee)
+BuildRequires:  libgee-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 
