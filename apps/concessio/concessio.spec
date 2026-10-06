@@ -55,7 +55,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md
-%{_datadir}/%{app_id}/
+%{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
 %{_datadir}/metainfo/*.metainfo.xml
 %{_datadir}/icons/hicolor/*/apps/*.svg
