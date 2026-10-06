@@ -40,25 +40,25 @@ It allows you to convert between symbolic and numeric representations
 %forgesetup
 
 %build
-%meson -Dforce_fallback_for=blueprint-compiler
+%meson
 %meson_build
 
 %install
 %meson_install
-%find_lang io.github.ronniedroid.concessio %{name}.lang
+%find_lang %{app_id} %{name}.lang
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
-%{_datadir}/metainfo/*.metainfo.xml
 %{_datadir}/icons/hicolor/*/apps/*.svg
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_metainfodir}/*.metainfo.xml
 
 %changelog
 * Sun Oct 04 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.0.0-1
