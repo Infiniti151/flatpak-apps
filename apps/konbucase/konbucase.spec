@@ -16,6 +16,7 @@ BuildRequires:  gcc
 BuildRequires:  vala
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
+BuildRequires:  git
 
 # Desktop Libraries (Development Files)
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.5
@@ -69,10 +70,10 @@ rm -rf %{buildroot}%{_datadir}/vala/vapi/chcase.*
 %doc README.md
 %{_bindir}/%{app_id}
 %{_libdir}/libchcase.so
-%{_datadir}/applications/%{app_id}.desktop
-%{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
+%{_datadir}/applications/*.desktop
+%{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*
-%{_datadir}/metainfo/%{app_id}.metainfo.xml
+%{_metainfodir}/*.metainfo.xml
 
 %changelog
 * Sun Oct 04 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 5.0.0-1
