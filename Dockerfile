@@ -14,17 +14,6 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
-    # --- text-compare dependencies --- \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(libadwaita-1)' \
-    blueprint-compiler \
-    desktop-file-utils \
-    forge-srpm-macros \
-    gcc \
-    gjs \
-    glib2-devel \
-    libappstream-glib \
-    meson \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
