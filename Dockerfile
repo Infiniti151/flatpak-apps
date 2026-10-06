@@ -21,6 +21,7 @@ RUN dnf install -y ccache \
     'pkgconfig(libadwaita-1)' \
     blueprint-compiler \
     desktop-file-utils \
+    forge-srpm-macros \
     gcc \
     gettext \
     git \
