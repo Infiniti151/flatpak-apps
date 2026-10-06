@@ -14,6 +14,17 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- concessio dependencies --- \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    'pkgconfig(libgee)' \
+    /usr/bin/node \
+    /usr/bin/npm \
+    blueprint-compiler \
+    desktop-file-utils \
+    gjs \
+    libappstream-glib \
+    meson \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
