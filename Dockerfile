@@ -17,13 +17,13 @@ RUN dnf install -y ccache \
     # --- concessio dependencies --- \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
-    'pkgconfig(libgee)' \
     /usr/bin/node \
     /usr/bin/npm \
     blueprint-compiler \
     desktop-file-utils \
     gjs \
     libappstream-glib \
+    libgee-devel \
     meson \
     && dnf clean all
 
