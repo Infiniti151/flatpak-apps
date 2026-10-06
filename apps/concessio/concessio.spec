@@ -1,7 +1,6 @@
 %global app_id         io.github.ronniedroid.concessio
 %global forgeurl       https://github.com/ronniedroid/concessio
 %global tag            v%{version}
-%global debug_package  %{nil}
 
 Name:           concessio
 Version:        1.0.0
