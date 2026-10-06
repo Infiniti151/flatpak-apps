@@ -14,16 +14,16 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
-    # --- concessio dependencies --- \
+    # --- text-compare dependencies --- \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
-    /usr/bin/node \
-    /usr/bin/npm \
     blueprint-compiler \
     desktop-file-utils \
+    forge-srpm-macros \
+    gcc \
     gjs \
+    glib2-devel \
     libappstream-glib \
-    libgee-devel \
     meson \
     && dnf clean all
 
