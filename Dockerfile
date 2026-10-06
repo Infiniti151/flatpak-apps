@@ -14,21 +14,6 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
-    # --- konbucase dependencies --- \
-    'pkgconfig(glib-2.0)' \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(gtksourceview-5)' \
-    'pkgconfig(libadwaita-1)' \
-    blueprint-compiler \
-    desktop-file-utils \
-    forge-srpm-macros \
-    gcc \
-    gettext \
-    git \
-    gtk-update-icon-cache \
-    libappstream-glib \
-    meson \
-    vala \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
