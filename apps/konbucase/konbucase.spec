@@ -1,14 +1,18 @@
-%global         app_id com.github.ryonakano.konbucase
+%global         app_id      com.github.ryonakano.konbucase
+%global         forgeurl    https://github.com/ryonakano/konbucase
+%global         tag         %{version}
 
 Name:           konbucase
 Version:        5.0.0
 Release:        1%{?dist}
 Summary:        A tool for case conversion and string manipulation
 License:        GPL-3.0-or-later
-URL:            https://github.com/ryonakano/konbucase
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 # Compilers and Build Tools
 BuildRequires:  meson >= 0.58.0
@@ -16,6 +20,8 @@ BuildRequires:  gcc
 BuildRequires:  vala
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
+BuildRequires:  git
+BuildRequires:  forge-srpm-macros
 
 # Desktop Libraries (Development Files)
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.5
@@ -33,7 +39,7 @@ Konbucase is a native Linux application for converting strings between
 various cases like camelCase, snake_case, and PascalCase.
 
 %prep
-%setup -q -n konbucase-%{version}
+%forgesetup
 
 git init
 
@@ -69,10 +75,10 @@ rm -rf %{buildroot}%{_datadir}/vala/vapi/chcase.*
 %doc README.md
 %{_bindir}/%{app_id}
 %{_libdir}/libchcase.so
-%{_datadir}/applications/%{app_id}.desktop
-%{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
+%{_datadir}/applications/*.desktop
+%{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*
-%{_datadir}/metainfo/%{app_id}.metainfo.xml
+%{_metainfodir}/*.metainfo.xml
 
 %changelog
 * Sun Oct 04 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 5.0.0-1
