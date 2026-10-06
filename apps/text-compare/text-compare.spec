@@ -1,6 +1,6 @@
-%global app_id        io.github.josephmawa.TextCompare
-%global forgeurl      https://github.com/josephmawa/TextCompare
-%global               debug_package %{nil}
+%global app_id         io.github.josephmawa.TextCompare
+%global forgeurl       https://github.com/josephmawa/TextCompare
+%global tag            v%{version}
 
 Name:                 text-compare
 Version:              0.1.11
@@ -8,6 +8,7 @@ Release:              1%{?dist}
 Summary:              A simple text comparison tool
 License:              GPL-3.0-or-later
 BugURL:               https://github.com/Infiniti151/flatpak-apps
+
 BuildArch:            noarch
 
 %forgemeta
@@ -51,15 +52,13 @@ A simple text comparison tool built with GJS and Adwaita.
 %files -f %{name}.lang
 %license COPYING
 %doc README.md
-%{_bindir}/io.github.josephmawa.TextCompare
+%{_bindir}/%{app_id}
 %{_datadir}/TextCompare/
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/scalable/apps/*.svg
-%{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
+%{_datadir}/icons/hicolor/*/apps/*.svg
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/metainfo/*.metainfo.xml
 %{_datadir}/dbus-1/services/*.service
-%doc README.md
 
 %changelog
 * Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.1.11-1

@@ -1,25 +1,28 @@
-%global         debug_package %{nil}
-%global         app_id          io.github.ronniedroid.concessio
+%global app_id         io.github.ronniedroid.concessio
+%global forgeurl       https://github.com/ronniedroid/concessio
+%global tag            v%{version}
 
 Name:           concessio
 Version:        1.0.0
 Release:        1%{?dist}
 Summary:        Understand and convert UNIX file permissions
 License:        GPL-3.0-or-later
-URL:            https://github.com/ronniedroid/concessio
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
 
-BuildArch:      noarch
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  /usr/bin/node
 BuildRequires:  /usr/bin/npm
 BuildRequires:  meson
 BuildRequires:  gjs
+BuildRequires:  forge-srpm-macros
 BuildRequires:  blueprint-compiler
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
+BuildRequires:  libgee-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 
@@ -34,7 +37,7 @@ It allows you to convert between symbolic and numeric representations
 (e.g., rwx------ to 700) using an intuitive GTK4 interface.
 
 %prep
-%autosetup
+%forgesetup
 
 %build
 %meson -Dforce_fallback_for=blueprint-compiler
@@ -51,14 +54,11 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md
-%{_bindir}/io.github.ronniedroid.concessio
-%{_datadir}/io.github.ronniedroid.concessio/
+%{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/scalable/apps/*.svg
-%{_datadir}/icons/hicolor/symbolic/apps/*.svg
+%{_datadir}/metainfo/*.metainfo.xml
+%{_datadir}/icons/hicolor/*/apps/*.svg
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/metainfo/*.xml
-%{_datadir}/dbus-1/services/*.service
 
 %changelog
 * Sun Oct 04 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.0.0-1
