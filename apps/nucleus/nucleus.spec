@@ -58,7 +58,7 @@ sed -i "s|python.find_installation('python3').full_path()|'/usr/bin/python3'|g" 
 %{_metainfodir}/*.xml
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/dbus-1/services/*.service
-%{_datadir}/icons/hicolor/*/apps/*.svg
+%{_datadir}/icons/hicolor/*/apps/*
 
 %changelog
 * Tue May 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v3-1

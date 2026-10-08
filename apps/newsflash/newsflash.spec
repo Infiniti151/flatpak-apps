@@ -87,8 +87,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{app_id}.appd
 %doc README.md
 %{_bindir}/%{app_id}
 %{_datadir}/applications/%{app_id}.desktop
-%{_datadir}/icons/hicolor/scalable/apps/%{app_id}*.svg
-%{_datadir}/icons/hicolor/symbolic/apps/%{app_id}-symbolic.svg
+%{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/dbus-1/services/%{app_id}.service
 %{_metainfodir}/%{app_id}.appdata.xml
 
