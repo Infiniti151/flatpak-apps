@@ -124,12 +124,12 @@ rm -rf %{buildroot}/usr/lib/debug/*libgxml*
 rm -rf %{buildroot}/usr/lib/debug/*libchrono*
 
 # Remove unwanted metainfo
-rm -f %{buildroot}%{_datadir}/metainfo/io.github.alainm23.chrono.metainfo.xml
+rm -f %{buildroot}%{_metainfodir}/io.github.alainm23.chrono.metainfo.xml
 
 %check
 %meson_test --suite cli
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 
 %files -f %{app_id}.lang
 %license LICENSE
@@ -140,7 +140,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 
 %{_datadir}/applications/%{app_id}.desktop
 %{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
-%{_datadir}/metainfo/%{app_id}.metainfo.xml
+%{_metainfodir}/%{app_id}.metainfo.xml
 %{_datadir}/icons/hicolor/*/apps/*.{svg,png}
 
 %{_datadir}/dbus-1/services/%{app_id}.SearchProvider.service

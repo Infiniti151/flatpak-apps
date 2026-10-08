@@ -45,7 +45,7 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 
 %files -f %{name}.lang
 %license COPYING
@@ -54,7 +54,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
-%{_datadir}/metainfo/*.xml
+%{_metainfodir}/*.xml
 
 %changelog
 * Sat Sep 12 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.15.0-1

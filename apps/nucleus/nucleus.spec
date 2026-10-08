@@ -55,7 +55,7 @@ sed -i "s|python.find_installation('python3').full_path()|'/usr/bin/python3'|g" 
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_datadir}/applications/*.desktop
-%{_datadir}/metainfo/*.xml
+%{_metainfodir}/*.xml
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/icons/hicolor/*/apps/*.svg

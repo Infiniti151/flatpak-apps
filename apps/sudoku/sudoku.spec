@@ -58,7 +58,7 @@ pip3 install --no-deps --ignore-installed --prefix=%{buildroot}%{_prefix} %{SOUR
 export PYTHONPATH="%{buildroot}%{python3_sitelib}:src:."
 %meson_test --suite unit
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 
 %files -f sudokugame.lang
 %license COPYING
@@ -71,7 +71,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 %{_datadir}/icons/hicolor/symbolic/apps/*-symbolic.svg
-%{_datadir}/metainfo/*.xml
+%{_metainfodir}/*.xml
 
 %changelog
 * Sat Jul 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.8.0-1
