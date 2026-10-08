@@ -45,14 +45,14 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 
 %files -f words.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/words
 %{_datadir}/applications/*.desktop
-%{_datadir}/metainfo/*.xml
+%{_metainfodir}/*.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/words/
 %{_datadir}/word-lists/

@@ -55,9 +55,9 @@ A simple text comparison tool built with GJS and Adwaita.
 %{_bindir}/%{app_id}
 %{_datadir}/TextCompare/
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/*/apps/*.svg
+%{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/metainfo/*.metainfo.xml
+%{_metainfodir}/*.xml
 %{_datadir}/dbus-1/services/*.service
 
 %changelog

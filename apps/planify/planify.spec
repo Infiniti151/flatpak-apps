@@ -124,12 +124,12 @@ rm -rf %{buildroot}/usr/lib/debug/*libgxml*
 rm -rf %{buildroot}/usr/lib/debug/*libchrono*
 
 # Remove unwanted metainfo
-rm -f %{buildroot}%{_datadir}/metainfo/io.github.alainm23.chrono.metainfo.xml
+rm -f %{buildroot}%{_metainfodir}/io.github.alainm23.chrono.metainfo.xml
 
 %check
 %meson_test --suite cli
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 
 %files -f %{app_id}.lang
 %license LICENSE
@@ -138,13 +138,13 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.xml
 %{_bindir}/%{app_id}*
 %{_libexecdir}/%{app_id}-search-provider
 
-%{_datadir}/applications/%{app_id}.desktop
-%{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
-%{_datadir}/metainfo/%{app_id}.metainfo.xml
-%{_datadir}/icons/hicolor/*/apps/*.{svg,png}
+%{_datadir}/applications/*.desktop
+%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_metainfodir}/*.xml
+%{_datadir}/icons/hicolor/*/apps/*
 
-%{_datadir}/dbus-1/services/%{app_id}.SearchProvider.service
-%{_datadir}/gnome-shell/search-providers/%{app_id}.SearchProvider.ini
+%{_datadir}/dbus-1/services/*.service
+%{_datadir}/gnome-shell/search-providers/*.SearchProvider.ini
 
 %{_libdir}/girepository-1.0/GXml-*.typelib
 %{_datadir}/gir-1.0/GXml-*.gir

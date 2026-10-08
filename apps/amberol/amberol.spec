@@ -67,7 +67,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/%{name}/
 %{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/metainfo/*.metainfo.xml
+%{_metainfodir}/*.xml
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/icons/hicolor/*/apps/*.*
 

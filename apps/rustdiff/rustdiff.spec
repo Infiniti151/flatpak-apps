@@ -41,12 +41,12 @@ cargo build --release %{?_smp_mflags}
 
 %install
 install -Dm755 target/release/%{name} %{buildroot}%{_bindir}/%{name}
-install -Dm644 data/%{app_id}.desktop \
-    %{buildroot}%{_datadir}/applications/%{app_id}.desktop
-install -Dm644 data/%{app_id}.metainfo.xml \
-    %{buildroot}%{_metainfodir}/%{app_id}.metainfo.xml
-install -Dm644 data/icons/%{app_id}.svg \
-    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{app_id}.svg
+install -Dm644 data/*.desktop \
+    %{buildroot}%{_datadir}/applications/*.desktop
+install -Dm644 data/*.metainfo.xml \
+    %{buildroot}%{_metainfodir}/*.xml
+install -Dm644 data/icons/* \
+    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/*
 
 mkdir -p %{buildroot}%{_datadir}/%{name}/locales
 install -m 644 locales/*.yml %{buildroot}%{_datadir}/%{name}/locales/
@@ -60,9 +60,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%{_datadir}/applications/%{app_id}.desktop
-%{_datadir}/icons/hicolor/scalable/apps/%{app_id}.svg
-%{_metainfodir}/%{app_id}.metainfo.xml
+%{_datadir}/applications/*.desktop
+%{_datadir}/icons/hicolor/*/apps/*
+%{_metainfodir}/*.metainfo.xml
 
 %changelog
 * Tue Jul 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.4.0-1
