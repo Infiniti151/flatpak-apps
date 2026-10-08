@@ -79,17 +79,17 @@ upx --best --lzma %{buildroot}%{_bindir}/%{app_id}
 %find_lang %{name}
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/%{app_id}.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{app_id}.appdata.xml
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/%{app_id}
-%{_datadir}/applications/%{app_id}.desktop
+%{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/*
-%{_datadir}/dbus-1/services/%{app_id}.service
-%{_metainfodir}/%{app_id}.appdata.xml
+%{_datadir}/dbus-1/services/*.service
+%{_metainfodir}/*.xml
 
 %changelog
 * Sun Aug 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v.5.2.5-1

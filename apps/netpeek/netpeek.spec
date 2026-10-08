@@ -56,10 +56,10 @@ NetPeek is a modern network scanner designed for the GNOME desktop, built with P
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%{_datadir}/applications/%{app_id}.desktop
-%{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
-%{_datadir}/dbus-1/services/%{app_id}.service
-%{_metainfodir}/%{app_id}.metainfo.xml
+%{_datadir}/applications/*.desktop
+%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_datadir}/dbus-1/services/*.service
+%{_metainfodir}/*.xml
 %{_datadir}/icons/hicolor/*/apps/*
 
 %changelog
