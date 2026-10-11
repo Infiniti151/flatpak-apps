@@ -4,7 +4,7 @@
 %global         app_id          page.codeberg.petsoi.words
 
 Name:           words-game
-Version:        0.7.9
+Version:        0.8.0
 Release:        1%{?dist}
 Summary:        A word puzzle game
 License:        GPL-3.0-only
@@ -59,6 +59,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_datadir}/icons/hicolor/*/apps/*
 
 %changelog
+* Sun Oct 11 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.8.0-1
+- Improve layout: keyboard stays at the bottom and the letter grid keeps square cells.
+- Update to GNOME 51.
+
 * Wed Sep 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.7.9-1
 - Update to 0.7.9
 
