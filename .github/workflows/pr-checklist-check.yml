@@ -6,6 +6,7 @@ on:
 
 jobs:
   validate-checklist:
+    if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
     name: Check PR Description & Spec Standards
     runs-on: ubuntu-latest
     permissions:
