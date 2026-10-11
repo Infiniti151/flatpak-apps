@@ -14,6 +14,19 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- words-game dependencies --- \
+    'pkgconfig(gio-2.0)' \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    appstream \
+    cargo \
+    desktop-file-utils \
+    gcc \
+    gettext \
+    libappstream-glib \
+    meson \
+    rust \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
