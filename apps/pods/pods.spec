@@ -3,7 +3,7 @@
 %global         app_id          com.github.marhkb.Pods
 
 Name:           pods
-Version:        3.2.0
+Version:        3.2.1
 Release:        1%{?dist}
 Summary:        A powerful Podman manager for GNOME
 License:        GPL-3.0-or-later
@@ -58,6 +58,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 
 %changelog
+* Sun Oct 11 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.2.1-1
+- Pods 3.2.1 is a small release fixing some design inconsistencies
+
 * Sun Oct 11 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.2.0-1
 - Pods 3.2.0 contains the following changes:
 - Improved port creation, visualization, and handling in container details. (#987)
