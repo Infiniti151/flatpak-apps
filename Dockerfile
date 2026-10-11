@@ -22,6 +22,7 @@ RUN dnf install -y ccache \
     appstream \
     cargo \
     desktop-file-utils \
+    forge-srpm-macros \
     gcc \
     gettext \
     libappstream-glib \
