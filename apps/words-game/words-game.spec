@@ -2,16 +2,20 @@
 %global         _empty_manifest_terminate_build 0
 %endif
 %global         app_id          page.codeberg.petsoi.words
+%global         forgeurl        https://codeberg.org/petsoi/words
+%global         tag             v%{version}
 
 Name:           words-game
 Version:        0.8.0
 Release:        1%{?dist}
 Summary:        A word puzzle game
 License:        GPL-3.0-only
-URL:            https://codeberg.org/petsoi/words
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gzs
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson >= 1.1.0
 BuildRequires:  gcc
@@ -21,6 +25,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 BuildRequires:  appstream
 BuildRequires:  libappstream-glib
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
 BuildRequires:  pkgconfig(gio-2.0) >= 2.66
 BuildRequires:  pkgconfig(gtk4) >= 4.18.0
@@ -31,7 +36,7 @@ An elegant word game puzzle built natively using
 Rust, GTK4, and Libadwaita.
 
 %prep
-%autosetup -n words -p1
+%forgesetup
 find . -name "*metainfo.xml*" -exec sed -i '/<releases>/,/<\/releases>/d' {} +
 
 %build
