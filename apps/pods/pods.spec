@@ -3,7 +3,7 @@
 %global         app_id          com.github.marhkb.Pods
 
 Name:           pods
-Version:        3.1.1
+Version:        3.2.0
 Release:        1%{?dist}
 Summary:        A powerful Podman manager for GNOME
 License:        GPL-3.0-or-later
@@ -58,6 +58,19 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 
 %changelog
+* Sun Oct 11 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.2.0-1
+- Pods 3.2.0 contains the following changes:
+- Improved port creation, visualization, and handling in container details. (#987)
+- Added support for configuring container restart policies. (#971)
+- Added confirmation dialog when deleting a container from the container details page. (#972)
+- Added support for running privileged containers when using Docker. (#981)
+- Redesigned container status controls and moved Pod and Image properties to standalone rows. (#978, #982, #983)
+- Fixed navigation view stack popping when deleting entities from detail views. (#991)
+- Improved container terminal with hyperlink support, Ptyxis-like padding, and context menu updates.
+- Improved container creation port configuration robustness. (#984)
+- Improved Docker engine stability for memory percentage calculations and stats streams after suspend. (#980, #981)
+- ... (see upstream for full release notes)
+
 * Thu Jul 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v3.1.1-1
 - Pods 3.1.1 contains the following changes:
 - Fixed an issue where active terminal exec sessions were unexpectedly terminated when the window was resized and the sidebar collapsed. (#965)
