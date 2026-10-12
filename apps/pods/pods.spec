@@ -3,7 +3,7 @@
 %global         app_id          com.github.marhkb.Pods
 
 Name:           pods
-Version:        3.2.1
+Version:        3.3.0
 Release:        1%{?dist}
 Summary:        A powerful Podman manager for GNOME
 License:        GPL-3.0-or-later
@@ -58,6 +58,14 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 
 %changelog
+* Mon Oct 12 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.3.0-1
+- Pods 3.3.0 contains the following changes:
+- Fixed missing port bindings by fanning out port ranges in the Podman container summary. (#986, #1002)
+- Added copy-to-clipboard actions across views. (#998)
+- Correctly hide the image preferences group for infrastructure containers. (#1000)
+- Improved container card layout, performance, and text ellipsization.
+- Standardized ID capitalization across views. (#999)
+
 * Sun Oct 11 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.2.1-1
 - Pods 3.2.1 is a small release fixing some design inconsistencies
 
