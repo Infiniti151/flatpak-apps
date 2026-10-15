@@ -2,16 +2,20 @@
 %global         _empty_manifest_terminate_build 0
 %endif
 %global         app_id          io.github.teacond.Morse
+%global         forgeurl        https://github.com/teacond/Morse
+%global         tag             v%{version}
 
 Name:           morse
 Version:        1.5.0
 Release:        1%{?dist}
 Summary:        Morse is an open-source program for learning Morse code
 License:        GPL-3.0-only
-URL:            https://github.com/teacond/Morse
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson >= 1.0.0
 BuildRequires:  cargo
@@ -21,6 +25,7 @@ BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.22
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.9
 BuildRequires:  pkgconfig(alsa)
@@ -33,7 +38,7 @@ Requires:       hicolor-icon-theme
 Morse is an app for learning Morse code and training High Speed Telegraphy skills written in Rust language using GTK4 and Adwaita.
 
 %prep
-%autosetup -n Morse-%{version}
+%forgesetup
 sed -i "/run_command('git'/d" meson.build
 
 %build

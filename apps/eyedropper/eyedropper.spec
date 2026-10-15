@@ -2,21 +2,26 @@
 %global         _empty_manifest_terminate_build 0
 %endif
 %global         app_id          com.github.finefindus.eyedropper
+%global         forgeurl        https://github.com/finefindus/eyedropper
+%global         tag             v%{version}
 
 Name:           eyedropper
 Version:        2.2.1
 Release:        1%{?dist}
 Summary:        Pick and format colors from your desktop
 License:        GPL-3.0-or-later
-URL:            https://github.com/finefindus/eyedropper
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson
 BuildRequires:  gcc
 BuildRequires:  rust
 BuildRequires:  cargo
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.22.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.9
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
@@ -30,7 +35,7 @@ A powerful color picker for the GNOME desktop that allows you to pick colors
 from any pixel on your screen and format them for your development needs.
 
 %prep
-%autosetup
+%forgesetup
 
 %build
 export CARGO_HOME=$(pwd)/cargo-home

@@ -1,14 +1,18 @@
 %global         app_id          io.github.diegopvlk.Tomatillo
+%global         forgeurl        https://github.com/diegopvlk/Tomatillo
+%global         tag             v%{version}
 
 Name:           tomatillo
 Version:        1.1.1
 Release:        1%{?dist}
 Summary:        Tomatillo is a Pomodoro Timer app for your productivity tasks.
 License:        GPL-3.0-or-later
-URL:            https://github.com/diegopvlk/Tomatillo
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildArch:      noarch
 
@@ -18,6 +22,7 @@ BuildRequires:  gcc
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  python3-devel
+BuildRequires:  forge-srpm-macros
 
 # Desktop Libraries (Development Files)
 BuildRequires:  pkgconfig(gio-2.0)
@@ -39,7 +44,7 @@ Requires:  hicolor-icon-theme
 Tomatillo helps to set individual timer durations for focus sessions, short breaks, and long breaks. It can also adjust the amount of cycles before a long break and automatically begin the next focus/break cycle.
 
 %prep
-%autosetup -n Tomatillo-%{version}
+%forgesetup
 
 %build
 %meson

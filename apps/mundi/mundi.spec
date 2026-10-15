@@ -2,16 +2,20 @@
 %global _empty_manifest_terminate_build 0
 %endif
 %global         app_id          io.github.nacho.mundi
+%global         forgeurl        https://github.com/nacho/mundi
+%global         tag             v%{version}
 
 Name:           mundi
 Version:        0.15.0
 Release:        1%{?dist}
 Summary:        A geography learning application for GNOME
 License:        GPL-3.0-or-later
-URL:            https://github.com/nacho/mundi
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson >= 0.59.0
 BuildRequires:  cargo
@@ -20,6 +24,7 @@ BuildRequires:  pkgconfig
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.14
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.5
 
@@ -31,7 +36,7 @@ Requires:       hicolor-icon-theme
 Mundi helps you test your knowledge of world regions by clicking on an interactive map.
 
 %prep
-%autosetup
+%forgesetup
 
 %build
 export CARGO_HOME=$(pwd)/cargo-home

@@ -1,16 +1,20 @@
 %global         app_id              io.github.alainm23.planify
-%global         __requires_exclude ^libgxml-0.20.*$
-%global         __provides_exclude ^libgxml-0.20.*$
+%global         __requires_exclude  ^libgxml-0.20.*$
+%global         __provides_exclude  ^libgxml-0.20.*$
+%global         forgeurl            https://github.com/alainm23/planify
+%global         tag                 v%{version}
 
 Name:           planify
 Version:        4.20.0
 Release:        1%{?dist}
 Summary:        Task manager with Todoist and CalDAV support
 License:        GPL-3.0-or-later
-URL:            https://github.com/alainm23/%{name}
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson
 BuildRequires:  vala
@@ -20,6 +24,7 @@ BuildRequires:  libappstream-glib
 BuildRequires:  gettext
 BuildRequires:  python3
 BuildRequires:  git-core
+BuildRequires:  forge-srpm-macros
 
 # Dependencies
 BuildRequires:  pkgconfig(gio-2.0)
@@ -63,7 +68,7 @@ The %{name}-devel package contains libraries, header files, and Vala bindings
 for developing applications that use Planify's core API.
 
 %prep
-%setup -q -n %{name}-%{version}
+%forgesetup
 
 git init
 

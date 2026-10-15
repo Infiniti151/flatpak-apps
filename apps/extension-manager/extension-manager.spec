@@ -1,17 +1,22 @@
 %global         app_id          com.mattjakeman.ExtensionManager
+%global         forgeurl        https://github.com/mjakeman/extension-manager
+%global         tag             v%{version}
 
 Name:           extension-manager
 Version:        0.6.5
 Release:        1%{?dist}
 Summary:        A utility for browsing and installing GNOME Shell Extensions
 License:        GPL-3.0-or-later
-URL:            https://github.com/mjakeman/extension-manager
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson
 BuildRequires:  gcc
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8.alpha
 BuildRequires:  pkgconfig(json-glib-1.0)
@@ -27,7 +32,7 @@ BuildRequires:  libappstream-glib
 A native desktop application for managing GNOME Shell Extensions.
 
 %prep
-%autosetup -n %{name}-%{version}
+%forgesetup
 
 %build
 %meson -Dbacktrace=false

@@ -2,19 +2,24 @@
 %global         _empty_manifest_terminate_build 0
 %endif
 %global         app_id com.digitalgex.RustDiff
+%global         forgeurl        https://github.com/jereok91/rustdiff
+%global         tag             v%{version}
 
 Name:           rustdiff
 Version:        0.4.0
 Release:        1%{?dist}
 Summary:        A simple GTK-based diff viewer written in Rust
 License:        GPLv3
-URL:            https://github.com/jereok91/rustdiff
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  cargo
 BuildRequires:  rust
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
 BuildRequires:  pkgconfig(gtksourceview-5)
@@ -32,7 +37,7 @@ RustDiff is a graphical tool to compare files and directories,
 built with Rust and GTK4. It features syntax highlighting via gtksourceview5.
 
 %prep
-%autosetup -n rustdiff-%{version}
+%forgesetup
 mkdir -p cargo-home
 
 %build

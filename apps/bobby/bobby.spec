@@ -2,21 +2,26 @@
 %global         _empty_manifest_terminate_build 0
 %endif
 %global         app_id          studio.planetpeanut.Bobby
+%global         forgeurl        https://github.com/hbons/Bobby
+%global         tag             v%{version}
 
 Name:           bobby
 Version:        51.0.2
 Release:        1%{?dist}
 Summary:        A Rust-based SQLite database viewer for GNOME
 License:        GPL-3.0-or-later
-URL:            https://github.com/hbons/Bobby
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson >= 1.1
 BuildRequires:  gcc
 BuildRequires:  rust
 BuildRequires:  cargo
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
@@ -28,7 +33,7 @@ BuildRequires:  gettext
 Bobby lets you open SQLite database files (.db, .sqlite) and browse the tables inside. Handy for app development or inspecting downloaded databases.
 
 %prep
-%autosetup -n Bobby-%{version}
+%forgesetup
 
 %build
 export CARGO_HOME="$(pwd)/cargo-home"

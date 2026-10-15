@@ -1,4 +1,6 @@
 %global         app_id io.github.zingytomato.netpeek
+%global         forgeurl        https://github.com/ZingyTomato/NetPeek
+%global         tag             v%{version}
 
 Name:           netpeek
 Version:        0.3.4
@@ -6,10 +8,12 @@ Release:        1%{?dist}
 Summary:        Modern network scanner for GNOME
 
 License:        GPL-3.0-or-later
-URL:            https://github.com/ZingyTomato/NetPeek
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildArch:      noarch
 
@@ -22,6 +26,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  glibc-langpack-en
+BuildRequires:  forge-srpm-macros
 
 Requires:       python3
 Requires:       python3-gobject
@@ -35,7 +40,7 @@ Requires:       hicolor-icon-theme
 NetPeek is a modern network scanner designed for the GNOME desktop, built with Python, GTK4, and Libadwaita.
 
 %prep
-%autosetup -n NetPeek-%{version}
+%forgesetup
 
 %build
 %meson

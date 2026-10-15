@@ -1,5 +1,7 @@
 %global         debug_package %{nil}
 %global         app_id          io.github.sepehr_rs.Sudoku
+%global         forgeurl        https://github.com/sepehr-rs/Sudoku
+%global         tag             v%{version}
 
 Name:           sudoku
 Version:        1.8.0
@@ -9,11 +11,15 @@ License:        GPL-3.0-or-later
 URL:            https://github.com/sepehr-rs/Sudoku
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 Source1:        https://files.pythonhosted.org/packages/0c/4f/e5de816646174cdd8c5db5e2422d4b3eb7cd38bcc398aa0e57047ece6db8/sudoku_engine-2.0.0-py3-none-any.whl
 
 BuildRequires:  meson >= 1.4.0
 BuildRequires:  gcc
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gtk4)
@@ -40,7 +46,7 @@ Requires:       python3
 A beautiful, modern Sudoku application featuring classic and diagonal variants.
 
 %prep
-%autosetup -n Sudoku-%{version}
+%forgesetup
 
 %build
 %meson

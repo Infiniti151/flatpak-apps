@@ -2,6 +2,8 @@
 %global         _empty_manifest_terminate_build 0
 %endif
 %global         app_id          io.gitlab.news_flash.NewsFlash
+%global         forgeurl        https://gitlab.com/news-flash/news_flash_gtk
+%global         tag             v.%{version}
 
 %global         __brp_mangle_shebangs %{nil}
 %global         debug_package %{nil}
@@ -12,10 +14,12 @@ Version:        5.2.5
 Release:        1%{?dist}
 Summary:        Modern feed reader designed for the GNOME desktop
 License:        GPLv3
-URL:            https://gitlab.com/news-flash/news_flash_gtk
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/-/archive/v.%{version}/news_flash_gtk-v.%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 # Compression Tools
 %if 0%{?fedora} && ! 0%{?eln}
@@ -33,6 +37,7 @@ BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  forge-srpm-macros
 
 # Development libraries (-devel equivalent pkgconfig dependencies)
 BuildRequires:  pkgconfig(glib-2.0) >= 2.70
@@ -59,7 +64,7 @@ It combines the advantages of web-based services with desktop apps: notification
 fast UI, background sync, and offline support.
 
 %prep
-%autosetup -n news_flash_gtk-v.%{version}
+%forgesetup
 mkdir -p cargo-home
 
 %build
