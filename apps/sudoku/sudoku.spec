@@ -8,7 +8,6 @@ Version:        1.8.0
 Release:        1%{?dist}
 Summary:        Sudoku Game application
 License:        GPL-3.0-or-later
-URL:            https://github.com/sepehr-rs/Sudoku
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 %forgemeta
