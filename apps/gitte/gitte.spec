@@ -1,7 +1,7 @@
 %global         app_id          de.wwwtech.gitte
 
 Name:           gitte
-Version:        0.10.1
+Version:        0.11.0
 Release:        1%{?dist}
 Summary:        A GTK4/libadwaita Git client for the GNOME desktop
 License:        GPL-3.0-or-later
@@ -63,6 +63,19 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Thu Oct 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.11.0-1
+- This release adds commit-graph and sidebar search, commit trailers and sign-off support, a more powerful amend workflow, and a number of UI improvements and fixes.
+- New features:
+- Search commits directly in the commit graph, using the same search syntax as the commit log
+- Search by commit ID or ID prefix, and match author email addresses and names
+- Filter branches, tags and remote branches with the new sidebar search (Ctrl+K)
+- Add commit trailers using configurable templates, with per-repository defaults, and sign off commits with your identity
+- Amend now lets you edit all changes from the previous commit, including unstaging changes to remove them from that commit
+- Choose the initial repository view globally or per repository: Changes, Current Branch or Commit Graph
+- Copy the complete commit message with a button in the commit details
+- Display a repository logo from logo.png, logo.gif, logo.jpg or logo.jpeg in the repository root
+- ... (see upstream for full release notes)
+
 * Sun Sep 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.10.1-1
 - This bugfix release fixes signing in Flatpak builds and adds small UI improvements.
 - Fixes:
