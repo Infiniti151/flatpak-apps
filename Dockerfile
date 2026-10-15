@@ -6,7 +6,9 @@ ENV TERM="xterm-256color"
 RUN echo "color=always" >> /etc/dnf/dnf.conf
 RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
 
-RUN dnf install -y ccache \
+RUN dnf install -y \
+    glibc-langpack-en \
+    ccache \
     dnf-plugins-core \
     git-core \
     npm \
