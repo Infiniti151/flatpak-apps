@@ -42,7 +42,7 @@ RESET = "\033[0m"
 
 PROTECTED_DEPS = {
     'dnf-plugins-core', 'rpm-build', 'rpmdevtools', 'rpmlint', 'git-core',
-    'npm', 'sccache', 'ccache'
+    'npm', 'sccache', 'ccache', 'glibc-langpack-en'
 }
 
 LINE_JOINER = " \\\n    "

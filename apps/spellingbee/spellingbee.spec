@@ -1,19 +1,24 @@
 %global         app_id          io.github.josephmawa.SpellingBee
+%global         forgeurl        https://github.com/josephmawa/SpellingBee
+%global         tag             v%{version}
 
 Name:           spellingbee
 Version:        0.1.6
 Release:        1%{?dist}
 Summary:        A word game application
 License:        GPL-3.0-or-later
-URL:            https://github.com/josephmawa/SpellingBee
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildArch:      noarch
 
 BuildRequires:  meson >= 1.0.0
 BuildRequires:  gcc
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(gjs-1.0)
 BuildRequires:  pkgconfig(gtk4)
@@ -31,7 +36,7 @@ Requires:       hicolor-icon-theme
 SpellingBee is a GNOME-based word game written in JavaScript using GJS.
 
 %prep
-%autosetup -n SpellingBee-%{version}
+%forgesetup
 
 %build
 %meson

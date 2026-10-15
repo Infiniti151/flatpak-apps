@@ -1,19 +1,24 @@
 %global         app_id          de.wwwtech.gitte
+%global         forgeurl        https://codeberg.org/ckruse/Gitte
+%global         tag             %{version}
 
 Name:           gitte
 Version:        0.11.0
 Release:        1%{?dist}
 Summary:        A GTK4/libadwaita Git client for the GNOME desktop
 License:        GPL-3.0-or-later
-URL:            https://codeberg.org/ckruse/Gitte
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson
 BuildRequires:  ninja-build
 BuildRequires:  rust
 BuildRequires:  cargo
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
 BuildRequires:  pkgconfig(libgit2)
@@ -31,7 +36,7 @@ intuitive interface for managing repositories, branches,
 and stashes.
 
 %prep
-%setup -q -n %{name}
+%forgesetup
 
 %build
 export LIBGIT2_SYS_USE_PKG_CONFIG=0

@@ -1,22 +1,27 @@
 %global         debug_package %{nil}
 %global         _enable_debug_package 0
 %global         app_id          com.github.marhkb.Pods
+%global         forgeurl        https://github.com/marhkb/Pods
+%global         tag             v%{version}
 
 Name:           pods
 Version:        3.3.0
 Release:        1%{?dist}
 Summary:        A powerful Podman manager for GNOME
 License:        GPL-3.0-or-later
-URL:            https://github.com/marhkb/Pods
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson >= 0.59
 BuildRequires:  gcc
 BuildRequires:  rust-packaging
 BuildRequires:  cargo
 BuildRequires:  blueprint-compiler
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.18.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.7
 BuildRequires:  pkgconfig(gtksourceview-5)
@@ -32,7 +37,7 @@ Pods is a GTK application that allows you to manage podman
 containers, pods, and images with a clean, native GNOME interface.
 
 %prep
-%autosetup
+%forgesetup
 
 %build
 %meson \

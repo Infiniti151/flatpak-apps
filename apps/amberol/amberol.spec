@@ -2,22 +2,27 @@
 %global         _empty_manifest_terminate_build 0
 %endif
 %global         app_id          io.bassi.Amberol
+%global         forgeurl        https://gitlab.gnome.org/World/amberol
+%global         tag             %{version}
 
 Name:           amberol
 Version:        2026.1
 Release:        1%{?dist}
 Summary:        A small and simple music player
 License:        GPL-3.0-or-later AND CC-BY-SA-3.0 AND CC0-1.0
-URL:            https://gitlab.gnome.org/World/amberol
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/-/archive/%{version}/%{name}-%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson >= 0.59.0
 BuildRequires:  gcc
 BuildRequires:  rust
 BuildRequires:  cargo
 BuildRequires:  blueprint-compiler
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.19.5
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8
 BuildRequires:  pkgconfig(gstreamer-1.0) >= 1.20
@@ -41,7 +46,7 @@ Amberol is a music player with no delusions of grandeur. If you want
 to play music and nothing else, Amberol is the right tool.
 
 %prep
-%autosetup -n %{name}-%{version}
+%forgesetup
 
 %build
 export CARGO_HOME="$(pwd)/cargo-home"

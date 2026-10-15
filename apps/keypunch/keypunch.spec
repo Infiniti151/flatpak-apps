@@ -1,19 +1,24 @@
 %global         app_id          no.bragefuglseth.Keypunch
+%global         forgeurl        https://github.com/bragefuglseth/keypunch
+%global         tag             v%{version}
 
 Name:           keypunch
 Version:        7.0
 Release:        1%{?dist}
 Summary:        A GTK4/Adwaita typing practice application
 License:        GPL-3.0-or-later
-URL:            https://github.com/bragefuglseth/keypunch
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson
 BuildRequires:  gcc
 BuildRequires:  rust
 BuildRequires:  cargo
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
 BuildRequires:  blueprint-compiler
@@ -27,7 +32,7 @@ built with Rust and GTK4. It allows users to improve their typing speed
 and accuracy through a clean, modern interface.
 
 %prep
-%autosetup
+%forgesetup
 
 %build
 %meson -Dsandboxed=false

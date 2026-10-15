@@ -1,14 +1,18 @@
 %global         app_id          page.codeberg.lo_vely.Nucleus
+%global         forgeurl        https://codeberg.org/lo-vely/nucleus
+%global         tag             v%{version}
 
 Name:           nucleus
 Version:        3
 Release:        1%{?dist}
 Summary:        A GNOME application to explore periodic table data
 License:        GPLv3+
-URL:            https://codeberg.org/lo-vely/nucleus
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
-Source0:        %{url}/archive/v%{version}.tar.gz
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildArch:      noarch
 
@@ -17,6 +21,7 @@ BuildRequires:  python3-devel
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
@@ -34,9 +39,7 @@ Nucleus is a modern GNOME application designed to display interactive
 periodic table data, element information, and electron shell configurations.
 
 %prep
-%setup -q -n %{name}
-
-sed -i "s|python.find_installation('python3').full_path()|'/usr/bin/python3'|g" src/meson.build
+%forgesetup
 
 %build
 %meson
@@ -44,6 +47,7 @@ sed -i "s|python.find_installation('python3').full_path()|'/usr/bin/python3'|g" 
 
 %install
 %meson_install
+%py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name}/
 %find_lang %{name}
 
 %check
