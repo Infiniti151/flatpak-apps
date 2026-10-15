@@ -14,6 +14,17 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- nucleus dependencies --- \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    blueprint-compiler \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gettext \
+    libappstream-glib \
+    meson \
+    python3-devel \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
