@@ -3,7 +3,7 @@
 %global tag            v%{version}
 
 Name:                 text-compare
-Version:              0.1.11
+Version:        0.1.12
 Release:              1%{?dist}
 Summary:              A simple text comparison tool
 License:              GPL-3.0-or-later
@@ -61,5 +61,8 @@ A simple text comparison tool built with GJS and Adwaita.
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Sun Oct 18 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.12-1
+- Upgrade to Gnome runtime version 51
+
 * Fri May 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.1.11-1
 - Update to v0.1.11
