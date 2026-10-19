@@ -6,7 +6,7 @@
 %global         tag             v%{version}
 
 Name:           rustdiff
-Version:        1.0.1
+Version:        1.0.3
 Release:        1%{?dist}
 Summary:        A simple GTK-based diff viewer written in Rust
 License:        GPLv3
@@ -70,6 +70,12 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
+* Mon Oct 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.3-1
+- Desktop-integration and editor-highlight fixes.
+- The window announces the application id, so the desktop shows its real icon and groups it with its launcher.
+- Editor highlighting is anchored to the diff paths, so a modified element is no longer painted as a whole added block when the other document appends a copy of it.
+- The focused editor's ring closes on all four sides.
+
 * Sun Oct 18 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.1-1
 - Packaging fix: the application icon now ships as a PNG set alongside the SVG, because the Flatpak builder runtime decodes icons through a pipeline that cannot read the SVG.
 
