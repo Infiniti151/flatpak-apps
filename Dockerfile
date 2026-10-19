@@ -15,6 +15,11 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- rustdiff dependencies --- \
+    cargo \
+    desktop-file-utils \
+    libappstream-glib \
+    rust \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
