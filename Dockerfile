@@ -15,16 +15,6 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
-    # --- rustdiff dependencies --- \
-    'pkgconfig(gio-2.0)' \
-    'pkgconfig(gobject-2.0)' \
-    'pkgconfig(javascriptcoregtk-4.1)' \
-    'pkgconfig(libsoup-3.0)' \
-    'pkgconfig(webkit2gtk-4.1)' \
-    cargo \
-    desktop-file-utils \
-    libappstream-glib \
-    rust \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content

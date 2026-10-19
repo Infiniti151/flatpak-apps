@@ -112,18 +112,14 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 * Tue Jul 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.4.0-1
 - *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.3.3...v0.4.0
-- *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.3.3...v0.4.0
 
 * Thu Jul 23 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.3-1
-- *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.3.2...v0.3.3
 - *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.3.2...v0.3.3
 
 * Tue Jul 21 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.3.2-1
 - *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.3.1...v0.3.2
-- *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.3.1...v0.3.2
 
 * Sun Jul 05 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.2-1
-- *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.2.1...v0.2.2
 - *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.2.1...v0.2.2
 
 * Fri Jul 03 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.2.1-1
@@ -133,6 +129,5 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 - *Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.1.7...v0.1.8
 
 * Fri May 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.1.7-1
-- **Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.1.6...v0.1.7
 - **Full Changelog**: https://github.com/jereok91/rustdiff/compare/v0.1.6...v0.1.7
 
