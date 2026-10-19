@@ -20,7 +20,11 @@ Source1:        %{forgeurl}/releases/download/%{tag}/%{name}-frontend-%{version}
 
 BuildRequires:  cargo
 BuildRequires:  rust
-
+BuildRequires:  pkgconfig(gobject-2.0)
+BuildRequires:  pkgconfig(gio-2.0)
+BuildRequires:  pkgconfig(webkit2gtk-4.1)
+BuildRequires:  pkgconfig(javascriptcoregtk-4.1)
+BuildRequires:  pkgconfig(libsoup-3.0)
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 
