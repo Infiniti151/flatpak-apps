@@ -50,7 +50,8 @@ Main features:
 rm -rf desktop/dist
 
 tar -xzf %{SOURCE1}
-mv %{name}-frontend-%{version}/dist desktop/
+
+mv dist desktop/
 
 mkdir -p cargo-home
 
