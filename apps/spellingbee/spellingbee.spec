@@ -3,7 +3,7 @@
 %global         tag             v%{version}
 
 Name:           spellingbee
-Version:        0.1.6
+Version:        0.1.7
 Release:        1%{?dist}
 Summary:        A word game application
 License:        GPL-3.0-or-later
@@ -63,6 +63,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/icons/hicolor/*/apps/*
 
 %changelog
+* Wed Oct 21 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.7-1
+- Upgrade to Gnome runtime version 51
+
 * Fri May 29 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v0.1.6-1
 - Update to v0.1.6
 
