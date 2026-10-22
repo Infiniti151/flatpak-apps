@@ -7,7 +7,7 @@
 %global         tag             v%{version}
 
 Name:           rustdiff
-Version:        1.0.3
+Version:        1.0.4
 Release:        1%{?dist}
 Summary:        Semantic JSON, XML and SQL comparator
 License:        GPL-3.0-or-later
@@ -101,6 +101,13 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
+* Thu Oct 22 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.4-1
+- A feature release: the editors now recognise JSON that arrives with the quotes escaped and offer to unescape it.
+- Detects JSON with escaped quotes and offers to unescape it with one click; valid documents are never touched and the document's whitespace is preserved.
+- Adds CONTRIBUTING.md and a canary branch: pull requests target canary and main only holds released code.
+- The CI runs on canary as well.
+- Fixes the pnpm bindings script, which pointed at a test target that no longer exists.
+
 * Mon Oct 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.3-1
 - Desktop-integration and editor-highlight fixes.
 - The window announces the application id, so the desktop shows its real icon and groups it with its launcher.
