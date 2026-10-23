@@ -6,7 +6,7 @@
 %global         tag             v%{version}
 
 Name:           mundi
-Version:        0.15.0
+Version:        1.0.1
 Release:        1%{?dist}
 Summary:        A geography learning application for GNOME
 License:        GPL-3.0-or-later
@@ -62,6 +62,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_metainfodir}/*.xml
 
 %changelog
+* Fri Oct 23 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.1-1
+- Fix the application icon failing to render in some environments
+- Fix layout warnings on the exercise screen at small window sizes
+
 * Sat Sep 12 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.15.0-1
 - Add Japanese translation
 - Migrate SVG parsing to quick-xml 0.42
