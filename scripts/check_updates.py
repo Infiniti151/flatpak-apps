@@ -5,6 +5,12 @@ import os
 import re
 import concurrent.futures
 
+# ANSI Color Codes
+GREEN = "\033[1;32m"
+YELLOW = "\033[1;33m"
+CYAN = "\033[1;36m"
+RESET = "\033[0m"
+
 def get_app_id(spec_path):
     try:
         result = subprocess.check_output(
@@ -62,10 +68,10 @@ def check_app(app):
         app['old_ver'] = old_ver
         app['new_ver'] = clean_new_ver
         app['raw_new_ver'] = raw_new_ver
-        print(f"[INFO] Update found for {app_name}: {old_ver} -> {clean_new_ver}")
+        print(f"{YELLOW}[INFO] Update found for {app_name}: {old_ver} -> {clean_new_ver}{RESET}")
         return app
     else:
-        print(f"[OK] {app_name} is up to date ({old_ver})")
+        print(f"{GREEN}[OK] {app_name} is up to date ({old_ver}){RESET}")
         return None
 
 def main():
@@ -91,7 +97,7 @@ def main():
         with open(github_output, 'a') as fh:
             fh.write(f"matrix={matrix_json}\n")
     else:
-        print("\n--- LOCAL EXECUTION: GitHub Output ---")
+        print(f"\n{CYAN}--- LOCAL EXECUTION: GitHub Output ---{RESET}")
         print(f"matrix={matrix_json}")
 
 if __name__ == "__main__":
