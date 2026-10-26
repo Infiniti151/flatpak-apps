@@ -55,13 +55,12 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %files -f words.lang
 %license LICENSE
 %doc README.md
-%{_bindir}/words
+%{_bindir}/%{app_id}
+%{_datadir}/%{app_id}/
 %{_datadir}/applications/*.desktop
-%{_metainfodir}/*.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/words/
-%{_datadir}/word-lists/
 %{_datadir}/icons/hicolor/*/apps/*
+%{_metainfodir}/*.xml
 
 %changelog
 * Mon Oct 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.8.1-1
