@@ -55,7 +55,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %files -f words.lang
 %license LICENSE
 %doc README.md
-%{_bindir}/words
+%{_bindir}/%{app_id}
+%{_datadir}/%{app_id}/
 %{_datadir}/applications/*.desktop
 %{_metainfodir}/*.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
