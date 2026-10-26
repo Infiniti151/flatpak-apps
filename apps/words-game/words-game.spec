@@ -6,7 +6,7 @@
 %global         tag             v%{version}
 
 Name:           words-game
-Version:        0.8.0
+Version:        0.8.1
 Release:        1%{?dist}
 Summary:        A word puzzle game
 License:        GPL-3.0-only
@@ -64,6 +64,11 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_datadir}/icons/hicolor/*/apps/*
 
 %changelog
+* Mon Oct 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.8.1-1
+- Link the solution to its Wiktionary entry on the game-over screen.
+- Fix letter feedback colors with custom GTK themes.
+- Install the binary and word lists under the application ID to avoid conflicts outside Flatpak.
+
 * Sun Oct 11 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.8.0-1
 - Improve layout: keyboard stays at the bottom and the letter grid keeps square cells.
 - Update to GNOME 51.
