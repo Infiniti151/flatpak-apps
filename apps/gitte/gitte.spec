@@ -3,7 +3,7 @@
 %global         tag             %{version}
 
 Name:           gitte
-Version:        0.11.0
+Version:        0.11.1
 Release:        1%{?dist}
 Summary:        A GTK4/libadwaita Git client for the GNOME desktop
 License:        GPL-3.0-or-later
@@ -68,6 +68,15 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Tue Oct 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.11.1-1
+- This bugfix release fixes a crash with stashes without a name and the FreeBSD build.
+- Fixes:
+- Fixed a crash when the repository has a stash entry without a name
+- Fixed the FreeBSD build by no longer using rustix::fs::renameat_with() when cloning a repository
+- Under the hood:
+- Updated the Finish translation
+- Updated dependencies and the bundled Git LFS
+
 * Thu Oct 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.11.0-1
 - This release adds commit-graph and sidebar search, commit trailers and sign-off support, a more powerful amend workflow, and a number of UI improvements and fixes.
 - New features:
