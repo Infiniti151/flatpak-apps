@@ -1,5 +1,5 @@
 %global         app_id          de.wwwtech.gitte
-%global         forgeurl        https://codeberg.org/ckruse/Gitte
+%global         forgeurl        https://codeberg.org/ckruse/gitte
 %global         tag             %{version}
 
 Name:           gitte
