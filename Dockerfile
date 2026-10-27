@@ -15,21 +15,6 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
-    # --- gitte dependencies --- \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(libadwaita-1)' \
-    'pkgconfig(libgit2)' \
-    'pkgconfig(libssh2)' \
-    'pkgconfig(zlib)' \
-    cargo \
-    desktop-file-utils \
-    forge-srpm-macros \
-    gettext \
-    libappstream-glib \
-    meson \
-    ninja-build \
-    openssl-devel \
-    rust \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
