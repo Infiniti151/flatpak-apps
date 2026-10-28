@@ -3,7 +3,7 @@
 %global         tag             v%{version}
 
 Name:           netpeek
-Version:        0.3.4
+Version:        0.3.5
 Release:        1%{?dist}
 Summary:        Modern network scanner for GNOME
 
@@ -68,6 +68,11 @@ NetPeek is a modern network scanner designed for the GNOME desktop, built with P
 %{_datadir}/icons/hicolor/*/apps/*
 
 %changelog
+* Wed Oct 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.5-1
+- Version 0.3.5
+- Updated to GNOME 51 runtime and nmap 7.992.
+- Added Bavarian, German, and Brazilian Portuguese translations. Updated Czech, Estonian, and German translations.
+
 * Tue Sep 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.4-1
 - Version 0.3.4
 - Added keyboard shortcuts for common actions, with a shortcuts window.
