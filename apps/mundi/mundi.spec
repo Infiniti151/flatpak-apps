@@ -6,7 +6,7 @@
 %global         tag             v%{version}
 
 Name:           mundi
-Version:        1.0.1
+Version:        1.1.0
 Release:        1%{?dist}
 Summary:        A geography learning application for GNOME
 License:        GPL-3.0-or-later
@@ -62,6 +62,11 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_metainfodir}/*.xml
 
 %changelog
+* Thu Oct 29 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.0-1
+- Softer colors for correct and wrong answers on the map
+- Fix the zoomed map drawing over the quiz prompt
+- Require GTK 4.16 or newer
+
 * Fri Oct 23 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.1-1
 - Fix the application icon failing to render in some environments
 - Fix layout warnings on the exercise screen at small window sizes
