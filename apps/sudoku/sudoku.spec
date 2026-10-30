@@ -6,7 +6,7 @@
 Name:           sudoku
 Version:        1.8.0
 Release:        1%{?dist}
-Summary:        Sudoku Game application
+Summary:        Solve puzzles in style
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -42,7 +42,15 @@ Requires:       hicolor-icon-theme
 Requires:       python3
 
 %description
-A beautiful, modern Sudoku application featuring classic and diagonal variants.
+Sudoku is a puzzle app that lets you solve classic number-placement challenges. It features a clean, distraction-freedesign with a simple interface to keep you focused and engaged.
+
+Features:
+- Modern GTK4 and libadwaita interface
+- Keyboard shortcuts for quick access to all functions
+- Save and load games seamlessly to continue your progress anytime
+- Highlight active row and cell to improve focus and ease of play
+- Conflict highlighting to help identify mistakes, ideal for beginners
+- Suitable for all skill levels, from beginners to experts
 
 %prep
 %forgesetup

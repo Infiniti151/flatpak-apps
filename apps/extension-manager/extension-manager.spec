@@ -5,7 +5,7 @@
 Name:           extension-manager
 Version:        0.6.5
 Release:        1%{?dist}
-Summary:        A utility for browsing and installing GNOME Shell Extensions
+Summary:        Install GNOME Extensions
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -29,7 +29,10 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 
 %description
-A native desktop application for managing GNOME Shell Extensions.
+Browse and install GNOME Shell extensions to customise your desktop.
+Features:
+- Browse extensions.gnome.org right inside the app
+- Manage the extensions you already have installed
 
 %prep
 %forgesetup

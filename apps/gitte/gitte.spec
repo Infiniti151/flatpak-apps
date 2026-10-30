@@ -5,7 +5,7 @@
 Name:           gitte
 Version:        0.11.1
 Release:        1%{?dist}
-Summary:        A GTK4/libadwaita Git client for the GNOME desktop
+Summary:        Manage your code history
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -30,10 +30,9 @@ BuildRequires:  libappstream-glib
 BuildRequires:  gettext
 
 %description
-A modern, feature-rich Git client designed for the GNOME desktop.
-Built with GTK4 and libadwaita, it provides a seamless and
-intuitive interface for managing repositories, branches,
-and stashes.
+Gitte is built around putting commits together with care. Stage or discard your changes line by line, in larger blocks, or a whole file at a time, so every commit holds exactly the work you mean it to and nothing more. It opens straight into your current changes, ready to work.
+
+Beyond that, follow how your project's history branches and merges in a visual graph, organize branches and tags, setwork aside for later, and sync with the places your code is stored, all in a clean, native interface.
 
 %prep
 %forgesetup

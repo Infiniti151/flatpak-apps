@@ -8,7 +8,7 @@
 Name:           eyedropper
 Version:        2.2.1
 Release:        1%{?dist}
-Summary:        Pick and format colors from your desktop
+Summary:        Pick and format colors
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -31,8 +31,13 @@ BuildRequires:  libappstream-glib
 BuildRequires:  gettext
 
 %description
-A powerful color picker for the GNOME desktop that allows you to pick colors
-from any pixel on your screen and format them for your development needs.
+Enter or pick a color and view it in different formats.
+
+Features
+- Pick a Color
+- Edit the viewed color in a simple HSL editor
+- Enter a color in various formats
+- Convert colors into other formats such as Hex, RGB, HSV, HSL, CMYK, XYZ, CIE-Lab…
 
 %prep
 %forgesetup

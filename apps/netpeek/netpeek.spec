@@ -5,7 +5,7 @@
 Name:           netpeek
 Version:        0.3.4
 Release:        1%{?dist}
-Summary:        Modern network scanner for GNOME
+Summary:        See what's on your network
 
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
@@ -37,7 +37,7 @@ Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
-NetPeek is a modern network scanner designed for the GNOME desktop, built with Python, GTK4, and Libadwaita.
+NetPeek is a simple network scanner that helps you discover active devices on your local network.
 
 %prep
 %forgesetup

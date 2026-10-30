@@ -5,7 +5,7 @@
 Name:           nucleus
 Version:        3
 Release:        1%{?dist}
-Summary:        A GNOME application to explore periodic table data
+Summary:        Browse the chemical elements
 License:        GPLv3+
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -35,8 +35,7 @@ Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
-Nucleus is a modern GNOME application designed to display interactive
-periodic table data, element information, and electron shell configurations.
+Nucleus gives you the ability to view the periodic table of the elements, as well as a variety of properties for each element, some with a visual representation. There is also search functionality which gives you the elements in a list for efficient viewing
 
 %prep
 %forgesetup

@@ -8,7 +8,7 @@
 Name:           morse
 Version:        1.5.0
 Release:        1%{?dist}
-Summary:        Morse is an open-source program for learning Morse code
+Summary:        Learn Morse Code
 License:        GPL-3.0-only
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -35,7 +35,7 @@ Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
-Morse is an app for learning Morse code and training High Speed Telegraphy skills written in Rust language using GTK4 and Adwaita.
+Learn Morse Code and High Speed Telegraphy.
 
 %prep
 %forgesetup

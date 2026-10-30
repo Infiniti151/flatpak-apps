@@ -8,7 +8,7 @@
 Name:           mundi
 Version:        1.0.1
 Release:        1%{?dist}
-Summary:        A geography learning application for GNOME
+Summary:        Learn geography
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -33,7 +33,9 @@ Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
-Mundi helps you test your knowledge of world regions by clicking on an interactive map.
+Mundi is a geography learning application for the GNOME desktop. Explore interactive maps in discovery mode to learn regions, countries and continents, then test your knowledge with timed quizzes.
+
+Features include discovery mode for free exploration, timed quizzes with score tracking, multiple exercises per country, and a results view to review your performance.
 
 %prep
 %forgesetup

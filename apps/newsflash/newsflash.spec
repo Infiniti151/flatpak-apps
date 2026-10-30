@@ -12,7 +12,7 @@
 Name:           newsflash
 Version:        5.2.5
 Release:        1%{?dist}
-Summary:        Modern feed reader designed for the GNOME desktop
+Summary:        Keep up with your feeds
 License:        GPLv3
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -59,9 +59,9 @@ Requires:       libmicrodns
 Requires:       libpeas
 
 %description
-NewsFlash is a modern RSS feed reader designed to work with web-based feed accounts.
-It combines the advantages of web-based services with desktop apps: notifications,
-fast UI, background sync, and offline support.
+Newsflash is a program designed to complement an already existing web-based RSS reader account.
+
+It combines all the advantages of web based services like syncing across all your devices with everything you expect from a modern desktop program: Desktop notifications, fast search and filtering, tagging, handy keyboard shortcuts andhaving access to all your articles for as long as you like.
 
 %prep
 %forgesetup

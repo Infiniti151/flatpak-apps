@@ -8,7 +8,7 @@
 Name:           bobby
 Version:        51.0.2
 Release:        1%{?dist}
-Summary:        A Rust-based SQLite database viewer for GNOME
+Summary:        View SQLite databases
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -31,6 +31,11 @@ BuildRequires:  gettext
 
 %description
 Bobby lets you open SQLite database files (.db, .sqlite) and browse the tables inside. Handy for app development or inspecting downloaded databases.
+- Search tables and views of any size
+- Copy rows or cells to the clipboard
+- Made with care by a human
+
+Don't forget to sanitize your database inputs!
 
 %prep
 %forgesetup

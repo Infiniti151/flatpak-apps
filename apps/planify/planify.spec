@@ -7,7 +7,7 @@
 Name:           planify
 Version:        4.20.0
 Release:        1%{?dist}
-Summary:        Task manager with Todoist and CalDAV support
+Summary:        Forget about forgetting things
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -49,8 +49,27 @@ Requires:       hicolor-icon-theme
 Requires:       glib2
 
 %description
-Planify is a modern task manager designed for GNOME, featuring synchronization
-capabilities with Todoist and CalDAV servers, planning views, and extensive integration.
+Planify is your modern and powerful task manager that helps you keep your life organized. With a clean and intuitive interface, cloud synchronization, and advanced features, you'll never forget what matters again.
+
+Core Features:
+- Modern and clean interface designed with GTK4 and libadwaita
+- Drag and drop to organize tasks and projects effortlessly
+- Visual progress indicators for each project
+- Smart organization with sections and custom labels
+- Calendar integration to visualize your schedule
+- Multiple reminders per task to never miss a deadline
+- Dark mode with seamless system theme integration
+- Quick and powerful search to find anything instantly
+- Recurring tasks with flexible patterns
+- Attachments and links in your tasks
+
+Cloud Synchronization:
+- Full synchronization with Todoist to access your tasks from anywhere
+- Support for Nextcloud and CalDAV servers (Radicale, Baïkal) to keep your data private
+- Offline mode: work without internet and sync when you're back online
+- Cross-platform synchronization to access from any device
+
+* Planify is not created by, affiliated with, or supported by Doist
 
 %package        libs
 Summary:        Shared libraries for %{name}

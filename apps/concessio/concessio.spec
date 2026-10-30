@@ -5,7 +5,7 @@
 Name:           concessio
 Version:        1.0.0
 Release:        1%{?dist}
-Summary:        Understand and convert UNIX file permissions
+Summary:        Understand file permissions
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -32,9 +32,12 @@ Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
-Concessio is a simple utility to help you understand UNIX file permissions.
-It allows you to convert between symbolic and numeric representations
-(e.g., rwx------ to 700) using an intuitive GTK4 interface.
+Concessio helps you understand and convert between unix permissions representations
+- Convert between symbolic and numeric representations of UNIX file permissions
+- Use toggle buttons to update the symbolic and numeric fields
+- Open a file to read it's permissions and convert them
+- Calculate umask values and see the resulting permissions for new files and directories
+- Open the help dialog to read and understand the UNIX permissions system
 
 %prep
 %forgesetup
