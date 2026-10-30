@@ -5,7 +5,7 @@
 Name:           tomatillo
 Version:        1.1.1
 Release:        1%{?dist}
-Summary:        Tomatillo is a Pomodoro Timer app for your productivity tasks.
+Summary:        Focus better, work smarter
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -41,7 +41,7 @@ Requires:  libadwaita
 Requires:  hicolor-icon-theme
 
 %description
-Tomatillo helps to set individual timer durations for focus sessions, short breaks, and long breaks. It can also adjust the amount of cycles before a long break and automatically begin the next focus/break cycle.
+Tomatillo is a Pomodoro Timer app for your productivity tasks. Work for a set time, then take a short break. After some cycles, take a longer break.
 
 %prep
 %forgesetup

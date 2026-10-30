@@ -5,7 +5,7 @@
 Name:           keypunch
 Version:        7.0
 Release:        1%{?dist}
-Summary:        A GTK4/Adwaita typing practice application
+Summary:        Practice your typing skills
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -27,9 +27,15 @@ BuildRequires:  libappstream-glib
 BuildRequires:  gettext
 
 %description
-Keypunch is a simple typing practice application for the GNOME desktop,
-built with Rust and GTK4. It allows users to improve their typing speed
-and accuracy through a clean, modern interface.
+There is no doubt that typing on a keyboard is an essential skill in the digital age. Typing fast and accurately gives you more opportunities, more time for what matters to you, and a sense of self-accomplishment.
+
+Keypunch lets you practice typing. Thanks to fast-paced sessions with instant feedback afterwards and a plethora of available languages, you might even have a little fun doing so. With determination, proper technique and some time, youwill observe a noticeable increase in both the speed and the accuracy of which your thoughts and ideas are put into words on the screen.
+
+If you are already a racer at typing, Keypunch still has something for you. Try practicing with numbers and punctuation, or choose your own text to type out as fast as you can.
+
+Get ready to accelerate your typing!
+
+Keypunch is proudly part of GNOME Circle, an initiative that champions the great software that is available for the GNOME platform. For more information, visit the GNOME Circle website.
 
 %prep
 %forgesetup

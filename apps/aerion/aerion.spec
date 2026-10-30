@@ -4,7 +4,7 @@
 Name:           aerion
 Version:        0.3.5
 Release:        1%{?dist}
-Summary:        Desktop Mail Client (Official Binary)
+Summary:        Lightweight open-source email client for Linux
 License:        Apache-2.0
 URL:            https://github.com/hkdb/aerion
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
@@ -23,8 +23,7 @@ Requires:       desktop-file-utils
 Requires:       shared-mime-info
 
 %description
-Aerion is a desktop mail client. This package contains the official binary
-release.
+Aerion is a modern, lightweight email client inspired by Geary, focused on resource efficiency and a clean user experience.
 
 %prep
 for src in %{sources}; do

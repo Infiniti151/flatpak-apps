@@ -6,6 +6,7 @@
 - [ ] **New App:** Adding a brand new application.
 - [ ] **Bug Fix:** Fixing a broken build or dependency issue.
 - [ ] **Optimization:** Cleaning up the spec file or improving the build process.
+- [ ] **Metadata Update:** Updating spec file metadata such as summary, license, etc.
 
 ## 🧪 Quality Checklist
 - [ ] I have **NOT** added/updated the `%changelog` section (it is handled automatically in our workflow).

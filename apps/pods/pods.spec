@@ -7,7 +7,7 @@
 Name:           pods
 Version:        3.3.0
 Release:        1%{?dist}
-Summary:        A powerful Podman manager for GNOME
+Summary:        Manage your containers
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -33,8 +33,21 @@ Requires:       podman
 Requires:       hicolor-icon-theme
 
 %description
-Pods is a GTK application that allows you to manage podman
-containers, pods, and images with a clean, native GNOME interface.
+Pods is a frontend for Podman/Docker. It uses libadwaita for its user interface and strives to meet the design principles of GNOME.
+
+With Pods you can, among other things:
+- Connect to local and remote Podman/Docker instances.
+- Easily overview images, containers and pods.
+- View prepared information about images, containers, and pods.
+- Inspect images, containers and pods.
+- View and search container logs.
+- Monitor processes of containers and pods.
+- Download images and build them using Dockerfiles.
+- Create pods and containers.
+- Control the lifecycle of containers and pods (in bulk) (start, stop, pause, etc.).
+- Delete images, containers, and pods (in bulk).
+- Prune images.
+- Rename containers.
 
 %prep
 %forgesetup

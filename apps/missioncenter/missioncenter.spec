@@ -12,7 +12,7 @@
 Name:           missioncenter
 Version:        1.2.0
 Release:        1%{?dist}
-Summary:        Monitor your CPU, Memory, Disk, Network and GPU usage
+Summary:        Monitor system resource usage
 License:        GPLv3
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -60,9 +60,29 @@ Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
-Mission Center is a system monitor written in Rust using GTK4 and Libadwaita.
-It provides a highly detailed view of system performance, including per-thread
-CPU usage and hardware-accelerated GPU monitoring.
+Monitor your CPU, Memory, Disk, Network and GPU usage, accompanied by a per app and process breakdown of these statistics
+
+Features:
+- Monitor overall or per-thread CPU usage
+- See system process, thread, and handle count, uptime, clock speed (base and current), cache sizes
+- Monitor RAM and Swap usage
+- See a breakdown how the memory is being used by the system
+- Monitor Disk utilization and transfer rates
+- Monitor network utilization and transfer speeds
+- See network interface information such as network card name, connection type (Wi-Fi or Ethernet), wireless speeds and frequency, hardware address, IP address
+- Monitor overall GPU usage, video encoder and decoder usage, memory usage and power consumption, powered by the popular NVTOP project
+- Monitor system fans
+- See a breakdown of resource usage by app and process
+- Supports a minified summary view for simple monitoring
+- Use hardware accelerated rendering for all the graphs in an effort to reduce CPU and overall resource usage
+- Uses GTK4 and Libadwaita
+- Written in Rust
+
+Limitations (there is ongoing work to overcome all of these):
+- Intel GPU monitoring is only supported for Broadwell and later GPUs; and does not support VRAM, power, or temperature monitoring
+- When using Linux Mint/Cinnamon, launched applications may not show up in the "Applications" section (Upstream issue: https://github.com/linuxmint/cinnamon/issues/12015)
+
+Comments, suggestions, bug reports and contributions welcome
 
 %prep
 %forgesetup

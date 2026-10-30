@@ -8,7 +8,7 @@
 Name:           words-game
 Version:        0.8.1
 Release:        1%{?dist}
-Summary:        A word puzzle game
+Summary:        Have fun guessing Words
 License:        GPL-3.0-only
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -32,8 +32,13 @@ BuildRequires:  pkgconfig(gtk4) >= 4.18.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.5.5
 
 %description
-An elegant word game puzzle built natively using
-Rust, GTK4, and Libadwaita.
+Words is a popular word puzzle game, similar to Wordle, where players try to guess a hidden word within six attempts.
+
+It's simple yet addictive, combining logic, vocabulary, and deduction.
+
+The game supports different word lists and lengths in multiple languages. Currently, English and German are available.
+
+Want to see your language in the game? Feel free to send me a word list!
 
 %prep
 %forgesetup

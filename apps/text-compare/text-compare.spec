@@ -3,9 +3,9 @@
 %global tag            v%{version}
 
 Name:                 text-compare
-Version:        0.1.12
+Version:              0.1.12
 Release:              1%{?dist}
-Summary:              A simple text comparison tool
+Summary:              Text snippet comparison
 License:              GPL-3.0-or-later
 BugURL:               https://github.com/Infiniti151/flatpak-apps
 
@@ -33,7 +33,12 @@ Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
-A simple text comparison tool built with GJS and Adwaita.
+Compare old and new text.
+
+Below are the main features of Text Compare:
+- Compare two versions of the same text
+- Switch to dark, light, or system mode
+- Compare text in real time
 
 %prep
 %forgesetup

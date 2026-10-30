@@ -5,7 +5,7 @@
 Name:           spellingbee
 Version:        0.1.7
 Release:        1%{?dist}
-Summary:        A word game application
+Summary:        Learn new English words
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -33,7 +33,15 @@ Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
-SpellingBee is a GNOME-based word game written in JavaScript using GJS.
+Use Spelling Bee to enhance your English vocabulary while having fun.
+
+Below are the main features:
+- Provides thousands of words
+- You can play it offline
+- It provides links to the meaning of words
+- You can view puzzle history
+- You can view your score
+- Switch to dark, light, or system mode
 
 %prep
 %forgesetup

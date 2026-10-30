@@ -5,7 +5,7 @@
 Name:           konbucase
 Version:        5.0.0
 Release:        1%{?dist}
-Summary:        A tool for case conversion and string manipulation
+Summary:        Convert case in your text
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -35,8 +35,12 @@ BuildRequires:  libappstream-glib
 BuildRequires:  gtk-update-icon-cache
 
 %description
-Konbucase is a native Linux application for converting strings between
-various cases like camelCase, snake_case, and PascalCase.
+A small text tool app that allows you convert case in your text.
+
+Features include:
+- Click "Copy to Clipboard" button to copy the all texts in the text view without selecting them
+- Click "Quick Swap" button to swap case and text of input and output
+- Convert your text between camelCase, PascalCase, Sentence case, snake_case, kebab-case, and space-separated
 
 %prep
 %forgesetup

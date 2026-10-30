@@ -8,7 +8,7 @@
 Name:           amberol
 Version:        2026.1
 Release:        1%{?dist}
-Summary:        A small and simple music player
+Summary:        Plays music, and nothing else
 License:        GPL-3.0-or-later AND CC-BY-SA-3.0 AND CC0-1.0
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
@@ -42,8 +42,9 @@ Requires:       gstreamer1-plugins-bad-free
 Requires:       hicolor-icon-theme
 
 %description
-Amberol is a music player with no delusions of grandeur. If you want
-to play music and nothing else, Amberol is the right tool.
+Amberol is a music player with no delusions of grandeur. If you just
+want to play music available on your local system then Amberol is the
+music player you are looking for.
 
 %prep
 %forgesetup
