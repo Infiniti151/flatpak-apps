@@ -10,7 +10,7 @@
 %global         __spec_install_post /usr/lib/rpm/brp-compress
 
 Name:           newsflash
-Version:        5.2.5
+Version:        6.0.0
 Release:        1%{?dist}
 Summary:        Keep up with your feeds
 License:        GPLv3
@@ -97,6 +97,19 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_metainfodir}/*.xml
 
 %changelog
+* Sat Oct 31 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 6.0.0-1
+- Migrations
+- As usual, there are database migrations. In addition, all secrets that were previously stored in Newsflash's own configuration files are moved into the system keyring. Expect a keyring unlock prompt on first start.
+- Article View: Much Improved Display of HTML Content
+- Support for details, summary, hr, svg, mark, q, del/ins and abbr tags
+- More list styles (letters, Roman numerals, custom start values, reversed lists)
+- Pick up lazy-loaded images
+- Display non-video iframes as a link to the external content
+- Improved styling of inline code
+- Syntax highlighting of code blocks matches the article theme
+- Improved math rendering
+- ... (see upstream for full release notes)
+
 * Sun Aug 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v.5.2.5-1
 - Update to v.5.2.5
 
