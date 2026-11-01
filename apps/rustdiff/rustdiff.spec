@@ -7,7 +7,7 @@
 %global         tag             v%{version}
 
 Name:           rustdiff
-Version:        1.0.4
+Version:        1.0.5
 Release:        1%{?dist}
 Summary:        Semantic JSON, XML and SQL comparator
 License:        GPL-3.0-or-later
@@ -101,6 +101,12 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
+* Sun Nov 01 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.5-1
+- A design and release-infrastructure release.
+- A redesigned exit prompt: it groups the export actions, summarises the pending session and shows the real shortcuts. Ctrl/Cmd+S saves to History from it.
+- The app icons are regenerated from the project's SVG with the Tauri CLI, and the header shows the app icon instead of a generic glyph.
+- A release-candidate lane in CI: a vX.Y.Z-rc.N tag builds testable artifacts as a prerelease and never publishes to APT, Homebrew or Flathub.
+
 * Thu Oct 22 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.4-1
 - A feature release: the editors now recognise JSON that arrives with the quotes escaped and offer to unescape it.
 - Detects JSON with escaped quotes and offers to unescape it with one click; valid documents are never touched and the document's whitespace is preserved.
