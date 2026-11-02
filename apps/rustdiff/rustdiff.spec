@@ -7,7 +7,7 @@
 %global         tag             v%{version}
 
 Name:           rustdiff
-Version:        1.0.5
+Version:        1.0.6
 Release:        1%{?dist}
 Summary:        Semantic JSON, XML and SQL comparator
 License:        GPL-3.0-or-later
@@ -101,6 +101,13 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
+* Mon Nov 02 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.6-1
+- A polish release: a new icon, screenshots that match the current interface, and two desktop fixes.
+- A new app icon (an emerald brace, an orange angle bracket and a violet not-equal sign) ships on every channel, and the header shows it.
+- The screenshots now show JSON, XML and SQL comparisons, the node graph of both formats, the difference table and the session history, all captured from the current interface.
+- Right-clicking no longer opens the WebView's own menu, whose Reload threw away everything held in memory.
+- Scrolling to the end of the differences no longer moves the whole interface or exposes the empty background.
+
 * Sun Nov 01 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.5-1
 - A design and release-infrastructure release.
 - A redesigned exit prompt: it groups the export actions, summarises the pending session and shows the real shortcuts. Ctrl/Cmd+S saves to History from it.
