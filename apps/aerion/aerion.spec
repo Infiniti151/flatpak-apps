@@ -2,7 +2,7 @@
 %global         app_id          io.github.hkdb.Aerion
 
 Name:           aerion
-Version:        0.3.5
+Version:        0.3.6
 Release:        1%{?dist}
 Summary:        Lightweight open-source email client for Linux
 License:        Apache-2.0
@@ -62,6 +62,19 @@ update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
 
 %changelog
+* Wed Nov 04 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.6-1
+- Added Brazilian Portuguese (pt-BR) translation - @sasnascimento
+- Added Japanse(ja) translation - @theluckystrike
+- Added Turkish (tr) translation - @omertahaoztop
+- Sync rework - [docs/SYNC_REWORK.md](docs/SYNC_REWORK.md)
+- Improved debug/logging
+- Fixed login by sending IMAP ID to servers that require it - [#457](https://github.com/hkdb/aerion/issues/457)
+- "Mark all as read/unread" on a folder can now include mail older than the sync period (asks when there is any) - [#458](https://github.com/hkdb/aerion/issues/458)
+- Empty folders now say when there are messages older than the sync period
+- Gmail accounts archive to All Mail by default - [#464](https://github.com/hkdb/aerion/issues/464)
+- Fixed shutdown/reboot when Aerion running in the background (SIGTERM now quits) - [#460](https://github.com/hkdb/aerion/issues/460)
+- ... (see upstream for full release notes)
+
 * Tue Sep 22 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.5-1
 - Temp fix for launch crash caused by WebKitGTK 2.54.0 in latest runtime - [#431](https://github.com/hkdb/aerion/issues/431)
 - Bumped wails to 2.16.0
