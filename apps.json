@@ -24,6 +24,12 @@
         "instance": ""
     },
     {
+        "app_name": "crosspipe",
+        "upstream_repo": "dp0sk/Crosspipe",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "exercise-timer",
         "upstream_repo": "World/exercise-timer",
         "provider": "gitlab",
