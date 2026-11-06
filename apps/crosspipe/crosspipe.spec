@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           crosspipe
-Version:        0.1.1
+Version:        0
 Release:        1%{?dist}
 Summary:        PipeWire graph GTK4/Libadwaita GUI
 License:        GPL-3.0-only
@@ -63,12 +63,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
 
-%changelog
-* Fri Nov 06 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.1-1
-- Fixes
-- Fixed memory leak, caused by pipewire backend not freeing itself on exit
-- Fixed tiny default zoom level
-- Changes
-- New icon
-- Added panning with middle mouse button and space key
-- Added shortcuts view
