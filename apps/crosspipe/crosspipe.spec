@@ -48,7 +48,6 @@ Features:
 
 %install
 %meson_install
-%find_lang %{name}
 
 %check
 %meson_test
