@@ -16,13 +16,17 @@ Source0:              %{forgesource}
 
 ExclusiveArch:        x86_64
 
+BuildRequires:        make
 BuildRequires:        gettext
 BuildRequires:        desktop-file-utils
 BuildRequires:        appstream
 BuildRequires:        glib2-devel
-BuildRequires:        libyaml-devel
 BuildRequires:        pkgconfig(gtk4)
 BuildRequires:        pkgconfig(libadwaita-1)
+BuildRequires:        pkgconfig(gobject-introspection-1.0)
+BuildRequires:        libyaml-devel
+BuildRequires:        openssl-devel
+BuildRequires:        blake3-devel
 
 Requires:             nautilus-python
 
@@ -52,31 +56,7 @@ CRYSTAL_VERSION="$(awk '/^crystal:/ {print $2}' shard.yml)"
 export PATH="$PWD/crystal-${CRYSTAL_VERSION}-1/bin:$PATH"
 export CRYSTAL_CACHE_DIR="$PWD/.crystal-cache"
 
-# Generate bindings if required
-if ! ./bin/gi-crystal; then
-    shards install
-    ./bin/gi-crystal
-fi
-
-# Desktop file
-msgfmt --desktop \
-    --template data/%{app_id}.desktop.in \
-    -d po \
-    -o data/%{app_id}.desktop
-
-# AppStream metadata
-msgfmt --xml \
-    --template data/%{app_id}.metainfo.xml.in \
-    -d po \
-    -o data/%{app_id}.metainfo.xml
-
-# Build application
-COLLISION_LOCALE_LOCATION="%{_datadir}/locale" \
-shards build \
-    -Dpreview_mt \
-    -Dexecution_context \
-    --release \
-    --no-debug
+make
 
 %install
 install -Dpm755 \
@@ -123,10 +103,7 @@ done
 %find_lang %{app_id} %{name}.lang
 
 %check
-crystal spec \
-    -Dpreview_mt \
-    -Dexecution_context \
-    --order random
+make test
 
 %files -f %{name}.lang
 %license LICENSE
