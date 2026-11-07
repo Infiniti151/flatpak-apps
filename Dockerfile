@@ -17,11 +17,13 @@ RUN dnf install -y ccache \
     sccache \
     # --- collision dependencies --- \
     'pkgconfig(gobject-introspection-1.0)' \
+    'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
     appstream \
     blake3-devel \
     desktop-file-utils \
     gettext \
+    glib2-devel \
     libyaml-devel \
     make \
     openssl-devel \
