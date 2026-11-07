@@ -104,6 +104,11 @@ done
 %find_lang %{app_id} %{name}.lang
 
 %check
+CRYSTAL_VERSION="$(awk '/^crystal:/ {print $2}' shard.yml)"
+
+export PATH="$PWD/crystal-${CRYSTAL_VERSION}-1/bin:$PATH"
+export CRYSTAL_CACHE_DIR="$PWD/.crystal-cache"
+
 make test
 
 %files -f %{name}.lang
