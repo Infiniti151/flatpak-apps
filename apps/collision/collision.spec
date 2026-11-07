@@ -3,7 +3,7 @@
 %global tag           v%{version}
 
 Name:                 collision
-Version:              3.14.1
+Version:              0
 Release:              1%{?dist}
 Summary:              Check hashes for your files
 BugURL:               https://github.com/Infiniti151/flatpak-apps
@@ -120,7 +120,3 @@ make test
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/nautilus-python/extensions/%{name}-extension.py
 %{_metainfodir}/%{app_id}.metainfo.xml
-
-%changelog
-* Sat Nov 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.0-1
-- Initial package
