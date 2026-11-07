@@ -15,6 +15,13 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- collision dependencies --- \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    appstream \
+    desktop-file-utils \
+    gettext \
+    glib2-devel \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
