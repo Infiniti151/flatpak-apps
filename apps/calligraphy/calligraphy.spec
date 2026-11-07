@@ -46,7 +46,7 @@ Calligraphy turns short texts into large, impressive banners made up of ASCII Ch
 %install
 %meson_install
 
-%find_lang %{name}.lang
+%find_lang %{name} %{name}.lang
 
 %py3_shebang_fix \
     %{buildroot}%{_bindir}/%{name} \
