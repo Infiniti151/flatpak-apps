@@ -22,6 +22,7 @@ RUN dnf install -y ccache \
     desktop-file-utils \
     gettext \
     glib2-devel \
+    libyaml-devel \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
