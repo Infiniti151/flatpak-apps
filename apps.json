@@ -18,6 +18,12 @@
         "instance": ""
     },
     {
+        "app_name": "collision",
+        "upstream_repo": "GeopJr/Collision",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "concessio",
         "upstream_repo": "ronniedroid/concessio",
         "provider": "github",
