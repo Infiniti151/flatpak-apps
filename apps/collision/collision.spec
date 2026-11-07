@@ -20,6 +20,7 @@ BuildRequires:        gettext
 BuildRequires:        desktop-file-utils
 BuildRequires:        appstream
 BuildRequires:        glib2-devel
+BuildRequires:        libyaml-devel
 BuildRequires:        pkgconfig(gtk4)
 BuildRequires:        pkgconfig(libadwaita-1)
 
