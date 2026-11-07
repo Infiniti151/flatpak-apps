@@ -3,7 +3,7 @@
 %global tag           v%{version}
 
 Name:                 collision
-Version:        3.14.1
+Version:              3.14.1
 Release:              1%{?dist}
 Summary:              Check hashes for your files
 BugURL:               https://github.com/Infiniti151/flatpak-apps
@@ -17,6 +17,7 @@ Source0:              %{forgesource}
 ExclusiveArch:        x86_64
 
 BuildRequires:        make
+BuildRequires:        git
 BuildRequires:        gettext
 BuildRequires:        desktop-file-utils
 BuildRequires:        appstream
