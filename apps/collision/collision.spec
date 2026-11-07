@@ -1,14 +1,17 @@
 %global app_id         dev.geopjr.Collision
 %global forgeurl       https://codeberg.org/GeopJr/Collision
+%global tag            v%{version}
 
 Name:                 collision
-Version:              1.0.0
+Version:              3.14.1
 Release:              1%{?dist}
 Summary:              GTK application written in Crystal
-
 License:              GPL-3.0-or-later
+
+%forgemeta
+
 URL:                  %{forgeurl}
-Source0:              %{forgeurl}/archive/v%{version}.tar.gz
+Source0:              %{forgesource}
 
 ExclusiveArch:        x86_64
 
