@@ -1,12 +1,13 @@
-%global app_id         dev.geopjr.Collision
-%global forgeurl       https://codeberg.org/GeopJr/Collision
-%global tag            v%{version}
+%global app_id        dev.geopjr.Collision
+%global forgeurl      https://codeberg.org/GeopJr/collision
+%global tag           v%{version}
 
 Name:                 collision
 Version:              3.14.1
 Release:              1%{?dist}
-Summary:              GTK application written in Crystal
-License:              GPL-3.0-or-later
+Summary:              Check hashes for your files
+BugURL:               https://github.com/Infiniti151/flatpak-apps
+License:              BSD-2-Clause
 
 %forgemeta
 
@@ -22,10 +23,17 @@ BuildRequires:        glib2-devel
 BuildRequires:        pkgconfig(gtk4)
 BuildRequires:        pkgconfig(libadwaita-1)
 
-Requires:       nautilus-python
+Requires:             nautilus-python
 
 %description
-Collision is a GTK application written in Crystal.
+Verifying that a file you downloaded or received is actually the one you were
+expecting is often overlooked or too time-consuming to do. At the same time, it
+has become very easy to get your hands on a file that has been tampered with, due
+to the mass increase of malicious webpages and other actors.
+
+This tool aims to solve that. Collision comes with a simple & clean UI, allowing
+anyone, from any age and experience group, to generate, compare and verify MD5,
+SHA-256, SHA-512, SHA-1, Blake3, CRC32 and Adler32 hashes.
 
 %prep
 %forgesetup
