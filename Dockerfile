@@ -15,6 +15,16 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- calligraphy dependencies --- \
+    appstream \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gettext \
+    glib2-devel \
+    gtk-update-icon-cache \
+    meson \
+    ninja-build \
+    python3-devel \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
