@@ -57,6 +57,7 @@ export PATH="$PWD/crystal-${CRYSTAL_VERSION}-1/bin:$PATH"
 export CRYSTAL_CACHE_DIR="$PWD/.crystal-cache"
 
 make
+make metainfo
 
 %install
 install -Dpm755 \
