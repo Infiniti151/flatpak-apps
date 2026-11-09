@@ -70,7 +70,7 @@ jobs:
           NEW_VER: ${{ matrix.raw_new_ver }}
           CLEAN_NEW_VER: ${{ matrix.new_ver }}
         run: |
-          if [ ! -f "$SPEC" ]; then
+          if [[ ! -f "$SPEC" ]]; then
             echo "::error::==> [ERROR] $SPEC not found!"
             exit 1
           fi
@@ -78,26 +78,24 @@ jobs:
           echo -e "${COLOR_INFO}==> [INFO] Bumping $APP from $OLD_VER to $CLEAN_NEW_VER...${COLOR_RESET}"
           sed -i "s/^Version:.*/Version:        $CLEAN_NEW_VER/" "$SPEC"
 
-          # Special handling for Sudoku python requirements dependency
-          if [ "$APP" = "sudoku" ]; then
-            echo -e "${COLOR_INFO}==> [INFO] Fetching external python3-requirements.json...${COLOR_RESET}"
+          # Update external sources for apps that require bundled dependencies
+          case "$APP" in
+            sudoku)
+              FILE_PATH="python3-requirements.json"
+              KEYWORDS="sudoku_engine"
+              ;;
+            calligraphy)
+              FILE_PATH="build-aux/dev.geopjr.Calligraphy.Devel.json"
+              KEYWORDS="pyfiglet"
+              ;;
+            *)
+              FILE_PATH=""
+              KEYWORDS=""
+              ;;
+          esac
 
-            REQ_URL="https://raw.githubusercontent.com/${REPO}/${NEW_VER}/python3-requirements.json"
-            REQ_DATA=$(curl -sSf "$REQ_URL" 2>/dev/null)
-
-            if [ $? -eq 0 ] && [ -n "$REQ_DATA" ]; then
-              ENGINE_URL=$(echo "$REQ_DATA" | jq -r '.sources[]? | select(.url | contains("sudoku_engine"))? | .url // empty')
-
-              if [ -n "$ENGINE_URL" ] && [ "$ENGINE_URL" != "null" ]; then
-                ESC_URL="${ENGINE_URL//\//\\\/}"
-                sed -i "s/^Source1:.*/Source1:        $ESC_URL/" "$SPEC"
-                echo -e "${COLOR_SUCCESS}==> [SUCCESS] Updated sudoku-engine URL: $ENGINE_URL.${COLOR_RESET}"
-              else
-                echo -e "${COLOR_WARN}==> [WARNING] Could not parse sudoku-engine URL from requirements file. Keeping existing Source1.${COLOR_RESET}"
-              fi
-            else
-              echo -e "${COLOR_WARN}==> [WARNING] Failed to fetch external requirements file. Keeping existing Source1.${COLOR_RESET}"
-            fi
+          if [[ -n "$FILE_PATH" && -n "$KEYWORDS" ]]; then
+            python3 scripts/source_scraper.py "$PROVIDER" "$INSTANCE" "$REPO" "$NEW_VER" "$SPEC" "$FILE_PATH" $KEYWORDS
           fi
 
           APP_ID=$(grep -E '^\s*%global\s+(app_id|rdnn)\s+' "$SPEC" | awk '{print $3}')

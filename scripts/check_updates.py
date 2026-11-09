@@ -1,4 +1,20 @@
 #!/usr/bin/env python3
+"""
+    SPDX-FileCopyrightText: 2026 Infiniti151
+    SPDX-License-Identifier: GPL-3.0-or-later
+    ---
+    Concurrent App Update Checker Utility
+
+    Checks application versions concurrently against upstream sources for RPM spec file automation.
+    Process order:
+      1. Load tracked applications configuration (apps.json)
+      2. Read current version and App ID / RDNN from local .spec files
+      3. Concurrently fetch upstream versions via changelog_scraper.py using a thread pool
+      4. Compare versions and output a filtered JSON matrix for GitHub Actions workflow dispatch
+
+    Usage:
+        check_updates.py
+"""
 import json
 import subprocess
 import os
