@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           calligraphy
-Version:        0
+Version:        1.3.0
 Release:        1%{?dist}
 Summary:        Turn text into ASCII banners
 License:        GPL-3.0-or-later
@@ -73,3 +73,13 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*
 %{_metainfodir}/*metainfo.xml
+
+
+%changelog
+* Mon Nov 09 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.3.0-1
+- Visual refinements to match the state of the art of GNOME apps
+- We moved to Codeberg!
+- The font preview view will now display more fonts if they fit in the current window size
+- Fixed a race condition with the font previews on the latest versions of the stack
+- Updated translations
+
