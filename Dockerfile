@@ -25,6 +25,7 @@ RUN dnf install -y ccache \
     meson \
     ninja-build \
     python3-devel \
+    python3-pip \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
