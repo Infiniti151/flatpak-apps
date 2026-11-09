@@ -15,6 +15,7 @@ BuildArch:      noarch
 
 URL:            %{forgeurl}
 Source0:        %{forgesource}
+Source1:        https://files.pythonhosted.org/packages/a0/f2/2649b2acace54f861eccd4ab163bfd914236fc93ddb1df02dad2a2552b14/pyfiglet-1.0.2.tar.gz
 
 BuildRequires:  meson >= 0.62.0
 BuildRequires:  ninja-build
@@ -27,12 +28,12 @@ BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  appstream
 BuildRequires:  python3-devel
+BuildRequires:  python3-pip
 
 Requires:       gtk4
 Requires:       hicolor-icon-theme
 Requires:       libadwaita
 Requires:       python3
-Requires:       python3-pyfiglet
 
 %description
 Calligraphy turns short texts into large, impressive banners made up of ASCII Characters, ready to be copied or exported to images. Spice up your online conversations by adding some extra oompf to your messages!
@@ -47,11 +48,13 @@ Calligraphy turns short texts into large, impressive banners made up of ASCII Ch
 %install
 %meson_install
 
-%find_lang %{name} %{name}.lang
-
+# Normalize the python shebang
 %py3_shebang_fix \
     %{buildroot}%{_bindir}/%{name} \
     %{buildroot}%{_datadir}/%{app_id}/
+
+# Install pyfiglet directly into the app's main directory
+pip3 install --no-deps --ignore-installed --target=%{buildroot}%{_datadir}/%{app_id} %{SOURCE1}
 
 %check
 %meson_test
