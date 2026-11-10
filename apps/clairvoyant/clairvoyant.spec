@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           clairvoyant
-Version:        0
+Version:        3.1.14
 Release:        1%{?dist}
 Summary:        Ask questions, get psychic answers
 License:        GPL-3.0-or-later
@@ -64,3 +64,10 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/*
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Tue Nov 10 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.1.14-1
+- Translations are flowing again! “Don’t count on it.” finally shows up in Persian, and translators can once again translate the latest store listing and release notes.
+- https://github.com/cassidyjames/clairvoyant/compare/3.1.13...3.1.14
+
