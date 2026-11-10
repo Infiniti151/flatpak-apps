@@ -2,11 +2,14 @@ ARG FEDORA_VER=version
 
 FROM fedora:${FEDORA_VER}
 
-ENV TERM="xterm-256color"
-RUN echo "color=always" >> /etc/dnf/dnf.conf
-RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
+ENV TERM="xterm-256color" \
+    CCACHE_COMPILERCHECK=content \
+    CCACHE_MAXSIZE=2G \
+    CARGO_INCREMENTAL=0
 
-RUN dnf install -y ccache \
+RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
+    dnf install -y \
+    ccache \
     dnf-plugins-core \
     git-core \
     glibc-langpack-en \
@@ -14,11 +17,8 @@ RUN dnf install -y ccache \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache \
-    && dnf clean all
-
-ENV CCACHE_COMPILERCHECK=content
-ENV CCACHE_MAXSIZE=2G
-ENV CARGO_INCREMENTAL=0
+    sccache && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf/*
 
 WORKDIR /github/workspace
