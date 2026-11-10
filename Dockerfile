@@ -15,6 +15,20 @@ RUN dnf install -y ccache \
     rpmdevtools \
     rpmlint \
     sccache \
+    # --- clairvoyant dependencies --- \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    appstream \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gcc \
+    gettext \
+    glib2-devel \
+    meson \
+    ninja-build \
+    python3-devel \
+    valac \
     && dnf clean all
 
 ENV CCACHE_COMPILERCHECK=content
