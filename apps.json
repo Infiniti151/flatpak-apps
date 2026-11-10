@@ -24,6 +24,12 @@
         "instance": ""
     },
     {
+        "app_name": "clairvoyant",
+        "upstream_repo": "cassidyjames/clairvoyant",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "collision",
         "upstream_repo": "GeopJr/Collision",
         "provider": "codeberg",
