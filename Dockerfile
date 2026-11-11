@@ -18,6 +18,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpmlint \
     sccache \
     # --- iconic dependencies --- \
+    appstream \
     blueprint-compiler \
     cairo-devel \
     cargo \
@@ -31,7 +32,6 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     gtk-update-icon-cache \
     gtk4-devel \
     libadwaita-devel \
-    libappstream-glib \
     meson \
     ninja-build \
     pango-devel \
