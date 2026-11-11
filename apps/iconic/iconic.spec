@@ -1,5 +1,6 @@
 %global         app_id        nl.emphisia.icon
-%global         forgeurl      https://github.com/youpie/Iconic
+%global         app_name      Iconic
+%global         forgeurl      https://github.com/youpie/%{app_name}
 %global         tag           v%{version}
 
 Name:           iconic
@@ -60,7 +61,7 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %install
 %meson_install
-%find_lang %{name}
+%find_lang %{app_name}
 
 %check
 %meson_test
@@ -68,11 +69,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
-%files -f %{name}.lang
+%files -f %{app_name}.lang
 %license COPYING
 %doc README.md changelog.md
-%{_bindir}/Iconic
-%{_datadir}/Iconic
+%{_bindir}/%{app_name}
+%{_datadir}/%{app_name}
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
