@@ -24,6 +24,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     cargo-rpm-macros \
     desktop-file-utils \
     forge-srpm-macros \
+    gcc-c++ \
     gdk-pixbuf2-devel \
     gettext \
     glib2-devel \
