@@ -56,7 +56,7 @@ def generate_dockerfile_block(app_deps, app_name, reset_mode):
     protected_list = sorted(PROTECTED_DEPS)
 
     if reset_mode:
-        return LINE_JOINER.join(protected_list) + " \\"
+        return LINE_JOINER.join(protected_list) + " && \\"
 
     app_list = sorted(app_deps)
     block = LINE_JOINER.join(protected_list)
@@ -65,7 +65,7 @@ def generate_dockerfile_block(app_deps, app_name, reset_mode):
         block += f" \\\n    # --- {app_name} dependencies --- \\\n    "
         block += LINE_JOINER.join(app_list)
 
-    return block + " \\"
+    return block + " && \\"
 
 def update_dockerfile(app_name, reset_mode=False):
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -87,7 +87,7 @@ def update_dockerfile(app_name, reset_mode=False):
         content = f.read()
 
     start_match = re.search(r'dnf install -y\s+', content)
-    end_match = re.search(r'&& dnf clean all', content)
+    end_match = re.search(r'dnf clean all', content)
 
     if not start_match or not end_match or start_match.end() > end_match.start():
         print(f"{RED}Error: Could not find valid dnf block bounds.{RESET}")

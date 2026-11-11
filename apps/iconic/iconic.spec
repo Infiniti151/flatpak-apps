@@ -1,0 +1,80 @@
+%global         app_id        nl.emphisia.icon
+%global         forgeurl      https://github.com/youpie/Iconic
+%global         tag           v%{version}
+
+Name:           iconic
+Version:        2026.8.1
+Release:        1%{?dist}
+Summary:        Add icons on top of folders
+License:        GPL-3.0-or-later
+BugURL:         https://github.com/Infiniti151/flatpak-apps
+
+%forgemeta
+
+URL:            %{forgeurl}
+Source0:        %{forgesource}
+
+BuildRequires:  meson >= 0.62.0
+BuildRequires:  ninja-build
+BuildRequires:  blueprint-compiler
+BuildRequires:  cairo-devel
+BuildRequires:  cargo
+BuildRequires:  cargo-rpm-macros
+BuildRequires:  desktop-file-utils
+BuildRequires:  forge-srpm-macros
+BuildRequires:  gdk-pixbuf2-devel
+BuildRequires:  gettext
+BuildRequires:  glib2-devel
+BuildRequires:  glibc-langpack-en
+BuildRequires:  gtk-update-icon-cache
+BuildRequires:  gtk4-devel
+BuildRequires:  libadwaita-devel
+BuildRequires:  libappstream-glib
+BuildRequires:  pango-devel
+BuildRequires:  rustc
+
+Requires:       cairo
+Requires:       gdk-pixbuf2
+Requires:       glib2
+Requires:       gtk4
+Requires:       hicolor-icon-theme
+Requires:       libadwaita
+Requires:       pango
+
+%description
+This program allows an easy and intuitive way to add an icon on top of a folder to help you differentiate it better.
+
+This program works best in combination with the app "Icon library" found on flathub and "Adwaita Colors" found on github
+
+This program is written in Rust and Libadwaita and is my first attempt at creating an application
+
+%prep
+%forgesetup
+
+%build
+%meson
+%meson_build
+
+%install
+%meson_install
+%find_lang %{name}
+
+%check
+%meson_test
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
+
+%files -f %{name}.lang
+%license COPYING
+%doc README.md changelog.md
+%{_bindir}/Iconic
+%{_datadir}/Iconic
+%{_datadir}/applications/*.desktop
+%{_datadir}/icons/hicolor/*/apps/*
+%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_metainfodir}/*.metainfo.xml
+
+%changelog
+* Tue Nov 10 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2026.8.1-1
+- Test
