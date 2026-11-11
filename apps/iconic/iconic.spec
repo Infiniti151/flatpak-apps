@@ -80,7 +80,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Tue Nov 10 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2026.8.1-1
-- Test
