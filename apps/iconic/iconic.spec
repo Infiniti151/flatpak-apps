@@ -30,7 +30,7 @@ BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  gtk4-devel
 BuildRequires:  libadwaita-devel
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  pango-devel
 BuildRequires:  rustc
 BuildRequires:  gcc-c++
@@ -52,6 +52,8 @@ This program is written in Rust and Libadwaita and is my first attempt at creati
 
 %prep
 %forgesetup
+# Fix hardcoded Flatpak path for RPM/system installs
+sed -i 's|/app/share/Iconic/folders/|/usr/share/Iconic/folders/|g' src/windows/file_handling.rs
 mkdir -p cargo-home
 
 %build
@@ -66,7 +68,7 @@ export CARGO_HOME=$(pwd)/cargo-home
 %check
 %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 %files -f %{app_name}.lang
