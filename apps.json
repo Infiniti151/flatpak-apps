@@ -72,6 +72,12 @@
         "instance": ""
     },
     {
+        "app_name": "iconic",
+        "upstream_repo": "youpie/Iconic",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "keypunch",
         "upstream_repo": "bragefuglseth/keypunch",
         "provider": "github",

@@ -1,4 +1,4 @@
-%global         app_id io.github.zingytomato.netpeek
+%global         app_id          io.github.zingytomato.netpeek
 %global         forgeurl        https://github.com/ZingyTomato/NetPeek
 %global         tag             v%{version}
 

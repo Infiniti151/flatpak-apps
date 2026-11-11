@@ -8,8 +8,7 @@ ENV TERM="xterm-256color" \
     CARGO_INCREMENTAL=0
 
 RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
-    dnf install -y \
-    ccache \
+    dnf install -y ccache \
     dnf-plugins-core \
     git-core \
     glibc-langpack-en \

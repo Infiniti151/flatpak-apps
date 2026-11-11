@@ -28,7 +28,7 @@ GREEN = "\033[32m"
 RESET = "\033[0m"
 
 def parse_spec_file(spec_path):
-    """Parses Name, Version, and %global forgeurl from the spec file reliably."""
+    """Parses Name, Version, %global forgeurl, and %global app_id from the spec file."""
     if not os.path.exists(spec_path):
         print(f"Error: Spec file not found at {spec_path}", file=sys.stderr)
         sys.exit(1)
@@ -40,13 +40,13 @@ def parse_spec_file(spec_path):
             if not cleaned_line or cleaned_line.startswith("#"):
                 continue
 
-            # Handle %global forgeurl
-            global_match = re.match(r"^%global\s+forgeurl\s+(\S+)$", cleaned_line, re.IGNORECASE)
+            # Handle %global forgeurl & %global app_id
+            global_match = re.match(r"^%global\s+(forgeurl|app_id)\s+(\S+)$", cleaned_line, re.IGNORECASE)
             if global_match:
-                metadata["FORGEURL"] = global_match.group(1).strip()
+                key = global_match.group(1).upper()
+                metadata[key] = global_match.group(2).strip()
                 continue
 
-            # Skip other % lines
             if cleaned_line.startswith("%"):
                 continue
 
@@ -57,11 +57,12 @@ def parse_spec_file(spec_path):
                 metadata[tag] = value
 
     if not all(k in metadata for k in ["NAME", "VERSION", "FORGEURL"]):
-        print(f"Error: Could not find all required tags (Name, Version, %global forgeurl) in {spec_path}", file=sys.stderr)
+        print(f"Error: Could not find all required tags in {spec_path}", file=sys.stderr)
         sys.exit(1)
 
     url = metadata["FORGEURL"].replace("%{name}", metadata["NAME"]).replace("%{version}", metadata["VERSION"])
-    return metadata["NAME"], metadata["VERSION"], url
+    app_id = metadata.get("APP_ID", "")
+    return metadata["NAME"], metadata["VERSION"], url, app_id
 
 def fetch_json(api_url):
     try:
@@ -153,7 +154,7 @@ def get_fallback_icon(platform, host, owner, repo, branch, app_name):
         return f"https://codeberg.org/{owner}/{repo}/raw/branch/{branch}/data/icons/page.codeberg.{owner}.{repo}.svg"
     return f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/data/icons/hicolor/scalable/apps/{app_name}.svg"
 
-def get_icon_url(url, app_name):
+def get_icon_url(url, app_name, app_id=""):
     """Scans repository tree using APIs to locate an application icon."""
     parsed = urlparse(url)
     host = parsed.netloc.lower()
@@ -165,8 +166,15 @@ def get_icon_url(url, app_name):
     owner, repo = path_parts[0], path_parts[1]
     repo = re.sub(r"\.git$", "", repo)
 
-    simplified_app_name = app_name.replace("-", "").replace("_", "").lower()
-    icon_regex = re.compile(rf"(^|\.)({app_name}|{simplified_app_name}|{repo})\.(svg|png)$", re.IGNORECASE)
+    # Build candidate names: app_name, repo name, app_id, and last part of app_id
+    candidates = {app_name, app_name.replace("-", "").replace("_", "").lower(), repo.lower()}
+    if app_id:
+        candidates.add(app_id.lower())
+        candidates.add(app_id.split(".")[-1].lower())
+
+    # Build regex matching any candidate as the full filename or preceding extension
+    pattern = r"(^|\.)(" + "|".join(re.escape(c) for c in candidates) + r")\.(svg|png)$"
+    icon_regex = re.compile(pattern, re.IGNORECASE)
 
     platform, branch, tree_entries, instance_host = get_platform_details(host, owner, repo)
 
@@ -273,8 +281,8 @@ def main():
         print(f"Error: apps.json not found at {apps_json_path}", file=sys.stderr)
         sys.exit(1)
 
-    _, version, url = parse_spec_file(spec_path)
-    icon_url, platform, upstream_repo, host = get_icon_url(url, args.app_name)
+    _, version, url, app_id = parse_spec_file(spec_path)
+    icon_url, platform, upstream_repo, host = get_icon_url(url, args.app_name, app_id)
 
     update_readme(readme_path, version, url, icon_url, args.app_name)
     update_matrix(apps_json_path, args.app_name, platform, upstream_repo, host)
