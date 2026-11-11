@@ -4,7 +4,7 @@
 %global         tag           v%{version}
 
 Name:           iconic
-Version:        0
+Version:        2026.8.1
 Release:        1%{?dist}
 Summary:        Add icons on top of folders
 License:        GPL-3.0-or-later
@@ -80,3 +80,16 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Wed Nov 11 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2026.8.1-1
+- Another new update for Iconic, wow! A friend of mine was asking for a new feature, but I ignored him. But then another friend asked for the same feature, and you know, I always listen to my friends so went to work implementing this feature. What is this feature you might ask?
+- Iconic now removed parts of the top image which don't overlap with the bottom image! WOW. This even works for custom bottom images! I did go a bit overboard so now, if you enable advanced mode (press ctrl+a) you can add custom masks, let your creativity flow!! And the best part, I used no AI! All brainpower baby.
+- I also did some other things like:
+- Fixed bug with regenerating custom colored folder
+- Cleaned up small parts in the UI
+- Remember your advanced mode setting, even after a restart
+- Yeah,, the other things are not that interesting, sorry. But! I am thinking about making Iconic also work for other desktop environments. So stay tuned for that!
+- That was all, I hope you have a nice day!!
+
