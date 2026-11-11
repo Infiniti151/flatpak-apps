@@ -32,6 +32,7 @@ BuildRequires:  libadwaita-devel
 BuildRequires:  libappstream-glib
 BuildRequires:  pango-devel
 BuildRequires:  rustc
+BuildRequires:  gcc-c++
 
 Requires:       cairo
 Requires:       gdk-pixbuf2
@@ -50,8 +51,10 @@ This program is written in Rust and Libadwaita and is my first attempt at creati
 
 %prep
 %forgesetup
+mkdir -p cargo-home
 
 %build
+export CARGO_HOME=$(pwd)/cargo-home
 %meson
 %meson_build
 
