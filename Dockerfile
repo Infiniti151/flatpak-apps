@@ -16,26 +16,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache \
-    # --- iconic dependencies --- \
-    appstream \
-    blueprint-compiler \
-    cairo-devel \
-    cargo \
-    cargo-rpm-macros \
-    desktop-file-utils \
-    forge-srpm-macros \
-    gcc-c++ \
-    gdk-pixbuf2-devel \
-    gettext \
-    glib2-devel \
-    gtk-update-icon-cache \
-    gtk4-devel \
-    libadwaita-devel \
-    meson \
-    ninja-build \
-    pango-devel \
-    rustc && \
+    sccache && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 

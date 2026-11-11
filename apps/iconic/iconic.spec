@@ -4,7 +4,7 @@
 %global         tag           v%{version}
 
 Name:           iconic
-Version:        2026.8.1
+Version:        0
 Release:        1%{?dist}
 Summary:        Add icons on top of folders
 License:        GPL-3.0-or-later
