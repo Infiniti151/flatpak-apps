@@ -154,30 +154,42 @@ jobs:
       - name: Trigger COPR Build
         env:
           APP: ${{ matrix.app_name }}
+          OLD_VER: ${{ matrix.old_ver }}
+          NEW_VER: ${{ matrix.new_ver }}
           COPR_URL: ${{ secrets.COPR_BASE_WEBHOOK_URL }}
         run: |
           BASE_URL=$(echo "$COPR_URL" | xargs)
           FINAL_URL="${BASE_URL%/}/$APP/"
 
           echo -e "${COLOR_INFO}==> [INFO] Triggering COPR build...${COLOR_RESET}"
-          if curl -fsS -X POST "$FINAL_URL"; then
+
+          if BUILD_ID=$(curl -fsS -X POST "$FINAL_URL" | tr -d '\n'); then
+            echo "Build ID: $BUILD_ID"
+            mkdir -p copr-builds
+            echo "${APP}|${OLD_VER}|${NEW_VER}|${BUILD_ID}" > "copr-builds/${APP}.txt"
             echo -e "${COLOR_SUCCESS}==> [SUCCESS] Triggered COPR build!${COLOR_RESET}"
           else
             echo "::error::==> [ERROR] Webhook failed to trigger COPR build."
             exit 1
           fi
 
+      - name: Upload COPR Build Metadata
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: copr-build-${{ matrix.app_name }}
+          path: copr-builds/*.txt
+
       - name: Add to Workflow Summary
         env:
           APP: ${{ matrix.app_name }}
-          OLD_VERSION: ${{ matrix.old_ver }}
-          NEW_VERSION: ${{ matrix.new_ver }}
+          OLD_VER: ${{ matrix.old_ver }}
+          NEW_VER: ${{ matrix.new_ver }}
           CHANGELOG: ${{ steps.update.outputs.changelog }}
         run: |
           cat <<EOF >> $GITHUB_STEP_SUMMARY
           ### 🚀 COPR Build Triggered
           **App:** $APP
-          **Version:** $OLD_VERSION -> $NEW_VERSION
+          **Version:** $OLD_VER -> $NEW_VER
           **Changelog:**
           $CHANGELOG
           EOF
@@ -240,3 +252,41 @@ jobs:
           commit_message: "chore: sync updated spec versions to README.md"
           files: "README.md"
           fail_on_self_push: false
+
+  # --- JOB 4: MERGE COPR BUILD ARTIFACTS ---
+  merge-copr-build-artifacts:
+    needs:
+      - build-updates
+      - update-readme
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download All COPR Build Artifacts
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          path: artifacts
+          pattern: copr-build-*
+          merge-multiple: true
+
+      - name: Merge Build Metadata
+        run: |
+          mkdir -p merged
+
+          find artifacts -name '*.txt' -type f | sort > filelist.txt
+
+          touch merged/copr-builds.txt
+
+          while IFS= read -r FILE; do
+            cat "$FILE" >> merged/copr-builds.txt
+            echo >> merged/copr-builds.txt
+          done < filelist.txt
+
+          echo "Merged build metadata:"
+          cat merged/copr-builds.txt
+
+      - name: Upload Combined Artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: copr-builds
+          path: merged/copr-builds.txt
+          retention-days: 7
