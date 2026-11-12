@@ -144,6 +144,12 @@
         "instance": ""
     },
     {
+        "app_name": "railway",
+        "upstream_repo": "schmiddi-on-mobile/railway",
+        "provider": "gitlab",
+        "instance": "gitlab.com"
+    },
+    {
         "app_name": "rustdiff",
         "upstream_repo": "jereok91/rustdiff",
         "provider": "github",
