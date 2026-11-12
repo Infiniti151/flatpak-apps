@@ -4,7 +4,7 @@
 %global         upstream_name diebahn
 
 Name:           railway
-Version:        0
+Version:        2.10.1
 Release:        1%{?dist}
 Summary:        Find all your travel information
 License:        GPL-3.0-or-later
@@ -81,3 +81,11 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
 %{_metainfodir}/*.metainfo.xml
+
+%changelog
+* Thu Nov 12 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.10.1-1
+- Fixed
+- Fixed errors with the DB provider.
+- Removed
+- Removed the BLS provider, as it was not working anymore.
+
