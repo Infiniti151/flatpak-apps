@@ -34,6 +34,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     gtk-update-icon-cache \
     meson \
     ninja-build \
+    openssl-devel \
     pango-devel \
     rustc && \
     dnf clean all && \
