@@ -16,27 +16,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache \
-    # --- railway dependencies --- \
-    'pkgconfig(gio-2.0)' \
-    'pkgconfig(glib-2.0)' \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(libadwaita-1)' \
-    appstream \
-    blueprint-compiler \
-    cairo-devel \
-    cargo \
-    cargo-rpm-macros \
-    desktop-file-utils \
-    forge-srpm-macros \
-    gdk-pixbuf2-devel \
-    gettext \
-    gtk-update-icon-cache \
-    meson \
-    ninja-build \
-    openssl-devel \
-    pango-devel \
-    rustc && \
+    sccache && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
