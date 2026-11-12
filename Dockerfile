@@ -16,7 +16,23 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache && \
+    sccache \
+    # --- extension-manager dependencies --- \
+    'pkgconfig(gio-unix-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(json-glib-1.0)' \
+    'pkgconfig(libadwaita-1)' \
+    'pkgconfig(libsoup-3.0)' \
+    'pkgconfig(libxml-2.0)' \
+    appstream \
+    blueprint-compiler \
+    cmake \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gcc \
+    gettext \
+    glycin-gtk4-devel \
+    meson && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
