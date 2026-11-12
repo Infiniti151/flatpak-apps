@@ -26,10 +26,13 @@ BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  blueprint-compiler
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
+BuildRequires:  cmake
+BuildRequires:  glycin-gtk4-devel
 
 %description
 Browse and install GNOME Shell extensions to customise your desktop.
+
 Features:
 - Browse extensions.gnome.org right inside the app
 - Manage the extensions you already have installed
@@ -48,7 +51,7 @@ Features:
 %check
 %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 %files -f %{name}.lang
@@ -57,8 +60,10 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/*
-%{_metainfodir}/*.metainfo.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_datadir}/dbus-1/services/*.service
+%{_datadir}/gnome-shell/search-providers/*.ini
+%{_metainfodir}/*.metainfo.xml
 
 %changelog
 * Sat Nov 07 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.7.0-1
