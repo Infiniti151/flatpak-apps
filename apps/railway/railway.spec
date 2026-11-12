@@ -29,6 +29,7 @@ BuildRequires:  gettext
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  pango-devel
+BuildRequires:  openssl-devel
 BuildRequires:  pkgconfig(gio-2.0) >= 2.66
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
 BuildRequires:  pkgconfig(gtk4) >= 4.14
