@@ -23,7 +23,6 @@ BuildRequires:  cairo-devel
 BuildRequires:  cargo
 BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-file-utils
-BuildRequires:  env
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  gettext
