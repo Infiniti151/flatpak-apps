@@ -12,7 +12,7 @@
 - [ ] I have **NOT** added/updated the `%changelog` section (it is handled automatically in our workflow).
 - [ ] I have run `spectool -g -R` to verify sources download correctly.
 - [ ] I have run `rpmlint` on the spec file and fixed any critical errors.
-- [ ] I have successfully run a `mock` build for Fedora 44 (or relevant target).
+- [ ] I have successfully run a `mock` build for Fedora 45 (or relevant target).
 
 ## 🔗 Related Issue
 <!-- Link to the App Request or Bug Report this PR addresses -->
