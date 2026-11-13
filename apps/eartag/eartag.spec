@@ -60,7 +60,7 @@ General stability and speed improvements. Loading files is now considerably fast
 
 %install
 %meson_install
-%find_lang %{name}
+%find_lang %{app_id}
 %py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name}/
 
 %check
@@ -68,7 +68,7 @@ General stability and speed improvements. Loading files is now considerably fast
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
 
-%files -f %{name}.lang
+%files -f %{app_id}.lang
 %license COPYING
 %doc README.md
 %{_bindir}/%{name}
