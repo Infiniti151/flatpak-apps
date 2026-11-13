@@ -8,6 +8,7 @@ Release:        1%{?dist}
 Summary:        Time games of over-the-board chess
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps
+
 BuildArch:      noarch
 
 %forgemeta
@@ -32,6 +33,9 @@ Requires:       gtk4
 Requires:       hicolor-icon-theme
 Requires:       libadwaita
 Requires:       python3
+Requires:       python3-gobject
+Requires:       gsound
+Requires:       libcanberra-backend-pulse
 
 %description
 Chess Clock is a simple application to provide time control for over-the-board chess games. Intended for mobile use, players select the time control settings desired for their game, then the black player taps their clock to start white's timer. After each player's turn, they tap the clock to start their opponent's, until the game is finished or one of the clocks reaches zero.
