@@ -168,6 +168,12 @@
         "instance": ""
     },
     {
+        "app_name": "pully",
+        "upstream_repo": "petsoi/pully",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "railway",
         "upstream_repo": "schmiddi-on-mobile/railway",
         "provider": "gitlab",
