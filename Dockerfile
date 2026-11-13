@@ -18,6 +18,8 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpmlint \
     sccache \
     # --- eartag dependencies --- \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
     appstream \
     blueprint-compiler \
     desktop-file-utils \
