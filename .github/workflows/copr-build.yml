@@ -108,7 +108,7 @@ jobs:
           DATE=$(date +"%a %b %d %Y")
           AUTHOR="Infiniti151 <43163551+Infiniti151@users.noreply.github.com>"
           echo "* $DATE $AUTHOR - $NEW_VER-1" > entry.tmp
-          echo "$CHANGELOG" >> entry.tmp
+          echo "$CHANGELOG" | sed 's/%/%%/g' >> entry.tmp
           echo "" >> entry.tmp
 
           if grep -q "^%changelog" "$SPEC"; then
@@ -197,6 +197,7 @@ jobs:
   # --- JOB 3: UPDATE README ---
   update-readme:
     needs: build-updates
+    if: ${{ !cancelled() && needs.build-updates.result != 'skipped' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -255,9 +256,8 @@ jobs:
 
   # --- JOB 4: MERGE COPR BUILD ARTIFACTS ---
   merge-copr-build-artifacts:
-    needs:
-      - build-updates
-      - update-readme
+    needs: [build-updates, update-readme]
+    if: ${{ !cancelled() && needs.build-updates.result != 'skipped' }}
     runs-on: ubuntu-latest
 
     steps:
