@@ -16,7 +16,17 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache && \
+    sccache \
+    # --- eartag dependencies --- \
+    appstream \
+    blueprint-compiler \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gettext \
+    glib2-devel \
+    meson \
+    ninja-build \
+    python3-devel && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
