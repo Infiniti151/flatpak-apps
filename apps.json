@@ -84,6 +84,12 @@
         "instance": ""
     },
     {
+        "app_name": "griddle",
+        "upstream_repo": "petsoi/griddle",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "iconic",
         "upstream_repo": "youpie/Iconic",
         "provider": "github",
