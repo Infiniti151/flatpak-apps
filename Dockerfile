@@ -28,15 +28,16 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     glib2-devel \
     meson \
     ninja-build \
+    python3-acoustid \
     python3-aiofiles \
     python3-aiohttp \
     python3-aiohttp-retry \
+    python3-audioread \
     python3-devel \
     python3-filetype \
     python3-gobject \
     python3-mutagen \
     python3-pillow \
-    python3-pyacoustid \
     python3-pytest \
     python3-pytest-asyncio \
     python3-xxhash && \
