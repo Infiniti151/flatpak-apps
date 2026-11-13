@@ -86,8 +86,9 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/*/apps/*
+%{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_datadir}/mime/packages/*.xml
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
