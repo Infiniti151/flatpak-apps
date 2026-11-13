@@ -4,7 +4,7 @@
 %global         __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*$
 
 Name:           decoder
-Version:        0
+Version:        0.10.0
 Release:        1%{?dist}
 Summary:        Scan and generate QR codes
 License:        GPL-3.0-or-later
@@ -83,3 +83,11 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.10.0-1
+- Minor release.
+- Focus text when app starts
+- Update translations
+
