@@ -1,6 +1,7 @@
-%global         app_id        page.codeberg.petsoi.scribble
-%global         forgeurl      https://codeberg.org/petsoi/scribble
-%global         tag           v%{version}
+%global         app_id                             page.codeberg.petsoi.scribble
+%global         forgeurl                           https://codeberg.org/petsoi/scribble
+%global         tag                                v%{version}
+%global         __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*$
 
 Name:           scribble
 Version:        1.13.1
