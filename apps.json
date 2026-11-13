@@ -234,6 +234,12 @@
         "instance": ""
     },
     {
+        "app_name": "wildcard",
+        "upstream_repo": "World/Wildcard",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "words-game",
         "upstream_repo": "petsoi/words",
         "provider": "codeberg",
