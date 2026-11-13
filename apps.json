@@ -24,6 +24,12 @@
         "instance": ""
     },
     {
+        "app_name": "chess-clock",
+        "upstream_repo": "World/chess-clock",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "clairvoyant",
         "upstream_repo": "cassidyjames/clairvoyant",
         "provider": "github",
