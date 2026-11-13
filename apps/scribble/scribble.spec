@@ -4,7 +4,7 @@
 %global         __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*$
 
 Name:           scribble
-Version:        0
+Version:        1.12.5
 Release:        1%{?dist}
 Summary:        Take handwritten notes and homework
 License:        GPL-3
@@ -90,3 +90,12 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/mime/packages/*.xml
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.12.5-1
+- A release for the narrow window layout.
+- On a narrow window the left rail gives way to a panel button in the header bar; it opens the panels with a back button and a switcher for Open, Stickers, Pictures, Objects, Animation and Audio
+- Dropped notes, tables, calendars, stickers and pictures, and their preview while you drag, come out smaller on narrow windows
+- The shadow of a note scales with the paper when you zoom
+
