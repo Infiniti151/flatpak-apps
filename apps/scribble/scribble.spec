@@ -33,6 +33,7 @@ BuildRequires:  pkgconfig(gio-2.0) >= 2.66
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
 BuildRequires:  pkgconfig(gtk4) >= 4.20
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.9
+BuildRequires:  pkgconfig(librsvg-2.0) >= 2.50
 BuildRequires:  rustc
 
 Requires:       cairo
