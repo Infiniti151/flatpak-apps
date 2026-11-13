@@ -163,15 +163,21 @@ jobs:
 
           echo -e "${COLOR_INFO}==> [INFO] Triggering COPR build...${COLOR_RESET}"
 
-          if BUILD_ID=$(curl -fsS -X POST "$FINAL_URL" | tr -d '\n'); then
-            echo "Build ID: $BUILD_ID"
-            mkdir -p copr-builds
-            echo "${APP}|${OLD_VER}|${NEW_VER}|${BUILD_ID}" > "copr-builds/${APP}.txt"
-            echo -e "${COLOR_SUCCESS}==> [SUCCESS] Triggered COPR build!${COLOR_RESET}"
-          else
+          if ! RESPONSE=$(curl -fsS -X POST "$FINAL_URL"); then
             echo "::error::==> [ERROR] Webhook failed to trigger COPR build."
             exit 1
           fi
+
+          BUILD_ID=$(echo "$RESPONSE" | tr -d '[:space:]')
+          if [[ ! "$BUILD_ID" =~ ^[0-9]+$ ]]; then
+            echo "::error::==> [ERROR] Webhook returned an invalid build ID: '$RESPONSE'"
+            exit 1
+          fi
+
+          echo "Build ID: $BUILD_ID"
+          mkdir -p copr-builds
+          echo "${APP}|${OLD_VER}|${NEW_VER}|${BUILD_ID}" > "copr-builds/${APP}.txt"
+          echo -e "${COLOR_SUCCESS}==> [SUCCESS] Triggered COPR build!${COLOR_RESET}"
 
       - name: Upload COPR Build Metadata
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

@@ -55,8 +55,10 @@ def get_json(url, tries=3):
             res = requests.get(url, timeout=30)
             res.raise_for_status()
             return res.json()
-        except requests.RequestException:
-            if i == tries - 1:
+        except requests.RequestException as e:
+            status = getattr(e.response, "status_code", None)
+            permanent = status is not None and 400 <= status < 500 and status != 429
+            if permanent or i == tries - 1:
                 raise
             time.sleep(5 * (i + 1))
 
@@ -221,6 +223,9 @@ def parse_builds(path):
             print(f"Warning: skipping malformed line: {line!r}", file=sys.stderr)
             continue
         app, old_ver, new_ver, build_id = parts
+        if not re.fullmatch(r"\d+", build_id, re.ASCII):
+            print(f"::error::Invalid build ID for {app}: {line!r}")
+            continue
         builds.append({
             "app": app,
             "old_ver": old_ver,
