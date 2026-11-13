@@ -16,7 +16,19 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache && \
+    sccache \
+    # --- chess-clock dependencies --- \
+    'pkgconfig(gsound)' \
+    'pkgconfig(libadwaita-1)' \
+    appstream \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gettext \
+    glib2-devel \
+    gtk-update-icon-cache \
+    meson \
+    ninja-build \
+    python3-devel && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
