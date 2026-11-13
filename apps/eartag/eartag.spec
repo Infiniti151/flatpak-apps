@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           eartag
-Version:        0
+Version:        1.0.3
 Release:        1%{?dist}
 Summary:        Edit audio file tags
 License:        MIT
@@ -88,3 +88,10 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.3-1
+- Fixed an issue where files loading would freeze, and an error when changing cover art. From 1.0.0 notes:
+- General stability and speed improvements. Loading files is now considerably faster. The Identify option has been updated and should provide more accurate results, while being 4x as fast.
+
