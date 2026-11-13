@@ -4,7 +4,7 @@
 %global         __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*$
 
 Name:           scribble
-Version:        1.13.1
+Version:        0
 Release:        1%{?dist}
 Summary:        Take handwritten notes and homework
 License:        GPL-3
@@ -90,7 +90,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/mime/packages/*.xml
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.12.5-1
-- Test
