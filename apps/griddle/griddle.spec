@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           griddle
-Version:        0
+Version:        0.3.4
 Release:        1%{?dist}
 Summary:        Solve picture logic puzzles
 License:        GPL-3
@@ -74,3 +74,10 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.4-1
+- Fixed new puzzles sometimes being harder than intended, especially on the larger boards.
+- When no puzzle can be solved by logic alone, the closest one is used.
+
