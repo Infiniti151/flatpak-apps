@@ -168,6 +168,12 @@
         "instance": ""
     },
     {
+        "app_name": "scribble",
+        "upstream_repo": "petsoi/scribble",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "spellingbee",
         "upstream_repo": "josephmawa/SpellingBee",
         "provider": "github",
