@@ -1,6 +1,7 @@
-%global         app_id        com.belmoussaoui.Decoder
-%global         forgeurl      https://gitlab.gnome.org/World/decoder
-%global         tag           %{version}
+%global         app_id                             com.belmoussaoui.Decoder
+%global         forgeurl                           https://gitlab.gnome.org/World/decoder
+%global         tag                                %{version}
+%global         __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*$
 
 Name:           decoder
 Version:        0.10.0
