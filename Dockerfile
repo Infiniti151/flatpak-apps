@@ -26,7 +26,9 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     glib2-devel \
     meson \
     ninja-build \
-    python3-devel && \
+    python3-devel \
+    python3-pytest \
+    python3-pytest-asyncio && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
