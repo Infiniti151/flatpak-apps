@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           eartag
-Version:        1.0.3
+Version:        0
 Release:        1%{?dist}
 Summary:        Edit audio file tags
 License:        MIT
@@ -88,7 +88,3 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.3-1
-- Test
