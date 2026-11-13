@@ -16,23 +16,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache \
-    # --- elastic dependencies --- \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(gtksourceview-5)' \
-    'pkgconfig(libadwaita-1)' \
-    'pkgconfig(template-glib-1.0)' \
-    appstream \
-    blueprint-compiler \
-    desktop-file-utils \
-    forge-srpm-macros \
-    gcc \
-    gettext \
-    glib2-devel \
-    gtk-update-icon-cache \
-    meson \
-    ninja-build \
-    valac && \
+    sccache && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
