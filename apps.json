@@ -66,6 +66,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "eartag",
+        "upstream_repo": "World/eartag",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "exercise-timer",
         "upstream_repo": "World/exercise-timer",
         "provider": "gitlab",
