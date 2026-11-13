@@ -175,10 +175,15 @@ def notify(token, chat_id, readme, app, old_ver, new_ver, build_id):
         "",
         f"<b>Overall:</b> {status}",
         f"<b>Version:</b> <code>{html.escape(old_ver)}</code> → <code>{html.escape(new_ver)}</code>",
-        build_table(states),
+    ]
+
+    if status == "❌":
+        lines.append(build_table(states))
+
+    lines.extend([
         f"<b>Build ID:</b> <code>{build_id}</code>",
         f'<a href="{url}">View Build on Copr</a>',
-    ]
+    ])
 
     message = "\n".join(lines)
     icon_url = get_icon_url(readme, app)
