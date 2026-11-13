@@ -1,13 +1,13 @@
-%global         app_id          io.missioncenter.MissionCenter
-%global         forgeurl        https://gitlab.com/mission-center-devs/mission-center
-%global         tag             v%{version}
+%global         app_id              io.missioncenter.MissionCenter
+%global         forgeurl            https://gitlab.com/mission-center-devs/mission-center
+%global         tag                 v%{version}
 
-%global         debug_package   %{nil}
+%global         debug_package       %{nil}
 %global         __spec_install_post /usr/lib/rpm/brp-compress
-%global         build_cc        clang
-%global         build_cxx       clang++
-%global         nethogs_bin     %{_bindir}/nethogs
-%global         powercap_rules  %{_sysconfdir}/udev/rules.d/99-powercap.rules
+%global         build_cc            clang
+%global         build_cxx           clang++
+%global         nethogs_bin         %{_bindir}/nethogs
+%global         powercap_rules      %{_sysconfdir}/udev/rules.d/99-powercap.rules
 
 Name:           missioncenter
 Version:        1.2.0
@@ -122,6 +122,10 @@ upx --best --lzma %{buildroot}%{_bindir}/%{name}-magpie
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+%if 0%{?fedora} && ! 0%{?eln}
+upx -t %{buildroot}%{_bindir}/%{name}
+upx -t %{buildroot}%{_bindir}/%{name}-magpie
+%endif
 
 %postun
 if [ $1 -eq 0 ]; then

@@ -2,7 +2,20 @@
 
 [![Request App](https://img.shields.io/badge/Request-App-green?style=for-the-badge&logo=github)](https://github.com/Infiniti151/flatpak-apps/issues/new?template=app_request.md) [![Report Bug](https://img.shields.io/badge/Report-Bug-red?style=for-the-badge&logo=github)](https://github.com/Infiniti151/flatpak-apps/issues/new?template=bug_report.md) [![Fedora Versions](https://img.shields.io/badge/Fedora-43%20%7C%2044%20%7C%2045%20%7C%20Rawhide%20%7C%20ELN-3c6eb4?style=for-the-badge&logo=fedora&logoColor=white)](https://fedoraproject.org/) ![Arch x86_64](https://img.shields.io/badge/Arch-x86__64-purple?style=for-the-badge) [![COPR Build Status](https://img.shields.io/badge/dynamic/json?url=https://copr.fedorainfracloud.org/api_3/build/list/%3Fownername%3Dinfiniti151%26projectname%3Dflatpak-apps%26limit%3D1&query=$.items[0].state&label=COPR&style=for-the-badge&logo=fedora&logoColor=white&color=%2351A2DA)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/) [![License](https://img.shields.io/github/license/Infiniti151/aerion-chocolatey?style=for-the-badge&logo=spdx&logoColor=white&color=yellow&label=License)](https://github.com/Infiniti151/aerion-chocolatey/blob/main/LICENSE)
 
-Collection of Flatpak apps available as RPM through [Copr](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/) (for Fedora Linux). My main motivation for doing this was to get away from the ridiculous storage hogging by Flatpak apps. Since these apps may build for different versions of Gnome, Flatpak needs to download dependencies (runtimes, drivers, extras) for each version. Each of these versions can take up 1 GB+ of storage. Even if apps build for the same version of Gnome as you may already be on, Flatpak needs to download dependencies for it due to its sandboxed model. It can't use your system's packages. So even though an app may be a few kilobytes/megabytes, it needs gigabytes of total dependencies. AppImage does solve this to an extent by using compression, but the same compression leads to delays in starting some apps. My repo aims to provide Flatpak apps as RPMs in their original size (and even reduced size in some cases with [UPX](https://upx.github.io/)) for Fedora Linux.
+Collection of Flatpak apps packaged as native RPMs for Fedora Linux, available through [Copr](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/).
+
+## Why
+
+Flatpak apps depend on a runtime (GNOME Platform, drivers, extras) that is separate from your system's libraries, even if your desktop already runs the same GNOME version. Runtimes can be hundreds of MB, and each runtime branch is downloaded separately, so apps built against different GNOME versions can leave you with several copies. A small app can end up costing far more in dependencies than in its own size.
+
+AppImage avoids the runtime by bundling libraries inside each app, and it runs from a compressed image mounted through FUSE, which can slow startup.
+
+These RPMs are ordinary packages that link against the libraries Fedora already provides, so you download only the app (plus any packages you don't already have) and updates come through `dnf`.
+
+> [!NOTE]
+> Some packages ship binaries compressed with [UPX](https://upx.github.io/) to reduce installed size. This saves disk space but adds a startup delay while the binary decompresses.
+>
+> Native RPMs run without Flatpak's sandbox and depend on Fedora's library versions, so a Fedora update can occasionally require a rebuild.
 
 ## App List
 
