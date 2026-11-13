@@ -28,6 +28,16 @@ BuildRequires:  glibc-langpack-en
 BuildRequires:  python3-devel
 BuildRequires:  python3-pytest
 BuildRequires:  python3-pytest-asyncio
+BuildRequires:  python3-mutagen
+BuildRequires:  python3-aiohttp
+BuildRequires:  python3-aiohttp-retry
+BuildRequires:  python3-aiofiles
+BuildRequires:  python3-pillow
+BuildRequires:  python3-filetype
+BuildRequires:  python3-acoustid
+BuildRequires:  python3-audioread
+BuildRequires:  python3-xxhash
+BuildRequires:  python3-gobject
 BuildRequires:  pkgconfig(gtk4) >= 4.16.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8.0
 
@@ -39,8 +49,8 @@ Requires:       python3-gobject >= 3.51.0
 Requires:       python3-pillow
 Requires:       python3-mutagen
 Requires:       python3-filetype
-Requires:       python3-pyacoustid
-Requires:       chromaprint-tools
+Requires:       python3-acoustid
+Requires:       python3-audioread
 Requires:       python3-aiohttp
 Requires:       python3-aiohttp-retry
 Requires:       python3-aiofiles
