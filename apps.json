@@ -48,6 +48,12 @@
         "instance": ""
     },
     {
+        "app_name": "coronet",
+        "upstream_repo": "petsoi/coronet",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "crosspipe",
         "upstream_repo": "dp0sk/Crosspipe",
         "provider": "github",
