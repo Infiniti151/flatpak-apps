@@ -16,6 +16,7 @@
         changelog_scraper.py get-changelog <provider> <instance> <repo> <app_id> <version>
         changelog_scraper.py <provider> <instance> <repo> <app_id> <version> (Legacy fallback)
 """
+import os
 import sys
 import re
 import json
@@ -24,10 +25,14 @@ import urllib.parse
 import xml.etree.ElementTree as ET
 import concurrent.futures
 
-def fetch_url(url):
+def fetch_url(url, timeout=1.5):
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    token = os.environ.get("GITHUB_TOKEN")
+    if token and urllib.parse.urlparse(url).hostname == "api.github.com":
+        headers['Authorization'] = f"Bearer {token}"
     try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=1.5) as response:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=timeout) as response:
             return response.read().decode('utf-8')
     except Exception:
         return None
@@ -136,7 +141,7 @@ def get_api_changelog(provider, instance, repo, target_ver):
     url, extract_info = api_config[provider]
 
     try:
-        raw = fetch_url(url)
+        raw = fetch_url(url, timeout=8)
         if not raw:
             return None
 
@@ -172,7 +177,7 @@ def main():
 
         # 1. PRIMARY: Flathub Appstream API
         try:
-            raw = fetch_url(f"https://flathub.org/api/v2/appstream/{app_id}")
+            raw = fetch_url(f"https://flathub.org/api/v2/appstream/{app_id}", timeout=8)
             if raw:
                 data = json.loads(raw)
                 releases = data.get("releases", [])

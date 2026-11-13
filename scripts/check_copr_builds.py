@@ -5,9 +5,10 @@
     ---
     COPR Build Status Monitor & Telegram Notifier
 
-    Monitors COPR build progress across specified chroots, handles periodic polling,
-    converts SVG/PNG app icons, builds formatted monospace status tables, and delivers
-    comprehensive build alerts directly to Telegram.
+    Monitors COPR build progress across specified chroots, polls all builds
+    together against one shared deadline, converts SVG/PNG app icons, builds
+    formatted monospace status tables, and delivers comprehensive build alerts
+    directly to Telegram.
 
     Usage:
         python3 scripts/check_copr_builds.py <builds_file.txt>
@@ -40,32 +41,52 @@ SUPPORTED = {
     "fedora-rawhide-x86_64",
 }
 
-POLL_INTERVAL = 180  # 3 min
-MAX_POLLS = 10       # 30 min total
+# States after which a build will not change anymore.
+TERMINAL_STATES = {"succeeded", "failed", "canceled", "skipped"}
+
+POLL_INTERVAL = 180      # 3 min between polling rounds
+MAX_WAIT = 30 * 60       # 30 min shared deadline for ALL builds
+
+
+def get_json(url, tries=3):
+    """GET a JSON document, retrying transient request errors."""
+    for i in range(tries):
+        try:
+            res = requests.get(url, timeout=30)
+            res.raise_for_status()
+            return res.json()
+        except requests.RequestException:
+            if i == tries - 1:
+                raise
+            time.sleep(5 * (i + 1))
 
 
 def get_build(build_id):
-    res = requests.get(f"{COPR_API}/build/{build_id}", timeout=30)
-    res.raise_for_status()
-    return res.json()
+    return get_json(f"{COPR_API}/build/{build_id}")
 
 
 def get_chroot_state(build_id, chroot):
     try:
-        res = requests.get(
-            f"{COPR_API}/build-chroot?build_id={build_id}&chrootname={chroot}",
-            timeout=30,
+        data = get_json(
+            f"{COPR_API}/build-chroot?build_id={build_id}&chrootname={chroot}"
         )
-        res.raise_for_status()
-        return res.json().get("state", "unknown")
+        return data.get("state", "unknown")
     except Exception:
         return "unknown"
 
 
+def get_chroot_states(build_id):
+    return {chroot: get_chroot_state(build_id, chroot) for chroot in CHROOTS}
+
+
 def get_icon_url(readme, app):
-    pattern = rf"\|\s*{re.escape(app)}\s*\|.*?<img src=\"([^\"]+)\""
-    match = re.search(pattern, readme, re.DOTALL | re.IGNORECASE)
-    return match.group(1) if match else None
+    """Finds the <img src> inside the README table row of `app` (row only)."""
+    row_pattern = rf"^\|\s*{re.escape(app)}\s*\|.*$"
+    row = re.search(row_pattern, readme, re.IGNORECASE | re.MULTILINE)
+    if not row:
+        return None
+    img = re.search(r'<img src="([^"]+)"', row.group(0))
+    return img.group(1) if img else None
 
 
 def fetch_icon_png(icon_url):
@@ -134,25 +155,11 @@ def build_table(states):
     return f"\n<pre>{html.escape(table_str)}</pre>"
 
 
-def wait_for_completion(build_id):
-    states = {}
-    for _ in range(MAX_POLLS):
-        build = get_build(build_id)
-        overall = build["state"]
-
-        for chroot in CHROOTS:
-            states[chroot] = get_chroot_state(build_id, chroot)
-
-        if overall in ("succeeded", "failed"):
-            return overall, states
-
-        time.sleep(POLL_INTERVAL)
-
-    return "timeout", states
-
-
-def notify(token, chat_id, readme, app, old_ver, new_ver, build_id):
-    overall, states = wait_for_completion(build_id)
+def notify(token, chat_id, readme, build, overall, states):
+    app = build["app"]
+    old_ver = build["old_ver"]
+    new_ver = build["new_ver"]
+    build_id = build["build_id"]
 
     supported_failed = any(states.get(c) == "failed" for c in SUPPORTED)
     fedora43_failed = states.get("fedora-43-x86_64") == "failed"
@@ -181,7 +188,7 @@ def notify(token, chat_id, readme, app, old_ver, new_ver, build_id):
         lines.append(build_table(states))
 
     lines.extend([
-        f"<b>Build ID:</b> <code>{build_id}</code>",
+        f"<b>Build ID:</b> <code>{html.escape(build_id)}</code>",
         f'<a href="{url}">View Build on Copr</a>',
     ])
 
@@ -194,9 +201,81 @@ def notify(token, chat_id, readme, app, old_ver, new_ver, build_id):
             send_photo(token, chat_id, photo_buf, message)
             return
         except Exception as e:
-            print(f"Warning: Failed to send icon photo ({e}), falling back to text.", file=sys.stderr)
+            print(
+                f"Warning: Failed to send icon photo for {app} ({e}), "
+                "falling back to text.",
+                file=sys.stderr,
+            )
 
     send_message(token, chat_id, message)
+
+
+def parse_builds(path):
+    """Reads `app|old_ver|new_ver|build_id` lines, skipping blank/bad ones."""
+    builds = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        parts = line.strip().split("|")
+        if len(parts) != 4:
+            print(f"Warning: skipping malformed line: {line!r}", file=sys.stderr)
+            continue
+        app, old_ver, new_ver, build_id = parts
+        builds.append({
+            "app": app,
+            "old_ver": old_ver,
+            "new_ver": new_ver,
+            "build_id": build_id,
+        })
+    return builds
+
+
+def safe_notify(token, chat_id, readme, build, overall, states):
+    """Sends one notification; returns False instead of raising on failure."""
+    try:
+        notify(token, chat_id, readme, build, overall, states)
+        return True
+    except Exception as e:
+        print(f"Error: notification failed for {build['app']}: {e}", file=sys.stderr)
+        return False
+
+
+def monitor(token, chat_id, readme, builds):
+    """
+    Polls every pending build each round and notifies as soon as one finishes.
+    Whatever is still pending at the shared deadline is reported as a timeout.
+    Returns the number of failed notifications.
+    """
+    pending = {b["build_id"]: b for b in builds}
+    notify_failures = 0
+    deadline = time.monotonic() + MAX_WAIT
+
+    while pending:
+        for build_id in list(pending): # NOSONAR “copy needed: dict is modified in loop"
+            try:
+                overall = get_build(build_id).get("state", "unknown")
+            except Exception as e:
+                # Keep the build pending and try again next round.
+                print(f"Warning: could not read build {build_id}: {e}", file=sys.stderr)
+                continue
+
+            if overall in TERMINAL_STATES:
+                build = pending.pop(build_id)
+                states = get_chroot_states(build_id)
+                if not safe_notify(token, chat_id, readme, build, overall, states):
+                    notify_failures += 1
+
+        remaining = deadline - time.monotonic()
+        if not pending or remaining <= 0:
+            break
+        time.sleep(min(POLL_INTERVAL, remaining))
+
+    for build_id, build in pending.items():
+        states = get_chroot_states(build_id)
+        if not safe_notify(token, chat_id, readme, build, "timeout", states):
+            notify_failures += 1
+
+    return notify_failures
 
 
 def main():
@@ -206,14 +285,14 @@ def main():
     readme_path = pathlib.Path("README.md")
     readme = readme_path.read_text(encoding="utf-8") if readme_path.exists() else ""
 
-    builds_file = pathlib.Path(sys.argv[1])
+    builds = parse_builds(pathlib.Path(sys.argv[1]))
+    if not builds:
+        print("No builds to monitor.")
+        return
 
-    for line in builds_file.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-
-        app, old_ver, new_ver, build_id = line.strip().split("|")
-        notify(token, chat_id, readme, app, old_ver, new_ver, build_id)
+    failures = monitor(token, chat_id, readme, builds)
+    if failures:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
