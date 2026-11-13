@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           wildcard
-Version:        0
+Version:        0.3.5
 Release:        1%{?dist}
 Summary:        Test your regular expressions
 License:        GPL-3.0-or-later
@@ -73,3 +73,14 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.5-1
+- Bigger release:
+- Added highlighting of matched regex groups in text view.
+- Added match information (overall match and groups) to the sidebar
+- Quick reference panel now available as a dialog
+- Updated translations
+- If you would like to come with suggestions, report bugs, translate the app, or contribute otherwise, feel free to reach out!
+
