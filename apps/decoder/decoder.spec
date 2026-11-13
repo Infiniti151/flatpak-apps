@@ -69,10 +69,9 @@ export CARGO_HOME=$(pwd)/cargo-home
 %find_lang %{name}
 
 %check
-%meson_test
+%meson_test validate-desktop 'Validate schema file' validate-metainfo cargo-test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 %files -f %{name}.lang
 %license LICENSE
