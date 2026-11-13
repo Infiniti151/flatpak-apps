@@ -28,6 +28,8 @@ BuildRequires:  glibc-langpack-en
 BuildRequires:  python3-devel
 BuildRequires:  python3-pytest
 BuildRequires:  python3-pytest-asyncio
+BuildRequires:  pkgconfig(gtk4) >= 4.16.0
+BuildRequires:  pkgconfig(libadwaita-1) >= 1.8.0
 
 Requires:       gtk4 >= 4.16.0
 Requires:       libadwaita >= 1.8.0
