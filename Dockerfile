@@ -22,6 +22,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     'pkgconfig(glib-2.0)' \
     'pkgconfig(gtk4)' \
     'pkgconfig(libadwaita-1)' \
+    'pkgconfig(librsvg-2.0)' \
     appstream \
     cairo-devel \
     cargo \
