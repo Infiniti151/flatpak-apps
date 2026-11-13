@@ -40,8 +40,8 @@ SUPPORTED = {
     "fedora-rawhide-x86_64",
 }
 
-POLL_INTERVAL = 300  # 5 min
-MAX_POLLS = 6        # 30 min total
+POLL_INTERVAL = 180  # 3 min
+MAX_POLLS = 10       # 30 min total
 
 
 def get_build(build_id):
