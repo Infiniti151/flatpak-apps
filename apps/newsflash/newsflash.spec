@@ -1,12 +1,11 @@
 %if 0%{?eln}
 %global         _empty_manifest_terminate_build 0
 %endif
-%global         app_id          io.gitlab.news_flash.NewsFlash
-%global         forgeurl        https://gitlab.com/news-flash/news_flash_gtk
-%global         tag             v.%{version}
+%global         app_id              io.gitlab.news_flash.NewsFlash
+%global         forgeurl            https://gitlab.com/news-flash/news_flash_gtk
+%global         tag                 v.%{version}
 
-%global         __brp_mangle_shebangs %{nil}
-%global         debug_package %{nil}
+%global         debug_package       %{nil}
 %global         __spec_install_post /usr/lib/rpm/brp-compress
 
 Name:           newsflash
@@ -86,6 +85,9 @@ upx --best --lzma %{buildroot}%{_bindir}/%{app_id}
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+%if 0%{?fedora} && ! 0%{?eln}
+upx -t %{buildroot}%{_bindir}/%{app_id}
+%endif
 
 %files -f %{name}.lang
 %license LICENSE
