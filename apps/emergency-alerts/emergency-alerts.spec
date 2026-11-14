@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           emergency-alerts
-Version:        0
+Version:        2.1.0
 Release:        1%{?dist}
 Summary:        Receive emergency alerts
 License:        GPL-3.0-or-later
@@ -71,3 +71,15 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Sat Nov 14 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.1.0-1
+- Enable alerts for your current location and the app will follow you, showing alerts as long as you're in a supported area. This release also brings quality-of-life improvements that make it easier to add locations and share alert information.
+- Highlights:
+- Get alerts for your current location
+- Select and copy alert descriptions to share them easily
+- Click a fact to copy it to the clipboard
+- Add locations more easily with the new location dialog
+- Added metadata about supported device form factors
+
