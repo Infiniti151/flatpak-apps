@@ -6,7 +6,7 @@ License:        MIT
 
 BuildArch:      noarch
 
-Source0:        https://raw.githubusercontent.com/Infiniti151/flatpak-apps/dev/macros/macros.desktop
+Source0:        https://raw.githubusercontent.com/Infiniti151/flatpak-apps/main/macros/macros.desktop
 
 %description
 Provides shorthand path macros (%_appsdir, %_scalableiconsdir, %_searchprovidersdir, etc.) for GNOME and GTK RPM packaging on Fedora and COPR.
