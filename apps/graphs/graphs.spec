@@ -60,6 +60,7 @@ Requires:       python3-gobject
 Requires:       python3-numpy
 Requires:       python3-scipy
 Requires:       python3-matplotlib
+Requires:       python3-matplotlib-gtk4
 Requires:       python3-sympy
 Requires:       python3-numexpr
 Requires:       python3-cycler
