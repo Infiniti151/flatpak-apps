@@ -22,6 +22,7 @@ BuildRequires:  meson >= 1.2.0
 BuildRequires:  gcc
 BuildRequires:  vala
 BuildRequires:  gettext
+BuildRequires:  itstool
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  appstream
@@ -86,7 +87,7 @@ export PYTHONPATH="$PWD/pydeps"
 # Install the bundled wheel into the buildroot
 pip3 install --no-deps --no-index --ignore-installed --prefix=%{buildroot}%{_prefix} %{SOURCE1}
 
-%find_lang %{name}
+%find_lang %{name} --with-gnome
 %py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name}/
 
 %check
