@@ -68,7 +68,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.xml
 %{_datadir}/dbus-1/services/*.service
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 
 %changelog
 * Wed Oct 21 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.7-1

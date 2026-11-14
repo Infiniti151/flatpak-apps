@@ -118,7 +118,8 @@ make test
 %{_bindir}/%{name}
 %{_datadir}/applications/%{app_id}.desktop
 %{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 %{_datadir}/nautilus-python/extensions/%{name}-extension.py
 %{_metainfodir}/%{app_id}.metainfo.xml
 

@@ -116,7 +116,8 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.
 %{python3_sitelib}/gio_pyio/
 %{python3_sitelib}/gio_pyio-*.dist-info/
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/mime/packages/*.xml

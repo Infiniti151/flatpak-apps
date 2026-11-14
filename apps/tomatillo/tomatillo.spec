@@ -67,7 +67,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/tomatillo/
 %{_datadir}/applications/*.desktop
 %{_metainfodir}/*.xml
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
 

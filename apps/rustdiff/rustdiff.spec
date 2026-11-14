@@ -97,7 +97,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 %{_metainfodir}/*.metainfo.xml
 
 %changelog

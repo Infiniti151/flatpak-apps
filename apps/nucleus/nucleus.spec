@@ -61,7 +61,8 @@ Nucleus gives you the ability to view the periodic table of the elements, as wel
 %{_metainfodir}/*.xml
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/dbus-1/services/*.service
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 
 %changelog
 * Tue May 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v3-1

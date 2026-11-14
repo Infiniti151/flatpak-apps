@@ -94,7 +94,8 @@ upx -t %{buildroot}%{_bindir}/%{app_id}
 %doc README.md
 %{_bindir}/%{app_id}
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 %{_datadir}/dbus-1/services/*.service
 %{_metainfodir}/*.xml
 
