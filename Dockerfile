@@ -35,6 +35,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     gettext \
     gobject-introspection \
     gtk-update-icon-cache \
+    itstool \
     meson \
     python3-devel \
     python3-gobject \
