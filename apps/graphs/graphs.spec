@@ -50,6 +50,7 @@ BuildRequires:  python3-numpy
 BuildRequires:  python3-scipy
 BuildRequires:  python3-matplotlib
 BuildRequires:  python3-sympy
+BuildRequires:  python3-numexpr
 BuildRequires:  python3-pytest
 
 Requires:       hicolor-icon-theme
@@ -60,6 +61,8 @@ Requires:       python3-numpy
 Requires:       python3-scipy
 Requires:       python3-matplotlib
 Requires:       python3-sympy
+Requires:       python3-numexpr
+Requires:       python3-cycler
 
 Provides:       bundled(python3dist(gio-pyio)) = %{gio_pyio_ver}
 
