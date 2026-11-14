@@ -40,6 +40,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     python3-devel \
     python3-gobject \
     python3-matplotlib \
+    python3-numexpr \
     python3-numpy \
     python3-pip \
     python3-pytest \
