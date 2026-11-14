@@ -6,7 +6,7 @@
 %global         tag             v%{version}
 
 Name:           mundi
-Version:        1.1.0
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Learn geography
 License:        GPL-3.0-or-later
@@ -65,6 +65,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_metainfodir}/*.xml
 
 %changelog
+* Sat Nov 14 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.2.0-1
+- New exercise: capitals of the regions of Italy
+- Complete Galician, Japanese, Polish, Spanish and Turkish translations
+
 * Thu Oct 29 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.0-1
 - Softer colors for correct and wrong answers on the map
 - Fix the zoomed map drawing over the quiz prompt
