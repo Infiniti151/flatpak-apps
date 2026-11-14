@@ -4,7 +4,7 @@
 %global         colorthief_ver  0.2.1
 
 Name:           pigment
-Version:        0.5.6
+Version:        0
 Release:        1%{?dist}
 Summary:        Get color palettes from images
 License:        GPL-3.0-or-later
@@ -83,7 +83,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Sat Nov 14 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.5.6-1
-- Test
