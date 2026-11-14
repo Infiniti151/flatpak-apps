@@ -8,6 +8,7 @@ Release:        1%{?dist}
 Summary:        Rip CDs with ease
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps
+
 BuildArch:      noarch
 
 %forgemeta
@@ -38,10 +39,11 @@ BuildRequires:  pkgconfig(libadwaita-1)
 Requires:       gtk4
 Requires:       hicolor-icon-theme
 Requires:       libadwaita
-Requires:       python3
 Requires:       cdrdao
 Requires:       cd-discid
 Requires:       gstreamer1-plugins-ugly
+Requires:       python3
+Requires:       python3-gobject
 Requires:       python3-pycdio
 Requires:       python3-discid
 Requires:       python3-musicbrainzngs

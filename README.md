@@ -11,6 +11,9 @@
 
 Collection of Flatpak apps packaged as native RPMs for Fedora Linux, available through [Copr](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/).
 
+> [!IMPORTANT]
+> Support is primarily targeted at current Fedora releases and Rawhide. Older supported Fedora releases (such as the lowest active version) and Fedora ELN are provided on a best-effort basis and are not treated as first-class targets.
+
 ## Why
 
 <img src="images/banner.png">
@@ -22,9 +25,9 @@ AppImage avoids the runtime by bundling libraries inside each app, and it runs f
 These RPMs are ordinary packages that link against the libraries Fedora already provides, so you download only the app (plus any packages you don't already have) and updates come through `dnf`.
 
 > [!NOTE]
-> Some packages ship binaries compressed with [UPX](https://upx.github.io/) to reduce installed size. This saves disk space but adds a startup delay while the binary decompresses.
+> **UPX Compression:** Some packages ship binaries compressed with [UPX](https://upx.github.io/) to reduce installed size. This saves disk space, though it adds a slight startup delay while the binary decompresses.
 >
-> Native RPMs run without Flatpak's sandbox and depend on Fedora's library versions, so a Fedora update can occasionally require a rebuild.
+> **No Sandboxing & Rebuilds:** Native RPMs run without Flatpak's sandbox and link directly against Fedora's system libraries, so major Fedora updates can occasionally require a package rebuild.
 
 ## App List
 
@@ -60,6 +63,7 @@ These RPMs are ordinary packages that link against the libraries Fedora already 
 | netpeek | <p align="center"><img src="https://raw.githubusercontent.com/ZingyTomato/NetPeek/master/data/icons/hicolor/scalable/apps/io.github.zingytomato.netpeek.svg" width="48" style="vertical-align:middle"></p> | [ZingyTomato/NetPeek](https://github.com/ZingyTomato/NetPeek) | 0.3.5 | [![COPR Status](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/netpeek/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/netpeek/) |
 | newsflash | <p align="center"><img src="https://gitlab.com/news-flash/news_flash_gtk/-/raw/main/data/icons/hicolor/io.gitlab.news_flash.NewsFlash.svg" width="48" style="vertical-align:middle"></p> | [news-flash/news_flash_gtk](https://gitlab.com/news-flash/news_flash_gtk) | 6.0.2 | [![COPR Status](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/newsflash/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/newsflash/) |
 | nucleus | <p align="center"><img src="https://codeberg.org/lo-vely/nucleus/raw/branch/master/data/icons/hicolor/scalable/apps/page.codeberg.lo_vely.Nucleus.svg" width="48" style="vertical-align:middle"></p> | [lo-vely/nucleus](https://codeberg.org/lo-vely/nucleus) | 3 | [![COPR Status](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/nucleus/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/nucleus/) |
+| pigment | <p align="center"><img src="https://raw.githubusercontent.com/Jeffser/Pigment/main/data/icons/hicolor/scalable/apps/com.jeffser.Pigment.svg" width="48" style="vertical-align:middle"></p> | [Jeffser/Pigment](https://github.com/Jeffser/Pigment) | 0.5.6 | [![COPR Status](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/pigment/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/pigment/) |
 | planify | <p align="center"><img src="https://raw.githubusercontent.com/alainm23/planify/main/data/icons/hicolor/scalable/apps/io.github.alainm23.planify.svg" width="48" style="vertical-align:middle"></p> | [alainm23/planify](https://github.com/alainm23/planify) | 4.20.0 | [![COPR Status](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/planify/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/planify/) |
 | pods | <p align="center"><img src="https://raw.githubusercontent.com/marhkb/Pods/main/data/icons/com.github.marhkb.Pods.svg" width="48" style="vertical-align:middle"></p> | [marhkb/Pods](https://github.com/marhkb/Pods) | 3.3.0 | [![COPR Status](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/pods/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/pods/) |
 | pully | <p align="center"><img src="https://codeberg.org/petsoi/pully/raw/branch/main/data/icons/page.codeberg.petsoi.pully.svg" width="48" style="vertical-align:middle"></p> | [petsoi/pully](https://codeberg.org/petsoi/pully) | 0.2.2 | [![COPR Status](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/pully/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/pully/) |
@@ -76,9 +80,9 @@ These RPMs are ordinary packages that link against the libraries Fedora already 
 | words-game | <p align="center"><img src="https://codeberg.org/petsoi/words/raw/branch/main/data/icons/page.codeberg.petsoi.words.svg" width="48" style="vertical-align:middle"></p> | [petsoi/words](https://codeberg.org/petsoi/words) | 0.8.1 | [![COPR Status](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/words-game/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/words-game/) |
 
 > [!NOTE]
-> The failed builds are only for Fedora 43 because these applications require newer dependencies (like GTK 4.22+ and Libadwaita 1.9+) not available in the Fedora 43 repos.
+> The failed builds are only for Fedora 43 and ELN because these applications require newer dependencies (such as GTK 4.22+ and Libadwaita 1.9+) that are not available in those repositories.
 >
-> **Recommendation:** Upgrade to **Fedora 45** or use the **Flatpak** versions for these specific apps.
+> **Recommendation:** Upgrade to a newer Fedora release or use the **Flatpak** versions for these specific apps.
 
 ## Installation
 **1. Enable COPR repo**

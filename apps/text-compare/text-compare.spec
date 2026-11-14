@@ -1,20 +1,20 @@
-%global app_id         io.github.josephmawa.TextCompare
-%global forgeurl       https://github.com/josephmawa/TextCompare
-%global tag            v%{version}
+%global         app_id         io.github.josephmawa.TextCompare
+%global         forgeurl       https://github.com/josephmawa/TextCompare
+%global         tag            v%{version}
 
-Name:                 text-compare
-Version:              0.1.12
-Release:              1%{?dist}
-Summary:              Text snippet comparison
-License:              GPL-3.0-or-later
-BugURL:               https://github.com/Infiniti151/flatpak-apps
+Name:           text-compare
+Version:        0.1.12
+Release:        1%{?dist}
+Summary:        Text snippet comparison
+License:        GPL-3.0-or-later
+BugURL:         https://github.com/Infiniti151/flatpak-apps
 
-BuildArch:            noarch
+BuildArch:      noarch
 
 %forgemeta
 
-URL:                  %{forgeurl}
-Source0:              %{forgesource}
+URL:            %{forgeurl}
+Source0:        %{forgesource}
 
 BuildRequires:  meson
 BuildRequires:  gcc

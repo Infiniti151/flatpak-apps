@@ -31,9 +31,10 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-pip
 
 Requires:       gtk4
-Requires:       hicolor-icon-theme
 Requires:       libadwaita
+Requires:       hicolor-icon-theme
 Requires:       python3
+Requires:       python3-gobject
 
 %description
 Calligraphy turns short texts into large, impressive banners made up of ASCII Characters, ready to be copied or exported to images. Spice up your online conversations by adding some extra oompf to your messages!
