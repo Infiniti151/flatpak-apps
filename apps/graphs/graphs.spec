@@ -18,7 +18,7 @@ Source0:        %{forgesource}
 Source1:        https://files.pythonhosted.org/packages/py3/g/gio_pyio/gio_pyio-%{gio_pyio_ver}-py3-none-any.whl
 
 # Build tools
-BuildRequires:  meson >= 1.10.0
+BuildRequires:  meson >= 1.2.0
 BuildRequires:  gcc
 BuildRequires:  vala
 BuildRequires:  gettext
