@@ -78,6 +78,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "emergency-alerts",
+        "upstream_repo": "leolost2605/emergency-alerts",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "exercise-timer",
         "upstream_repo": "World/exercise-timer",
         "provider": "gitlab",
