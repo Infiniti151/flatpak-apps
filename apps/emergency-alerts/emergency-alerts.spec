@@ -50,7 +50,7 @@ Features:
 %forgesetup
 
 %build
-%meson
+%meson -Dadwaita=true
 %meson_build
 
 %install
