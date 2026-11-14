@@ -31,6 +31,7 @@ BuildRequires:  glibc-langpack-en
 BuildRequires:  gobject-introspection
 
 # Libraries
+BuildRequires:  pkgconfig(gee-0.8)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gobject-2.0)
 BuildRequires:  pkgconfig(gio-2.0)
