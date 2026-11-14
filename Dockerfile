@@ -18,6 +18,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpmlint \
     sccache \
     # --- graphs dependencies --- \
+    'pkgconfig(gee-0.8)' \
     'pkgconfig(gio-2.0)' \
     'pkgconfig(glib-2.0)' \
     'pkgconfig(gobject-2.0)' \
