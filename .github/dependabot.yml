@@ -12,5 +12,5 @@ updates:
         patterns:
           - "*"
     commit-message:
-      prefix: "chore"
+      prefix: "ci(deps)"
     target-branch: "main"

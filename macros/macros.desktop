@@ -1,0 +1,8 @@
+# Custom desktop packaging shortcuts
+%_appsdir               %{_datadir}/applications
+%_scalableiconsdir      %{_datadir}/icons/hicolor/scalable/apps
+%_symboliciconsdir      %{_datadir}/icons/hicolor/symbolic/apps
+%_hicolordir            %{_datadir}/icons/hicolor
+%_gschemasdir           %{_datadir}/glib-2.0/schemas
+%_dbusservicesdir       %{_datadir}/dbus-1/services
+%_searchprovidersdir    %{_datadir}/gnome-shell/search-providers

@@ -180,6 +180,12 @@
         "instance": ""
     },
     {
+        "app_name": "pigment",
+        "upstream_repo": "Jeffser/Pigment",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "planify",
         "upstream_repo": "alainm23/planify",
         "provider": "github",

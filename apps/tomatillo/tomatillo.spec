@@ -36,9 +36,11 @@ BuildRequires:  appstream
 BuildRequires:  gtk-update-icon-cache
 
 # Runtime Requirements
-Requires:  gtk4
-Requires:  libadwaita
-Requires:  hicolor-icon-theme
+Requires:       gtk4
+Requires:       libadwaita
+Requires:       hicolor-icon-theme
+Requires:       python3
+Requires:       python3-gobject
 
 %description
 Tomatillo is a Pomodoro Timer app for your productivity tasks. Work for a set time, then take a short break. After some cycles, take a longer break.
