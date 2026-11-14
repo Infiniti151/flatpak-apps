@@ -108,6 +108,12 @@
         "instance": ""
     },
     {
+        "app_name": "graphs",
+        "upstream_repo": "World/Graphs",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "griddle",
         "upstream_repo": "petsoi/griddle",
         "provider": "codeberg",
