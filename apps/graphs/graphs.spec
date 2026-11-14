@@ -91,7 +91,11 @@ pip3 install --no-deps --no-index --ignore-installed --prefix=%{buildroot}%{_pre
 %py3_shebang_fix %{buildroot}%{_bindir}/%{name}
 
 %check
-export PYTHONPATH="%{buildroot}%{python3_sitelib}:$PWD/pydeps"
+find %{buildroot} \( -name 'Graphs-1.typelib' -o -name 'libgraphs*' \)
+cp -a tests %{_vpath_builddir}/run_tests
+export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
+export GI_TYPELIB_PATH=%{buildroot}%{_libdir}/girepository-1.0
+export PYTHONPATH=%{buildroot}%{python3_sitelib}:%{buildroot}%{python3_sitearch}
 %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
