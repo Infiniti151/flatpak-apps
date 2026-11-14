@@ -27,6 +27,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     gettext \
     glib2-devel \
     gtk-update-icon-cache \
+    hicolor-icon-theme \
     meson \
     ninja-build \
     python3-devel \
