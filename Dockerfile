@@ -16,7 +16,25 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache && \
+    sccache \
+    # --- emergency-alerts dependencies --- \
+    'pkgconfig(granite-7)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(json-glib-1.0)' \
+    'pkgconfig(libadwaita-1)' \
+    'pkgconfig(libportal)' \
+    'pkgconfig(libsoup-3.0)' \
+    'pkgconfig(shumate-1.0)' \
+    appstream \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gcc \
+    gettext \
+    glib2-devel \
+    gtk-update-icon-cache \
+    meson \
+    ninja-build \
+    valac && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
