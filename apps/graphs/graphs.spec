@@ -4,7 +4,7 @@
 %global         gio_pyio_ver    0.0.6
 
 Name:           graphs
-Version:        2.0.9
+Version:        0
 Release:        1%{?dist}
 Summary:        Plot and manipulate data
 License:        GPL-3.0-or-later
@@ -122,7 +122,3 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.
 %{_datadir}/mime/packages/*.xml
 %{_mandir}/man1/graphs.1*
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Sat Nov 14 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.0.9-1
-- Test

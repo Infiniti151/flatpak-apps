@@ -16,37 +16,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache \
-    # --- graphs dependencies --- \
-    'pkgconfig(gee-0.8)' \
-    'pkgconfig(gio-2.0)' \
-    'pkgconfig(glib-2.0)' \
-    'pkgconfig(gobject-2.0)' \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(libadwaita-1)' \
-    'pkgconfig(libgsf-1)' \
-    'pkgconfig(libxml-2.0)' \
-    'pkgconfig(sqlite3)' \
-    appstream \
-    blueprint-compiler \
-    desktop-file-utils \
-    forge-srpm-macros \
-    gcc \
-    gettext \
-    gobject-introspection \
-    gtk-update-icon-cache \
-    itstool \
-    meson \
-    python3-devel \
-    python3-gobject \
-    python3-matplotlib \
-    python3-numexpr \
-    python3-numpy \
-    python3-pip \
-    python3-pytest \
-    python3-scipy \
-    python3-sympy \
-    vala && \
+    sccache && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
