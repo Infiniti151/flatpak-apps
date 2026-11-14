@@ -17,7 +17,7 @@ BuildArch:      noarch
 URL:            %{forgeurl}
 Source0:        %{forgesource}
 # colorthief is not packaged in Fedora; bundle the pure-Python wheel
-Source1:        https://files.pythonhosted.org/packages/py2.py3/c/colorthief/colorthief-%{colorthief_ver}-py2.py3-none-any.whl
+Source1:        https://files.pythonhosted.org/packages/56/18/be03b7058e65f9df479b14e7af4e73945ce311e07aaad45cf2536e14791a/colorthief-%{colorthief_ver}-py2.py3-none-any.whl
 
 BuildRequires:  meson >= 1.0.0
 BuildRequires:  ninja-build
