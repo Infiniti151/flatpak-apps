@@ -4,6 +4,7 @@
 
 ## ⚒️ Type of Change
 - [ ] **New App:** Adding a brand new application.
+- [ ] **New Library:** Adding a new library (not available in Fedora repos) required to build an app.
 - [ ] **Bug Fix:** Fixing a broken build or dependency issue.
 - [ ] **Optimization:** Cleaning up the spec file or improving the build process.
 - [ ] **Metadata Update:** Updating spec file metadata such as summary, license, etc.
