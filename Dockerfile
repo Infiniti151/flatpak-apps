@@ -24,6 +24,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     appstream \
     blueprint-compiler \
     desktop-file-utils \
+    desktop-rpm-macros \
     forge-srpm-macros \
     gettext \
     glib2-devel \
