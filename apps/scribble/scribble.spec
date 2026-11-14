@@ -4,7 +4,7 @@
 %global         __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*$
 
 Name:           scribble
-Version:        1.12.5
+Version:        1.13.1
 Release:        1%{?dist}
 Summary:        Take handwritten notes and homework
 License:        GPL-3
@@ -93,6 +93,11 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 
 
 %changelog
+* Sat Nov 14 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.13.1-1
+- A bug fix release for the page menus and Fit Page.
+- A page's own menu changes the background or imports a PDF into that page, even when another page became active meanwhile
+- Fit Page frames the active page instead of always returning to the first page
+
 * Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.12.5-1
 - A release for the narrow window layout.
 - On a narrow window the left rail gives way to a panel button in the header bar; it opens the panels with a back button and a switcher for Open, Stickers, Pictures, Objects, Animation and Audio
