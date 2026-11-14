@@ -88,7 +88,7 @@ export PYTHONPATH="$PWD/pydeps"
 pip3 install --no-deps --no-index --ignore-installed --prefix=%{buildroot}%{_prefix} %{SOURCE1}
 
 %find_lang %{name} --with-gnome
-%py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name}/
+%py3_shebang_fix %{buildroot}%{_bindir}/%{name}
 
 %check
 export PYTHONPATH="%{buildroot}%{python3_sitelib}:$PWD/pydeps"
@@ -106,7 +106,6 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{python3_sitelib}/graphs/
 %{python3_sitelib}/gio_pyio/
 %{python3_sitelib}/gio_pyio-*.dist-info/
-%{_datadir}/%{name}/
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
