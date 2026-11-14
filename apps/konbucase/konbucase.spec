@@ -81,7 +81,8 @@ rm -rf %{buildroot}%{_datadir}/vala/vapi/chcase.*
 %{_libdir}/libchcase.so
 %{_datadir}/applications/*.desktop
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 %{_metainfodir}/*.metainfo.xml
 
 %changelog

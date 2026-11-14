@@ -147,7 +147,8 @@ fi
 %{_bindir}/%{name}-magpie
 %{_datadir}/%{name}/
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.xml
 

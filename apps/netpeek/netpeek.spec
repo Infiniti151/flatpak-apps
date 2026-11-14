@@ -65,7 +65,8 @@ NetPeek is a simple network scanner that helps you discover active devices on yo
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
 %{_metainfodir}/*.xml
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 
 %changelog
 * Wed Oct 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.5-1

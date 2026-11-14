@@ -70,7 +70,8 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %doc readme.md
 %{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/*/apps/*
+%{_scalableiconsdir}/*.svg
+%{_hicolordir}/symbolic/apps/*.svg
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
 
