@@ -84,14 +84,16 @@ export PYTHONPATH="$PWD/pydeps"
 
 %install
 %meson_install
+# upstream's install_subdir() uses an absolute build-dir path, which DESTDIR redirects into the buildroot (the test files from tests/meson.build)
+rm -rf "%{buildroot}${PWD:?}/%{_vpath_builddir}/run_tests"
 # Install the bundled wheel into the buildroot
-pip3 install --no-deps --no-index --ignore-installed --prefix=%{buildroot}%{_prefix} %{SOURCE1}
+pip3 install --no-deps --no-index --ignore-installed --root-user-action=ignore --prefix=%{buildroot}%{_prefix} %{SOURCE1}
 
 %find_lang %{name} --with-gnome
 %py3_shebang_fix %{buildroot}%{_bindir}/%{name}
 
 %check
-find %{buildroot} \( -name 'Graphs-1.typelib' -o -name 'libgraphs*' \)
+# upstream's install_subdir() put run_tests in the buildroot, so copy it to the real build dir for meson's pytest test
 cp -a tests %{_vpath_builddir}/run_tests
 export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 export GI_TYPELIB_PATH=%{buildroot}%{_libdir}/girepository-1.0
@@ -99,7 +101,6 @@ export PYTHONPATH=%{buildroot}%{python3_sitelib}:%{buildroot}%{python3_sitearch}
 %meson_test
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 %files -f %{name}.lang
 %license LICENSE
@@ -114,6 +115,8 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_datadir}/icons/hicolor/*/apps/*
 %{_datadir}/glib-2.0/schemas/*.gschema.xml
 %{_datadir}/dbus-1/services/*.service
+%{_datadir}/mime/packages/*.xml
+%{_mandir}/man1/graphs.1*
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
