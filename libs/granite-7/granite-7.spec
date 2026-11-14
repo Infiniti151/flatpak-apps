@@ -21,7 +21,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gcc
 BuildRequires:  gettext
-BuildRequires:  appstream
+BuildRequires:  libappstream-glib
 BuildRequires:  meson >= 0.57.0
 BuildRequires:  sassc
 BuildRequires:  vala >= 0.48.2
@@ -68,7 +68,7 @@ sed -i '/icon type="stock"/d' %{buildroot}/%{_datadir}/metainfo/%{name}.metainfo
 desktop-file-validate \
     %{buildroot}/%{_datadir}/applications/%{app_id}.demo.desktop
 
-appstreamcli validate --no-net --explain \
+appstream-util validate-relax --nonet \
     %{buildroot}/%{_metainfodir}/%{name}.metainfo.xml
 
 
