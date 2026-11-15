@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           memerist
-Version:        2.6.1
+Version:        0
 Release:        1%{?dist}
 Summary:        A simple and modern meme editor
 License:        GPL-3.0-or-later
@@ -75,7 +75,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Sun Nov 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.6.1-1
-- Test
