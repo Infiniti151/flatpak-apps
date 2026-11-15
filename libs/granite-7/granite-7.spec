@@ -18,6 +18,7 @@ URL:            %{forgeurl}
 Source0:        %{forgesource}
 
 BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gcc
 BuildRequires:  gettext
@@ -66,7 +67,7 @@ sed -i '/icon type="stock"/d' %{buildroot}/%{_datadir}/metainfo/%{name}.metainfo
 
 %check
 desktop-file-validate \
-    %{buildroot}/%{_datadir}/applications/%{app_id}.demo.desktop
+    %{buildroot}/%{_appsdir}/%{app_id}.demo.desktop
 
 appstream-util validate-relax --nonet \
     %{buildroot}/%{_metainfodir}/%{name}.metainfo.xml
@@ -80,7 +81,7 @@ appstream-util validate-relax --nonet \
 %{_libdir}/libgranite-7.so.7.*
 %{_libdir}/girepository-1.0/Granite-7.0.typelib
 
-%{_datadir}/themes/Granite/
+%{_themesdir}/Granite/
 
 %{_metainfodir}/%{name}.metainfo.xml
 
@@ -92,8 +93,8 @@ appstream-util validate-relax --nonet \
 
 %{_includedir}/%{name}/
 
-%{_datadir}/applications/%{app_id}.demo.desktop
-%{_datadir}/icons/hicolor/*/apps/%{app_id}.svg
+%{_appsdir}/%{app_id}.demo.desktop
+%{_hicolordir}/*/apps/%{app_id}.svg
 %{_datadir}/gir-1.0/Granite-7.0.gir
 %{_datadir}/vala/vapi/%{name}.deps
 %{_datadir}/vala/vapi/%{name}.vapi

@@ -11,16 +11,16 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 
 ExclusiveArch:  x86_64
 
-Source0:        https://github.com/hkdb/aerion/releases/download/v%{version}/aerion-v%{version}-linux-x86_64
+Source0:        %{url}/releases/download/v%{version}/aerion-v%{version}-linux-x86_64
 Source1:        https://raw.githubusercontent.com/hkdb/aerion/main/brand/icon-beautyline.png
 Source2:        https://raw.githubusercontent.com/hkdb/aerion/main/build/linux/aerion.desktop
 Source3:        https://raw.githubusercontent.com/hkdb/aerion/main/LICENSE
 Source4:        https://raw.githubusercontent.com/hkdb/aerion/main/README.md
 
 BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-rpm-macros
 
-Requires:       desktop-file-utils
-Requires:       shared-mime-info
+Requires:       hicolor-icon-theme
 
 %description
 Aerion is a modern, lightweight email client inspired by Geary, focused on resource efficiency and a clean user experience.
@@ -35,31 +35,23 @@ done
 
 %install
 mkdir -p %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_datadir}/applications
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
+mkdir -p %{buildroot}%{_appsdir}
+mkdir -p %{buildroot}%{_hicolordir}/256x256/apps
 
-install -m 755 aerion-v%{version}-linux-x86_64 %{buildroot}%{_bindir}/aerion
-install -m 644 icon-beautyline.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
-install -m 644 aerion.desktop %{buildroot}%{_datadir}/applications/io.github.hkdb.Aerion.desktop
+install -m 755 %{name}-v%{version}-linux-x86_64 %{buildroot}%{_bindir}/%{name}
+install -m 644 icon-beautyline.png %{buildroot}%{_hicolordir}/256x256/apps/%{app_id}.png
+install -m 644 %{name}.desktop %{buildroot}%{_appsdir}/%{app_id}.desktop
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
-ldd %{buildroot}%{_bindir}/aerion
-
-%post
-update-desktop-database &> /dev/null || :
-update-mime-database %{_datadir}/mime &> /dev/null || :
-
-%postun
-update-desktop-database &> /dev/null || :
-update-mime-database %{_datadir}/mime &> /dev/null || :
+desktop-file-validate %{buildroot}%{_appsdir}/%{app_id}.desktop
+ldd %{buildroot}%{_bindir}/%{name}
 
 %files
 %license LICENSE
 %doc README.md
-%{_bindir}/aerion
-%{_datadir}/applications/io.github.hkdb.Aerion.desktop
-%{_datadir}/icons/hicolor/256x256/apps/io.github.hkdb.Aerion.png
+%{_bindir}/%{name}
+%{_appsdir}/%{app_id}.desktop
+%{_hicolordir}/256x256/apps/%{app_id}.png
 
 %changelog
 * Wed Nov 04 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.6-1

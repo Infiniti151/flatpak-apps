@@ -22,6 +22,7 @@ BuildRequires:  gcc
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  python3-devel
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 
 # Desktop Libraries (Development Files)
@@ -54,25 +55,26 @@ Tomatillo is a Pomodoro Timer app for your productivity tasks. Work for a set ti
 
 %install
 %meson_install
-python3 %{_rpmconfigdir}/redhat/pathfix.py -pni "%{__python3}" %{buildroot}%{_bindir}/tomatillo
+%py3_shebang_fix %{buildroot}%{_bindir}/%{name}
 %find_lang %{name}
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md
-%{_bindir}/tomatillo
-%{_datadir}/tomatillo/
-%{_datadir}/applications/*.desktop
+%{_bindir}/%{name}
+%{_datadir}/%{name}/
+%{_appsdir}/*.desktop
 %{_metainfodir}/*.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/dbus-1/services/*.service
+%{_symboliciconsdir}/*.svg
+%{_gschemasdir}/*.gschema.xml
+%{_dbusservicesdir}/*.service
 
 %changelog
 * Tue Jun 23 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.1.1-1

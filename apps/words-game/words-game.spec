@@ -25,6 +25,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 BuildRequires:  appstream
 BuildRequires:  libappstream-glib
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
 BuildRequires:  pkgconfig(gio-2.0) >= 2.66
@@ -54,18 +55,19 @@ export CARGO_HOME=$(pwd)/cargo-home
 %find_lang words
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f words.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/%{app_id}
 %{_datadir}/%{app_id}/
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 %{_metainfodir}/*.xml
 
 %changelog

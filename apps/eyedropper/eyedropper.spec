@@ -21,6 +21,7 @@ BuildRequires:  meson
 BuildRequires:  gcc
 BuildRequires:  rust
 BuildRequires:  cargo
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.22.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.9
@@ -53,21 +54,21 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 %{_metainfodir}/*.metainfo.xml
-%{_datadir}/dbus-1/services/*.service
+%{_dbusservicesdir}/*.service
 %{_datadir}/gnome-shell/search-providers/*.search-provider.ini
 
 %changelog

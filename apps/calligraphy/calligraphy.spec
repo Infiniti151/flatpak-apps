@@ -20,6 +20,7 @@ Source1:        https://files.pythonhosted.org/packages/a0/f2/2649b2acace54f861e
 BuildRequires:  meson >= 0.62.0
 BuildRequires:  ninja-build
 BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gettext
 BuildRequires:  git-core
@@ -61,19 +62,19 @@ pip3 install --no-deps --ignore-installed --target=%{buildroot}%{_datadir}/%{app
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstreamcli validate --no-net %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{app_id}/
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 %{_metainfodir}/*metainfo.xml
 
 

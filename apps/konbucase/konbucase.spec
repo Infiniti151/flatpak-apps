@@ -21,6 +21,7 @@ BuildRequires:  vala
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  git
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 
 # Desktop Libraries (Development Files)
@@ -79,10 +80,10 @@ rm -rf %{buildroot}%{_datadir}/vala/vapi/chcase.*
 %doc README.md
 %{_bindir}/%{app_id}
 %{_libdir}/libchcase.so
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 %{_metainfodir}/*.metainfo.xml
 
 %changelog

@@ -73,7 +73,7 @@ install -Dm755 target/release/%{name} \
 
 install -Dm644 \
     data/%{app_id}.desktop \
-    %{buildroot}%{_datadir}/applications/%{app_id}.desktop
+    %{buildroot}%{_appsdir}/%{app_id}.desktop
 
 install -Dm644 \
     data/%{app_id}.metainfo.xml \
@@ -81,14 +81,14 @@ install -Dm644 \
 
 install -Dm644 \
     data/icons/%{app_id}.svg \
-    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{app_id}.svg
+    %{buildroot}%{_scalableiconsdir}/%{app_id}.svg
 
 mkdir -p %{buildroot}%{_datadir}/%{name}/locales
 install -m644 locales/*.yml \
     %{buildroot}%{_datadir}/%{name}/locales/
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 %files
@@ -96,9 +96,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%{_datadir}/applications/*.desktop
+%{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 %{_metainfodir}/*.metainfo.xml
 
 %changelog

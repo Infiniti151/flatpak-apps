@@ -21,6 +21,7 @@ BuildRequires:  python3-devel
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gtk4)
@@ -51,18 +52,31 @@ Nucleus gives you the ability to view the periodic table of the elements, as wel
 
 %check
 %meson_test
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
+
+%files
+%license LICENSE.txt
+%doc README.md
+%{_bindir}/%{name}
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
+%{_metainfodir}/*.xml
+%{_scalableiconsdir}/*.svg
+%{_symboliciconsdir}/*.svg
 
 %files -f %{name}.lang
 %license COPYING
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%{_datadir}/applications/*.desktop
+%{_appsdir}/*.desktop
 %{_metainfodir}/*.xml
-%{_datadir}/glib-2.0/schemas/*.xml
-%{_datadir}/dbus-1/services/*.service
+%{_gschemasdir}/*.xml
+%{_dbusservicesdir}/*.service
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 
 %changelog
 * Tue May 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v3-1

@@ -1,6 +1,6 @@
-%global app_id        dev.geopjr.Collision
-%global forgeurl      https://codeberg.org/GeopJr/collision
-%global tag           v%{version}
+%global               app_id        dev.geopjr.Collision
+%global               forgeurl      https://codeberg.org/GeopJr/collision
+%global               tag           v%{version}
 
 Name:                 collision
 Version:              3.14.1
@@ -67,11 +67,11 @@ install -Dpm755 \
 
 install -Dpm644 \
     data/%{app_id}.gschema.xml \
-    %{buildroot}%{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
+    %{buildroot}%{_gschemasdir}/%{app_id}.gschema.xml
 
 install -Dpm644 \
     data/%{app_id}.desktop \
-    %{buildroot}%{_datadir}/applications/%{app_id}.desktop
+    %{buildroot}%{_appsdir}/%{app_id}.desktop
 
 install -Dpm644 \
     data/%{app_id}.metainfo.xml \
@@ -79,15 +79,15 @@ install -Dpm644 \
 
 install -Dpm644 \
     data/icons/%{app_id}.svg \
-    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{app_id}.svg
+    %{buildroot}%{_scalableiconsdir}/%{app_id}.svg
 
 install -Dpm644 \
     data/icons/%{app_id}-symbolic.svg \
-    %{buildroot}%{_datadir}/icons/hicolor/symbolic/apps/%{app_id}-symbolic.svg
+    %{buildroot}%{_symboliciconsdir}/%{app_id}-symbolic.svg
 
 install -Dpm644 \
     nautilus-extension/%{name}-extension.py \
-    %{buildroot}%{_datadir}/nautilus-python/extensions/%{name}-extension.py
+    %{buildroot}%{_nautilusextensionsdir}/%{name}-extension.py
 
 mkdir -p %{buildroot}%{_datadir}/locale
 
@@ -116,11 +116,11 @@ make test
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
-%{_datadir}/applications/%{app_id}.desktop
-%{_datadir}/glib-2.0/schemas/%{app_id}.gschema.xml
+%{_appsdir}/%{app_id}.desktop
+%{_gschemasdir}/%{app_id}.gschema.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
-%{_datadir}/nautilus-python/extensions/%{name}-extension.py
+%{_symboliciconsdir}/*.svg
+%{_nautilusextensionsdir}/%{name}-extension.py
 %{_metainfodir}/%{app_id}.metainfo.xml
 
 %changelog

@@ -19,6 +19,7 @@ BuildRequires:  meson >= 0.59
 BuildRequires:  ninja-build
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gcc
 BuildRequires:  gettext
@@ -57,18 +58,18 @@ Features:
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{app_name}.lang
 %license LICENSE
 %doc CHANGELOG.md README.md
 %{_bindir}/%{app_name}
-%{_datadir}/applications/*.desktop
+%{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_symboliciconsdir}/*.svg
+%{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
 
 

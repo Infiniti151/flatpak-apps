@@ -18,6 +18,7 @@ BuildRequires:  /usr/bin/node
 BuildRequires:  /usr/bin/npm
 BuildRequires:  meson
 BuildRequires:  gjs
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  blueprint-compiler
 BuildRequires:  pkgconfig(gtk4)
@@ -51,17 +52,18 @@ Concessio helps you understand and convert between unix permissions representati
 %find_lang %{app_id} %{name}.lang
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
-%{_datadir}/applications/*.desktop
+%{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_symboliciconsdir}/*.svg
+%{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
 
 %changelog

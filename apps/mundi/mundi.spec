@@ -24,6 +24,7 @@ BuildRequires:  pkgconfig
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.14
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.5
@@ -51,17 +52,18 @@ export CARGO_HOME=$(pwd)/cargo-home
 %find_lang %{name}
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license COPYING
 %doc README.md
 %{_bindir}/%{name}
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 %{_metainfodir}/*.xml
 
 %changelog

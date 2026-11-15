@@ -50,11 +50,11 @@ jobs:
       - name: Validate New App Spec File Standards
         if: steps.checklist.outputs.pr_type == 'new_app'
         run: |
-          # Get list of added/modified .spec files in this PR
-          SPEC_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep '\.spec$' || true)
+          # Get list of added/modified .spec files in apps/ in this PR
+          SPEC_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'apps/*.spec' || true)
 
           if [ -z "$SPEC_FILES" ]; then
-            echo "⚠️ Warning: 'New App' selected, but no .spec file was found in the diff."
+            echo "⚠️ Warning: 'New App' selected, but no .spec file was found in apps/."
             exit 1
           fi
 
@@ -85,11 +85,11 @@ jobs:
       - name: Validate Bug Fix / Optimization Diff Standards
         if: steps.checklist.outputs.pr_type == 'update'
         run: |
-          # Get list of modified .spec files in this PR
-          SPEC_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep '\.spec$' || true)
+          # Get list of modified .spec files in apps/ in this PR
+          SPEC_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'apps/*.spec' || true)
 
           if [ -z "$SPEC_FILES" ]; then
-            echo "ℹ️ No .spec files modified in this PR."
+            echo "ℹ️ No .spec files in apps/ modified in this PR."
             exit 0
           fi
 
