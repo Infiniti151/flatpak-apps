@@ -35,7 +35,7 @@ BuildRequires:  pkgconfig(libadwaita-1) >= 1.9
 Requires:       gtk4
 Requires:       hicolor-icon-theme
 Requires:       libadwaita
-Requires:       magick
+Requires:       ImageMagick
 
 %description
 A lightweight photo editor focused entirely on editing memes. Yes, just memes, nothing more, nothing less.
