@@ -150,6 +150,12 @@
         "instance": ""
     },
     {
+        "app_name": "memerist",
+        "upstream_repo": "vani-tty1/memerist",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "missioncenter",
         "upstream_repo": "mission-center-devs/mission-center",
         "provider": "gitlab",
