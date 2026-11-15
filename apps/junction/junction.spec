@@ -74,7 +74,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
 
-%files -f %{name}.lang
+%files
 %license COPYING
 %doc README.md
 %{_bindir}/%{name}
