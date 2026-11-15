@@ -77,6 +77,7 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %files
 %license COPYING
 %doc README.md
+%{_bindir}/%{name}
 %{_bindir}/%{app_id}
 %{_datadir}/%{app_id}
 %{_appsdir}/*.desktop
