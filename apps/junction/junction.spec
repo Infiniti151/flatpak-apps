@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           junction
-Version:        0
+Version:        1.13
 Release:        1%{?dist}
 Summary:        Application chooser
 License:        GPL-3.0-only
@@ -86,3 +86,12 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Sun Nov 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.13-1
+- Use GNOME 51
+- Follow system color scheme and accent color
+- Remove duplicate hover background
+- Fix "Test Junction" in welcome window
+
