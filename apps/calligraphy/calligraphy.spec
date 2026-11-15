@@ -50,15 +50,16 @@ Calligraphy turns short texts into large, impressive banners made up of ASCII Ch
 %install
 %meson_install
 
-%find_lang %{name} %{name}.lang
-
-# Normalize the python shebang
-%py3_shebang_fix \
-    %{buildroot}%{_bindir}/%{name} \
-    %{buildroot}%{_datadir}/%{app_id}/
+%find_lang %{name}
 
 # Install pyfiglet directly into the app's main directory
-pip3 install --no-deps --ignore-installed --target=%{buildroot}%{_datadir}/%{app_id} %{SOURCE1}
+pip3 install --no-deps --ignore-installed \
+    --target=%{buildroot}%{_datadir}/%{app_id} %{SOURCE1}
+
+# Normalize Python shebangs
+%py3_shebang_fix \
+    %{buildroot}%{_bindir}/%{name} \
+    %{buildroot}%{_datadir}/%{app_id}
 
 %check
 %meson_test

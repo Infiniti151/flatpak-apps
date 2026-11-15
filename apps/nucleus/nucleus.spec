@@ -56,16 +56,6 @@ desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
-%files
-%license LICENSE.txt
-%doc README.md
-%{_bindir}/%{name}
-%{_appsdir}/*.desktop
-%{_gschemasdir}/*.gschema.xml
-%{_metainfodir}/*.xml
-%{_scalableiconsdir}/*.svg
-%{_symboliciconsdir}/*.svg
-
 %files -f %{name}.lang
 %license COPYING
 %doc README.md

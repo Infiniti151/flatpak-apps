@@ -63,9 +63,13 @@ Features:
 
 %install
 %meson_install
-sed -i 's|/usr/sbin/python3|/usr/bin/python3|g' %{buildroot}%{_bindir}/%{upstream_name}
-find %{buildroot}%{_datadir}/%{upstream_name}/ -type f -name "*.py" -exec sed -i 's|/usr/sbin/python3|/usr/bin/python3|g' {} +
-pip3 install --no-deps --ignore-installed --prefix=%{buildroot}%{_prefix} %{SOURCE1}
+
+pip3 install --no-deps --ignore-installed \
+    --prefix=%{buildroot}%{_prefix} %{SOURCE1}
+
+%py3_shebang_fix \
+    %{buildroot}%{_bindir}/%{upstream_name} \
+    %{buildroot}%{_datadir}/%{upstream_name}
 
 %find_lang %{upstream_name}
 
