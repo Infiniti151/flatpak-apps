@@ -126,6 +126,12 @@
         "instance": ""
     },
     {
+        "app_name": "junction",
+        "upstream_repo": "sonnyp/Junction",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "keypunch",
         "upstream_repo": "bragefuglseth/keypunch",
         "provider": "github",
