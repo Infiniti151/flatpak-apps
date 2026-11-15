@@ -74,8 +74,6 @@ Features
 
 %prep
 %forgesetup
-# Ensure es is listed in po/LINGUAS so Meson compiles and installs es.po
-grep -qxF 'es' po/LINGUAS || echo 'es' >> po/LINGUAS
 # the bundled wheels must match what the Flatpak manifest pins (release assets can be replaced)
 echo "%{segno_sha256}  %{SOURCE1}" | sha256sum -c -
 echo "%{strenum_sha256}  %{SOURCE2}" | sha256sum -c -
@@ -91,7 +89,6 @@ pip3 install --no-deps --no-index --ignore-installed --root-user-action=ignore -
 # segno installs a command-line script the app does not use
 rm -f %{buildroot}%{_bindir}/segno
 
-%find_lang %{name}
 %py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name}/
 
 %check
@@ -100,7 +97,7 @@ desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
-%files -f %{name}.lang
+%files
 %license COPYING
 %doc README.md
 %{_bindir}/%{name}
