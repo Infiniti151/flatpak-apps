@@ -54,10 +54,10 @@ Features:
 
 # Re-initialize git context for forge tarballs to resolve submodules
 if [ ! -d ".git" ]; then
-	git init -q
-	git remote add origin %{forgeurl}
-	git fetch -q --depth 1 origin %{tag}
-	git checkout -q -f FETCH_HEAD
+    git init -q
+    git remote add origin %{forgeurl}
+    git fetch -q --depth 1 origin %{tag}
+    git checkout -q -f FETCH_HEAD
 fi
 git submodule update --init --recursive
 
