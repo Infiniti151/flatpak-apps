@@ -17,21 +17,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache \
-    # --- popcorn dependencies --- \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(libadwaita-1)' \
-    appstream \
-    blueprint-compiler \
-    desktop-file-utils \
-    desktop-rpm-macros \
-    forge-srpm-macros \
-    gettext \
-    glib2-devel \
-    gtk-update-icon-cache \
-    meson \
-    python3-devel \
-    python3-pip && \
+    sccache && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 

@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           junction
-Version:        1.13
+Version:        0
 Release:        1%{?dist}
 Summary:        Application chooser
 License:        GPL-3.0-only
@@ -70,9 +70,9 @@ git submodule update --init --recursive
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files
 %license COPYING
@@ -86,7 +86,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Sun Nov 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.13-1
-- Test
