@@ -86,8 +86,9 @@ echo "%{mpris_sha256}  %{SOURCE3}" | sha256sum -c -
 %install
 %meson_install
 pip3 install --no-deps --no-index --ignore-installed --root-user-action=ignore --prefix=%{buildroot}%{_prefix} %{SOURCE1} %{SOURCE2} %{SOURCE3}
-# segno installs a command-line script the app does not use
+# segno installs a command-line script and manpage the app does not use
 rm -f %{buildroot}%{_bindir}/segno
+rm -f %{buildroot}%{_mandir}/man1/segno.1.gz
 
 %py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name}/
 
@@ -101,12 +102,14 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %license COPYING
 %doc README.md
 %{_bindir}/%{name}
+%{_bindir}/popcorn_search_provider
 %{_datadir}/%{name}
 %{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
+%{_searchprovidersdir}/*.ini
 %{_metainfodir}/*.metainfo.xml
 %{python3_sitelib}/segno/
 %{python3_sitelib}/segno-*.dist-info/
