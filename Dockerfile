@@ -11,7 +11,6 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     dnf copr enable -y infiniti151/flatpak-apps && \
     dnf install -y ccache \
     dnf-plugins-core \
-    git-core \
     glibc-langpack-en \
     npm \
     rpm-build \

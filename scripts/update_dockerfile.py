@@ -28,7 +28,7 @@ RED = "\033[31m"
 RESET = "\033[0m"
 
 PROTECTED_DEPS = {
-    'dnf-plugins-core', 'rpm-build', 'rpmdevtools', 'rpmlint', 'git-core',
+    'dnf-plugins-core', 'rpm-build', 'rpmdevtools', 'rpmlint',
     'npm', 'sccache', 'ccache', 'glibc-langpack-en'
 }
 

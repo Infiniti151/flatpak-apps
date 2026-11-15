@@ -24,6 +24,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  forge-srpm-macros
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  gettext
+BuildRequires:  git
 BuildRequires:  gjs
 BuildRequires:  glib2-devel
 BuildRequires:  glibc-langpack-en
