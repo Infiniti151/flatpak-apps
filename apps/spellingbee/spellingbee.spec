@@ -18,6 +18,7 @@ BuildArch:      noarch
 
 BuildRequires:  meson >= 1.0.0
 BuildRequires:  gcc
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(gjs-1.0)
@@ -56,20 +57,21 @@ Below are the main features:
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license COPYING
 %doc README.md
-%{_bindir}/io.github.josephmawa.SpellingBee
+%{_bindir}/%{app_id}
 %{_datadir}/%{name}/
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.xml
-%{_datadir}/dbus-1/services/*.service
+%{_dbusservicesdir}/*.service
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 
 %changelog
 * Wed Oct 21 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.7-1

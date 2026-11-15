@@ -23,6 +23,7 @@ BuildRequires:  cairo-devel
 BuildRequires:  cargo
 BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  gettext
@@ -67,20 +68,20 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{upstream_name}.lang
 %license LICENSE
 %doc CHANGELOG.md README.md
 %{_bindir}/%{upstream_name}
 %{_datadir}/%{upstream_name}
-%{_datadir}/applications/*.desktop
+%{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/dbus-1/services/*.service
+%{_symboliciconsdir}/*.svg
+%{_gschemasdir}/*.gschema.xml
+%{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
 
 %changelog

@@ -24,6 +24,7 @@ BuildRequires:  libappstream-glib
 BuildRequires:  gettext
 BuildRequires:  python3
 BuildRequires:  git-core
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 
 # Dependencies
@@ -152,8 +153,9 @@ rm -f %{buildroot}%{_metainfodir}/io.github.alainm23.chrono.metainfo.xml
 
 %check
 %meson_test --suite cli
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{app_id}.lang
 %license LICENSE
@@ -162,14 +164,14 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %{_bindir}/%{app_id}*
 %{_libexecdir}/%{app_id}-search-provider
 
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 
-%{_datadir}/dbus-1/services/*.service
-%{_datadir}/gnome-shell/search-providers/*.SearchProvider.ini
+%{_dbusservicesdir}/*.service
+%{_searchprovidersdir}/*.SearchProvider.ini
 
 %{_libdir}/girepository-1.0/GXml-*.typelib
 %{_datadir}/gir-1.0/GXml-*.gir

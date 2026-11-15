@@ -19,6 +19,7 @@ BuildRequires:  ninja-build
 BuildRequires:  appstream
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gcc
 BuildRequires:  gettext
@@ -55,19 +56,19 @@ Features:
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license COPYING
 %doc README.md
 %{_bindir}/%{app_id}
-%{_datadir}/applications/*.desktop
+%{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/dbus-1/services/*.service
+%{_symboliciconsdir}/*.svg
+%{_gschemasdir}/*.gschema.xml
+%{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
 
 

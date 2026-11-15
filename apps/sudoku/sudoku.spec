@@ -1,5 +1,6 @@
 %global         debug_package %{nil}
 %global         app_id          io.github.sepehr_rs.Sudoku
+%global         upstream_name   sudokugame
 %global         forgeurl        https://github.com/sepehr-rs/Sudoku
 %global         tag             v%{version}
 
@@ -18,6 +19,7 @@ Source1:        https://files.pythonhosted.org/packages/0c/4f/e5de816646174cdd8c
 
 BuildRequires:  meson >= 1.4.0
 BuildRequires:  gcc
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(glib-2.0)
@@ -61,29 +63,34 @@ Features:
 
 %install
 %meson_install
-sed -i 's|/usr/sbin/python3|/usr/bin/python3|g' %{buildroot}%{_bindir}/sudokugame
-find %{buildroot}%{_datadir}/sudokugame/ -type f -name "*.py" -exec sed -i 's|/usr/sbin/python3|/usr/bin/python3|g' {} +
-pip3 install --no-deps --ignore-installed --prefix=%{buildroot}%{_prefix} %{SOURCE1}
 
-%find_lang sudokugame
+pip3 install --no-deps --ignore-installed \
+    --prefix=%{buildroot}%{_prefix} %{SOURCE1}
+
+%py3_shebang_fix \
+    %{buildroot}%{_bindir}/%{upstream_name} \
+    %{buildroot}%{_datadir}/%{upstream_name}
+
+%find_lang %{upstream_name}
 
 %check
 export PYTHONPATH="%{buildroot}%{python3_sitelib}:src:."
 %meson_test --suite unit
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
-%files -f sudokugame.lang
+%files -f %{upstream_name}.lang
 %license COPYING
 %doc README.md
-%{_bindir}/sudokugame
-%{_datadir}/sudokugame/
+%{_bindir}/%{upstream_name}
+%{_datadir}/%{upstream_name}/
 %{python3_sitelib}/sudoku/
 %{python3_sitelib}/sudoku_engine-*.dist-info/
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 %{_metainfodir}/*.xml
 
 %changelog

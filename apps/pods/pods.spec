@@ -21,6 +21,7 @@ BuildRequires:  gcc
 BuildRequires:  rust-packaging
 BuildRequires:  cargo
 BuildRequires:  blueprint-compiler
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.18.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.7
@@ -63,18 +64,18 @@ With Pods you can, among other things:
 
 %check
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 
 %files -f %{name}.lang
 %license COPYING
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%{_datadir}/applications/*.desktop
+%{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 %{_metainfodir}/*.metainfo.xml
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_gschemasdir}/*.gschema.xml
 
 %changelog
 * Mon Oct 12 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.3.0-1

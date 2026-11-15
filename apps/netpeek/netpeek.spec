@@ -26,6 +26,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  glibc-langpack-en
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 
 Requires:       python3
@@ -55,18 +56,21 @@ NetPeek is a simple network scanner that helps you discover active devices on yo
 
 %check
 %meson_test
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/dbus-1/services/*.service
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
+%{_dbusservicesdir}/*.service
 %{_metainfodir}/*.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 
 %changelog
 * Wed Oct 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.3.5-1

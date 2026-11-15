@@ -18,6 +18,7 @@ BuildRequires:  meson
 BuildRequires:  ninja-build
 BuildRequires:  rust
 BuildRequires:  cargo
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
@@ -50,9 +51,9 @@ export LIBSSH2_SYS_USE_PKG_CONFIG=1
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas/
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license COPYING
@@ -60,12 +61,12 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_datadir}/glib-2.0/schemas
 %{_bindir}/%{name}
 %{_libexecdir}/%{name}/
 %{_datadir}/%{name}/
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 %{_metainfodir}/*.xml
-%{_datadir}/dbus-1/services/*.service
+%{_dbusservicesdir}/*.service
 
 %changelog
 * Tue Oct 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.11.1-1

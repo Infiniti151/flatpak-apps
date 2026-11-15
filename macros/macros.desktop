@@ -1,8 +1,18 @@
-# Custom desktop packaging shortcuts
-%_appsdir               %{_datadir}/applications
-%_scalableiconsdir      %{_datadir}/icons/hicolor/scalable/apps
-%_symboliciconsdir      %{_datadir}/icons/hicolor/symbolic/apps
-%_hicolordir            %{_datadir}/icons/hicolor
-%_gschemasdir           %{_datadir}/glib-2.0/schemas
-%_dbusservicesdir       %{_datadir}/dbus-1/services
-%_searchprovidersdir    %{_datadir}/gnome-shell/search-providers
+# Desktop application directories
+%_appsdir                %{_datadir}/applications
+%_autostartdir           %{_datadir}/autostart
+%_scalableiconsdir       %{_datadir}/icons/hicolor/scalable/apps
+%_symboliciconsdir       %{_datadir}/icons/hicolor/symbolic/apps
+%_hicolordir             %{_datadir}/icons/hicolor
+%_themesdir              %{_datadir}/themes
+%_backgroundsdir         %{_datadir}/backgrounds
+%_wallpapersdir          %{_datadir}/wallpapers
+
+# Desktop integration directories
+%_gschemasdir            %{_datadir}/glib-2.0/schemas
+%_mimepackagesdir        %{_datadir}/mime/packages
+%_dbusservicesdir        %{_datadir}/dbus-1/services
+%_dbusinterfacesdir      %{_datadir}/dbus-1/interfaces
+%_searchprovidersdir     %{_datadir}/gnome-shell/search-providers
+%_gnomeextensionsdir     %{_datadir}/gnome-shell/extensions
+%_nautilusextensionsdir  %{_datadir}/nautilus-python/extensions

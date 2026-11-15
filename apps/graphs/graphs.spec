@@ -26,6 +26,7 @@ BuildRequires:  itstool
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  appstream
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  glibc-langpack-en
@@ -103,8 +104,9 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 export GI_TYPELIB_PATH=%{buildroot}%{_libdir}/girepository-1.0
 export PYTHONPATH=%{buildroot}%{python3_sitelib}:%{buildroot}%{python3_sitearch}
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE
@@ -115,12 +117,12 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.
 %{python3_sitelib}/graphs/
 %{python3_sitelib}/gio_pyio/
 %{python3_sitelib}/gio_pyio-*.dist-info/
-%{_datadir}/applications/*.desktop
+%{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
-%{_datadir}/dbus-1/services/*.service
-%{_datadir}/mime/packages/*.xml
+%{_symboliciconsdir}/*.svg
+%{_gschemasdir}/*.gschema.xml
+%{_dbusservicesdir}/*.service
+%{_mimepackagesdir}/*.xml
 %{_mandir}/man1/graphs.1*
 %{_metainfodir}/*.metainfo.xml
 

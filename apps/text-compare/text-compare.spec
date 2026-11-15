@@ -1,4 +1,5 @@
 %global         app_id         io.github.josephmawa.TextCompare
+%global         upstream_name  TextCompare
 %global         forgeurl       https://github.com/josephmawa/TextCompare
 %global         tag            v%{version}
 
@@ -19,6 +20,7 @@ Source0:        %{forgesource}
 BuildRequires:  meson
 BuildRequires:  gcc
 BuildRequires:  gjs
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  blueprint-compiler
 BuildRequires:  pkgconfig(gtk4)
@@ -49,22 +51,22 @@ Below are the main features of Text Compare:
 
 %install
 %meson_install
-%find_lang TextCompare %{name}.lang
+%find_lang %{upstream_name}
 
 %check
 %meson_test
 
-%files -f %{name}.lang
+%files -f %{upstream_name}.lang
 %license COPYING
 %doc README.md
 %{_bindir}/%{app_id}
-%{_datadir}/TextCompare/
-%{_datadir}/applications/*.desktop
+%{_datadir}/%{upstream_name}/
+%{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_symboliciconsdir}/*.svg
+%{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.xml
-%{_datadir}/dbus-1/services/*.service
+%{_dbusservicesdir}/*.service
 
 %changelog
 * Sun Oct 18 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.12-1

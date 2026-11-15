@@ -36,6 +36,7 @@ BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 
 # Development libraries (-devel equivalent pkgconfig dependencies)
@@ -83,7 +84,7 @@ upx --best --lzma %{buildroot}%{_bindir}/%{app_id}
 %find_lang %{name}
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %if 0%{?fedora} && ! 0%{?eln}
 upx -t %{buildroot}%{_bindir}/%{app_id}
@@ -93,10 +94,10 @@ upx -t %{buildroot}%{_bindir}/%{app_id}
 %license LICENSE
 %doc README.md
 %{_bindir}/%{app_id}
-%{_datadir}/applications/*.desktop
+%{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
-%{_datadir}/dbus-1/services/*.service
+%{_symboliciconsdir}/*.svg
+%{_dbusservicesdir}/*.service
 %{_metainfodir}/*.xml
 
 %changelog

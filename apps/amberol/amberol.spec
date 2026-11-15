@@ -22,6 +22,7 @@ BuildRequires:  gcc
 BuildRequires:  rust
 BuildRequires:  cargo
 BuildRequires:  blueprint-compiler
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.19.5
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8
@@ -61,8 +62,9 @@ export CARGO_HOME="$(pwd)/cargo-home"
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSES/CC-BY-SA-3.0.txt
@@ -71,12 +73,12 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.xml
-%{_datadir}/dbus-1/services/*.service
+%{_dbusservicesdir}/*.service
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg.*
+%{_symboliciconsdir}/*.svg.*
 
 %changelog
 * Sun May 10 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2026.1-1

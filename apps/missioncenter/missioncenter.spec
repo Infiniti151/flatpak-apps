@@ -35,6 +35,7 @@ BuildRequires:  compiler-rt
 BuildRequires:  rustc
 BuildRequires:  cargo
 BuildRequires:  cargo-rpm-macros
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  blueprint-compiler
 
@@ -120,7 +121,7 @@ upx --best --lzma %{buildroot}%{_bindir}/%{name}-magpie
 %find_lang %{name}
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %if 0%{?fedora} && ! 0%{?eln}
 upx -t %{buildroot}%{_bindir}/%{name}
@@ -146,10 +147,10 @@ fi
 %{_bindir}/%{name}
 %{_bindir}/%{name}-magpie
 %{_datadir}/%{name}/
-%{_datadir}/applications/*.desktop
+%{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_symboliciconsdir}/*.svg
+%{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.xml
 
 %changelog

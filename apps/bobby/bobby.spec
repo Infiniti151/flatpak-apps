@@ -21,6 +21,7 @@ BuildRequires:  meson >= 1.1
 BuildRequires:  gcc
 BuildRequires:  rust
 BuildRequires:  cargo
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gtk4)
@@ -51,18 +52,19 @@ export CARGO_HOME="$(pwd)/cargo-home"
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files
 %license LICENSE.txt
 %doc README.md
 %{_bindir}/%{name}
-%{_datadir}/applications/*.desktop
-%{_datadir}/glib-2.0/schemas/*.gschema.xml
+%{_appsdir}/*.desktop
+%{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.xml
 %{_scalableiconsdir}/*.svg
-%{_hicolordir}/symbolic/apps/*.svg
+%{_symboliciconsdir}/*.svg
 
 %changelog
 * Thu Oct 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 51.0.2-1
