@@ -31,10 +31,12 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-gobject
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
+BuildRequires:  pkgconfig(gtksourceview-5)
 
 Requires:       gtk4
 Requires:       hicolor-icon-theme
 Requires:       libadwaita
+Requires:       gtksourceview5
 Requires:       python3
 Requires:       python3-gobject
 
