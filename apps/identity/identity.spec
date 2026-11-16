@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           identity
-Version:        26.03
+Version:        0
 Release:        1%{?dist}
 Summary:        Compare images and videos
 License:        GPL3+
@@ -78,7 +78,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Mon Nov 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 26.03-1
-- Test
