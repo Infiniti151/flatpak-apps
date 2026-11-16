@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           identity
-Version:        0
+Version:        26.03
 Release:        1%{?dist}
 Summary:        Compare images and videos
 License:        GPL3+
@@ -78,3 +78,16 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Mon Nov 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 26.03-1
+- This release adds a time hover display, CLI flags, and more zoom shortcuts.
+- Added a time display when hovering over the video seek bar.
+- Added --display and --zoom CLI flags for starting Identity with a given display mode and zoom.
+- Added Ctrl+2..9 shortcuts to set zoom level to increments from 200%% to 900%%.
+- The window title now shows the current file name, which is convenient when opening many tabs.
+- Increased the default window size to make the video 960×540.
+- Updated to the GNOME 50 platform.
+- Updated translations.
+
