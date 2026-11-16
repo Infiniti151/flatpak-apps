@@ -72,7 +72,6 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
-%{_datadir}/%{app_id}/
 %{_appsdir}/*.desktop
 %{_scalableiconsdir}/*.svg
 %{_symboliciconsdir}/*.svg
