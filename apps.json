@@ -78,6 +78,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "embellish",
+        "upstream_repo": "getnf/embellish",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "emergency-alerts",
         "upstream_repo": "leolost2605/emergency-alerts",
         "provider": "github",
