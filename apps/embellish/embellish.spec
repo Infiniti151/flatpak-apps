@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           embellish
-Version:        1.2.0
+Version:        0
 Release:        1%{?dist}
 Summary:        Install nerd fonts
 License:        GPL-3.0-or-later
@@ -78,8 +78,5 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-%{_datadir}/fonts/%{app_id}/
+%{_fontsdir}/%{app_id}/
 
-%changelog
-* Mon Nov 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.2.0-1
-- Test
