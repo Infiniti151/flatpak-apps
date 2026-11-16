@@ -84,6 +84,12 @@
         "instance": ""
     },
     {
+        "app_name": "exchange",
+        "upstream_repo": "shonebinu/Exchange",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "exercise-timer",
         "upstream_repo": "World/exercise-timer",
         "provider": "gitlab",
