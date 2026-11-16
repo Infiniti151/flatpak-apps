@@ -16,6 +16,8 @@ Source0:        %{forgesource}
 
 BuildRequires:  meson >= 0.59
 BuildRequires:  ninja-build
+BuildRequires:  gcc-c++
+BuildRequires:  gcc
 BuildRequires:  appstream
 BuildRequires:  blueprint-compiler
 BuildRequires:  cairo-devel
