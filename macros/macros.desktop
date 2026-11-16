@@ -5,6 +5,7 @@
 %_symboliciconsdir       %{_datadir}/icons/hicolor/symbolic/apps
 %_hicolordir             %{_datadir}/icons/hicolor
 %_themesdir              %{_datadir}/themes
+%_fontsdir               %{_datadir}/fonts
 %_backgroundsdir         %{_datadir}/backgrounds
 %_wallpapersdir          %{_datadir}/wallpapers
 

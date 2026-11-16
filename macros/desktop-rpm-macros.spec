@@ -1,5 +1,5 @@
 Name:           desktop-rpm-macros
-Version:        1.1.0
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Custom RPM macros for desktop application packaging
 License:        MIT
@@ -28,8 +28,11 @@ install -pm 0644 %{SOURCE0} %{buildroot}%{_rpmconfigdir}/macros.d/macros.desktop
 %{_rpmconfigdir}/macros.d/macros.desktop
 
 %changelog
-* Sun Nov 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.1.0-1
-- Added desktop packaging macros for autostart entries, themes, backgrounds, wallpapers, MIME packages, D-Bus interfaces, GNOME Shell extensions and Nautilus extensions.
+* Mon Nov 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.2.0-1
+- Added desktop packaging macro for fonts
 
-* Sat Nov 14 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.0.0-1
+* Sun Nov 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.0-1
+- Added desktop packaging macros for autostart entries, themes, backgrounds, wallpapers, MIME packages, D-Bus interfaces, GNOME Shell extensions and Nautilus extensions
+
+* Sat Nov 14 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.0-1
 - Initial release
