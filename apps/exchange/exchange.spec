@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           exchange
-Version:        0.2.2
+Version:        0
 Release:        1%{?dist}
 Summary:        Convert between XML and Blueprint
 License:        GPL-3.0-or-later
@@ -37,6 +37,7 @@ Requires:       gtk4
 Requires:       hicolor-icon-theme
 Requires:       libadwaita
 Requires:       gtksourceview5
+Requires:       blueprint-compiler
 Requires:       python3
 Requires:       python3-gobject
 
@@ -77,6 +78,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
 
-%changelog
-* Mon Nov 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.2.2-1
-- Test
