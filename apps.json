@@ -13,13 +13,13 @@
     },
     {
         "app_name": "bobby",
-        "upstream_repo": "hbons/bobby",
+        "upstream_repo": "hbons/Bobby",
         "provider": "github",
         "instance": ""
     },
     {
         "app_name": "calligraphy",
-        "upstream_repo": "GeopJr/Calligraphy",
+        "upstream_repo": "GeopJr/calligraphy",
         "provider": "codeberg",
         "instance": ""
     },
@@ -37,7 +37,7 @@
     },
     {
         "app_name": "collision",
-        "upstream_repo": "GeopJr/Collision",
+        "upstream_repo": "GeopJr/collision",
         "provider": "codeberg",
         "instance": ""
     },
@@ -97,13 +97,13 @@
     },
     {
         "app_name": "eyedropper",
-        "upstream_repo": "FineFindus/eyedropper",
+        "upstream_repo": "finefindus/eyedropper",
         "provider": "github",
         "instance": ""
     },
     {
         "app_name": "gitte",
-        "upstream_repo": "ckruse/Gitte",
+        "upstream_repo": "ckruse/gitte",
         "provider": "codeberg",
         "instance": ""
     },
@@ -151,7 +151,7 @@
     },
     {
         "app_name": "laser",
-        "upstream_repo": "andreasknoben/Laser",
+        "upstream_repo": "andreasknoben/laser",
         "provider": "codeberg",
         "instance": ""
     },
@@ -169,7 +169,7 @@
     },
     {
         "app_name": "morse",
-        "upstream_repo": "teacond/morse",
+        "upstream_repo": "teacond/Morse",
         "provider": "github",
         "instance": ""
     },
@@ -211,7 +211,7 @@
     },
     {
         "app_name": "pods",
-        "upstream_repo": "marhkb/pods",
+        "upstream_repo": "marhkb/Pods",
         "provider": "github",
         "instance": ""
     },
@@ -247,7 +247,7 @@
     },
     {
         "app_name": "sudoku",
-        "upstream_repo": "sepehr-rs/sudoku",
+        "upstream_repo": "sepehr-rs/Sudoku",
         "provider": "github",
         "instance": ""
     },
