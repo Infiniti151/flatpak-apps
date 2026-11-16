@@ -36,6 +36,8 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     desktop-file-utils \
     desktop-rpm-macros \
     forge-srpm-macros \
+    gcc \
+    gcc-c++ \
     gdk-pixbuf2-devel \
     gettext \
     gtk-update-icon-cache \
