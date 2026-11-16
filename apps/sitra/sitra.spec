@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           sitra
-Version:        0
+Version:        0.2.0
 Release:        1%{?dist}
 Summary:        Get fonts from online sources
 License:        GPL-3.0-or-later
@@ -75,3 +75,9 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
 %{_fontsdir}/%{app_id}/
+
+
+%changelog
+* Mon Nov 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.2.0-1
+- Updated GNOME runtime to version 51
+
