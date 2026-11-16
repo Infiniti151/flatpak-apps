@@ -5,15 +5,18 @@
     ---
     App Registry & Matrix Sync Utility
 
-    Parses an application's RPM spec file (Name, Version, %global forgeurl) and queries forge
-    APIs (GitHub, GitLab, Codeberg) to locate high-resolution app icons. Updates
+    Parses an application's RPM spec file (Name, Version, Summary, %global forgeurl, %global app_id)
+    and queries forge APIs (GitHub, GitLab, Codeberg) to locate high-resolution app icons. Updates
     README.md and apps.json with alphabetically sorted entries while preserving formatting.
 
     Usage:
-        python3 scripts/update_readme_matrix.py <app_name>
+        python3 scripts/update_readme_matrix.py [-f|--force] <app_name> [<app_name> ...]
 
-    Example:
+    Examples:
         python3 scripts/update_readme_matrix.py netpeek
+        python3 scripts/update_readme_matrix.py netpeek identity chess-clock
+        python3 scripts/update_readme_matrix.py --force netpeek
+        python3 scripts/update_readme_matrix.py -f netpeek identity chess-clock
 """
 import argparse
 import json
@@ -27,11 +30,38 @@ CYAN = "\033[36m"
 GREEN = "\033[32m"
 RESET = "\033[0m"
 
+FORGE_LABELS = {"github": "GitHub", "gitlab": "GitLab", "codeberg": "Codeberg"}
+
+
+class SpecError(Exception):
+    """Raised when an app's spec file is missing or incomplete."""
+
+
+def attr_escape(text):
+    """Escape text for an HTML attribute inside a Markdown table cell."""
+    return (
+        text.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("|", "&#124;")
+    )
+
+
+def format_alt(app_name):
+    """identity -> Identity, chess-clock -> Chess-Clock."""
+    return "-".join(word[:1].upper() + word[1:] for word in app_name.split("-"))
+
+
+def format_title(summary):
+    """Capitalise only the first letter of the spec Summary."""
+    return summary[:1].upper() + summary[1:] if summary else ""
+
+
 def parse_spec_file(spec_path):
-    """Parses Name, Version, %global forgeurl, and %global app_id from the spec file."""
+    """Parses Name, Version, Summary, %global forgeurl, %global app_id, and URL from the spec file."""
     if not os.path.exists(spec_path):
-        print(f"Error: Spec file not found at {spec_path}", file=sys.stderr)
-        sys.exit(1)
+        raise SpecError(f"Spec file not found at {spec_path}")
 
     metadata = {}
     with open(spec_path, "r", encoding="utf-8") as f:
@@ -40,29 +70,35 @@ def parse_spec_file(spec_path):
             if not cleaned_line or cleaned_line.startswith("#"):
                 continue
 
-            # Handle %global forgeurl & %global app_id
-            global_match = re.match(r"^%global\s+(forgeurl|app_id)\s+(\S+)$", cleaned_line, re.IGNORECASE)
-            if global_match:
-                key = global_match.group(1).upper()
-                metadata[key] = global_match.group(2).strip()
-                continue
+            if cleaned_line.lower().startswith("%global "):
+                parts = cleaned_line.split(None, 2)
+                if len(parts) >= 2 and parts[1].lower() in ("forgeurl", "app_id"):
+                    metadata[parts[1].upper()] = parts[2].strip() if len(parts) == 3 else ""
+                    continue
 
-            if cleaned_line.startswith("%"):
-                continue
+            if ":" in cleaned_line:
+                tag, value = cleaned_line.split(":", 1)
+                tag = tag.strip().upper()
+                value = value.strip()
 
-            match = re.match(r"^(Name|Version)\s*:\s*(\S+)$", cleaned_line, re.IGNORECASE)
-            if match:
-                tag = match.group(1).upper()
-                value = match.group(2).strip()
-                metadata[tag] = value
+                if tag == "SUMMARY":
+                    metadata.setdefault("SUMMARY", value)
+                elif tag in ("NAME", "VERSION", "URL"):
+                    metadata[tag] = value
 
-    if not all(k in metadata for k in ["NAME", "VERSION", "FORGEURL"]):
-        print(f"Error: Could not find all required tags in {spec_path}", file=sys.stderr)
-        sys.exit(1)
+    if not all(k in metadata for k in ("NAME", "VERSION")):
+        raise SpecError(f"Could not find all required tags in {spec_path}")
 
-    url = metadata["FORGEURL"].replace("%{name}", metadata["NAME"]).replace("%{version}", metadata["VERSION"])
+    url = metadata.get("FORGEURL") or metadata.get("URL", "")
+    url = url.replace("%{name}", metadata["NAME"]).replace("%{version}", metadata["VERSION"])
+
     app_id = metadata.get("APP_ID", "")
-    return metadata["NAME"], metadata["VERSION"], url, app_id
+    summary = metadata.get("SUMMARY", "").replace("%{name}", metadata["NAME"]).replace("%{version}", metadata["VERSION"])
+
+    if not url:
+        raise SpecError(f"Could not find a non-empty %global forgeurl or URL field in {spec_path}")
+
+    return metadata["NAME"], metadata["VERSION"], url, app_id, summary
 
 def fetch_json(api_url):
     try:
@@ -113,16 +149,43 @@ def build_raw_url(platform, host, owner, repo, branch, path):
         return f"https://codeberg.org/{owner}/{repo}/raw/branch/{branch}/{path}"
     return f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{path}"
 
-def score_icon_path(path, filename):
-    if "48x48" in path or "/48/" in path:
-        return 3
-    if "scalable" in path:
-        return 2
-    if "hicolor" in path:
-        return 1
-    if filename.startswith("page.codeberg") and not filename.endswith("-symbolic.svg"):
-        return 4
-    return 0
+def score_icon(path, filename, icon_regex):
+    """Scores a candidate icon path on a unified priority scale (-1 means ignore)."""
+    filename_lower = filename.lower()
+    path_lower = path.lower()
+
+    if "symbolic" in filename_lower:
+        return -1
+
+    if not filename_lower.endswith((".svg", ".png")):
+        return -1
+
+    # Tier 1: Explicit name, repo, or app_id match
+    if icon_regex.search(filename):
+        if filename.startswith("page.codeberg"):
+            return 10
+        if "48x48" in path_lower or "/48/" in path_lower:
+            return 9
+        if "scalable" in path_lower:
+            return 8
+        if "hicolor" in path_lower:
+            return 7
+        return 6
+
+    # Tier 2: Fallback icons inside an icons/ directory
+    if "icons/" in path_lower:
+        stem = filename_lower.rsplit(".", 1)[0]
+        if re.search(r"\d", stem):
+            if "48" in stem:
+                return 3
+            if filename_lower.endswith(".svg"):
+                return 1
+        elif filename_lower in ("app.svg", "app.png"):
+            return 2
+        elif filename_lower.endswith(".svg"):
+            return 1
+
+    return -1
 
 def find_best_icon(tree_entries, icon_regex, platform, host, owner, repo, branch):
     best_url = None
@@ -131,18 +194,16 @@ def find_best_icon(tree_entries, icon_regex, platform, host, owner, repo, branch
     for entry in tree_entries:
         if entry.get("type") != "blob":
             continue
+
         path = entry.get("path", "")
         filename = path.split("/")[-1]
+        score = score_icon(path, filename, icon_regex)
 
-        if not icon_regex.search(filename):
-            continue
-
-        score = score_icon_path(path, filename)
         if score > best_score:
             best_score = score
             best_url = build_raw_url(platform, host, owner, repo, branch, path)
 
-        if best_score == 4:
+        if best_score == 10:
             break
 
     return best_url
@@ -184,22 +245,49 @@ def get_icon_url(url, app_name, app_id=""):
 
     return best_url, platform, f"{owner}/{repo}", host
 
-def update_readme(readme_path, version, url, icon_url, app_name):
-    """Step 1: Appends a sorted application entry in README.md if it doesn't exist."""
+def build_markdown_entry(app_name, version, url, icon_url, app_id, summary, platform):
+    """Builds one README table row."""
+    alt = attr_escape(format_alt(app_name))
+    title_text = format_title(summary)
+    title_attr = f' title="{attr_escape(title_text)}"' if title_text else ""
+
+    links = []
+    if app_id:
+        links.append(f"[Flathub](https://flathub.org/en/apps/{app_id})")
+    links.append(f"[{FORGE_LABELS.get(platform, 'Source')}]({url})")
+
+    copr_badge = f"[![COPR Status](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/{app_name}/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/{app_name}/)"
+    return (
+        f'| {app_name} | <p align="center"><img src="{icon_url}" width="48" alt="{alt}"{title_attr} '
+        f'style="vertical-align:middle"></p> | {" • ".join(links)} | {version} | {copr_badge} |\n'
+    )
+
+
+def update_readme(readme_path, version, url, icon_url, app_name, app_id="", summary="", platform="github", force=False):
+    """Step 1: Inserts or replaces a sorted application entry in README.md."""
     with open(readme_path, "r", encoding="utf-8") as f:
         readme_lines = f.readlines()
 
     existing_entry_pattern = re.compile(r"^\|\s*" + re.escape(app_name) + r"\s*\|", re.IGNORECASE)
 
-    for line in readme_lines:
-        if existing_entry_pattern.match(line):
+    existing_index = next(
+        (index for index, line in enumerate(readme_lines) if existing_entry_pattern.match(line)),
+        None,
+    )
+
+    markdown_entry = build_markdown_entry(app_name, version, url, icon_url, app_id, summary, platform)
+
+    if existing_index is not None:
+        if not force:
             print(f"{CYAN}[Step 1/2] Entry for '{app_name}' already exists in README.md. Skipping README update.{RESET}")
             return
 
-    copr_badge = f"[![COPR Status](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/{app_name}/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/package/{app_name}/)"
-    parsed_url = urlparse(url)
-    repo_display = parsed_url.path.strip("/")
-    markdown_entry = f'| {app_name} | <p align="center"><img src="{icon_url}" width="48" style="vertical-align:middle"></p> | [{repo_display}]({url}) | {version} | {copr_badge} |\n'
+        readme_lines[existing_index] = markdown_entry
+        with open(readme_path, "w", encoding="utf-8") as f:
+            f.writelines(readme_lines)
+
+        print(f"{GREEN}[Step 1/2] Successfully updated entry for '{app_name}' (v{version}) in README.md.{RESET}")
+        return
 
     table_separator_pattern = re.compile(r"^\|(\s*:?-+:?\s*\|)+$")
 
@@ -236,15 +324,19 @@ def update_readme(readme_path, version, url, icon_url, app_name):
 
     print(f"{GREEN}[Step 1/2] Successfully inserted sorted entry for '{app_name}' (v{version}) into README.md.{RESET}")
 
-def update_matrix(apps_json_path, app_name, platform, upstream_repo, host):
-    """Step 2: Updates apps.json matrix preserving style and alphabetical order."""
+def update_matrix(apps_json_path, app_name, platform, upstream_repo, host, force=False):
+    """Step 2: Inserts or replaces an apps.json entry, preserving alphabetical order."""
     with open(apps_json_path, "r", encoding="utf-8") as f:
         matrix = json.load(f)
 
-    for item in matrix:
-        if item.get("app_name") == app_name:
-            print(f"{CYAN}[Step 2/2] Matrix entry for '{app_name}' already exists in apps.json. Skipping matrix update.{RESET}")
-            return
+    existing_index = next(
+        (index for index, item in enumerate(matrix) if item.get("app_name") == app_name),
+        None,
+    )
+
+    if existing_index is not None and not force:
+        print(f"{CYAN}[Step 2/2] Matrix entry for '{app_name}' already exists in apps.json. Skipping matrix update.{RESET}")
+        return
 
     new_entry = {
         "app_name": app_name,
@@ -253,24 +345,47 @@ def update_matrix(apps_json_path, app_name, platform, upstream_repo, host):
         "instance": host if platform == "gitlab" else "",
     }
 
-    matrix.append(new_entry)
+    if existing_index is None:
+        matrix.append(new_entry)
+    else:
+        matrix[existing_index] = new_entry
+
     matrix.sort(key=lambda x: x.get("app_name", "").lower())
 
     with open(apps_json_path, "w", encoding="utf-8") as f:
         json.dump(matrix, f, indent=4)
         f.write("\n")
 
-    print(f"{GREEN}[Step 2/2] Successfully inserted sorted entry for '{app_name}' into apps.json.{RESET}")
+    action = "updated" if existing_index is not None else "inserted"
+    print(f"{GREEN}[Step 2/2] Successfully {action} sorted entry for '{app_name}' in apps.json.{RESET}")
+
+def process_app(root_dir, app_name, force=False):
+    """Runs both README and apps.json updates for a single app."""
+    spec_path = os.path.join(root_dir, "apps", app_name, f"{app_name}.spec")
+    readme_path = os.path.join(root_dir, "README.md")
+    apps_json_path = os.path.join(root_dir, "apps.json")
+
+    _, version, url, app_id, summary = parse_spec_file(spec_path)
+    icon_url, platform, upstream_repo, host = get_icon_url(url, app_name, app_id)
+
+    update_readme(readme_path, version, url, icon_url, app_name, app_id, summary, platform, force)
+    update_matrix(apps_json_path, app_name, platform, upstream_repo, host, force)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Update app lists across README and matrix config seamlessly.")
-    parser.add_argument("app_name", help="The name of the application directory")
+    parser.add_argument(
+        "-f", "--force",
+        action="store_true",
+        help="Overwrite existing entries in README.md and apps.json",
+    )
+    parser.add_argument("app_names", nargs="+", metavar="app_name",
+                        help="One or more application directory names (space separated)")
     args = parser.parse_args()
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
     root_dir = os.path.dirname(script_dir)
 
-    spec_path = os.path.join(root_dir, "apps", args.app_name, f"{args.app_name}.spec")
     readme_path = os.path.join(root_dir, "README.md")
     apps_json_path = os.path.join(root_dir, "apps.json")
 
@@ -281,11 +396,22 @@ def main():
         print(f"Error: apps.json not found at {apps_json_path}", file=sys.stderr)
         sys.exit(1)
 
-    _, version, url, app_id = parse_spec_file(spec_path)
-    icon_url, platform, upstream_repo, host = get_icon_url(url, args.app_name, app_id)
+    app_names = list(dict.fromkeys(args.app_names))  # drop duplicates, keep order
+    failed = []
 
-    update_readme(readme_path, version, url, icon_url, args.app_name)
-    update_matrix(apps_json_path, args.app_name, platform, upstream_repo, host)
+    for app_name in app_names:
+        if len(app_names) > 1:
+            print(f"{CYAN}==> {app_name}{RESET}")
+        try:
+            process_app(root_dir, app_name, args.force)
+        except SpecError as err:
+            print(f"Error: {err}", file=sys.stderr)
+            failed.append(app_name)
+
+    if failed:
+        print(f"Error: failed for: {', '.join(failed)}", file=sys.stderr)
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
