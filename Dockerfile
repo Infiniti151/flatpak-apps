@@ -19,6 +19,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     sccache \
     # --- exchange dependencies --- \
     'pkgconfig(gtk4)' \
+    'pkgconfig(gtksourceview-5)' \
     'pkgconfig(libadwaita-1)' \
     appstream \
     blueprint-compiler \
