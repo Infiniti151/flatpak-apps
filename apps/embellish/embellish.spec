@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           embellish
-Version:        0
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Install nerd fonts
 License:        GPL-3.0-or-later
@@ -79,4 +79,13 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
 %{_fontsdir}/%{app_id}/
+
+
+%changelog
+* Mon Nov 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v1.2.0-1
+- Updated to GNOME runtime 51
+- Updated to NerdFonts V3.5.1
+- Added the missing Devicons
+- Other minor upstream fixes
+- Fonts need to be reinstalled to be updated
 
