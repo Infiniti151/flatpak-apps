@@ -65,7 +65,7 @@ User-friendly application designed for managing Nerd Fonts on your system. With 
 %check
 %meson_test
 desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{app_id}.lang
