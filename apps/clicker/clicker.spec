@@ -1,5 +1,4 @@
 %global         app_id        net.codelogistics.clicker
-%global         forgeurl      https://gitlab.gnome.org/eyekay/clicker
 %global         tag           %{version}
 
 Name:           clicker
@@ -9,20 +8,17 @@ Summary:        Simulate user input repeatedly
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps
 
+URL:            https://gitlab.gnome.org/eyekay/clicker
+
 BuildArch:      noarch
-
-%forgemeta
-
-URL:            %{forgeurl}
-Source0:        %{forgesource}
 
 BuildRequires:  meson >= 0.62.0
 BuildRequires:  ninja-build
 BuildRequires:  appstream
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  forge-srpm-macros
 BuildRequires:  gettext
+BuildRequires:  git-core
 BuildRequires:  glib2-devel
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
@@ -45,7 +41,10 @@ Clicker works on both Wayland and X11 by simulating a remote desktop session. Th
 The automation can be paused at any point by pressing the F5 key, if the user's desktop environment provides support for the Global Shortcuts portal and the user grants permission for this hotkey to be registered.
 
 %prep
-%forgesetup
+rm -rf %{name}-%{version}
+git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
+rm -rf %{name}-%{version}/.git
+%setup -T -D -n %{name}-%{version}
 
 %build
 %meson
