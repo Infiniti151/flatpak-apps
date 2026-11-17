@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           tags
-Version:        2.5
+Version:        2.6
 Release:        1%{?dist}
 Summary:        Color logs based on tags
 License:        MIT
@@ -76,6 +76,14 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 
 %changelog
+* Tue Nov 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.6-1
+- Tags 2.6 is out
+- What's new:
+- Updated translations
+- Performance improvements
+- UX improvements
+- Minor fixes
+
 * Tue Sep 08 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.5-1
 - Tags 2.5 is out
 - What's new:
