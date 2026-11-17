@@ -36,6 +36,12 @@
         "instance": ""
     },
     {
+        "app_name": "clicker",
+        "upstream_repo": "eyekay/clicker",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "collision",
         "upstream_repo": "GeopJr/collision",
         "provider": "codeberg",

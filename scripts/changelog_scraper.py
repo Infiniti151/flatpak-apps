@@ -20,10 +20,14 @@ import os
 import sys
 import re
 import json
+import subprocess
+import tempfile
 import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
 import concurrent.futures
+
+GIT_ONLY_HOSTS = {"gitlab.gnome.org"}
 
 def fetch_url(url, timeout=1.5):
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -65,6 +69,52 @@ def parse_appstream_version(xml_content):
                 return ver
     except Exception:
         pass
+    return None
+
+def candidate_paths(app_id):
+    names = list(dict.fromkeys([app_id, app_id.split('.')[-1].lower(), app_id.split('.')[-1]]))
+    paths = []
+    for name in names:
+        paths.extend([
+            f"{name}.metainfo.xml", f"{name}.metainfo.xml.in", f"{name}.metainfo.xml.in.in",
+            f"data/{name}.metainfo.xml", f"data/{name}.metainfo.xml.in", f"data/{name}.metainfo.xml.in.in",
+            f"data/{name}.appdata.xml", f"data/{name}.appdata.xml.in",
+            f"data/{name}.appdata.xml.in.in", f"data/metainfo/{name}.metainfo.xml",
+            f"data/appdata/{name}.appdata.xml"
+        ])
+    return list(dict.fromkeys(paths))
+
+def fetch_via_git(provider, instance, repo, app_id, mode, target_ver=None):
+    if not app_id:
+        return None
+    host = {"github": "github.com", "codeberg": "codeberg.org"}.get(provider, instance)
+    env = {**os.environ, "GIT_TERMINAL_PROMPT": "0"}
+    with tempfile.TemporaryDirectory() as tmp:
+        def git(*args):
+            return subprocess.run(["git", "-C", tmp, *args], capture_output=True,
+                                  text=True, timeout=60, env=env)
+        try:
+            clone = subprocess.run(
+                ["git", "clone", "--depth", "1", "--filter=blob:none", "--no-checkout",
+                 f"https://{host}/{repo}.git", tmp],
+                capture_output=True, timeout=60, env=env)
+            if clone.returncode != 0:
+                return None
+            ls = git("ls-tree", "-r", "--name-only", "HEAD")
+            if ls.returncode != 0:
+                return None
+            files = set(ls.stdout.splitlines())
+            for path in candidate_paths(app_id):
+                if path in files:
+                    content = git("show", f"HEAD:{path}").stdout
+                    if mode == "get-version":
+                        result = parse_appstream_version(content)
+                    else:
+                        result = parse_appstream_changelog(content, target_ver)
+                    if result:
+                        return result
+        except Exception:
+            pass
     return None
 
 def fetch_and_parse(url, mode, target_ver=None):
@@ -186,11 +236,16 @@ def main():
         except Exception:
             pass
 
+        git_only = instance in GIT_ONLY_HOSTS
+
         # 2. SECONDARY: AppStream XML from upstream repo
-        if not version:
+        if not version and not git_only:
             urls = generate_candidate_urls(provider, instance, repo, app_id)
             if urls:
                 version = fetch_first_valid_match(urls, "get-version")
+
+        if not version and git_only:
+            version = fetch_via_git(provider, instance, repo, app_id, "get-version")
 
         if version:
             print(version)
@@ -208,11 +263,16 @@ def main():
 
         clean_ver = re.sub(r'^[vV]\.?', '', raw_ver)
 
-        urls = generate_candidate_urls(provider, instance, repo, app_id)
-        changelog = fetch_first_valid_match(urls, "get-changelog", clean_ver) if urls else None
+        git_only = instance in GIT_ONLY_HOSTS
 
-        if not changelog:
-            changelog = get_api_changelog(provider, instance, repo, clean_ver)
+        changelog = None
+        if git_only:
+            changelog = fetch_via_git(provider, instance, repo, app_id, "get-changelog", clean_ver)
+        else:
+            urls = generate_candidate_urls(provider, instance, repo, app_id)
+            changelog = fetch_first_valid_match(urls, "get-changelog", clean_ver) if urls else None
+            if not changelog:
+                changelog = get_api_changelog(provider, instance, repo, clean_ver)
         if not changelog:
             changelog = f"- Update to {clean_ver}"
 
