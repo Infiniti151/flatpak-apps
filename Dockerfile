@@ -21,8 +21,8 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     appstream \
     desktop-file-utils \
     desktop-rpm-macros \
-    forge-srpm-macros \
     gettext \
+    git-core \
     glib2-devel \
     gtk-update-icon-cache \
     meson \
