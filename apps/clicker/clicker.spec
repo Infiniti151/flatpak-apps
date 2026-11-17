@@ -2,7 +2,7 @@
 %global         tag           %{version}
 
 Name:           clicker
-Version:        0
+Version:        0.2.0
 Release:        1%{?dist}
 Summary:        Simulate user input repeatedly
 License:        GPL-3.0-or-later
@@ -71,3 +71,11 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Tue Nov 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.2.0-1
+- Automations can now be stopped at any point by pressing "F5".
+- The app now remembers the previously set values for delay, duration of automation etc.
+- Added Japanese (camegone), Italian (Albano Battistella) and Brazilian Portuguese (johnpetersa19) translations.
+
