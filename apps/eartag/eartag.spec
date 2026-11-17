@@ -1,5 +1,4 @@
 %global         app_id        app.drey.EarTag
-%global         forgeurl      https://gitlab.gnome.org/World/eartag
 %global         tag           %{version}
 
 Name:           eartag
@@ -8,21 +7,17 @@ Release:        1%{?dist}
 Summary:        Edit audio file tags
 License:        MIT
 BugURL:         https://github.com/Infiniti151/flatpak-apps
+URL:            https://gitlab.gnome.org/World/eartag
 
 BuildArch:      noarch
 
-%forgemeta
-
-URL:            %{forgeurl}
-Source0:        %{forgesource}
-
 BuildRequires:  meson >= 0.58.0
 BuildRequires:  ninja-build
+BuildRequires:  git-core
 BuildRequires:  appstream
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  forge-srpm-macros
 BuildRequires:  gettext
 BuildRequires:  glib2-devel
 BuildRequires:  glibc-langpack-en
@@ -63,7 +58,10 @@ Fixed an issue where files loading would freeze, and an error when changing cove
 General stability and speed improvements. Loading files is now considerably faster. The Identify option has been updated and should provide more accurate results, while being 4x as fast.
 
 %prep
-%forgesetup
+rm -rf %{name}-%{version}
+git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
+rm -rf %{name}-%{version}/.git
+%setup -T -D -n %{name}-%{version}
 
 %build
 %meson
@@ -91,7 +89,6 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-
 
 %changelog
 * Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.3-1

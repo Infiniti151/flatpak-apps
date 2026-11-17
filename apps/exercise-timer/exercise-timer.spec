@@ -1,6 +1,5 @@
 %global         app_id        xyz.safeworlds.hiit
 %global         app_name      hiit
-%global         forgeurl      https://gitlab.gnome.org/World/exercise-timer
 %global         tag           v%{version}
 
 Name:           exercise-timer
@@ -9,18 +8,14 @@ Release:        1%{?dist}
 Summary:        Train and rest with high intensity
 License:        GPL-3.0
 BugURL:         https://github.com/Infiniti151/flatpak-apps
-
-%forgemeta
-
-URL:            %{forgeurl}
-Source0:        %{forgesource}
+URL:            https://gitlab.gnome.org/World/exercise-timer
 
 BuildRequires:  meson >= 0.59
 BuildRequires:  ninja-build
+BuildRequires:  git-core
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  forge-srpm-macros
 BuildRequires:  gcc
 BuildRequires:  gettext
 BuildRequires:  glib2-devel
@@ -46,7 +41,10 @@ Features:
 - Light and dark mode follows the system's setting.
 
 %prep
-%forgesetup
+rm -rf %{name}-%{version}
+git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
+rm -rf %{name}-%{version}/.git
+%setup -T -D -n %{name}-%{version}
 
 %build
 %meson
@@ -71,7 +69,6 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
-
 
 %changelog
 * Thu Sep 03 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.10.0-1
