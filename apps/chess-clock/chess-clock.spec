@@ -1,5 +1,4 @@
 %global         app_id        eu.fortysixandtwo.chessclock
-%global         forgeurl      https://gitlab.gnome.org/World/chess-clock
 %global         tag           v%{version}
 
 Name:           chess-clock
@@ -8,20 +7,16 @@ Release:        1%{?dist}
 Summary:        Time games of over-the-board chess
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps
+URL:            https://gitlab.gnome.org/World/chess-clock
 
 BuildArch:      noarch
-
-%forgemeta
-
-URL:            %{forgeurl}
-Source0:        %{forgesource}
 
 BuildRequires:  meson >= 0.59.0
 BuildRequires:  ninja-build
 BuildRequires:  appstream
+BuildRequires:  git-core
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  forge-srpm-macros
 BuildRequires:  gettext
 BuildRequires:  glib2-devel
 BuildRequires:  glibc-langpack-en
@@ -42,7 +37,10 @@ Requires:       libcanberra-backend-pulse
 Chess Clock is a simple application to provide time control for over-the-board chess games. Intended for mobile use, players select the time control settings desired for their game, then the black player taps their clock to start white's timer. After each player's turn, they tap the clock to start their opponent's, until the game is finished or one of the clocks reaches zero.
 
 %prep
-%forgesetup
+rm -rf %{name}-%{version}
+git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
+rm -rf %{name}-%{version}/.git
+%setup -T -D -n %{name}-%{version}
 
 %build
 %meson
@@ -70,7 +68,6 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-
 
 %changelog
 * Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.6.3-1

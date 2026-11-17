@@ -1,5 +1,4 @@
 %global         app_id          se.sjoerd.Graphs
-%global         forgeurl        https://gitlab.gnome.org/World/Graphs
 %global         tag             v%{version}
 %global         gio_pyio_ver    0.0.6
 
@@ -9,16 +8,14 @@ Release:        1%{?dist}
 Summary:        Plot and manipulate data
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
+URL:            https://gitlab.gnome.org/World/Graphs
 
-%forgemeta
-
-URL:            %{forgeurl}
-Source0:        %{forgesource}
 # gio_pyio is not packaged in Fedora; bundle the pure-Python wheel
-Source1:        https://files.pythonhosted.org/packages/py3/g/gio_pyio/gio_pyio-%{gio_pyio_ver}-py3-none-any.whl
+Source0:        https://files.pythonhosted.org/packages/py3/g/gio_pyio/gio_pyio-%{gio_pyio_ver}-py3-none-any.whl
 
 # Build tools
 BuildRequires:  meson >= 1.2.0
+BuildRequires:  git-core
 BuildRequires:  gcc
 BuildRequires:  vala
 BuildRequires:  gettext
@@ -27,7 +24,6 @@ BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  appstream
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  forge-srpm-macros
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gobject-introspection
@@ -78,9 +74,12 @@ Graphs is an excellent fit for both plotting and data manipulation. The plots cr
 For any feedback, questions or general issues, please file an issue on the GitLab page.
 
 %prep
-%forgesetup
+rm -rf %{name}-%{version}
+git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
+rm -rf %{name}-%{version}/.git
+%setup -T -D -n %{name}-%{version}
 # Make gio_pyio importable for meson's configure-time module check
-pip3 install --no-deps --no-index --target="$PWD/pydeps" %{SOURCE1}
+pip3 install --no-deps --no-index --target="$PWD/pydeps" %{SOURCE0}
 
 %build
 export PYTHONPATH="$PWD/pydeps"

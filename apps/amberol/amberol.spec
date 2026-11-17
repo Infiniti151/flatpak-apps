@@ -2,7 +2,6 @@
 %global         _empty_manifest_terminate_build 0
 %endif
 %global         app_id          io.bassi.Amberol
-%global         forgeurl        https://gitlab.gnome.org/World/amberol
 %global         tag             %{version}
 
 Name:           amberol
@@ -11,19 +10,15 @@ Release:        1%{?dist}
 Summary:        Plays music, and nothing else
 License:        GPL-3.0-or-later AND CC-BY-SA-3.0 AND CC0-1.0
 BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
-
-%forgemeta
-
-URL:            %{forgeurl}
-Source0:        %{forgesource}
+URL:            https://gitlab.gnome.org/World/amberol
 
 BuildRequires:  meson >= 0.59.0
 BuildRequires:  gcc
 BuildRequires:  rust
 BuildRequires:  cargo
+BuildRequires:  git-core
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.19.5
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8
 BuildRequires:  pkgconfig(gstreamer-1.0) >= 1.20
@@ -48,7 +43,10 @@ want to play music available on your local system then Amberol is the
 music player you are looking for.
 
 %prep
-%forgesetup
+rm -rf %{name}-%{version}
+git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
+rm -rf %{name}-%{version}/.git
+%setup -T -D -n %{name}-%{version}
 
 %build
 export CARGO_HOME="$(pwd)/cargo-home"

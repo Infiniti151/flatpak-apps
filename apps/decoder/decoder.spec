@@ -1,5 +1,4 @@
 %global         app_id                             com.belmoussaoui.Decoder
-%global         forgeurl                           https://gitlab.gnome.org/World/decoder
 %global         tag                                %{version}
 %global         __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*$
 
@@ -9,21 +8,17 @@ Release:        1%{?dist}
 Summary:        Scan and generate QR codes
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps
-
-%forgemeta
-
-URL:            %{forgeurl}
-Source0:        %{forgesource}
+URL:            https://gitlab.gnome.org/World/decoder
 
 BuildRequires:  meson >= 1.7
 BuildRequires:  ninja-build
+BuildRequires:  git-core
 BuildRequires:  appstream
 BuildRequires:  cairo-devel
 BuildRequires:  cargo
 BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  forge-srpm-macros
 BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  gettext
 BuildRequires:  glibc-langpack-en
@@ -57,7 +52,10 @@ Features:
 - Parses and displays QR code content when possible
 
 %prep
-%forgesetup
+rm -rf %{name}-%{version}
+git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
+rm -rf %{name}-%{version}/.git
+%setup -T -D -n %{name}-%{version}
 mkdir -p cargo-home
 
 %build
@@ -86,7 +84,6 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-
 
 %changelog
 * Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.10.0-1

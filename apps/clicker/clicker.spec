@@ -7,7 +7,6 @@ Release:        1%{?dist}
 Summary:        Simulate user input repeatedly
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps
-
 URL:            https://gitlab.gnome.org/eyekay/clicker
 
 BuildArch:      noarch
@@ -71,7 +70,6 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
-
 
 %changelog
 * Tue Nov 17 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.2.0-1

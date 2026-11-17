@@ -1,5 +1,4 @@
 %global         app_id        org.gnome.gitlab.YaLTeR.Identity
-%global         forgeurl      https://gitlab.gnome.org/YaLTeR/identity
 %global         tag           v%{version}
 
 Name:           identity
@@ -8,14 +7,11 @@ Release:        1%{?dist}
 Summary:        Compare images and videos
 License:        GPL3+
 BugURL:         https://github.com/Infiniti151/flatpak-apps
-
-%forgemeta
-
-URL:            %{forgeurl}
-Source0:        %{forgesource}
+URL:            https://gitlab.gnome.org/YaLTeR/identity
 
 BuildRequires:  meson >= 0.59
 BuildRequires:  ninja-build
+BuildRequires:  git-core
 BuildRequires:  gcc-c++
 BuildRequires:  gcc
 BuildRequires:  appstream
@@ -25,7 +21,6 @@ BuildRequires:  cargo
 BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  forge-srpm-macros
 BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  gettext
 BuildRequires:  glibc-langpack-en
@@ -52,7 +47,10 @@ Requires:       hicolor-icon-theme
 A program for comparing multiple versions of an image or video.
 
 %prep
-%forgesetup
+rm -rf %{name}-%{version}
+git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
+rm -rf %{name}-%{version}/.git
+%setup -T -D -n %{name}-%{version}
 
 %build
 %meson
@@ -78,7 +76,6 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
-
 
 %changelog
 * Mon Nov 16 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 26.03-1

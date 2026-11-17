@@ -1,5 +1,4 @@
 %global         app_id        app.drey.Elastic
-%global         forgeurl      https://gitlab.gnome.org/World/elastic
 %global         tag           %{version}
 
 Name:           elastic
@@ -8,19 +7,15 @@ Release:        1%{?dist}
 Summary:        Design spring animations
 License:        GPL-3.0-or-later
 BugURL:         https://github.com/Infiniti151/flatpak-apps
-
-%forgemeta
-
-URL:            %{forgeurl}
-Source0:        %{forgesource}
+URL:            https://gitlab.gnome.org/World/elastic
 
 BuildRequires:  meson >= 0.59.0
 BuildRequires:  ninja-build
+BuildRequires:  git-core
 BuildRequires:  appstream
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  forge-srpm-macros
 BuildRequires:  gcc
 BuildRequires:  gettext
 BuildRequires:  glib2-devel
@@ -44,7 +39,10 @@ Features:
 - Export C, JavaScript, Python, Vala or Rust code.
 
 %prep
-%forgesetup
+rm -rf %{name}-%{version}
+git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
+rm -rf %{name}-%{version}/.git
+%setup -T -D -n %{name}-%{version}
 
 %build
 %meson
@@ -70,7 +68,6 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-
 
 %changelog
 * Fri Nov 13 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.4-1
