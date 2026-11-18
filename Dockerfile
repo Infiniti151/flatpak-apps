@@ -16,19 +16,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache \
-    # --- mundi dependencies --- \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(libadwaita-1)' \
-    cargo \
-    desktop-file-utils \
-    desktop-rpm-macros \
-    forge-srpm-macros \
-    gettext \
-    libappstream-glib \
-    meson \
-    pkgconfig \
-    rustc && \
+    sccache && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
