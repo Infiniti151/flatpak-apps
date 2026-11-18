@@ -6,7 +6,7 @@ Name:           exercise-timer
 Version:        1.10.0
 Release:        1%{?dist}
 Summary:        Train and rest with high intensity
-License:        GPL-3.0
+License:        GPL-3.0-only
 BugURL:         https://github.com/Infiniti151/flatpak-apps
 URL:            https://gitlab.gnome.org/World/exercise-timer
 
