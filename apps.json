@@ -54,6 +54,12 @@
         "instance": ""
     },
     {
+        "app_name": "commit",
+        "upstream_repo": "sonnyp/Commit",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "concessio",
         "upstream_repo": "ronniedroid/concessio",
         "provider": "github",
