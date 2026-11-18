@@ -62,12 +62,11 @@ install -d %{buildroot}%{_licensedir}/%{name}
 install -pm 0644 LICENSES/GPL-3.0-or-later.txt \
                  LICENSES/CC-BY-SA-4.0.txt \
                  LICENSES/CC0-1.0.txt \
+                 data/AGPL-3.0-only.txt \
                  %{buildroot}%{_licensedir}/%{name}/
-mv %{buildroot}%{_datadir}/licenses/%{app_id}/AGPL-3.0-only.txt \
-   %{buildroot}%{_licensedir}/%{name}/
-rmdir %{buildroot}%{_datadir}/licenses/%{app_id}
+rm -rf %{buildroot}%{_licensedir}/%{app_id}
 %find_lang %{name}
-%py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name}/
+%py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name
 
 %check
 %meson_test
