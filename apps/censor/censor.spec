@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           censor
-Version:        0
+Version:        0.10.2
 Release:        1%{?dist}
 Summary:        Redact PDF documents
 License:        GPL-3.0-or-later AND AGPL-3.0-only AND CC-BY-SA-4.0 AND CC0-1.0
@@ -85,4 +85,10 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Wed Nov 18 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.10.2-1
+- Censor with latest runtime
+- Run Censor’s Flatpak package with GNOME 51 and updated translations
 
