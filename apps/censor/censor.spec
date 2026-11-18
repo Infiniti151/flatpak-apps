@@ -66,7 +66,7 @@ install -pm 0644 LICENSES/GPL-3.0-or-later.txt \
                  %{buildroot}%{_licensedir}/%{name}/
 rm -rf %{buildroot}%{_licensedir}/%{app_id}
 %find_lang %{name}
-%py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name
+%py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name}
 
 %check
 %meson_test
