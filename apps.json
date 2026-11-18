@@ -24,6 +24,12 @@
         "instance": ""
     },
     {
+        "app_name": "censor",
+        "upstream_repo": "censor/censor",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "chess-clock",
         "upstream_repo": "World/chess-clock",
         "provider": "gitlab",
