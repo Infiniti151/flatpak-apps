@@ -63,7 +63,6 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_appsdir}/*.desktop
 %{_gschemasdir}/*.gschema.xml
 %{_scalableiconsdir}/*.svg
-%{_symboliciconsdir}/*.svg
 %{_metainfodir}/*.xml
 
 %changelog
