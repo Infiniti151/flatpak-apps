@@ -16,7 +16,22 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache && \
+    sccache \
+    # --- lorem dependencies --- \
+    'pkgconfig(gio-2.0)' \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    appstream \
+    cargo \
+    desktop-file-utils \
+    desktop-rpm-macros \
+    gettext \
+    git-core \
+    gtk-update-icon-cache \
+    meson \
+    ninja-build \
+    rustc && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
