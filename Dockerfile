@@ -30,7 +30,6 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     gjs \
     glib2-devel \
     gtk-update-icon-cache \
-    jasmine \
     meson \
     ninja-build \
     python3-devel \
