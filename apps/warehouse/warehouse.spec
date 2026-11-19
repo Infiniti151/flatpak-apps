@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           warehouse
-Version:        2.2.0
+Version:        0
 Release:        1%{?dist}
 Summary:        Manage all things Flatpak
 License:        GPL-3.0-only
@@ -37,6 +37,7 @@ Requires:       gtk4
 Requires:       hicolor-icon-theme
 Requires:       libadwaita
 Requires:       python3-gobject
+Requires:       flatpak-xdg-utils
 
 %description
 Warehouse provides a simple UI to control complex Flatpak options, all without resorting to the command line.
@@ -82,6 +83,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
 
-%changelog
-* Thu Nov 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.2.0-1
-- Test
