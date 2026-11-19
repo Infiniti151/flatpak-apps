@@ -2,7 +2,7 @@
 %global         tag           %{version}
 
 Name:           lorem
-Version:        1.7
+Version:        0
 Release:        1%{?dist}
 Summary:        Generate placeholder text
 License:        GPL-3.0-or-later
@@ -63,7 +63,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Thu Nov 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.7-1
-- Test
