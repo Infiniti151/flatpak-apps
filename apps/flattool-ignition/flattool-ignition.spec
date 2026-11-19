@@ -31,7 +31,7 @@ BuildRequires:  glib2-devel
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  python3-devel
-BuildRequires:  tsc
+BuildRequires:  typescript
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
 
