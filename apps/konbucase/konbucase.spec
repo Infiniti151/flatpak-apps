@@ -17,14 +17,13 @@ Source0:        %{forgesource}
 # Compilers and Build Tools
 BuildRequires:  meson >= 0.58.0
 BuildRequires:  gcc
-BuildRequires:  vala
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
-BuildRequires:  git
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 
 # Desktop Libraries (Development Files)
+BuildRequires:  pkgconfig(chcase) >= 3.0.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.5
 BuildRequires:  pkgconfig(glib-2.0) >= 2.74
 BuildRequires:  pkgconfig(gtk4)
@@ -46,31 +45,15 @@ Features include:
 %prep
 %forgesetup
 
-git init
-
-W_URL=$(sed -n 's/^url = //p' subprojects/chcase.wrap)
-W_REV=$(sed -n 's/^revision = //p' subprojects/chcase.wrap)
-
-git clone --depth 1 -b "$W_REV" "$W_URL" subprojects/chcase
-
-rm -f subprojects/blueprint-compiler.wrap
-
-sed -i "s/allow_fallback: get_option('use_submodule')/allow_fallback: true/" meson.build
-
 %build
 %meson \
     -Dgranite=disabled \
-    -Duse_submodule=false \
-    --wrap-mode=nodownload
+    -Duse_submodule=false
 %meson_build
 
 %install
 %meson_install
 %find_lang %{app_id}
-
-rm -rf %{buildroot}%{_includedir}/chcase.h
-rm -rf %{buildroot}%{_libdir}/pkgconfig/chcase.pc
-rm -rf %{buildroot}%{_datadir}/vala/vapi/chcase.*
 
 %check
 %meson_test
@@ -79,11 +62,10 @@ rm -rf %{buildroot}%{_datadir}/vala/vapi/chcase.*
 %license LICENSE
 %doc README.md
 %{_bindir}/%{app_id}
-%{_libdir}/libchcase.so
 %{_appsdir}/*.desktop
 %{_gschemasdir}/*.gschema.xml
 %{_scalableiconsdir}/*.svg
-%{_symboliciconsdir}/*.svg
+%{_hicolordir}/*/apps/*.png
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
