@@ -25,6 +25,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     'pkgconfig(librsvg-2.0)' \
     appstream \
     cargo \
+    clippy \
     desktop-file-utils \
     gettext \
     git-core \
