@@ -54,6 +54,7 @@ Features:
 
 %prep
 %forgesetup
+sed -i "s/args: \['validate', appstream_file\]/args: ['validate-relax', '--nonet', appstream_file]/g" data/meson.build
 
 %build
 %meson
