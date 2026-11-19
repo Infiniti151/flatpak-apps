@@ -27,6 +27,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     cargo \
     clippy \
     desktop-file-utils \
+    desktop-rpm-macros \
     gettext \
     git-core \
     gtk-update-icon-cache \
