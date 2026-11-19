@@ -4,7 +4,7 @@
 %global         tag           %{version}
 
 Name:           flattool-ignition
-Version:        0
+Version:        2.4.1
 Release:        1%{?dist}
 Summary:        Manage startup apps and scripts
 License:        GPL-3.0-or-later
@@ -80,3 +80,18 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Thu Nov 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.4.1-1
+- New Features
+- Added ability to open a script to fill in the Command or Script
+- Added better support for NixOS and other Nix setups
+- Bug Fixes and Changes
+- Added fallback option to delete a file if trashing the file does not work
+- Fixed minor issue causing some new entries to not be allowed to be created
+- Better handle cases where the system autostart folder is missing
+- Fixed incorrectly titled "About Descriptive" menu item
+- Improved reliability of the Installed Apps list and its automatic refreshing
+- Added and updated translations
+
