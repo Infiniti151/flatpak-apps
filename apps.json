@@ -258,6 +258,12 @@
         "instance": "gitlab.com"
     },
     {
+        "app_name": "reco",
+        "upstream_repo": "ryonakano/reco",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "rustdiff",
         "upstream_repo": "jereok91/rustdiff",
         "provider": "github",
