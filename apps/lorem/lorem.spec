@@ -31,7 +31,10 @@ Requires:       hicolor-icon-theme
 Simple app to generate the well-known Lorem Ipsum placeholder text.
 
 %prep
-%forgesetup
+rm -rf %{name}-%{version}
+git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
+rm -rf %{name}-%{version}/.git
+%setup -T -D -n %{name}-%{version}
 
 %build
 %meson
