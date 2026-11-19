@@ -13,6 +13,7 @@ BuildRequires:  meson >= 1.7
 BuildRequires:  ninja-build
 BuildRequires:  appstream
 BuildRequires:  cargo
+BuildRequires:  clippy
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 BuildRequires:  git-core
