@@ -33,7 +33,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     meson \
     ninja-build \
     python3-devel \
-    tsc && \
+    typescript && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
