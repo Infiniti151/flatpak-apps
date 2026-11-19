@@ -4,7 +4,7 @@
 %global         tag           %{version}
 
 Name:           flattool-ignition
-Version:        2.4.1
+Version:        0
 Release:        1%{?dist}
 Summary:        Manage startup apps and scripts
 License:        GPL-3.0-or-later
@@ -80,7 +80,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Thu Nov 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.4.1-1
-- Test
