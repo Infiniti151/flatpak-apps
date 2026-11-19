@@ -24,6 +24,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     'pkgconfig(libadwaita-1)' \
     appstream \
     cargo \
+    clippy \
     desktop-file-utils \
     desktop-rpm-macros \
     gettext \
