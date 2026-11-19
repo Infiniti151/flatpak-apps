@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           reco
-Version:        0
+Version:        5.2.2
 Release:        1%{?dist}
 Summary:        Focus on recording
 License:        GPL-3.0-or-later AND MIT
@@ -81,4 +81,10 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_datadir}/icons/hicolor/*/apps/*
 %{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Thu Nov 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 5.2.2-1
+- Improve mobile support of the keyboard shortcut dialog
+- Update translations
 
