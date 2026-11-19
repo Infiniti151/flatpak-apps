@@ -15,6 +15,7 @@ BuildRequires:  appstream
 BuildRequires:  cargo
 BuildRequires:  clippy
 BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-rpm-macros
 BuildRequires:  gettext
 BuildRequires:  git-core
 BuildRequires:  glibc-langpack-en
