@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           warehouse
-Version:        0
+Version:        2.2.0
 Release:        1%{?dist}
 Summary:        Manage all things Flatpak
 License:        GPL-3.0-only
@@ -82,4 +82,12 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Thu Nov 19 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.2.0-1
+- Changes
+- Updated to GNOME 49 GTK Technologies
+- Changed to new Shortcuts UI
+- Added and updated translations
 
