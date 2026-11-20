@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           lyricade
-Version:        0.7.1
+Version:        0.7.0
 Release:        1%{?dist}
 Summary:        Download and manage lyrics for your music library
 License:        Apache-2.0 AND MIT AND ISC AND BSD-3-Clause AND Unicode-3.0 AND MPL-2.0
@@ -79,3 +79,14 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.m
 %{_scalableiconsdir}/%{app_id}.svg
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+
+%changelog
+* Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.7.0-1
+- This release adds additional lyrics providers and some UX improvements.
+- Added: lrc.red lyrics provider
+- Added: Musixmatch lyrics provider
+- Added: option to prevent future confirmation dialogs when writing lyrics tags
+- Fixed: removed failing SimpMusic provider
+- Fixed: registered Lyricade with LRCLIB to reduce rate-limiting
+
