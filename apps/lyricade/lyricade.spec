@@ -14,13 +14,13 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps
 URL:            %{forgeurl}
 Source0:        %{forgesource}
 
-BuildRequires:  cargo-rpm-macros
 BuildRequires:  cargo
 BuildRequires:  rustc
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  cmake
 BuildRequires:  appstream
+BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
@@ -72,15 +72,10 @@ desktop-file-validate %{buildroot}%{_appsdir}/%{app_id}.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.metainfo.xml
 
 %files
-%license LICENSE
-%license LICENSE.dependencies
+%license LICENSE LICENSE.dependencies
 %doc README.md
 %{_bindir}/%{name}
 %{_appsdir}/%{app_id}.desktop
 %{_scalableiconsdir}/%{app_id}.svg
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_metainfodir}/%{app_id}.metainfo.xml
-
-%changelog
-* Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.7.1-1
-- Test

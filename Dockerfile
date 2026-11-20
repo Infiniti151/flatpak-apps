@@ -16,23 +16,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache \
-    # --- lyricade dependencies --- \
-    'pkgconfig(alsa)' \
-    'pkgconfig(gio-2.0)' \
-    'pkgconfig(glib-2.0)' \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(libadwaita-1)' \
-    appstream \
-    cargo \
-    cargo-rpm-macros \
-    cmake \
-    desktop-file-utils \
-    desktop-rpm-macros \
-    forge-srpm-macros \
-    gcc \
-    gcc-c++ \
-    rustc && \
+    sccache && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
