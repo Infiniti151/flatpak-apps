@@ -90,6 +90,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "egghead",
+        "upstream_repo": "josephmawa/Egghead",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "elastic",
         "upstream_repo": "World/elastic",
         "provider": "gitlab",
