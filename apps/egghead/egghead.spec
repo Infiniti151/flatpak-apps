@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           egghead
-Version:        0.1.5
+Version:        0
 Release:        1%{?dist}
 Summary:        Learn while having fun
 License:        GPL-3.0-or-later
@@ -70,7 +70,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.5-1
-- Test
