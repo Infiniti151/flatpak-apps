@@ -288,6 +288,12 @@
         "instance": ""
     },
     {
+        "app_name": "pwvucontrol",
+        "upstream_repo": "saivert/pwvucontrol",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "railway",
         "upstream_repo": "schmiddi-on-mobile/railway",
         "provider": "gitlab",
