@@ -99,9 +99,9 @@ jobs:
               NEW_COUNT=$((NEW_COUNT + 1))
               echo "==> $SPEC: new app, checking New App compliance..."
 
-              # 1. Version must start with 0
-              if [[ ! "$VERSION_VAL" =~ ^0(\.|$) ]]; then
-                echo "❌ ERROR in $SPEC: New App initial Version must start with 0 (found Version: ${VERSION_VAL:-<none>})."
+              # 1. Version must be exactly 0
+              if [[ "$VERSION_VAL" != "0" ]]; then
+                echo "❌ ERROR in $SPEC: New App initial Version must be exactly 0 (found Version: ${VERSION_VAL:-<none>})."
                 echo "Please set 'Version: 0' in the spec file."
                 FAILED=1
               else
