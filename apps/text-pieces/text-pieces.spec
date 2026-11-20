@@ -4,7 +4,7 @@
 %global         tag           %{version}
 
 Name:           text-pieces
-Version:        4.3.2
+Version:        0
 Release:        1%{?dist}
 Summary:        Developer's scratchpad
 License:        GPL-3.0-or-later AND MIT AND Apache-2.0 AND Unicode-3.0 AND 0BSD AND MPL-2.0
@@ -78,7 +78,3 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
-
-%changelog
-* Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.3.2-1
-- Test
