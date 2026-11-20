@@ -16,7 +16,18 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache && \
+    sccache \
+    # --- egghead dependencies --- \
+    appstream \
+    desktop-file-utils \
+    desktop-rpm-macros \
+    forge-srpm-macros \
+    gettext \
+    gjs \
+    glib2-devel \
+    gtk-update-icon-cache \
+    meson \
+    ninja-build && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
