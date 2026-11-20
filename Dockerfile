@@ -16,26 +16,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache \
-    # --- pwvucontrol dependencies --- \
-    'pkgconfig(gio-2.0)' \
-    'pkgconfig(glib-2.0)' \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(libadwaita-1)' \
-    'pkgconfig(libpipewire-0.3)' \
-    'pkgconfig(wireplumber-0.5)' \
-    blueprint-compiler \
-    cargo \
-    clang-devel \
-    desktop-file-utils \
-    desktop-rpm-macros \
-    forge-srpm-macros \
-    gettext \
-    gtk-update-icon-cache \
-    libappstream-glib \
-    meson \
-    ninja-build \
-    rustc && \
+    sccache && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 

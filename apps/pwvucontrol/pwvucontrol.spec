@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           pwvucontrol
-Version:        0.5.3
+Version:        0
 Release:        1%{?dist}
 Summary:        Volume control for pipewire
 License:        GPL-3.0-or-later AND MIT AND Unicode-3.0 AND MPL-2.0
@@ -47,7 +47,7 @@ A native volume control app made with GTK + Rust.
 
 %build
 %meson_build
-env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none --format '{p}: {l}' | sort -u > LICENSE.dependencies
+env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none --format '{p}: {l}' | sed -E 's/ \(\*\)$//; s/ \(\/[^)]*\)//' | sort -u > LICENSE.dependencies
 
 %install
 %meson_install
@@ -66,7 +66,3 @@ env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none 
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
-
-%changelog
-* Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.5.3-1
-- Test
