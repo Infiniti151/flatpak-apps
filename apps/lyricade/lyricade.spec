@@ -53,11 +53,13 @@ Features:
 %cargo_prep -N
 
 %build
+export CARGO_NET_OFFLINE=false
 %cargo_build
 %{cargo_license_summary}
 %{cargo_license} > LICENSE.dependencies
 
 %install
+export CARGO_NET_OFFLINE=false
 %cargo_install
 install -Dpm0644 data/icons/%{app_id}.svg %{buildroot}%{_scalableiconsdir}/%{app_id}.svg
 install -Dpm0644 data/icons/symbolic/%{app_id}-symbolic.svg %{buildroot}%{_symboliciconsdir}/%{app_id}-symbolic.svg
