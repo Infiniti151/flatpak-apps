@@ -6,7 +6,7 @@
 %global         tag             v%{version}
 
 Name:           mundi
-Version:        1.2.0
+Version:        1.3.0
 Release:        1%{?dist}
 Summary:        Learn geography
 License:        GPL-3.0-or-later
@@ -62,6 +62,12 @@ Features include discovery mode for free exploration, timed quizzes with score t
 %{_metainfodir}/*.xml
 
 %changelog
+* Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.3.0-1
+- New Italy exercises: rivers, lakes, mountain ranges, peaks and volcanoes, seas, islands and archipelagos, plains and hills, gulfs and peninsulas
+- New Spain exercises: lakes, mountain ranges, peaks and volcanoes, seas, islands and archipelagos, plains and hills, gulfs and peninsulas
+- New Galicia exercise: islands
+- Hold to show the regions on the river maps
+
 * Sat Nov 14 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.2.0-1
 - New exercise: capitals of the regions of Italy
 - Complete Galician, Japanese, Polish, Spanish and Turkish translations
