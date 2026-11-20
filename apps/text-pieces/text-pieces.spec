@@ -69,7 +69,7 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{upstream_name}.lang
 %license LICENSE LICENSES
-%doc README.md TODO.md
+%doc README.md
 %{_bindir}/%{upstream_name}
 %{_datadir}/%{upstream_name}
 %{_appsdir}/*.desktop
