@@ -20,14 +20,13 @@ Source0:        %{forgesource}
 Source1:        %{forgeurl}/releases/download/%{tag}/%{name}-frontend-%{version}.tar.gz
 
 BuildRequires:  cargo
-BuildRequires:  rust
+BuildRequires:  desktop-file-utils
+BuildRequires:  appstream
 BuildRequires:  pkgconfig(gobject-2.0)
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(webkit2gtk-4.1)
 BuildRequires:  pkgconfig(javascriptcoregtk-4.1)
 BuildRequires:  pkgconfig(libsoup-3.0)
-BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
 
 # Runtime Requirements
 Requires:       hicolor-icon-theme
@@ -58,11 +57,7 @@ tar -xzf %{SOURCE1}
 
 mv dist desktop/
 
-mkdir -p cargo-home
-
 %build
-export CARGO_HOME=$(pwd)/cargo-home
-
 cargo build --release \
     --features custom-protocol \
     -p %{name}-desktop
@@ -89,7 +84,7 @@ install -m644 locales/*.yml \
 
 %check
 desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 %files
 %license LICENSE

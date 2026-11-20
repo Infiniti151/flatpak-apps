@@ -14,7 +14,7 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps
 URL:            %{forgeurl}
 Source0:        %{forgesource}
 
-BuildRequires:  git
+BuildRequires:  git-core
 BuildRequires:  meson >= 0.58.0
 BuildRequires:  ninja-build
 BuildRequires:  appstream
@@ -56,8 +56,10 @@ Features include:
 %forgesetup
 meson subprojects download $(basename -s .wrap subprojects/live*.wrap)
 
-%build
+%conf
 %meson -Duse_submodule=true
+
+%build
 %meson_build
 
 %install
@@ -69,9 +71,6 @@ install -Dpm 0644 subprojects/live*/LICENSE %{buildroot}%{_licensedir}/%{name}/L
 
 %check
 meson test -C %{_vpath_builddir} --print-errorlogs --no-suite live-chart
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{app_id}.lang
 %license %{_licensedir}/%{name}

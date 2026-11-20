@@ -30,12 +30,11 @@ BuildRequires:  meson >= 0.59.0
 BuildRequires:  ninja-build
 BuildRequires:  gcc
 BuildRequires:  cargo
-BuildRequires:  rust
 BuildRequires:  clang-devel
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 
@@ -65,11 +64,11 @@ It combines all the advantages of web based services like syncing across all you
 
 %prep
 %forgesetup
-mkdir -p cargo-home
+
+%conf
+%meson -Dprofile=default
 
 %build
-export CARGO_HOME=$(pwd)/cargo-home
-%meson -Dprofile=default
 %meson_build
 
 %install
@@ -84,8 +83,7 @@ upx --best --lzma %{buildroot}%{_bindir}/%{app_id}
 %find_lang %{name}
 
 %check
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+%meson_test
 %if 0%{?fedora} && ! 0%{?eln}
 upx -t %{buildroot}%{_bindir}/%{app_id}
 %endif

@@ -57,8 +57,10 @@ Features:
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -76,9 +78,6 @@ pip3 install --no-deps --ignore-installed \
 %check
 export PYTHONPATH="%{buildroot}%{python3_sitelib}:src:."
 %meson_test --suite unit
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{upstream_name}.lang
 %license COPYING

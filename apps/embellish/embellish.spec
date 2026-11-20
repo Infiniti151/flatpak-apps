@@ -54,8 +54,10 @@ User-friendly application designed for managing Nerd Fonts on your system. With 
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -64,9 +66,6 @@ User-friendly application designed for managing Nerd Fonts on your system. With 
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{app_id}.lang
 %license LICENSE

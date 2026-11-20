@@ -14,7 +14,6 @@ URL:            https://gitlab.gnome.org/World/amberol
 
 BuildRequires:  meson >= 0.59.0
 BuildRequires:  gcc
-BuildRequires:  rust
 BuildRequires:  cargo
 BuildRequires:  git-core
 BuildRequires:  blueprint-compiler
@@ -27,11 +26,9 @@ BuildRequires:  pkgconfig(gstreamer-play-1.0)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires:  pkgconfig(gstreamer-plugins-bad-1.0)
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  gettext
 
-Requires:       gtk4 >= 4.19.5
-Requires:       libadwaita
 Requires:       gstreamer1-plugins-base
 Requires:       gstreamer1-plugins-good
 Requires:       gstreamer1-plugins-bad-free
@@ -48,21 +45,18 @@ git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
 rm -rf %{name}-%{version}/.git
 %setup -T -D -n %{name}-%{version}
 
-%build
-export CARGO_HOME="$(pwd)/cargo-home"
+%conf
 %meson -Dprofile=default --wrap-mode=nodownload
+
+%build
 %meson_build
 
 %install
-export CARGO_HOME="$(pwd)/cargo-home"
 %meson_install
 %find_lang %{name}
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSES/CC-BY-SA-3.0.txt

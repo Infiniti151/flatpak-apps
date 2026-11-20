@@ -40,8 +40,10 @@ developing applications that use %{name}.
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install

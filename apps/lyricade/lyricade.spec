@@ -14,8 +14,6 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps
 URL:            %{forgeurl}
 Source0:        %{forgesource}
 
-BuildRequires:  cargo
-BuildRequires:  rustc
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  cmake
@@ -79,7 +77,6 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.m
 %{_scalableiconsdir}/%{app_id}.svg
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_metainfodir}/%{app_id}.metainfo.xml
-
 
 %changelog
 * Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.7.0-1

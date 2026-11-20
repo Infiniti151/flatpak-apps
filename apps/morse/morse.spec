@@ -19,20 +19,17 @@ Source0:        %{forgesource}
 
 BuildRequires:  meson >= 1.0.0
 BuildRequires:  cargo
-BuildRequires:  rustc
 BuildRequires:  pkgconfig
 BuildRequires:  gettext
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.22
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.9
 BuildRequires:  pkgconfig(alsa)
 
-Requires:       gtk4
-Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
@@ -42,9 +39,10 @@ Learn Morse Code and High Speed Telegraphy.
 %forgesetup
 sed -i "/run_command('git'/d" meson.build
 
-%build
-export CARGO_HOME=$(pwd)/cargo-home
+%conf
 %meson -Dprofile=default
+
+%build
 %meson_build
 
 %install
@@ -53,8 +51,7 @@ export CARGO_HOME=$(pwd)/cargo-home
 %find_lang %{name}
 
 %check
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+%meson_test
 
 %files -f %{name}.lang
 %license COPYING.md

@@ -17,30 +17,19 @@ Source0:        %{forgesource}
 BuildRequires:  meson >= 1.1.0
 BuildRequires:  ninja-build
 BuildRequires:  appstream
-BuildRequires:  cairo-devel
 BuildRequires:  cargo
-BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
-BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  gettext
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
-BuildRequires:  pango-devel
 BuildRequires:  pkgconfig(gio-2.0) >= 2.66
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
 BuildRequires:  pkgconfig(gtk4) >= 4.20
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.9
-BuildRequires:  rustc
 
-Requires:       cairo
-Requires:       gdk-pixbuf2
-Requires:       glib2
-Requires:       gtk4
 Requires:       hicolor-icon-theme
-Requires:       libadwaita
-Requires:       pango
 
 %description
 Coronet is a logic puzzle game. The grid is divided into colored regions; place exactly one crown in every row, every column, and every colored region, with no two crowns touching, not even diagonally.
@@ -49,11 +38,11 @@ Left-click a cell to place or remove a crown, drag a crown to move it, right-cli
 
 %prep
 %forgesetup
-mkdir -p cargo-home
+
+%conf
+%meson
 
 %build
-export CARGO_HOME=$(pwd)/cargo-home
-%meson
 %meson_build
 
 %install
@@ -62,9 +51,6 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE

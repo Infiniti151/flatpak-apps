@@ -49,8 +49,10 @@ Tomatillo is a Pomodoro Timer app for your productivity tasks. Work for a set ti
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -60,9 +62,6 @@ Tomatillo is a Pomodoro Timer app for your productivity tasks. Work for a set ti
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE

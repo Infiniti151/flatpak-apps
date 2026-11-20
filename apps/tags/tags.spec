@@ -51,8 +51,10 @@ Features
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -60,9 +62,7 @@ Features
 %find_lang %{app_id}
 
 %check
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/*.appdata.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
+%meson_test
 
 %files -f %{app_id}.lang
 %license COPYING

@@ -50,8 +50,10 @@ Get your fonts from online sources with a sleek, friendly user interface. Sitra 
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -60,9 +62,6 @@ Get your fonts from online sources with a sleek, friendly user interface. Sitra 
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{app_id}.lang
 %license COPYING

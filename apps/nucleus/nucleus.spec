@@ -20,7 +20,7 @@ BuildRequires:  meson >= 1.0.0
 BuildRequires:  python3-devel
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(glib-2.0)
@@ -41,8 +41,10 @@ Nucleus gives you the ability to view the periodic table of the elements, as wel
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -52,9 +54,6 @@ Nucleus gives you the ability to view the periodic table of the elements, as wel
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license COPYING

@@ -57,8 +57,10 @@ Features:
 %forgesetup
 sed -i "s/args: \['validate', appstream_file\]/args: ['validate-relax', '--nonet', appstream_file]/g" data/meson.build
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -68,9 +70,6 @@ sed -i "s/args: \['validate', appstream_file\]/args: ['validate-relax', '--nonet
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE

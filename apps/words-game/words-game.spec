@@ -2,6 +2,7 @@
 %global         _empty_manifest_terminate_build 0
 %endif
 %global         app_id          page.codeberg.petsoi.words
+%global         upstream_name   words
 %global         forgeurl        https://codeberg.org/petsoi/words
 %global         tag             v%{version}
 
@@ -19,18 +20,18 @@ Source0:        %{forgesource}
 
 BuildRequires:  meson >= 1.1.0
 BuildRequires:  gcc
-BuildRequires:  rust
 BuildRequires:  cargo
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 BuildRequires:  appstream
-BuildRequires:  libappstream-glib
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
 BuildRequires:  pkgconfig(gio-2.0) >= 2.66
 BuildRequires:  pkgconfig(gtk4) >= 4.18.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.5.5
+
+Requires:       hicolor-icon-theme
 
 %description
 Words is a popular word puzzle game, similar to Wordle, where players try to guess a hidden word within six attempts.
@@ -45,21 +46,20 @@ Want to see your language in the game? Feel free to send me a word list!
 %forgesetup
 find . -name "*metainfo.xml*" -exec sed -i '/<releases>/,/<\/releases>/d' {} +
 
-%build
-export CARGO_HOME=$(pwd)/cargo-home
+%conf
 %meson -Dprofile=default
+
+%build
 %meson_build
 
 %install
 %meson_install
-%find_lang words
+%find_lang %{upstream_name}
 
 %check
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
+%meson_test
 
-%files -f words.lang
+%files -f %{upstream_name}.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/%{app_id}

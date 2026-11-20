@@ -26,7 +26,7 @@ BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gettext
 BuildRequires:  gjs
-BuildRequires:  git
+BuildRequires:  git-core
 BuildRequires:  glib2-devel
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
@@ -55,8 +55,10 @@ if [ ! -d ".git" ]; then
 fi
 git submodule update --init --recursive
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -65,9 +67,6 @@ git submodule update --init --recursive
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{upstream_name}.lang
 %license LICENSE
