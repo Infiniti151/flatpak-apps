@@ -4,7 +4,7 @@
 %global         tag           v%{version}
 
 Name:           encoding-explorer
-Version:        0
+Version:        0.1.5
 Release:        1%{?dist}
 Summary:        Transform characters into binary
 License:        GPL-3.0-or-later
@@ -71,3 +71,9 @@ glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
 %{_metainfodir}/*.metainfo.xml
+
+
+%changelog
+* Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.5-1
+- Upgrade Gnome runtime to version 50
+
