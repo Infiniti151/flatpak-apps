@@ -3,7 +3,7 @@
 %global         tag             v%{version}
 
 Name:           spellingbee
-Version:        0.1.7
+Version:        0.1.8
 Release:        1%{?dist}
 Summary:        Learn new English words
 License:        GPL-3.0-or-later
@@ -73,6 +73,9 @@ Below are the main features:
 %{_symboliciconsdir}/*.svg
 
 %changelog
+* Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.8-1
+- Add Spanish translation
+
 * Wed Oct 21 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.7-1
 - Upgrade to Gnome runtime version 51
 
