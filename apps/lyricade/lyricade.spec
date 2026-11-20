@@ -66,6 +66,7 @@ install -Dpm0644 data/%{app_id}.desktop %{buildroot}%{_appsdir}/%{app_id}.deskto
 install -Dpm0644 data/%{app_id}.metainfo.xml %{buildroot}%{_metainfodir}/%{app_id}.metainfo.xml
 
 %check
+export CARGO_NET_OFFLINE=false
 %cargo_test
 desktop-file-validate %{buildroot}%{_appsdir}/%{app_id}.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.metainfo.xml
