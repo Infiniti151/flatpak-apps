@@ -216,6 +216,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "lyricade",
+        "upstream_repo": "weiteck/lyricade",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "memerist",
         "upstream_repo": "vani-tty1/memerist",
         "provider": "github",
