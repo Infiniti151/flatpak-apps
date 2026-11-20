@@ -81,5 +81,6 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.m
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_metainfodir}/%{app_id}.metainfo.xml
 
-* Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.3.2-1
+%changelog
+* Fri Nov 20 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.7.1-1
 - Test
