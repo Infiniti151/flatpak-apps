@@ -55,8 +55,7 @@ Features:
 %build
 export CARGO_NET_OFFLINE=false
 %cargo_build
-%{cargo_license_summary}
-%{cargo_license} > LICENSE.dependencies
+env CARGO_HOME=.cargo cargo tree -e normal --prefix none --format '{p}: {l}' | sort -u > LICENSE.dependencies
 
 %install
 export CARGO_NET_OFFLINE=false
