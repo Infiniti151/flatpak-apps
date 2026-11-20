@@ -51,8 +51,10 @@ This package contains the development headers.
 %forgesetup
 
 
-%build
+%conf
 %meson -D gtk-stylesheets=true
+
+%build
 %meson_build
 
 

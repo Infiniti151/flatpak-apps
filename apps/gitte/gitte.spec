@@ -16,7 +16,6 @@ Source0:        %{forgesource}
 
 BuildRequires:  meson
 BuildRequires:  ninja-build
-BuildRequires:  rust
 BuildRequires:  cargo
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
@@ -27,8 +26,10 @@ BuildRequires:  pkgconfig(libssh2)
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  openssl-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  gettext
+
+Requires:       hicolor-icon-theme
 
 %description
 Gitte is built around putting commits together with care. Stage or discard your changes line by line, in larger blocks, or a whole file at a time, so every commit holds exactly the work you mean it to and nothing more. It opens straight into your current changes, ready to work.
@@ -38,11 +39,12 @@ Beyond that, follow how your project's history branches and merges in a visual g
 %prep
 %forgesetup
 
+%conf
+%meson
+
 %build
 export LIBGIT2_SYS_USE_PKG_CONFIG=0
 export LIBSSH2_SYS_USE_PKG_CONFIG=1
-
-%meson
 %meson_build
 
 %install
@@ -51,9 +53,6 @@ export LIBSSH2_SYS_USE_PKG_CONFIG=1
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license COPYING

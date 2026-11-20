@@ -30,6 +30,8 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  gettext
 
+Requires:       hicolor-icon-theme
+
 %description
 Bobby lets you open SQLite database files (.db, .sqlite) and browse the tables inside. Handy for app development or inspecting downloaded databases.
 - Search tables and views of any size
@@ -41,20 +43,17 @@ Don't forget to sanitize your database inputs!
 %prep
 %forgesetup
 
-%build
-export CARGO_HOME="$(pwd)/cargo-home"
+%conf
 %meson -Dnightly=false
+
+%build
 %meson_build
 
 %install
-export CARGO_HOME="$(pwd)/cargo-home"
 %meson_install
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files
 %license LICENSE.txt

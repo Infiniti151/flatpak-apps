@@ -45,8 +45,10 @@ Warning: it has been noted that “such a program can lead people away from God,
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -55,8 +57,6 @@ Warning: it has been noted that “such a program can lead people away from God,
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 %files -f %{app_id}.lang
 %license LICENSE

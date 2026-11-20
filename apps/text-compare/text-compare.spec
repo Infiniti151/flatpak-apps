@@ -45,8 +45,10 @@ Below are the main features of Text Compare:
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install

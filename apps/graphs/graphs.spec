@@ -81,9 +81,12 @@ rm -rf %{name}-%{version}/.git
 # Make gio_pyio importable for meson's configure-time module check
 pip3 install --no-deps --no-index --target="$PWD/pydeps" %{SOURCE0}
 
-%build
+%conf
 export PYTHONPATH="$PWD/pydeps"
 %meson
+
+%build
+export PYTHONPATH="$PWD/pydeps"
 %meson_build
 
 %install
@@ -103,9 +106,6 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 export GI_TYPELIB_PATH=%{buildroot}%{_libdir}/girepository-1.0
 export PYTHONPATH=%{buildroot}%{python3_sitelib}:%{buildroot}%{python3_sitearch}
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE

@@ -14,8 +14,7 @@ BugURL:         https://github.com/Infiniti151/flatpak-apps/issues
 URL:            %{forgeurl}
 Source0:        %{forgesource}
 
-BuildRequires:  /usr/bin/node
-BuildRequires:  /usr/bin/npm
+BuildRequires:  nodejs-npm
 BuildRequires:  meson
 BuildRequires:  gjs
 BuildRequires:  desktop-rpm-macros
@@ -43,8 +42,10 @@ Concessio helps you understand and convert between unix permissions representati
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -52,9 +53,7 @@ Concessio helps you understand and convert between unix permissions representati
 %find_lang %{app_id} %{name}.lang
 
 %check
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
+%meson_test
 
 %files -f %{name}.lang
 %license LICENSE

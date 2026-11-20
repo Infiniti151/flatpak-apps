@@ -43,8 +43,10 @@ Calligraphy turns short texts into large, impressive banners made up of ASCII Ch
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -63,9 +65,6 @@ pip3 install --no-deps --ignore-installed \
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE

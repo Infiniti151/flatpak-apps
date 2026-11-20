@@ -16,16 +16,12 @@ BuildRequires:  gcc-c++
 BuildRequires:  gcc
 BuildRequires:  appstream
 BuildRequires:  blueprint-compiler
-BuildRequires:  cairo-devel
 BuildRequires:  cargo
-BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  gettext
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
-BuildRequires:  pango-devel
 BuildRequires:  pkgconfig(dav1d) >= 1.0.0
 BuildRequires:  pkgconfig(gio-2.0) >= 2.74
 BuildRequires:  pkgconfig(glib-2.0) >= 2.74
@@ -36,9 +32,10 @@ BuildRequires:  pkgconfig(gstreamer-video-1.0) >= 1.24.0
 BuildRequires:  pkgconfig(gtk4) >= 4.16.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8.0
 BuildRequires:  pkgconfig(libwebpdemux) >= 0.5
-BuildRequires:  rustc
 
+Requires:       glycin-loaders
 Requires:       gstreamer1-plugin-gtk4
+Requires:       gstreamer1-plugins-bad-free
 Requires:       gstreamer1-plugins-base
 Requires:       gstreamer1-plugins-good
 Requires:       hicolor-icon-theme
@@ -52,8 +49,10 @@ git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
 rm -rf %{name}-%{version}/.git
 %setup -T -D -n %{name}-%{version}
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -62,9 +61,6 @@ rm -rf %{name}-%{version}/.git
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license COPYING

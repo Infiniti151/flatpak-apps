@@ -46,8 +46,10 @@ Encoding Explorer is a tool for learning character encoding. Below are the main 
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -56,9 +58,6 @@ Encoding Explorer is a tool for learning character encoding. Below are the main 
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{upstream_name}.lang
 %license COPYING

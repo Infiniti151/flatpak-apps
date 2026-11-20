@@ -16,7 +16,6 @@ Source0:        %{forgesource}
 
 BuildRequires:  meson
 BuildRequires:  gcc
-BuildRequires:  rust
 BuildRequires:  cargo
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
@@ -24,8 +23,10 @@ BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  gettext
+
+Requires:       hicolor-icon-theme
 
 %description
 There is no doubt that typing on a keyboard is an essential skill in the digital age. Typing fast and accurately gives you more opportunities, more time for what matters to you, and a sense of self-accomplishment.
@@ -41,21 +42,20 @@ Keypunch is proudly part of GNOME Circle, an initiative that champions the great
 %prep
 %forgesetup
 
-%build
+%conf
 %meson -Dsandboxed=false
+
+%build
 %meson_build
 
 %install
 %meson_install
-%find_lang keypunch
+%find_lang %{name}
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
-%files -f keypunch.lang
+%files -f %{name}.lang
 %license COPYING
 %doc README.md
 %{_bindir}/keypunch

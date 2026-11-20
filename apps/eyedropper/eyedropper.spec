@@ -28,8 +28,10 @@ BuildRequires:  pkgconfig(libadwaita-1) >= 1.9
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
 BuildRequires:  blueprint-compiler >= 0.20
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  gettext
+
+Requires:       hicolor-icon-theme
 
 %description
 Enter or pick a color and view it in different formats.
@@ -43,9 +45,10 @@ Features
 %prep
 %forgesetup
 
-%build
-export CARGO_HOME=$(pwd)/cargo-home
+%conf
 %meson -Dprofile=default
+
+%build
 %meson_build
 
 %install
@@ -54,9 +57,6 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE

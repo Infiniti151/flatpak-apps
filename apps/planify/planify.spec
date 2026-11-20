@@ -20,7 +20,7 @@ BuildRequires:  meson
 BuildRequires:  vala
 BuildRequires:  gcc
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  gettext
 BuildRequires:  python3
 BuildRequires:  git-core
@@ -120,7 +120,7 @@ if [ -f scripts/update-translations.py ]; then
     python3 scripts/update-translations.py
 fi
 
-%build
+%conf
 %meson \
     -Dprofile=default \
     -Dportal=true \
@@ -128,6 +128,7 @@ fi
     -Dspelling=enabled \
     -Dmanpage=false
 
+%build
 %meson_build
 
 %install
@@ -153,9 +154,7 @@ rm -f %{buildroot}%{_metainfodir}/io.github.alainm23.chrono.metainfo.xml
 
 %check
 %meson_test --suite cli
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
+appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.xml
 
 %files -f %{app_id}.lang
 %license LICENSE

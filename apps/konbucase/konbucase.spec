@@ -45,10 +45,12 @@ Features include:
 %prep
 %forgesetup
 
-%build
+%conf
 %meson \
     -Dgranite=disabled \
     -Duse_submodule=false
+
+%build
 %meson_build
 
 %install

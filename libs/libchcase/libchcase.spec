@@ -35,8 +35,10 @@ Header, pkg-config file and Vala bindings for building applications against
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install

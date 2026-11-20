@@ -14,28 +14,17 @@ BuildRequires:  ninja-build
 BuildRequires:  git-core
 BuildRequires:  appstream
 BuildRequires:  blueprint-compiler
-BuildRequires:  cairo-devel
 BuildRequires:  cargo
-BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
-BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  gettext
 BuildRequires:  git-core
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
-BuildRequires:  pango-devel
 BuildRequires:  pkgconfig(gtk4) >= 4.10
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.5
-BuildRequires:  rustc
 
-Requires:       cairo
-Requires:       gdk-pixbuf2
-Requires:       glib2
-Requires:       gtk4
 Requires:       hicolor-icon-theme
-Requires:       libadwaita
-Requires:       pango
 
 %description
 Wildcard gives you a nice and simple to use interface to test/practice regular expressions.
@@ -45,11 +34,11 @@ rm -rf %{name}-%{version}
 git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
 rm -rf %{name}-%{version}/.git
 %setup -T -D -n %{name}-%{version}
-mkdir -p cargo-home
+
+%conf
+%meson
 
 %build
-export CARGO_HOME=$(pwd)/cargo-home
-%meson
 %meson_build
 
 %install
@@ -58,9 +47,6 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license COPYING

@@ -17,30 +17,19 @@ Source0:        %{forgesource}
 BuildRequires:  meson >= 1.9
 BuildRequires:  ninja-build
 BuildRequires:  cargo
-BuildRequires:  cargo-rpm-macros
-BuildRequires:  cairo-devel
-BuildRequires:  pango-devel
-BuildRequires:  gdk-pixbuf2-devel
-BuildRequires:  gtk4-devel
-BuildRequires:  libadwaita-devel
-BuildRequires:  gstreamer1-devel
-BuildRequires:  gstreamer1-plugins-base-devel
+BuildRequires:  appstream
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  gettext
-BuildRequires:  glib2-devel
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
-BuildRequires:  libappstream-glib
-BuildRequires:  rustc
+BuildRequires:  gstreamer1-devel
+BuildRequires:  gstreamer1-plugins-base-devel
+BuildRequires:  pkgconfig(gtk4)
+BuildRequires:  pkgconfig(libadwaita-1)
 
-Requires:       gtk4
-Requires:       libadwaita
 Requires:       hicolor-icon-theme
-Requires:       cairo
-Requires:       pango
-Requires:       gdk-pixbuf2
 Requires:       gstreamer1
 Requires:       gstreamer1-plugins-base
 
@@ -57,8 +46,10 @@ Transition supports converting to:
 %prep
 %forgesetup
 
-%build
+%conf
 %meson -Dprofile=release
+
+%build
 %meson_build
 
 %install
@@ -68,7 +59,7 @@ Transition supports converting to:
 %check
 %meson_test
 desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
+appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
 glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang

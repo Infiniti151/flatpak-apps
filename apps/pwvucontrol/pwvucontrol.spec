@@ -32,7 +32,6 @@ BuildRequires:  pkgconfig(gtk4) >= 4.0.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.2
 BuildRequires:  pkgconfig(libpipewire-0.3) >= 0.3.83
 BuildRequires:  pkgconfig(wireplumber-0.5) >= 0.5.11
-BuildRequires:  rustc
 
 Requires:       hicolor-icon-theme
 

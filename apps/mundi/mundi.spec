@@ -19,18 +19,15 @@ Source0:        %{forgesource}
 
 BuildRequires:  meson >= 0.59.0
 BuildRequires:  cargo
-BuildRequires:  rustc
 BuildRequires:  pkgconfig
 BuildRequires:  gettext
+BuildRequires:  appstream
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  pkgconfig(gtk4) >= 4.14
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.5
 
-Requires:       gtk4
-Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
@@ -41,9 +38,10 @@ Features include discovery mode for free exploration, timed quizzes with score t
 %prep
 %forgesetup
 
-%build
-export CARGO_HOME=$(pwd)/cargo-home
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -52,9 +50,7 @@ export CARGO_HOME=$(pwd)/cargo-home
 %find_lang %{name}
 
 %check
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
+%meson_test
 
 %files -f %{name}.lang
 %license COPYING

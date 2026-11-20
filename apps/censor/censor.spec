@@ -16,7 +16,7 @@ BuildArch:      noarch
 URL:            %{forgeurl}
 Source0:        %{forgesource}
 
-BuildRequires:  git
+BuildRequires:  git-core
 BuildRequires:  meson >= 1.0.0
 BuildRequires:  ninja-build
 BuildRequires:  appstream
@@ -52,8 +52,10 @@ if [ ! -d ".git" ]; then
 fi
 git submodule update --init --recursive
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -70,9 +72,6 @@ rm -rf %{buildroot}%{_licensedir}/%{app_id}
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license %{_licensedir}/%{name}

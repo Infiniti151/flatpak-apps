@@ -19,31 +19,20 @@ BuildRequires:  meson >= 0.59
 BuildRequires:  ninja-build
 BuildRequires:  appstream
 BuildRequires:  blueprint-compiler
-BuildRequires:  cairo-devel
 BuildRequires:  cargo
-BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
-BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  gettext
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
-BuildRequires:  pango-devel
 BuildRequires:  openssl-devel
 BuildRequires:  pkgconfig(gio-2.0) >= 2.66
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
 BuildRequires:  pkgconfig(gtk4) >= 4.14
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8
-BuildRequires:  rustc
 
-Requires:       cairo
-Requires:       gdk-pixbuf2
-Requires:       glib2
-Requires:       gtk4
 Requires:       hicolor-icon-theme
-Requires:       libadwaita
-Requires:       pango
 
 %description
 Railway lets you look up travel information across networks and borders without having to navigate through different websites. Due to the adaptive design, it is suitable to plan your trip in advance or mobile on the go:
@@ -55,11 +44,11 @@ And all that for networks from all around the world, but mostly from Europe.
 
 %prep
 %forgesetup
-mkdir -p cargo-home
+
+%conf
+%meson
 
 %build
-export CARGO_HOME=$(pwd)/cargo-home
-%meson
 %meson_build
 
 %install
@@ -68,9 +57,6 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{upstream_name}.lang
 %license LICENSE

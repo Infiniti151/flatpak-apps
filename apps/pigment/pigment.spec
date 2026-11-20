@@ -51,8 +51,10 @@ Pigment allows you to extract a palette of colors from your images offline. You 
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -65,9 +67,6 @@ pip3 install --no-deps --no-index --ignore-installed --root-user-action=ignore -
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license COPYING

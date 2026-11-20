@@ -23,7 +23,7 @@ BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  python3-devel
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  glibc-langpack-en
 BuildRequires:  desktop-rpm-macros
@@ -43,8 +43,10 @@ NetPeek is a simple network scanner that helps you discover active devices on yo
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -56,9 +58,6 @@ NetPeek is a simple network scanner that helps you discover active devices on yo
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license LICENSE

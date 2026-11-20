@@ -32,9 +32,7 @@ BuildRequires:  gcc
 BuildRequires:  clang
 BuildRequires:  lld
 BuildRequires:  compiler-rt
-BuildRequires:  rustc
 BuildRequires:  cargo
-BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
 BuildRequires:  blueprint-compiler
@@ -56,8 +54,6 @@ BuildRequires:  libadwaita-devel
 
 Requires:       nethogs
 Requires:       lm_sensors
-Requires:       gtk4
-Requires:       libadwaita
 Requires:       hicolor-icon-theme
 
 %description
@@ -97,17 +93,20 @@ if [ ! -d ".git" ]; then
 fi
 git submodule update --init --recursive
 
-%build
-export CARGO_NET_OFFLINE=false
-export CC=%{build_cc}
-export CXX=%{build_cxx}
+%conf
+export CC="%{build_cc}"
+export CXX="%{build_cxx}"
 export LDFLAGS="-fuse-ld=lld"
-export RUSTFLAGS="$RUSTFLAGS -C linker=clang -C link-arg=$LDFLAGS -C lto=fat -C embed-bitcode=yes -C opt-level=z -C strip=symbols"
-
 %meson \
   -Db_lto=true \
   -Dflatpak=false
 
+%build
+export CARGO_NET_OFFLINE=false
+export CC="%{build_cc}"
+export CXX="%{build_cxx}"
+export LDFLAGS="-fuse-ld=lld"
+export RUSTFLAGS="$RUSTFLAGS -C linker=clang -C link-arg=$LDFLAGS -C lto=fat -C embed-bitcode=yes -C opt-level=z -C strip=symbols"
 %meson_build
 
 %install
@@ -121,7 +120,7 @@ upx --best --lzma %{buildroot}%{_bindir}/%{name}-magpie
 %find_lang %{name}
 
 %check
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
+%meson_test
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
 %if 0%{?fedora} && ! 0%{?eln}
 upx -t %{buildroot}%{_bindir}/%{name}

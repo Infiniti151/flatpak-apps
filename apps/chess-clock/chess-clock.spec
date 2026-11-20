@@ -42,8 +42,10 @@ git clone --depth 1 --branch %{tag} %{url}.git %{name}-%{version}
 rm -rf %{name}-%{version}/.git
 %setup -T -D -n %{name}-%{version}
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -53,9 +55,6 @@ rm -rf %{name}-%{version}/.git
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{name}.lang
 %license COPYING

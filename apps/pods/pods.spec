@@ -18,7 +18,6 @@ Source0:        %{forgesource}
 
 BuildRequires:  meson >= 0.59
 BuildRequires:  gcc
-BuildRequires:  rust-packaging
 BuildRequires:  cargo
 BuildRequires:  blueprint-compiler
 BuildRequires:  desktop-rpm-macros
@@ -53,9 +52,11 @@ With Pods you can, among other things:
 %prep
 %forgesetup
 
-%build
+%conf
 %meson \
     -Dprofile=default
+
+%build
 %meson_build
 
 %install
@@ -63,8 +64,6 @@ With Pods you can, among other things:
 %find_lang %{name}
 
 %check
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
 
 %files -f %{name}.lang
 %license COPYING

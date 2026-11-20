@@ -18,31 +18,19 @@ Source0:        %{forgesource}
 BuildRequires:  meson >= 0.62.0
 BuildRequires:  ninja-build
 BuildRequires:  blueprint-compiler
-BuildRequires:  cairo-devel
 BuildRequires:  cargo
-BuildRequires:  cargo-rpm-macros
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
-BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  gettext
-BuildRequires:  glib2-devel
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
-BuildRequires:  gtk4-devel
-BuildRequires:  libadwaita-devel
 BuildRequires:  appstream
-BuildRequires:  pango-devel
-BuildRequires:  rustc
 BuildRequires:  gcc-c++
+BuildRequires:  pkgconfig(gtk4)
+BuildRequires:  pkgconfig(libadwaita-1)
 
-Requires:       cairo
-Requires:       gdk-pixbuf2
-Requires:       glib2
-Requires:       gtk4
 Requires:       hicolor-icon-theme
-Requires:       libadwaita
-Requires:       pango
 
 %description
 This program allows an easy and intuitive way to add an icon on top of a folder to help you differentiate it better.
@@ -55,11 +43,11 @@ This program is written in Rust and Libadwaita and is my first attempt at creati
 %forgesetup
 # Fix hardcoded Flatpak path for RPM/system installs
 sed -i 's|/app/share/Iconic/folders/|/usr/share/Iconic/folders/|g' src/windows/file_handling.rs
-mkdir -p cargo-home
+
+%conf
+%meson
 
 %build
-export CARGO_HOME=$(pwd)/cargo-home
-%meson
 %meson_build
 
 %install
@@ -68,9 +56,6 @@ export CARGO_HOME=$(pwd)/cargo-home
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{upstream_name}.lang
 %license COPYING

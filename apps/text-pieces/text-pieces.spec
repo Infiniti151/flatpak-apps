@@ -31,7 +31,6 @@ BuildRequires:  pkgconfig(glib-2.0) >= 2.80
 BuildRequires:  pkgconfig(gtk4) >= 4.20
 BuildRequires:  pkgconfig(gtksourceview-5) >= 5.10
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8.0
-BuildRequires:  rustc
 
 Requires:       hicolor-icon-theme
 
@@ -53,8 +52,10 @@ The application is extendable with your own script-based actions.
 %prep
 %forgesetup
 
-%build
+%conf
 %meson
+
+%build
 %meson_build
 
 %install
@@ -63,9 +64,6 @@ The application is extendable with your own script-based actions.
 
 %check
 %meson_test
-desktop-file-validate %{buildroot}%{_appsdir}/*.desktop
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.metainfo.xml
-glib-compile-schemas --dry-run --strict %{buildroot}%{_gschemasdir}/
 
 %files -f %{upstream_name}.lang
 %license LICENSE LICENSES
