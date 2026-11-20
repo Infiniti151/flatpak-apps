@@ -114,6 +114,12 @@
         "instance": ""
     },
     {
+        "app_name": "encoding-explorer",
+        "upstream_repo": "josephmawa/EncodingExplorer",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "exchange",
         "upstream_repo": "shonebinu/Exchange",
         "provider": "github",
