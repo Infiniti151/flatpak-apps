@@ -336,6 +336,12 @@
         "instance": ""
     },
     {
+        "app_name": "text-pieces",
+        "upstream_repo": "liferooter/textpieces",
+        "provider": "gitlab",
+        "instance": "gitlab.com"
+    },
+    {
         "app_name": "tomatillo",
         "upstream_repo": "diegopvlk/Tomatillo",
         "provider": "github",
