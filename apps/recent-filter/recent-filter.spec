@@ -48,8 +48,8 @@ sed -i 's/os\.expanduser/os.path.expanduser/g' src/filter_test.py
 python3 - <<'PY'
 from pathlib import Path
 
-p = Path("src/background_portal.py")
-text = p.read_text()
+p_portal = Path("src/background_portal.py")
+text_portal = p_portal.read_text()
 
 old_status = """        except GLib.Error as e:
             if e.matches(Gio.DBusError.quark(), Gio.DBusError.UNKNOWN_METHOD):
@@ -73,9 +73,37 @@ new_req = """        try:
             g_log('background-portal', GLib.LogLevelFlags.LEVEL_WARNING,
                   'Can\\'t request background execution: %s', e.message)"""
 
-assert old_status in text, "old_status not found"
-assert old_req in text, "old_req not found"
-p.write_text(text.replace(old_status, new_status, 1).replace(old_req, new_req, 1))
+assert old_status in text_portal, "old_status not found"
+assert old_req in text_portal, "old_req not found"
+p_portal.write_text(
+    text_portal.replace(old_status, new_status, 1).replace(old_req, new_req, 1)
+)
+
+p_service = Path("src/service.py")
+text_service = p_service.read_text()
+
+old_activate = """    def activate(self, window):
+        def handle_response(autostart, background):
+            self.active = autostart and background
+        # TODO: No public API to get window handle
+        window_handle = ''
+        self._bg_portal.request_background(
+            window_handle, N_('Activate background service'), True, True,
+            [*COMMANDLINE, '--service'], handle_response)"""
+
+new_activate = """    def activate(self, window):
+        def handle_response(autostart, background):
+            if autostart and background:
+                self.active = True
+        # TODO: No public API to get window handle
+        window_handle = ''
+        self.active = True
+        self._bg_portal.request_background(
+            window_handle, N_('Activate background service'), True, True,
+            [*COMMANDLINE, '--service'], handle_response)"""
+
+assert old_activate in text_service, "old_activate not found"
+p_service.write_text(text_service.replace(old_activate, new_activate, 1))
 PY
 
 %conf
