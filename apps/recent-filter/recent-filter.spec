@@ -44,6 +44,7 @@ Paths can be specified using wildcards, just like in a .gitignore file. This mea
 %prep
 %forgesetup
 sed -i "s|'discover', '-p', '\*_test.py'\],|'discover', '-s', meson.current_source_dir() / 'src', '-p', '*_test.py'], env: {'PYTHONPATH': meson.current_source_dir()},|" meson.build
+sed -i 's/os\.expanduser/os.path.expanduser/g' src/filter_test.py
 
 %conf
 %meson
