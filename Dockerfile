@@ -28,7 +28,8 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     librsvg2-tools \
     meson \
     ninja-build \
-    python3-devel && \
+    python3-devel \
+    python3-gobject && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 
