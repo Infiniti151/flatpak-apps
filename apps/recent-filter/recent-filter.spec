@@ -44,7 +44,7 @@ Exclude specific files and folders from appearing in the list of recently used f
 Paths can be specified using wildcards, just like in a .gitignore file. This means you can use patterns such as "*.txt".
 
 %prep
-%forgeautosetup
+%forgeautosetup -p1
 
 %conf
 %meson
