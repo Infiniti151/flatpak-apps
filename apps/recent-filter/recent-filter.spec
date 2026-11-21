@@ -26,6 +26,7 @@ BuildRequires:  glib2-devel
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  libappstream-glib
+BuildRequires:  librsvg2-tools
 BuildRequires:  python3-devel
 
 Requires:       gtk4
@@ -69,6 +70,7 @@ Paths can be specified using wildcards, just like in a .gitignore file. This mea
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_scalableiconsdir}/%{app_id}.svg
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
+%{_hicolordir}/*/apps/%{app_id}.png
 %{_metainfodir}/%{app_id}.metainfo.xml
 
 %changelog
