@@ -25,6 +25,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     glib2-devel \
     gtk-update-icon-cache \
     libappstream-glib \
+    librsvg2-tools \
     meson \
     ninja-build \
     python3-devel && \
