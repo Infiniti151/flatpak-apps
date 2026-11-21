@@ -45,6 +45,38 @@ Paths can be specified using wildcards, just like in a .gitignore file. This mea
 %forgesetup
 sed -i "s|'discover', '-p', '\*_test.py'\],|'discover', '-s', meson.current_source_dir() / 'src', '-p', '*_test.py'], env: {'PYTHONPATH': meson.current_source_dir()},|" meson.build
 sed -i 's/os\.expanduser/os.path.expanduser/g' src/filter_test.py
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("src/background_portal.py")
+text = p.read_text()
+
+old_status = """        except GLib.Error as e:
+            if e.matches(Gio.DBusError.quark(), Gio.DBusError.UNKNOWN_METHOD):
+                g_log('background-portal', GLib.LogLevelFlags.LEVEL_WARNING,
+                      'Can\\'t set status message because method not available')
+                return
+            raise"""
+
+new_status = """        except GLib.Error as e:
+            g_log('background-portal', GLib.LogLevelFlags.LEVEL_WARNING,
+                  'Can\\'t set status message: %s', e.message)
+            return"""
+
+old_req = """        self._background_proxy.call_sync(
+            'RequestBackground', parameters, Gio.DBusCallFlags.NONE, -1)"""
+
+new_req = """        try:
+            self._background_proxy.call_sync(
+                'RequestBackground', parameters, Gio.DBusCallFlags.NONE, -1)
+        except GLib.Error as e:
+            g_log('background-portal', GLib.LogLevelFlags.LEVEL_WARNING,
+                  'Can\\'t request background execution: %s', e.message)"""
+
+assert old_status in text, "old_status not found"
+assert old_req in text, "old_req not found"
+p.write_text(text.replace(old_status, new_status, 1).replace(old_req, new_req, 1))
+PY
 
 %conf
 %meson
