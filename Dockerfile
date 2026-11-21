@@ -16,20 +16,7 @@ RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
     rpm-build \
     rpmdevtools \
     rpmlint \
-    sccache \
-    # --- recent-filter dependencies --- \
-    desktop-file-utils \
-    desktop-rpm-macros \
-    forge-srpm-macros \
-    gettext \
-    glib2-devel \
-    gtk-update-icon-cache \
-    libappstream-glib \
-    librsvg2-tools \
-    meson \
-    ninja-build \
-    python3-devel \
-    python3-gobject && \
+    sccache && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
 

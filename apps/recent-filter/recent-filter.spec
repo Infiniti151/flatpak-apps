@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           recent-filter
-Version:        0.1.10
+Version:        0
 Release:        1%{?dist}
 Summary:        Exclude files and folders from recently used files
 License:        GPL-3.0-or-later
@@ -15,8 +15,8 @@ BuildArch:      noarch
 
 URL:            %{forgeurl}
 Source0:        %{forgesource}
-Patch0:         https://raw.githubusercontent.com/Infiniti151/flatpak-apps/dev/apps/recent-filter/recent-filter-tests.patch
-Patch1:         https://raw.githubusercontent.com/Infiniti151/flatpak-apps/dev/apps/recent-filter/recent-filter-unsandboxed-portal.patch
+Patch0:         https://raw.githubusercontent.com/Infiniti151/flatpak-apps/main/apps/recent-filter/recent-filter-tests.patch
+Patch1:         https://raw.githubusercontent.com/Infiniti151/flatpak-apps/main/apps/recent-filter/recent-filter-unsandboxed-portal.patch
 
 BuildRequires:  meson >= 0.62.0
 BuildRequires:  ninja-build
@@ -35,7 +35,6 @@ BuildRequires:  python3-gobject
 Requires:       gtk4
 Requires:       libadwaita
 Requires:       hicolor-icon-theme
-Requires:       python3
 Requires:       python3-gobject
 
 %description
@@ -75,7 +74,3 @@ Paths can be specified using wildcards, just like in a .gitignore file. This mea
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_hicolordir}/*/apps/%{app_id}.png
 %{_metainfodir}/%{app_id}.metainfo.xml
-
-%changelog
-* Sat Nov 21 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.10-1
-- Test
