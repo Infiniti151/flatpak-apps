@@ -300,6 +300,12 @@
         "instance": "gitlab.com"
     },
     {
+        "app_name": "recent-filter",
+        "upstream_repo": "Unrud/recent-filter",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "reco",
         "upstream_repo": "ryonakano/reco",
         "provider": "github",
