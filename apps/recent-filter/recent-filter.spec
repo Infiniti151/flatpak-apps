@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           recent-filter
-Version:        0
+Version:        0.1.10
 Release:        1%{?dist}
 Summary:        Exclude files and folders from recently used files
 License:        GPL-3.0-or-later
@@ -74,3 +74,9 @@ Paths can be specified using wildcards, just like in a .gitignore file. This mea
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_hicolordir}/*/apps/%{app_id}.png
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Sat Nov 21 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.10-1
+- Add Czech translation
+- Flatpak: Update runtime to 50
+
