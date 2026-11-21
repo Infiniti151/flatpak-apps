@@ -15,6 +15,8 @@ BuildArch:      noarch
 
 URL:            %{forgeurl}
 Source0:        %{forgesource}
+Patch0:         https://raw.githubusercontent.com/Infiniti151/flatpak-apps/dev/apps/recent-filter/recent-filter-tests.patch
+Patch1:         https://raw.githubusercontent.com/Infiniti151/flatpak-apps/dev/apps/recent-filter/recent-filter-unsandboxed-portal.patch
 
 BuildRequires:  meson >= 0.62.0
 BuildRequires:  ninja-build
@@ -42,69 +44,7 @@ Exclude specific files and folders from appearing in the list of recently used f
 Paths can be specified using wildcards, just like in a .gitignore file. This means you can use patterns such as "*.txt".
 
 %prep
-%forgesetup
-sed -i "s|'discover', '-p', '\*_test.py'\],|'discover', '-s', meson.current_source_dir() / 'src', '-p', '*_test.py'], env: {'PYTHONPATH': meson.current_source_dir()},|" meson.build
-sed -i 's/os\.expanduser/os.path.expanduser/g' src/filter_test.py
-python3 - <<'PY'
-from pathlib import Path
-
-p_portal = Path("src/background_portal.py")
-text_portal = p_portal.read_text()
-
-old_status = """        except GLib.Error as e:
-            if e.matches(Gio.DBusError.quark(), Gio.DBusError.UNKNOWN_METHOD):
-                g_log('background-portal', GLib.LogLevelFlags.LEVEL_WARNING,
-                      'Can\\'t set status message because method not available')
-                return
-            raise"""
-
-new_status = """        except GLib.Error as e:
-            g_log('background-portal', GLib.LogLevelFlags.LEVEL_WARNING,
-                  'Can\\'t set status message: %s', e.message)
-            return"""
-
-old_req = """        self._background_proxy.call_sync(
-            'RequestBackground', parameters, Gio.DBusCallFlags.NONE, -1)"""
-
-new_req = """        try:
-            self._background_proxy.call_sync(
-                'RequestBackground', parameters, Gio.DBusCallFlags.NONE, -1)
-        except GLib.Error as e:
-            g_log('background-portal', GLib.LogLevelFlags.LEVEL_WARNING,
-                  'Can\\'t request background execution: %s', e.message)"""
-
-assert old_status in text_portal, "old_status not found"
-assert old_req in text_portal, "old_req not found"
-p_portal.write_text(
-    text_portal.replace(old_status, new_status, 1).replace(old_req, new_req, 1)
-)
-
-p_service = Path("src/service.py")
-text_service = p_service.read_text()
-
-old_activate = """    def activate(self, window):
-        def handle_response(autostart, background):
-            self.active = autostart and background
-        # TODO: No public API to get window handle
-        window_handle = ''
-        self._bg_portal.request_background(
-            window_handle, N_('Activate background service'), True, True,
-            [*COMMANDLINE, '--service'], handle_response)"""
-
-new_activate = """    def activate(self, window):
-        def handle_response(autostart, background):
-            if autostart and background:
-                self.active = True
-        # TODO: No public API to get window handle
-        window_handle = ''
-        self.active = True
-        self._bg_portal.request_background(
-            window_handle, N_('Activate background service'), True, True,
-            [*COMMANDLINE, '--service'], handle_response)"""
-
-assert old_activate in text_service, "old_activate not found"
-p_service.write_text(text_service.replace(old_activate, new_activate, 1))
-PY
+%forgeautosetup
 
 %conf
 %meson

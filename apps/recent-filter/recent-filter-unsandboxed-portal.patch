@@ -1,0 +1,72 @@
+diff --git a/src/background_portal.py b/src/background_portal.py
+index cb7ebe9..6ba4e6c 100644
+--- a/src/background_portal.py
++++ b/src/background_portal.py
+@@ -27,6 +27,13 @@ from recent_filter.util import g_log, gobject_log
+ from recent_filter.util.connection import CloseStack, SignalConnection
+ 
+ 
++def _portal_unavailable(e: GLib.Error) -> bool:
++    # UNKNOWN_METHOD: old portal; NotAllowed: caller is not sandboxed
++    return (e.matches(Gio.DBusError.quark(), Gio.DBusError.UNKNOWN_METHOD) or
++            Gio.DBusError.get_remote_error(e) ==
++            'org.freedesktop.portal.Error.NotAllowed')
++
++
+ class BackgroundPortal:
+     def __init__(self):
+         self._cs = CloseStack()
+@@ -68,9 +75,9 @@ class BackgroundPortal:
+             self._background_proxy.call_sync(
+                 'SetStatus', parameters, Gio.DBusCallFlags.NONE, -1)
+         except GLib.Error as e:
+-            if e.matches(Gio.DBusError.quark(), Gio.DBusError.UNKNOWN_METHOD):
++            if _portal_unavailable(e):
+                 g_log('background-portal', GLib.LogLevelFlags.LEVEL_WARNING,
+-                      'Can\'t set status message because method not available')
++                      "Can't set status message: %s", e.message)
+                 return
+             raise
+ 
+@@ -78,7 +85,8 @@ class BackgroundPortal:
+             self, window_handle: str, reason: Optional[str],
+             autostart: Optional[bool], background: Optional[bool],
+             commandline: Optional[Iterable[str]],
+-            on_response: Optional[Callable[[bool, bool], None]]) -> None:
++            on_response: Optional[Callable[[bool, bool], None]]) -> bool:
++        """Returns False if the portal can't be used (e.g. not sandboxed)."""
+         if on_response is None:
+             on_response = lambda _autostart, _background: None  # noqa: E731
+         token = self._connect_response(lambda _, results: on_response(
+@@ -97,5 +105,13 @@ class BackgroundPortal:
+             options['commandline'] = GLib.Variant('as', list(commandline))
+ 
+         parameters = GLib.Variant('(sa{sv})', (window_handle, options,))
+-        self._background_proxy.call_sync(
+-            'RequestBackground', parameters, Gio.DBusCallFlags.NONE, -1)
++        try:
++            self._background_proxy.call_sync(
++                'RequestBackground', parameters, Gio.DBusCallFlags.NONE, -1)
++        except GLib.Error as e:
++            if _portal_unavailable(e):
++                g_log('background-portal', GLib.LogLevelFlags.LEVEL_WARNING,
++                      "Can't request background execution: %s", e.message)
++                return False
++            raise
++        return True
+diff --git a/src/service.py b/src/service.py
+index b7a0087..cf4c830 100644
+--- a/src/service.py
++++ b/src/service.py
+@@ -96,6 +96,8 @@ class Service(GObject.GObject):
+             self.active = autostart and background
+         # TODO: No public API to get window handle
+         window_handle = ''
+-        self._bg_portal.request_background(
+-            window_handle, N_('Activate background service'), True, True,
+-            [*COMMANDLINE, '--service'], handle_response)
++        if not self._bg_portal.request_background(
++                window_handle, N_('Activate background service'), True, True,
++                [*COMMANDLINE, '--service'], handle_response):
++            # No portal (not sandboxed): run without autostart/background
++            self.active = True

@@ -1,0 +1,33 @@
+diff --git a/meson.build b/meson.build
+index abbcda1..074dfe8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -44,6 +44,7 @@ endif
+ 
+ if (python_for_unittest.found())
+   test('Run python unittest', python_for_unittest,
++    workdir: meson.current_source_dir(),
+     args: ['-B', '-c', 'import runpy, sys, src; sys.modules["recent_filter"]=src; runpy.run_module("unittest", alter_sys=True)',
+            'discover', '-p', '*_test.py'],
+   )
+diff --git a/src/filter_test.py b/src/filter_test.py
+index 90c8748..dc04564 100644
+--- a/src/filter_test.py
++++ b/src/filter_test.py
+@@ -34,13 +34,13 @@ class TestGitignore(unittest.TestCase):
+         self.assertEqual(os.path.expanduser('~'), expand_path('~'))
+ 
+     def test_expand_home2(self):
+-        self.assertEqual(os.expanduser('~/foo'), expand_path('~/foo'))
++        self.assertEqual(os.path.expanduser('~/foo'), expand_path('~/foo'))
+ 
+     def test_path_to_pattern1(self):
+-        self.assertEqual(path_to_pattern(os.expanduser('~')), '~')
++        self.assertEqual(path_to_pattern(os.path.expanduser('~')), '~')
+ 
+     def test_path_to_pattern2(self):
+-        self.assertEqual(path_to_pattern(os.expanduser('~/foo')), '~/foo')
++        self.assertEqual(path_to_pattern(os.path.expanduser('~/foo')), '~/foo')
+ 
+     def test_path_to_pattern3(self):
+         self.assertEqual(path_to_pattern('/['), '/\\[')
