@@ -28,6 +28,7 @@ BuildRequires:  gtk-update-icon-cache
 BuildRequires:  libappstream-glib
 BuildRequires:  librsvg2-tools
 BuildRequires:  python3-devel
+BuildRequires:  python3-gobject
 
 Requires:       gtk4
 Requires:       libadwaita
@@ -42,7 +43,7 @@ Paths can be specified using wildcards, just like in a .gitignore file. This mea
 
 %prep
 %forgesetup
-sed -i "s|'discover', '-p', '\*_test.py'|'discover', '-s', meson.current_source_dir() / 'src', '-p', '*_test.py'|" meson.build
+sed -i "s|'discover', '-p', '\*_test.py'\],|'discover', '-s', meson.current_source_dir() / 'src', '-p', '*_test.py'], env: {'PYTHONPATH': meson.current_source_dir()},|" meson.build
 
 %conf
 %meson
