@@ -33,6 +33,27 @@ RUN dnf install -y \
 
 # Layer 3: App-specific build dependencies (managed by scripts/update_dockerfile.py)
 # --- APP_DEPS_START ---
+RUN dnf install -y \
+    # --- inscriptions dependencies --- \
+    'pkgconfig(gio-unix-2.0)' \
+    'pkgconfig(granite-7)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(json-glib-1.0)' \
+    'pkgconfig(libsecret-1)' \
+    'pkgconfig(libsoup-3.0)' \
+    appstream \
+    desktop-file-utils \
+    desktop-rpm-macros \
+    forge-srpm-macros \
+    gcc \
+    gettext \
+    glib2-devel \
+    gtk-update-icon-cache \
+    meson \
+    ninja-build \
+    valac && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf/*
 # --- APP_DEPS_END ---
 
 WORKDIR /github/workspace
