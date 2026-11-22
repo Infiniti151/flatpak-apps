@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           inscriptions
-Version:        0
+Version:        1.2.1
 Release:        1%{?dist}
 Summary:        Translate text elegantly
 License:        GPL-3.0-or-later
@@ -74,3 +74,9 @@ Libretranslate support is considered, but a heavy time and energy investment, so
 %{_hicolordir}/*/apps/%{app_id}.png
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Sun Nov 22 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.2.1-1
+- Another unexciting release for now alas
+- Minor language fixes in German. Somehow a bad translation slipped in, and i cannot unsee it
+- Updated Brazilian translation thanks to @alvaroburns!
