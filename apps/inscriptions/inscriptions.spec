@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           inscriptions
-Version:        1.2.1
+Version:        0
 Release:        1%{?dist}
 Summary:        Translate text elegantly
 License:        GPL-3.0-or-later
@@ -34,6 +34,7 @@ BuildRequires:  pkgconfig(libsecret-1)
 BuildRequires:  pkgconfig(libsoup-3.0)
 
 Requires:       hicolor-icon-theme
+Requires:       elementary-icon-theme
 
 %description
 A fast, pretty, and ready translation app using DeepL free and paid API
@@ -73,7 +74,3 @@ Libretranslate support is considered, but a heavy time and energy investment, so
 %{_hicolordir}/*/apps/%{app_id}.png
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
-
-%changelog
-* Sun Nov 22 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.2.1-1
-- Test
