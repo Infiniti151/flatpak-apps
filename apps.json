@@ -186,6 +186,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "inscriptions",
+        "upstream_repo": "elly-code/inscriptions",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "junction",
         "upstream_repo": "sonnyp/Junction",
         "provider": "github",

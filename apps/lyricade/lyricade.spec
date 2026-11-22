@@ -53,7 +53,7 @@ Features:
 %build
 export CARGO_NET_OFFLINE=false
 %cargo_build
-env CARGO_HOME=.cargo cargo tree -e normal --prefix none --format '{p}: {l}' | sort -u > LICENSE.dependencies
+env CARGO_HOME=.cargo cargo tree -e normal --prefix none --format '{p}: {l}' | sed -E 's/ \(\*\)$//; s/ \(\/[^)]*\)//' | sort -u > LICENSE.dependencies
 
 %install
 export CARGO_NET_OFFLINE=false
