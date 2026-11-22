@@ -9,10 +9,10 @@ ENV TERM="xterm-256color" \
 
 # Layer 1: DNF/rpmlint config & COPR repos (only re-runs if this layer changes or cache is busted)
 RUN echo -e "color=always\nmax_parallel_downloads=10" >> /etc/dnf/dnf.conf && \
-    mkdir -p ~/.config/rpmlint && \
+    mkdir -p /etc/xdg/rpmlint && \
     dnf copr enable -y infiniti151/flatpak-apps && \
     dnf copr enable -y infiniti151/rpmcrab && \
-    cat > ~/.config/rpmlint/rpmcrab.toml <<'EOF'
+    cat > /etc/xdg/rpmlint/rpmcrab.toml <<'EOF'
 Filters = [
 "no-copyright-comment",
 ]
