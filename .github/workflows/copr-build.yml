@@ -114,10 +114,15 @@ jobs:
           if grep -q "^%changelog" "$SPEC"; then
             sed -i "/^%changelog/r entry.tmp" "$SPEC"
           else
+            # Strip trailing blank lines from the spec
             sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$SPEC"
 
-            echo -e "\n\n%changelog" >> "$SPEC"
+            # Exactly one blank line, then %changelog
+            printf '\n%%changelog\n' >> "$SPEC"
             cat entry.tmp >> "$SPEC"
+
+            # Drop the trailing blank line that entry.tmp ends with
+            sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$SPEC"
           fi
 
           rm entry.tmp
