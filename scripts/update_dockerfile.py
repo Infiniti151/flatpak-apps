@@ -33,6 +33,11 @@ PROTECTED_DEPS = {
 }
 
 LINE_JOINER = " \\\n    "
+BLOCK_PATTERN = re.compile(
+    r'(# --- APP_DEPS_START ---\n)(.*?)(# --- APP_DEPS_END ---)',
+    re.DOTALL
+)
+
 
 def extract_spec_dependencies(spec_path):
     if not os.path.exists(spec_path):
@@ -52,20 +57,22 @@ def extract_spec_dependencies(spec_path):
                     app_deps.add(dep)
     return app_deps
 
-def generate_dockerfile_block(app_deps, app_name, reset_mode):
-    protected_list = sorted(PROTECTED_DEPS)
 
-    if reset_mode:
-        return LINE_JOINER.join(protected_list) + " && \\"
+def generate_layer3_block(app_deps, app_name, reset_mode):
+    if reset_mode or not app_deps:
+        return ""
 
     app_list = sorted(app_deps)
-    block = LINE_JOINER.join(protected_list)
+    pkg_lines = LINE_JOINER.join(app_list)
 
-    if app_list:
-        block += f" \\\n    # --- {app_name} dependencies --- \\\n    "
-        block += LINE_JOINER.join(app_list)
+    return (
+        "RUN dnf install -y \\\n"
+        f"    # --- {app_name} dependencies --- \\\n"
+        f"    {pkg_lines} && \\\n"
+        "    dnf clean all && \\\n"
+        "    rm -rf /var/cache/dnf/*\n"
+    )
 
-    return block + " && \\"
 
 def update_dockerfile(app_name, reset_mode=False):
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -86,34 +93,28 @@ def update_dockerfile(app_name, reset_mode=False):
     with open(dockerfile_path, 'r') as f:
         content = f.read()
 
-    start_match = re.search(r'dnf install -y\s+', content)
-    end_match = re.search(r'dnf clean all', content)
-
-    if not start_match or not end_match or start_match.end() > end_match.start():
-        print(f"{RED}Error: Could not find valid dnf block bounds.{RESET}")
+    if not BLOCK_PATTERN.search(content):
+        print(f"{RED}Error: Could not find APP_DEPS_START / APP_DEPS_END markers.{RESET}")
         sys.exit(1)
 
-    prefix = content[:start_match.end()]
-    suffix = "\n    " + content[end_match.start():]
-
     # 3. Format and Write Back
-    formatted_block = generate_dockerfile_block(app_deps, app_name, reset_mode)
-    new_content = f"{prefix}{formatted_block}{suffix}"
+    layer3_body = generate_layer3_block(app_deps, app_name, reset_mode)
+    new_content = BLOCK_PATTERN.sub(rf"\g<1>{layer3_body}\g<3>", content, count=1)
 
     with open(dockerfile_path, 'w') as f:
         f.write(new_content)
 
     if reset_mode:
-        print(f"{CYAN}🧹 Success! Dockerfile reset to protected dependencies only.{RESET}")
+        print(f"{CYAN}🧹 Success! Cleared APP_DEPS block in Dockerfile.{RESET}")
     else:
         print(f"{GREEN}✅ Success! Dockerfile synced for {app_name}.{RESET}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Sync or reset app dependencies in the Dockerfile."
+        description="Sync or reset app dependencies in Layer 3 of the Dockerfile."
     )
     parser.add_argument("app_name", nargs="?", help="The name of the application to sync.")
-    parser.add_argument("-r", "--reset", action="store_true", help="Reset the Dockerfile to only keep the protected dependencies.")
+    parser.add_argument("-r", "--reset", action="store_true", help="Remove everything inside the APP_DEPS block.")
 
     args = parser.parse_args()
 
