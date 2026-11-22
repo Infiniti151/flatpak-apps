@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           exercise-timer
-Version:        1.10.0
+Version:        1.11.0
 Release:        1%{?dist}
 Summary:        Train and rest with high intensity
 License:        GPL-3.0-only
@@ -70,6 +70,19 @@ rm -rf %{name}-%{version}/.git
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
+* Sun Nov 22 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.11.0-1
+- Miscellaneous
+- Updated Flatpak runtime to GNOME 51
+- New translations
+- Indonesian
+- Korean
+- Updated translations
+- German
+- Italian
+- Kazakh
+- Portuguese (Brazil)
+- ... (see upstream for full release notes)
+
 * Thu Sep 03 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.10.0-1
 - Development of the application was moved from GitHub to GNOME GitLab.
 - Features
