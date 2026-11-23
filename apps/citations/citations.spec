@@ -2,7 +2,7 @@
 %global         tag           %{version}
 
 Name:           citations
-Version:        0
+Version:        0.11.0
 Release:        1%{?dist}
 Summary:        Manage your bibliography
 License:        GPL-3.0-or-later
@@ -64,3 +64,9 @@ env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none 
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_dbusservicesdir}/%{app_id}.service
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Mon Nov 23 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.11.0-1
+- Update Harvard style templates
+- Minor improvements
+- Updated translations
