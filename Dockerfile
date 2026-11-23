@@ -22,6 +22,7 @@ EOF
 RUN dnf install -y \
         ccache \
         dnf-plugins-core \
+        desktop-rpm-macros \
         glibc-langpack-en \
         npm \
         rpm-build \
@@ -33,27 +34,6 @@ RUN dnf install -y \
 
 # Layer 3: App-specific build dependencies (managed by scripts/update_dockerfile.py)
 # --- APP_DEPS_START ---
-RUN dnf install -y \
-    # --- citations dependencies --- \
-    'pkgconfig(gio-2.0)' \
-    'pkgconfig(glib-2.0)' \
-    'pkgconfig(gtk4)' \
-    'pkgconfig(gtksourceview-5)' \
-    'pkgconfig(libadwaita-1)' \
-    'pkgconfig(poppler)' \
-    'pkgconfig(poppler-glib)' \
-    appstream \
-    clippy \
-    desktop-file-utils \
-    desktop-rpm-macros \
-    gcc \
-    gettext \
-    git-core \
-    gtk-update-icon-cache \
-    meson \
-    ninja-build && \
-    dnf clean all && \
-    rm -rf /var/cache/dnf/*
 # --- APP_DEPS_END ---
 
 WORKDIR /github/workspace
