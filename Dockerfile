@@ -22,6 +22,7 @@ EOF
 RUN dnf install -y \
         ccache \
         dnf-plugins-core \
+        desktop-rpm-macros \
         glibc-langpack-en \
         npm \
         rpm-build \

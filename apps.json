@@ -36,6 +36,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "citations",
+        "upstream_repo": "World/citations",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "clairvoyant",
         "upstream_repo": "cassidyjames/clairvoyant",
         "provider": "github",

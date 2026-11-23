@@ -28,8 +28,8 @@ RED = "\033[31m"
 RESET = "\033[0m"
 
 PROTECTED_DEPS = {
-    'dnf-plugins-core', 'rpm-build', 'rpmdevtools', 'rpmlint',
-    'npm', 'sccache', 'ccache', 'glibc-langpack-en'
+    'dnf-plugins-core', 'rpm-build', 'rpmdevtools', 'rpmcrab',
+    'npm', 'sccache', 'ccache', 'glibc-langpack-en', 'desktop-rpm-macros'
 }
 
 LINE_JOINER = " \\\n    "
