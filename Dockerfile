@@ -48,6 +48,7 @@ RUN dnf install -y \
     desktop-rpm-macros \
     gcc \
     gettext \
+    git-core \
     gtk-update-icon-cache \
     meson \
     ninja-build && \
