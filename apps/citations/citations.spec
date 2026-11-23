@@ -14,6 +14,7 @@ BuildRequires:  ninja-build
 BuildRequires:  appstream
 BuildRequires:  clippy
 BuildRequires:  gcc
+BuildRequires:  git-core
 BuildRequires:  desktop-file-utils
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  gettext
