@@ -180,6 +180,12 @@
         "instance": ""
     },
     {
+        "app_name": "hieroglyphic",
+        "upstream_repo": "FineFindus/Hieroglyphic",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "iconic",
         "upstream_repo": "youpie/Iconic",
         "provider": "github",
