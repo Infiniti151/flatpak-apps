@@ -42,6 +42,8 @@ If you work with LaTeX or Typst, you know it's difficult to memorize the names o
 %meson
 
 %build
+export ORT_LIB_PATH="%{_libdir}"
+export ORT_PREFER_DYNAMIC_LINK=1
 %meson_build
 env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none --format '{p}: {l}' | sed -E 's/ \(\*\)$//; s/ \(\/[^)]*\)//' | sort -u > LICENSE.dependencies
 
