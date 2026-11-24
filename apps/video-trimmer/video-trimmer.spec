@@ -2,7 +2,7 @@
 %global         tag           v%{version}
 
 Name:           video-trimmer
-Version:        26.03.1
+Version:        0
 Release:        1%{?dist}
 Summary:        Trim videos quickly
 License:        GPL3+
@@ -61,7 +61,3 @@ env CARGO_HOME=.cargo cargo tree -e normal --prefix none --format '{p}: {l}' | s
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
-
-%changelog
-* Tue Nov 24 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 26.03.1-1
-- Test
