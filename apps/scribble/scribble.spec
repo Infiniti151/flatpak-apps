@@ -4,7 +4,7 @@
 %global         __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*$
 
 Name:           scribble
-Version:        1.13.1
+Version:        1.14.0
 Release:        1%{?dist}
 Summary:        Take handwritten notes and homework
 License:        GPL-3
@@ -80,6 +80,16 @@ Made for a pen and a touchscreen used together: the pen draws, and your finger p
 
 
 %changelog
+* Tue Nov 24 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.14.0-1
+- A release for printing, select all and copying into other programs.
+- Print from the menu or with Ctrl+P: the print dialog covers every page, applies page ranges, copies, collate and reverse order, and can print to a PDF file
+- Ctrl+A selects everything on the active page
+- Pasting a copied note into Inkscape keeps its ink inside the note
+- Copied stickers keep their proportions and show only what is inside their view box
+- A move no longer latches onto grid snaps until it leaves its grab radius, and guides stay hidden until then
+- Pictures dropped in come out at most 2.5 times the size of a sticker
+- While the last document loads, only the gray ground is drawn at startup
+
 * Sat Nov 14 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.13.1-1
 - A bug fix release for the page menus and Fit Page.
 - A page's own menu changes the background or imports a PDF into that page, even when another page became active meanwhile
