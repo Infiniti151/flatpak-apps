@@ -117,3 +117,7 @@ These RPMs are ordinary packages that link against the libraries Fedora already 
 **2. Install app**
 
    `sudo dnf install <app>`
+
+## License
+
+This packaging repository (`flatpak-apps`) is licensed under the terms of the [LICENSE](LICENSE) file in this repository. Individual applications in the [App List](#app-list) are distributed under their respective upstream open-source licenses; check each project's repository or installed package metadata (`rpm -qi <app>`) for details.
