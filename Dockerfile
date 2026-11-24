@@ -44,6 +44,7 @@ RUN dnf install -y \
     cargo \
     desktop-file-utils \
     gettext \
+    git-core \
     glib2-devel \
     gtk-update-icon-cache \
     meson \
