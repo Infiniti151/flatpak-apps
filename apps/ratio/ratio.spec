@@ -3,7 +3,7 @@
 %global         tag             v%{version}
 
 Name:           ratio
-Version:        1.0.4
+Version:        0
 Release:        1%{?dist}
 Summary:        Validate color contrast
 License:        GPL-3.0-or-later
@@ -61,7 +61,3 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.m
 %{_metainfodir}/%{app_id}.metainfo.xml
 %{_scalableiconsdir}/%{app_id}.svg
 %{_hicolordir}/scalable/actions/*.svg
-
-%changelog
-* Tue Nov 24 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.0-1
-- Test
