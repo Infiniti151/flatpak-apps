@@ -54,15 +54,15 @@ desktop-file-validate %{buildroot}%{_appsdir}/%{app_id}.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.metainfo.xml
 
 %files
-%license LICENSE
+%license LICENSE.txt
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_appsdir}/%{app_id}.desktop
 %{_metainfodir}/%{app_id}.metainfo.xml
 %{_scalableiconsdir}/%{app_id}.svg
-%{_symboliciconsdir}/%{app_id}-symbolic.svg
-%{_hicolordir}/actions/*.svg
+%{_scalableiconsdir}/%{app_id}-symbolic.svg
+%{_hicolordir}/scalable/actions/*.svg
 
 %changelog
 * Tue Nov 24 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.1.0-1
