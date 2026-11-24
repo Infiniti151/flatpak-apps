@@ -130,7 +130,20 @@ jobs:
           }
 
           echo -e "${COLOR_WARN}📥 Downloading sources...${COLOR_RESET}"
-          spectool -g -C "$RPM_SOURCES" "$SPEC_FILE"
+          downloaded=false
+          for attempt in 1 2 3; do
+            if timeout -k 5 35 spectool -g -C "$RPM_SOURCES" "$SPEC_FILE"; then
+              downloaded=true
+              break
+            fi
+            echo "::warning::==> spectool attempt $attempt failed or timed out after 35s"
+            [ "$attempt" -lt 3 ] && sleep $((attempt * 5))
+          done
+
+          if [ "$downloaded" != "true" ]; then
+            echo "::error::==> [ERROR] Could not download sources after 3 attempts."
+            exit 1
+          fi
 
           # Fail immediately if any Source* declared in the spec is missing from SOURCES/
           for src in $(rpmspec -P "$SPEC_FILE" | awk '/^Source[0-9]*:/ {print $2}'); do
