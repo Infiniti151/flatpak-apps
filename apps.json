@@ -312,6 +312,12 @@
         "instance": "gitlab.com"
     },
     {
+        "app_name": "ratio",
+        "upstream_repo": "markwyner/ratio-for-linux",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "recent-filter",
         "upstream_repo": "Unrud/recent-filter",
         "provider": "github",
