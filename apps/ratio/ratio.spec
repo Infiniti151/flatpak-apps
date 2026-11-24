@@ -54,14 +54,12 @@ desktop-file-validate %{buildroot}%{_appsdir}/%{app_id}.desktop
 appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.metainfo.xml
 
 %files
-%license LICENSE.txt
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_appsdir}/%{app_id}.desktop
 %{_metainfodir}/%{app_id}.metainfo.xml
 %{_scalableiconsdir}/%{app_id}.svg
-%{_scalableiconsdir}/%{app_id}-symbolic.svg
 %{_hicolordir}/scalable/actions/*.svg
 
 %changelog
