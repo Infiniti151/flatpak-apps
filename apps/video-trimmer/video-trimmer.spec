@@ -25,6 +25,7 @@ BuildRequires:  pkgconfig(gio-2.0) >= 2.80.0
 BuildRequires:  pkgconfig(gtk4) >= 4.16.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8.0
 
+Requires:       %{_bindir}/ffmpeg
 Requires:       hicolor-icon-theme
 
 %description
