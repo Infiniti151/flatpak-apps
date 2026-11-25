@@ -318,6 +318,12 @@
         "instance": ""
     },
     {
+        "app_name": "raider",
+        "upstream_repo": "ADBeveridge/raider",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "railway",
         "upstream_repo": "schmiddi-on-mobile/railway",
         "provider": "gitlab",
