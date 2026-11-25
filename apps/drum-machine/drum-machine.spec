@@ -4,7 +4,7 @@
 %global         mido_ver      1.3.3
 
 Name:           drum-machine
-Version:        0
+Version:        2.2.0
 Release:        1%{?dist}
 Summary:        Create and play drum beats
 License:        GPL-3.0-or-later AND MIT
@@ -99,3 +99,9 @@ mv %{buildroot}%{python3_sitelib}/mido-%{mido_ver}.dist-info/LICENSE mido-LICENS
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Wed Nov 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.2.0-1
+- Drum Machine 2.2.0: Reset to Defaults!
+- Reset to Defaults: New menu option to restore all samples, BPM, and volume to factory settings
+- Clear Button: Renamed from Reset, now only clears the pattern while keeping custom samples
