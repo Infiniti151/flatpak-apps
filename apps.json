@@ -192,6 +192,12 @@
         "instance": ""
     },
     {
+        "app_name": "icon-library",
+        "upstream_repo": "World/design",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "iconic",
         "upstream_repo": "youpie/Iconic",
         "provider": "github",

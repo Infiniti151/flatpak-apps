@@ -63,7 +63,7 @@ Features:
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
 %{_dbusservicesdir}/*.service
-%{_datadir}/gnome-shell/search-providers/*.ini
+%{_searchprovidersdir}/*.ini
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
