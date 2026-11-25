@@ -1,6 +1,9 @@
-%global         app_id        dev.bragefuglseth.Fretboard
-%global         forgeurl      https://github.com/bragefuglseth/fretboard
-%global         tag           v%{version}
+%if 0%{?eln}
+%global         debug_package       %{nil}
+%endif
+%global         app_id              dev.bragefuglseth.Fretboard
+%global         forgeurl            https://github.com/bragefuglseth/fretboard
+%global         tag                 v%{version}
 
 Name:           fretboard
 Version:        9.1
