@@ -1,5 +1,8 @@
-%global         app_id        org.gnome.design.IconLibrary
-%global         tag           %{version}
+%if 0%{?eln}
+%global         debug_package       %{nil}
+%endif
+%global         app_id              org.gnome.design.IconLibrary
+%global         tag                 %{version}
 
 Name:           icon-library
 Version:        0.0.23
