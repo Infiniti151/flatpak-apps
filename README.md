@@ -115,13 +115,49 @@ These RPMs are ordinary packages that link against the libraries Fedora already 
 > **Recommendation:** Upgrade to a newer Fedora release or use the **Flatpak** versions for these specific apps.
 
 ## Installation
-**1. Enable COPR repo**
+
+### Enable Copr repo
 
    `sudo dnf copr enable infiniti151/flatpak-apps`
 
-**2. Install app**
+### Install app
 
-   `sudo dnf install <app>`
+   `sudo dnf install <app>`'
+
+## Browsing Packages
+
+You can list everything in the repo from the terminal. This needs `copr-cli` and `jq`, and no Copr account:
+
+`sudo dnf install copr-cli jq`
+
+### List apps
+
+```
+copr-cli list-packages infiniti151/flatpak-apps | jq -r '.[] | select((.source_dict.subdirectory // "") | startswith("apps/")) | .name' | sort
+```
+
+### List libraries
+
+```
+copr-cli list-packages infiniti151/flatpak-apps | jq -r '.[] | select((.source_dict.subdirectory // "") | startswith("libs/")) | .name' | sort
+```
+
+### Inspect a spec file
+
+Replace `<app>` with a package name from the list above:
+
+```
+curl -sL https://raw.githubusercontent.com/Infiniti151/flatpak-apps/main/apps/<app>/<app>.spec
+```
+
+For a library, use the `libs` directory instead:
+
+```
+curl -sL https://raw.githubusercontent.com/Infiniti151/flatpak-apps/main/libs/<lib>/<lib>.spec
+```
+
+> [!TIP]
+> Pipe the output into `less` (or `bat -l spec`) to page through long spec files.
 
 ## License
 
