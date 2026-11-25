@@ -57,7 +57,6 @@ Within a certain limit, it is effective. However, modern SSDs use certain techno
 %license LICENSE.md
 %doc README.md
 %{_bindir}/%{name}
-%{_datadir}/%{name}
 %{_appsdir}/%{app_id}.desktop
 %{_scalableiconsdir}/%{app_id}.svg
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
