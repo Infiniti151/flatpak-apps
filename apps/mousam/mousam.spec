@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           mousam
-Version:        0
+Version:        3.1.0
 Release:        1%{?dist}
 Summary:        Weather at a glance
 License:        GPL-3.0-or-later
@@ -83,3 +83,14 @@ Features:
 %{_hicolordir}/scalable/material_icons/
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.appdata.xml
+
+%changelog
+* Wed Nov 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.1.0-1
+- Improved weather overview and fixes
+- Improved weather overview: combines related events, reminds less often, and describes the weather at sunrise and sunset.
+- Notifications are on by default, one per topic.
+- New app icon.
+- Ctrl+Shift+R refreshes without cached data.
+- Faster loading on networks with broken IPv6.
+- Fixed sunrise and sunset times west of UTC, precipitation bars in inches, and the hourly list.
+- Updated translations.
