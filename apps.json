@@ -276,6 +276,12 @@
         "instance": ""
     },
     {
+        "app_name": "mousam",
+        "upstream_repo": "amit9838/mousam",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "mundi",
         "upstream_repo": "nacho/mundi",
         "provider": "github",
