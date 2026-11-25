@@ -2,7 +2,7 @@
 %global         tag           %{version}
 
 Name:           icon-library
-Version:        0
+Version:        0.0.23
 Release:        1%{?dist}
 Summary:        Symbolic icons for your apps
 License:        GPL-3.0-or-later
@@ -62,3 +62,7 @@ env CARGO_HOME=.cargo cargo tree -e normal --prefix none --format '{p}: {l}' | s
 %{_dbusservicesdir}/{%{app_id}.service,%{app_id}.SearchProvider.service}
 %{_searchprovidersdir}/%{app_id}.search-provider.ini
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Wed Nov 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.0.23-1
+- Update to 0.0.23
