@@ -34,6 +34,23 @@ RUN dnf install -y \
 
 # Layer 3: App-specific build dependencies (managed by scripts/update_dockerfile.py)
 # --- APP_DEPS_START ---
+RUN dnf install -y \
+    # --- queue dependencies --- \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(json-glib-1.0)' \
+    'pkgconfig(libadwaita-1)' \
+    'pkgconfig(sqlite3)' \
+    appstream \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gcc \
+    gettext \
+    glib2-devel \
+    meson \
+    ninja-build \
+    valac && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf/*
 # --- APP_DEPS_END ---
 
 WORKDIR /github/workspace
