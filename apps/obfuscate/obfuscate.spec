@@ -2,7 +2,7 @@
 %global         tag           %{version}
 
 Name:           obfuscate
-Version:        0
+Version:        0.0.10
 Release:        1%{?dist}
 Summary:        Censor private information
 License:        GPL-3.0-or-later
@@ -59,3 +59,8 @@ env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none 
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Wed Nov 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.0.10-1
+- The application window is now adaptive
+- Add a warning if the file is unsaved
