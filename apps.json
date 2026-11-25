@@ -282,6 +282,12 @@
         "instance": ""
     },
     {
+        "app_name": "picker",
+        "upstream_repo": "mezoahmedii/picker",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "pigment",
         "upstream_repo": "Jeffser/Pigment",
         "provider": "github",
