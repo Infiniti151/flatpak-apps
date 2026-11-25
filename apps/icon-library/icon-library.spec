@@ -44,11 +44,11 @@ rm -rf %{name}-%{version}/.git
 
 %build
 %meson_build
+env CARGO_HOME=.cargo cargo tree -e normal --prefix none --format '{p}: {l}' | sed -E 's/ \(\*\)$//; s/ \(\/[^)]*\)//' | sort -u > LICENSE.dependencies
 
 %install
 %meson_install
 %find_lang %{name}
-env CARGO_HOME=.cargo cargo tree -e normal --prefix none --format '{p}: {l}' | sed -E 's/ \(\*\)$//; s/ \(\/[^)]*\)//' | sort -u > LICENSE.dependencies
 
 %check
 %meson_test

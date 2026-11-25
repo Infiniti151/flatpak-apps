@@ -294,6 +294,12 @@
         "instance": ""
     },
     {
+        "app_name": "obfuscate",
+        "upstream_repo": "World/obfuscate",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "picker",
         "upstream_repo": "mezoahmedii/picker",
         "provider": "github",
