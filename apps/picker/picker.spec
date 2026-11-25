@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           picker
-Version:        1.4.1
+Version:        0
 Release:        1%{?dist}
 Summary:        Randomly pick something to do
 License:        GPL-3.0-or-later
@@ -68,7 +68,3 @@ Picker is a simple app that can pick something for you from a list of things. Fo
 %{_hicolordir}/scalable/actions/*.svg
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
-
-%changelog
-* Wed Nov 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.4.1-1
-- Test
