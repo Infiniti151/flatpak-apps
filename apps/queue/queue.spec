@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           queue
-Version:        0
+Version:        1.1.0
 Release:        1%{?dist}
 Summary:        Manage and organize tasks
 License:        GPL-3.0-or-later
@@ -71,3 +71,13 @@ Features:
 %{_hicolordir}/*/apps/%{app_id}.png
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Wed Nov 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.0-1
+- This release brings rich text descriptions and several refinements:
+- Format task descriptions with headings, bold, italic, underline, strikethrough, text color and lists.
+- See the completion date of finished tasks.
+- Edit and delete tasks and groups from a per-item menu.
+- The task list now uses the full width of the window.
+- Task descriptions can now hold much longer text.
+- Added Polish, Russian, Korean, Norwegian, Swedish, Hindi and Greek translations.
