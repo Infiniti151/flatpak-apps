@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           fretboard
-Version:        0
+Version:        9.1
 Release:        1%{?dist}
 Summary:        Look up guitar chords
 License:        GPL-3.0-or-later
@@ -64,3 +64,7 @@ env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none 
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Wed Nov 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 9.1-1
+- This update improves the translations of Fretboard into different languages.
