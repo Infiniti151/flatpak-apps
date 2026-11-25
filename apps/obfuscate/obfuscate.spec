@@ -1,3 +1,6 @@
+%if 0%{?eln}
+%global         debug_package       %{nil}
+%endif
 %global         app_id        com.belmoussaoui.Obfuscate
 %global         tag           %{version}
 

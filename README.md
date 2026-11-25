@@ -123,7 +123,7 @@ These RPMs are ordinary packages that link against the libraries Fedora already 
 
 ### Install app
 
-   `sudo dnf install <app>`'
+   `sudo dnf install <app>`
 
 ## Browsing Packages
 
