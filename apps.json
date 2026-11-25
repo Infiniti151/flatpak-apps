@@ -90,6 +90,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "drum-machine",
+        "upstream_repo": "Revisto/drum-machine",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "eartag",
         "upstream_repo": "World/eartag",
         "provider": "gitlab",
