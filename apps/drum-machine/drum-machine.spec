@@ -4,7 +4,7 @@
 %global         mido_ver      1.3.3
 
 Name:           drum-machine
-Version:        2.2.0
+Version:        0
 Release:        1%{?dist}
 Summary:        Create and play drum beats
 License:        GPL-3.0-or-later AND MIT
@@ -76,6 +76,9 @@ Features:
 # Install the bundled wheel into the buildroot
 pip3 install --no-deps --no-index --ignore-installed --root-user-action=ignore --prefix=%{buildroot}%{_prefix} %{SOURCE1}
 
+# Drop mido's CLI tools, only the library is needed
+rm -f %{buildroot}%{_bindir}/mido-*
+
 %py3_shebang_fix %{buildroot}%{_bindir}/%{name} %{buildroot}%{_datadir}/%{name}/
 
 # Keep mido's license only under %%license
@@ -89,16 +92,10 @@ mv %{buildroot}%{python3_sitelib}/mido-%{mido_ver}.dist-info/LICENSE mido-LICENS
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%{python3_sitelib}/mido.py
-%{python3_sitelib}/__pycache__/mido.*
+%{python3_sitelib}/mido/
 %{python3_sitelib}/mido-*.dist-info/
 %{_appsdir}/%{app_id}.desktop
 %{_scalableiconsdir}/%{app_id}.svg
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
-%{_hicolordir}/scalable/actions/*.svg
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
-
-%changelog
-* Wed Nov 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.2.0-1
-- Test

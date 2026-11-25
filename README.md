@@ -1,4 +1,5 @@
-# <img src="images/logo.png" alt="Project Logo" width="64" style="vertical-align: middle;"> flatpak-apps
+# flatpak-apps
+<img src="images/logo.png" alt="Project Logo" align="right" width="130">
 
 [![Request App](https://img.shields.io/badge/Request-App-green?style=for-the-badge&logo=github)](https://github.com/Infiniti151/flatpak-apps/issues/new?template=app_request.md)
 [![Report Bug](https://img.shields.io/badge/Report-Bug-red?style=for-the-badge&logo=github)](https://github.com/Infiniti151/flatpak-apps/issues/new?template=bug_report.md)
