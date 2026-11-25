@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           raider
-Version:        3.1.0
+Version:        0
 Release:        1%{?dist}
 Summary:        Permanently delete your files
 License:        GPL-3.0-or-later
@@ -62,7 +62,3 @@ Within a certain limit, it is effective. However, modern SSDs use certain techno
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_dbusservicesdir}/%{app_id}.service
 %{_metainfodir}/%{app_id}.metainfo.xml
-
-%changelog
-* Wed Nov 25 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.1.0-1
-- Test
