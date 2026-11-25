@@ -336,6 +336,12 @@
         "instance": ""
     },
     {
+        "app_name": "queue",
+        "upstream_repo": "dprietob/queue",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "raider",
         "upstream_repo": "ADBeveridge/raider",
         "provider": "github",
