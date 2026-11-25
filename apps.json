@@ -168,6 +168,12 @@
         "instance": ""
     },
     {
+        "app_name": "fretboard",
+        "upstream_repo": "bragefuglseth/fretboard",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "gitte",
         "upstream_repo": "ckruse/gitte",
         "provider": "codeberg",
