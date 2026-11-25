@@ -14,7 +14,44 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      dockerfile: ${{ steps.diff.outputs.dockerfile }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Detect Dockerfile change
+        id: diff
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          # schedule / workflow_dispatch: always build
+          if [ "${{ github.event_name }}" != "push" ]; then
+            echo "dockerfile=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+
+          # Old tip may be gone after a force push; try to fetch it
+          git cat-file -e "$BEFORE^{commit}" 2>/dev/null || git fetch origin "$BEFORE" 2>/dev/null || true
+
+          if git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            if git diff --quiet "$BEFORE" HEAD -- Dockerfile; then
+              echo "dockerfile=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "dockerfile=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "dockerfile=true" >> "$GITHUB_OUTPUT"   # can't compare: build anyway
+          fi
+
   build-and-push:
+    needs: changes
+    if: needs.changes.outputs.dockerfile == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read

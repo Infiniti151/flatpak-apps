@@ -69,7 +69,7 @@ Features
 %{_symboliciconsdir}/*.svg
 %{_metainfodir}/*.metainfo.xml
 %{_dbusservicesdir}/*.service
-%{_datadir}/gnome-shell/search-providers/*.search-provider.ini
+%{_searchprovidersdir}/*.search-provider.ini
 
 %changelog
 * Sat May 09 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - v2.2.1-1

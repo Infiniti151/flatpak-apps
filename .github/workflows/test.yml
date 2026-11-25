@@ -45,9 +45,30 @@ jobs:
             echo "is_sync=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Detect spec changes
+        id: changes
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "${{ github.event_name }}" != "push" ]; then
+            echo "spec=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+
+          git cat-file -e "$BEFORE^{commit}" 2>/dev/null || git fetch origin "$BEFORE" 2>/dev/null || true
+
+          if git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            if git diff --quiet "$BEFORE" HEAD -- ':(glob)apps/**/*.spec'; then
+              echo "spec=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "spec=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "spec=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Verify Spec Version
         id: check
-        if: steps.sync-check.outputs.is_sync == 'false'
+        if: steps.sync-check.outputs.is_sync == 'false' && steps.changes.outputs.spec == 'true'
         run: |
           SPEC_FILE=$(find apps/${{ vars.APP }} -maxdepth 1 -name "${{ vars.APP }}.spec" | head -n 1)
 
