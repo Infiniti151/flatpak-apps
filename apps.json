@@ -474,6 +474,12 @@
         "instance": ""
     },
     {
+        "app_name": "warp",
+        "upstream_repo": "World/warp",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "wildcard",
         "upstream_repo": "World/Wildcard",
         "provider": "gitlab",
