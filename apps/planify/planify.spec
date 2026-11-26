@@ -3,7 +3,7 @@
 %global         tag                 v%{version}
 
 Name:           planify
-Version:        4.20.0
+Version:        4.21.0
 Release:        1%{?dist}
 Summary:        Forget about forgetting things
 License:        GPL-3.0-or-later
