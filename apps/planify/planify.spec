@@ -1,6 +1,4 @@
 %global         app_id              io.github.alainm23.planify
-%global         __requires_exclude  ^libgxml-0.20.*$
-%global         __provides_exclude  ^libgxml-0.20.*$
 %global         forgeurl            https://github.com/alainm23/planify
 %global         tag                 v%{version}
 
@@ -17,20 +15,24 @@ URL:            %{forgeurl}
 Source0:        %{forgesource}
 
 BuildRequires:  meson
+BuildRequires:  ninja-build
 BuildRequires:  vala
+BuildRequires:  valadoc
 BuildRequires:  gcc
 BuildRequires:  desktop-file-utils
 BuildRequires:  appstream
 BuildRequires:  gettext
+BuildRequires:  glib2-devel
+BuildRequires:  glibc-langpack-en
 BuildRequires:  python3
-BuildRequires:  git-core
 BuildRequires:  desktop-rpm-macros
 BuildRequires:  forge-srpm-macros
-
-# Dependencies
-BuildRequires:  pkgconfig(gio-2.0)
-BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(chrono)
 BuildRequires:  pkgconfig(gee-0.8)
+BuildRequires:  pkgconfig(gio-2.0)
+BuildRequires:  pkgconfig(glib-2.0) >= 2.70
+BuildRequires:  pkgconfig(gobject-2.0)
+BuildRequires:  pkgconfig(goa-1.0)
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libsoup-3.0)
 BuildRequires:  pkgconfig(sqlite3)
@@ -41,13 +43,14 @@ BuildRequires:  pkgconfig(libsecret-1)
 BuildRequires:  pkgconfig(libspelling-1)
 BuildRequires:  pkgconfig(gtksourceview-5)
 BuildRequires:  pkgconfig(icu-uc)
+BuildRequires:  pkgconfig(pangocairo)
 BuildRequires:  pkgconfig(libportal)
 BuildRequires:  pkgconfig(libportal-gtk4)
 BuildRequires:  pkgconfig(libecal-2.0) >= 3.45.1
 BuildRequires:  pkgconfig(libedataserver-1.2) >= 3.45.1
 
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 Requires:       hicolor-icon-theme
-Requires:       glib2
 
 %description
 Planify is your modern and powerful task manager that helps you keep your life organized. With a clean and intuitive interface, cloud synchronization, and advanced features, you'll never forget what matters again.
@@ -90,31 +93,8 @@ for developing applications that use Planify's core API.
 %prep
 %forgesetup
 
-git init
-
-CHRONO_URL=$(sed -n 's/^url=//p' subprojects/chrono.wrap)
-CHRONO_REV=$(sed -n 's/^revision=//p' subprojects/chrono.wrap)
-
-rm -rf subprojects/chrono
-git clone --depth 1 -b "$CHRONO_REV" "$CHRONO_URL" subprojects/chrono
-
+# chrono is packaged separately (libchrono); never fall back to a bundled copy
 rm -f subprojects/chrono.wrap
-
-cat > subprojects/chrono/meson.override << 'EOF'
-[project options]
-default_library = static
-EOF
-
-GXML_URL=$(sed -n 's/^url=//p' subprojects/gxml-0.20.wrap)
-GXML_REV=$(sed -n 's/^revision=//p' subprojects/gxml-0.20.wrap)
-
-rm -rf subprojects/gxml-0.20
-git clone --depth 1 -b "$GXML_REV" "$GXML_URL" subprojects/gxml-0.20
-
-cat > subprojects/gxml-0.20/meson.override << 'EOF'
-[project options]
-default_library = static
-EOF
 
 if [ -f scripts/update-translations.py ]; then
     python3 scripts/update-translations.py
@@ -125,6 +105,7 @@ fi
     -Dprofile=default \
     -Dportal=true \
     -Devolution=true \
+    -Dgoa=true \
     -Dspelling=enabled \
     -Dmanpage=false
 
@@ -135,51 +116,27 @@ fi
 %meson_install
 %find_lang %{app_id}
 
-# Cleanup subproject devel files
-rm -rf %{buildroot}%{_includedir}/gxml-0.20/
-rm -rf %{buildroot}%{_libdir}/pkgconfig/gxml-0.20.pc
-rm -rf %{buildroot}%{_datadir}/vala/vapi/gxml-0.20.*
-
-rm -f %{buildroot}%{_includedir}/chrono.h
-rm -f %{buildroot}%{_libdir}/pkgconfig/chrono.pc
-rm -f %{buildroot}%{_datadir}/vala/vapi/chrono.*
-rm -rf %{buildroot}%{_libdir}/girepository-1.0/Chrono*
-
-# Remove debug files for subprojects
-rm -rf %{buildroot}/usr/lib/debug/*libgxml*
-rm -rf %{buildroot}/usr/lib/debug/*libchrono*
-
-# Remove unwanted metainfo
-rm -f %{buildroot}%{_metainfodir}/io.github.alainm23.chrono.metainfo.xml
+rm -f %{buildroot}%{_scalableiconsdir}/%{app_id}.Devel.svg
 
 %check
 %meson_test --suite cli
-appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.xml
+appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.metainfo.xml
 
 %files -f %{app_id}.lang
 %license LICENSE
 %doc README.md
-
 %{_bindir}/%{app_id}*
 %{_libexecdir}/%{app_id}-search-provider
-
-%{_appsdir}/*.desktop
-%{_gschemasdir}/*.gschema.xml
-%{_metainfodir}/*.xml
-%{_scalableiconsdir}/*.svg
-%{_symboliciconsdir}/*.svg
-
-%{_dbusservicesdir}/*.service
-%{_searchprovidersdir}/*.SearchProvider.ini
-
-%{_libdir}/girepository-1.0/GXml-*.typelib
-%{_datadir}/gir-1.0/GXml-*.gir
-%{_datadir}/locale/*/LC_MESSAGES/GXml-*.mo
+%{_appsdir}/%{app_id}.desktop
+%{_gschemasdir}/%{app_id}.gschema.xml
+%{_metainfodir}/%{app_id}.metainfo.xml
+%{_scalableiconsdir}/%{app_id}.svg
+%{_symboliciconsdir}/%{app_id}-symbolic.svg
+%{_dbusservicesdir}/{%{app_id}.service,%{app_id}.SearchProvider.service}
+%{_searchprovidersdir}/%{app_id}.SearchProvider.ini
 
 %files libs
 %{_libdir}/libplanify.so.*
-%{_libdir}/libgxml-0.20.so*
-%{_libdir}/libchrono.so*
 
 %files devel
 %{_includedir}/%{name}/
