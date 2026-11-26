@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           dosage
-Version:        0
+Version:        2.1.9
 Release:        1%{?dist}
 Summary:        Keep track of your treatments
 License:        GPL-3.0-only
@@ -74,3 +74,10 @@ Features:
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.appdata.xml
+
+%changelog
+* Thu Nov 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.1.9-1
+- Added Greek translation
+- Updated translations
+- Updated GNOME runtime to 51
+- Fixed "Ended Last" sorting so only ended treatments move to the bottom (@hazelcore)
