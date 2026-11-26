@@ -4,7 +4,7 @@
 [![Request App](https://img.shields.io/badge/Request-App-green?style=for-the-badge&logo=github)](https://github.com/Infiniti151/flatpak-apps/issues/new?template=app_request.md)
 [![Report Bug](https://img.shields.io/badge/Report-Bug-red?style=for-the-badge&logo=github)](https://github.com/Infiniti151/flatpak-apps/issues/new?template=bug_report.md)
 
-[![Packaged Apps](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Finfiniti151%2Fflatpak-apps%2Fmain%2Fapps.json&query=%24.length&label=packaged%20apps&color=pink&style=for-the-badge)](#app-list)
+[![Packaged Apps](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Finfiniti151%2Fflatpak-apps%2Fmain%2Fapps.json&query=%24.length&label=packaged%20apps&color=pink&style=for-the-badge&logo=flatpak&logoColor=white)](#app-list)
 [![COPR Build Status](https://img.shields.io/badge/dynamic/json?url=https://copr.fedorainfracloud.org/api_3/build/list/%3Fownername%3Dinfiniti151%26projectname%3Dflatpak-apps%26limit%3D1&query=$.items[0].state&label=COPR&style=for-the-badge&logo=fedora&logoColor=white&color=%2351A2DA)](https://copr.fedorainfracloud.org/coprs/infiniti151/flatpak-apps/)
 [![Fedora Versions](https://img.shields.io/badge/Fedora-43%20%7C%2044%20%7C%2045%20%7C%20Rawhide%20%7C%20ELN-3c6eb4?style=for-the-badge&logo=fedora&logoColor=white)](https://fedoraproject.org/)
 ![Arch x86_64](https://img.shields.io/badge/Arch-x86__64-purple?style=for-the-badge)
