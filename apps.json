@@ -90,6 +90,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "dosage",
+        "upstream_repo": "diegopvlk/Dosage",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "drum-machine",
         "upstream_repo": "Revisto/drum-machine",
         "provider": "github",
