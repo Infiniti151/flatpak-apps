@@ -34,6 +34,23 @@ RUN dnf install -y \
 
 # Layer 3: App-specific build dependencies (managed by scripts/update_dockerfile.py)
 # --- APP_DEPS_START ---
+RUN dnf install -y \
+    # --- biblioteca dependencies --- \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    'pkgconfig(webkitgtk-6.0)' \
+    appstream \
+    blueprint-compiler \
+    desktop-file-utils \
+    forge-srpm-macros \
+    git-core \
+    gjs \
+    glib2-devel \
+    gtk-update-icon-cache \
+    meson \
+    ninja-build && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf/*
 # --- APP_DEPS_END ---
 
 WORKDIR /github/workspace
