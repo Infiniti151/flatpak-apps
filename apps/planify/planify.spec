@@ -3,7 +3,7 @@
 %global         tag                 v%{version}
 
 Name:           planify
-Version:        4.21.0
+Version:        4.20.0
 Release:        1%{?dist}
 Summary:        Forget about forgetting things
 License:        GPL-3.0-or-later
@@ -145,6 +145,19 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.m
 %{_datadir}/vala/vapi/%{name}.*
 
 %changelog
+* Thu Nov 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.20.0-1
+- Planify 4.20.0 is a big release with Nextcloud Deck integration, CalDAV reminder sync, productivity goals, GNOME Online Accounts detection, and many features, fixes and performance improvements. Update now and enjoy a smoother experience.
+- New Features:
+- Added Nextcloud Deck integration — boards, stacks and cards sync two-way as projects, sections and tasks, with labels, archive, drag and drop between stacks and boards, and order preservation.
+- Added a productivity goals system — daily and weekly targets (fixed or dynamic), a mini progress widget in the app menu, and an 8-week activity heatmap in the productivity report.
+- Added "Repeat from completion date" — recurring tasks can repeat from the day they are completed instead of their due date, per task, matching how apps like Tasks.org behave (local and Todoist).
+- Added detection and import of CalDAV accounts from GNOME Online Accounts — a subtle link under the account list imports Nextcloud/ownCloud (via Login Flow v2) or generic CalDAV accounts with the server URL prefilled.
+- Added a completed tasks section to the Today view, toggleable from the view settings.
+- Added a project filter to the Completed view and sort/filter controls to the All Tasks view, matching the project views.
+- Added All Tasks and Labels as Home View options in Preferences.
+- Added a calendar sources preferences page to choose which calendars are shown.
+- ... (see upstream for full release notes)
+
 * Thu Nov 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.21.0-1
 - Planify 4.21.0 brings offline support for CalDAV, Nextcloud and Nextcloud Deck, a more reliable Todoist sync, client certificates (mTLS), attachments that keep working after the original file moves, and many fixes and memory improvements.
 - New Features:
