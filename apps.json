@@ -12,6 +12,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "boatswain",
+        "upstream_repo": "World/boatswain",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "bobby",
         "upstream_repo": "hbons/Bobby",
         "provider": "github",
