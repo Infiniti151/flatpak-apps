@@ -5,7 +5,7 @@
 %global         tag                 v%{version}
 
 Name:           warp
-Version:        0
+Version:        1.0.0
 Release:        1%{?dist}
 Summary:        Fast and secure file transfer
 License:        GPL-3.0-only
@@ -84,3 +84,11 @@ env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none 
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_dbusservicesdir}/%{app_id}.service
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Thu Nov 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.0-1
+- Version 1.0.0
+- Use new libadwaita shortcuts dialog
+- Update to the GNOME 50 runtime
+- Translation Updates
+- Remove unused flatpak permission
