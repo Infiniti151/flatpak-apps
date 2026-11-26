@@ -5,7 +5,7 @@
 %global         tag                 %{version}
 
 Name:           shortwave
-Version:        0
+Version:        5.1.0
 Release:        1%{?dist}
 Summary:        Listen to internet radio
 License:        GPL-3.0-or-later
@@ -87,3 +87,12 @@ env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none 
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_dbusservicesdir}/%{app_id}.service
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Thu Nov 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 5.1.0-1
+- This version includes minor improvements and bug fixes.
+- Track titles are selectable and copyable
+- Station search is accessible via Ctrl+F
+- Search entry now receives keyboard focus automatically
+- Faster loading of station cover art
+- Maximum recording duration increased to 3 hours
