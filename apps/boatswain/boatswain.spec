@@ -2,7 +2,7 @@
 %global         tag           %{version}
 
 Name:           boatswain
-Version:        6.0
+Version:        0
 Release:        1%{?dist}
 Summary:        Control your Elgato Stream Decks
 License:        GPL-3.0-or-later
@@ -94,7 +94,3 @@ rm -f %{buildroot}%{_scalableiconsdir}/%{app_id}.Devel.svg
 %{_includedir}/%{name}/
 %{_includedir}/bs-enum-types.h
 %{_datadir}/gir-1.0/Bs-0.gir
-
-%changelog
-* Thu Nov 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 6.0-1
-- Test
