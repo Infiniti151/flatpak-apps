@@ -396,6 +396,12 @@
         "instance": ""
     },
     {
+        "app_name": "shortwave",
+        "upstream_repo": "World/Shortwave",
+        "provider": "gitlab",
+        "instance": "gitlab.gnome.org"
+    },
+    {
         "app_name": "sitra",
         "upstream_repo": "sitraorg/sitra",
         "provider": "github",
