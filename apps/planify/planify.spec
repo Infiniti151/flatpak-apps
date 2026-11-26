@@ -5,7 +5,7 @@
 %global         tag                 v%{version}
 
 Name:           planify
-Version:        4.20.0
+Version:        4.21.0
 Release:        1%{?dist}
 Summary:        Forget about forgetting things
 License:        GPL-3.0-or-later
@@ -188,6 +188,19 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/*.xml
 %{_datadir}/vala/vapi/%{name}.*
 
 %changelog
+* Thu Nov 26 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.21.0-1
+- Planify 4.21.0 brings offline support for CalDAV, Nextcloud and Nextcloud Deck, a more reliable Todoist sync, client certificates (mTLS), attachments that keep working after the original file moves, and many fixes and memory improvements.
+- New Features:
+- Added offline support for CalDAV and Nextcloud: tasks, sections and calendars can be created, edited, completed, moved and deleted without a connection, and are sent on the next sync.
+- Added offline support for Nextcloud Deck: cards, stacks and boards work without a connection, including moving cards between boards.
+- Added client certificate (mTLS) authentication for CalDAV and Nextcloud, with .pem and .p12/.pfx files.
+- Attachments are now copied into Planify's data folder, so they keep opening after the original file is moved or deleted. Files can also be attached while creating a task.
+- Added dragging tasks in All Tasks onto sidebar lists and onto other tasks to make them subtasks.
+- Added sort and filter options to the Label view.
+- Added sorting by deadline in projects, Today, Scheduled, filters and labels.
+- Added setting a deadline on multiple selected tasks.
+- ... (see upstream for full release notes)
+
 * Sat Sep 12 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 4.20.0-1
 - Planify 4.20.0 is a big release with Nextcloud Deck integration, CalDAV reminder sync, productivity goals, GNOME Online Accounts detection, and many features, fixes and performance improvements. Update now and enjoy a smoother experience.
 - New Features:
