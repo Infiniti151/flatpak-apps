@@ -34,6 +34,32 @@ RUN dnf install -y \
 
 # Layer 3: App-specific build dependencies (managed by scripts/update_dockerfile.py)
 # --- APP_DEPS_START ---
+RUN dnf install -y \
+    # --- boatswain dependencies --- \
+    'pkgconfig(glycin-2)' \
+    'pkgconfig(gobject-introspection-1.0)' \
+    'pkgconfig(graphene-gobject-1.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(gudev-1.0)' \
+    'pkgconfig(hidapi-libusb)' \
+    'pkgconfig(json-glib-1.0)' \
+    'pkgconfig(libadwaita-1)' \
+    'pkgconfig(libdex-1)' \
+    'pkgconfig(libpeas-2)' \
+    'pkgconfig(libportal-gtk4)' \
+    'pkgconfig(libsecret-1)' \
+    'pkgconfig(libsoup-3.0)' \
+    appstream \
+    desktop-file-utils \
+    gcc \
+    gettext \
+    git-core \
+    glib2-devel \
+    gtk-update-icon-cache \
+    meson \
+    ninja-build && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf/*
 # --- APP_DEPS_END ---
 
 WORKDIR /github/workspace
