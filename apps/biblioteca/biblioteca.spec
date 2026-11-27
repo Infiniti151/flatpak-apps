@@ -122,4 +122,8 @@ rm -f %{buildroot}%{_scalableiconsdir}/%{app_id}.Devel.svg
 
 %changelog
 * Fri Nov 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.8-1
-- Update to 1.8
+- Update to GNOME 51
+- Update gom to 0.5.6
+- Update libshumate to 1.7.0
+- Update libspelling to 0.4.10
+- Update vte to 0.84.1

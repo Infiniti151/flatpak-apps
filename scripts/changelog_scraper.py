@@ -7,7 +7,8 @@
 
     Extracts release version or changelogs for RPM spec file automation.
     Priority order:
-      1. AppStream Metainfo XML (.metainfo.xml / .appdata.xml)
+      1. AppStream Metainfo XML (.metainfo.xml / .appdata.xml); for changelogs it is
+         read at the exact tag passed in, for versions from main/master
       2. Flathub API (for version resolution) / Forge Release API (for changelogs)
       3. Default fallback string ("- Update to <version>")
 
@@ -28,6 +29,22 @@ import xml.etree.ElementTree as ET
 import concurrent.futures
 
 GIT_ONLY_HOSTS = {"gitlab.gnome.org"}
+
+METAINFO_PATTERN = re.compile(
+    r"(^|/).*\.(?:metainfo|appdata)\.xml(?:\.in(?:\.in)?)?$",
+    re.IGNORECASE,
+)
+
+METAINFO_EXTS = [
+    ".metainfo.xml",
+    ".metainfo.xml.in",
+    ".metainfo.xml.in.in",
+    ".appdata.xml",
+    ".appdata.xml.in",
+    ".appdata.xml.in.in",
+]
+
+METAINFO_DIRS = ["", "data/", "data/metainfo/", "data/appdata/"]
 
 def fetch_url(url, timeout=1.5):
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -71,20 +88,12 @@ def parse_appstream_version(xml_content):
         pass
     return None
 
-def candidate_paths(app_id):
-    names = list(dict.fromkeys([app_id, app_id.split('.')[-1].lower(), app_id.split('.')[-1]]))
-    paths = []
-    for name in names:
-        paths.extend([
-            f"{name}.metainfo.xml", f"{name}.metainfo.xml.in", f"{name}.metainfo.xml.in.in",
-            f"data/{name}.metainfo.xml", f"data/{name}.metainfo.xml.in", f"data/{name}.metainfo.xml.in.in",
-            f"data/{name}.appdata.xml", f"data/{name}.appdata.xml.in",
-            f"data/{name}.appdata.xml.in.in", f"data/metainfo/{name}.metainfo.xml",
-            f"data/appdata/{name}.appdata.xml"
-        ])
-    return list(dict.fromkeys(paths))
+def find_metainfo_paths_in_git(files):
+    # Prioritize paths matching candidate_paths order first, then any other matching file
+    matched = [p for p in files if METAINFO_PATTERN.search(p)]
+    return sorted(matched, key=lambda p: (0 if "/" not in p or p.startswith("data/") else 1, p))
 
-def fetch_via_git(provider, instance, repo, app_id, mode, target_ver=None):
+def fetch_via_git(provider, instance, repo, app_id, mode, target_ver=None, ref=None):
     if not app_id:
         return None
     host = {"github": "github.com", "codeberg": "codeberg.org"}.get(provider, instance)
@@ -96,6 +105,7 @@ def fetch_via_git(provider, instance, repo, app_id, mode, target_ver=None):
         try:
             clone = subprocess.run(
                 ["git", "clone", "--depth", "1", "--filter=blob:none", "--no-checkout",
+                 *(["--branch", ref] if ref else []),
                  f"https://{host}/{repo}.git", tmp],
                 capture_output=True, timeout=60, env=env)
             if clone.returncode != 0:
@@ -104,7 +114,7 @@ def fetch_via_git(provider, instance, repo, app_id, mode, target_ver=None):
             if ls.returncode != 0:
                 return None
             files = set(ls.stdout.splitlines())
-            for path in candidate_paths(app_id):
+            for path in find_metainfo_paths_in_git(files):
                 if path in files:
                     content = git("show", f"HEAD:{path}").stdout
                     if mode == "get-version":
@@ -126,45 +136,104 @@ def fetch_and_parse(url, mode, target_ver=None):
             return parse_appstream_version(content)
     return None
 
-def generate_candidate_urls(provider, instance, repo, app_id):
-    if not app_id:
-        return []
+def candidate_paths(app_id, repo=""):
+    app_short = app_id.split(".")[-1] if app_id else ""
+    repo_short = repo.split("/")[-1] if repo else ""
+    names = list(
+        dict.fromkeys(
+            [
+                n
+                for n in [
+                    app_id,
+                    app_short.lower(),
+                    app_short,
+                    repo_short.lower(),
+                    repo_short,
+                    "app",
+                ]
+                if n
+            ]
+        )
+    )
 
-    names = list(dict.fromkeys([app_id, app_id.split('.')[-1].lower(), app_id.split('.')[-1]]))
     paths = []
     for name in names:
-        paths.extend([
-            f"{name}.metainfo.xml", f"{name}.metainfo.xml.in", f"{name}.metainfo.xml.in.in",
-            f"data/{name}.metainfo.xml", f"data/{name}.metainfo.xml.in", f"data/{name}.metainfo.xml.in.in",
-            f"data/{name}.appdata.xml", f"data/{name}.appdata.xml.in",
-            f"data/{name}.appdata.xml.in.in", f"data/metainfo/{name}.metainfo.xml",
-            f"data/appdata/{name}.appdata.xml"
-        ])
-    paths = list(dict.fromkeys(paths))
+        for directory in METAINFO_DIRS:
+            for ext in METAINFO_EXTS:
+                paths.append(f"{directory}{name}{ext}")
+    return list(dict.fromkeys(paths))
 
-    base_urls = {
-        "github": f"https://raw.githubusercontent.com/{repo}/{{branch}}/{{path}}",
-        "gitlab": f"https://{instance}/{repo}/-/raw/{{branch}}/{{path}}",
-        "codeberg": f"https://codeberg.org/{repo}/raw/branch/{{branch}}/{{path}}"
-    }
 
-    if provider not in base_urls:
+def raw_url(provider, instance, repo, ref, path, ref_type="branch"):
+    """Raw-file URL for one path at a ref (branch or tag)."""
+    if provider == "github":
+        return f"https://raw.githubusercontent.com/{repo}/{ref}/{path}"
+    if provider == "gitlab":
+        return f"https://{instance}/{repo}/-/raw/{ref}/{path}"
+    if provider == "codeberg":
+        return f"https://codeberg.org/{repo}/raw/{ref_type}/{ref}/{path}"
+    return None
+
+
+def generate_candidate_urls(provider, instance, repo, app_id,
+                            refs=("main", "master"), ref_type="branch"):
+    """Build raw-file URLs for every candidate metainfo path.
+
+    refs:     git refs to try (branches by default, or an exact tag)
+    ref_type: "branch" or "tag" (only Codeberg/Gitea encodes this in the URL)
+    """
+    if not app_id or provider not in ("github", "gitlab", "codeberg"):
         return []
 
-    url_template = base_urls[provider]
-    return [url_template.format(branch=branch, path=path) for branch in ("main", "master") for path in paths]
+    paths = candidate_paths(app_id, repo)
+    return [
+        raw_url(provider, instance, repo, ref, path, ref_type)
+        for ref in refs
+        for path in paths
+    ]
 
-def fetch_first_valid_match(urls, mode, target_ver=None):
-    chunk_size = 5
-    for i in range(0, len(urls), chunk_size):
-        chunk = urls[i:i + chunk_size]
-        with concurrent.futures.ThreadPoolExecutor(max_workers=len(chunk)) as executor:
-            future_to_url = {executor.submit(fetch_and_parse, url, mode, target_ver): url for url in chunk}
-            for future in concurrent.futures.as_completed(future_to_url):
-                result = future.result()
-                if result:
-                    executor.shutdown(wait=False, cancel_futures=True)
-                    return result
+
+def list_tree_via_api(provider, repo, ref):
+    """List every file path at a ref with ONE API call (GitHub/Codeberg only)."""
+    quoted = urllib.parse.quote(ref, safe="")
+    if provider == "github":
+        url = f"https://api.github.com/repos/{repo}/git/trees/{quoted}?recursive=1"
+    elif provider == "codeberg":
+        url = f"https://codeberg.org/api/v1/repos/{repo}/git/trees/{quoted}?recursive=true&per_page=10000"
+    else:
+        return None
+    raw = fetch_url(url, timeout=8)
+    if not raw:
+        return None
+    try:
+        tree = json.loads(raw).get("tree") or []
+        return {e["path"] for e in tree if e.get("type") == "blob" and "path" in e}
+    except Exception:
+        return None
+
+
+def fetch_via_tree(provider, instance, repo, mode, ref, ref_type, target_ver=None):
+    """Find the metainfo in the repo's file list instead of guessing ~100 names."""
+    files = list_tree_via_api(provider, repo, ref)
+    if not files:
+        return None
+    paths = find_metainfo_paths_in_git(files)[:12]
+    urls = [raw_url(provider, instance, repo, ref, p, ref_type) for p in paths]
+    return fetch_first_valid_match(urls, mode, target_ver)
+
+
+def fetch_first_valid_match(urls, mode, target_ver=None, workers=16):
+    if not urls:
+        return None
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=min(workers, len(urls)))
+    try:
+        futures = [executor.submit(fetch_and_parse, url, mode, target_ver) for url in urls]
+        for future in concurrent.futures.as_completed(futures):
+            result = future.result()
+            if result:
+                return result
+    finally:
+        executor.shutdown(wait=False, cancel_futures=True)
     return None
 
 def get_api_changelog(provider, instance, repo, target_ver):
@@ -267,10 +336,14 @@ def main():
 
         changelog = None
         if git_only:
-            changelog = fetch_via_git(provider, instance, repo, app_id, "get-changelog", clean_ver)
+            changelog = fetch_via_git(provider, instance, repo, app_id, "get-changelog", clean_ver, ref=raw_ver)
         else:
-            urls = generate_candidate_urls(provider, instance, repo, app_id)
-            changelog = fetch_first_valid_match(urls, "get-changelog", clean_ver) if urls else None
+            changelog = fetch_via_tree(provider, instance, repo, "get-changelog",
+                                       raw_ver, "tag", clean_ver)
+            if not changelog:
+                urls = generate_candidate_urls(provider, instance, repo, app_id,
+                                               refs=(raw_ver,), ref_type="tag")
+                changelog = fetch_first_valid_match(urls, "get-changelog", clean_ver)
             if not changelog:
                 changelog = get_api_changelog(provider, instance, repo, clean_ver)
         if not changelog:
