@@ -4,7 +4,7 @@
 %global         tag           %{version}
 
 Name:           webfont-kit-generator
-Version:        0
+Version:        1.3.0
 Release:        1%{?dist}
 Summary:        Create @font-face kits easily
 License:        GPL-3.0-or-later
@@ -79,3 +79,7 @@ Webfont Bundler also includes a tool to Download fonts from Google Fonts for sel
 %{_dbusservicesdir}/%{app_id}.service
 %{_metainfodir}/%{app_id}.metainfo.xml
 
+%changelog
+* Fri Nov 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.3.0-1
+- App name changed to Webfont Bundler
+- Bug fixes
