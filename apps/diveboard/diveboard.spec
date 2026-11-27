@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           diveboard
-Version:        0
+Version:        0.6.0
 Release:        1%{?dist}
 Summary:        A Scuba Diving Logbook
 License:        GPL-3.0-or-later AND 0BSD AND Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-3-Clause AND ISC AND MIT AND MIT-0 AND Unicode-3.0 AND Unlicense AND Zlib
@@ -65,3 +65,8 @@ find %{_vpath_builddir}/cargo-home -name '*.rs' -perm /111 -exec chmod a-x {} +
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
 
+%changelog
+* Fri Nov 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.6.0-1
+- Improved spot and dive shop selection UX
+- Stat and Tank mix bug fixes
+- Dependency upgrades
