@@ -102,6 +102,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "door-knocker",
+        "upstream_repo": "tytan652/door-knocker",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "dosage",
         "upstream_repo": "diegopvlk/Dosage",
         "provider": "github",
