@@ -510,6 +510,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "webfont-kit-generator",
+        "upstream_repo": "rafaelmardojai/webfont-kit-generator",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "wildcard",
         "upstream_repo": "World/Wildcard",
         "provider": "gitlab",
