@@ -34,6 +34,23 @@ RUN dnf install -y \
 
 # Layer 3: App-specific build dependencies (managed by scripts/update_dockerfile.py)
 # --- APP_DEPS_START ---
+RUN dnf install -y \
+    # --- door-knocker dependencies --- \
+    'pkgconfig(gio-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    blueprint-compiler \
+    date \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gcc \
+    gettext \
+    gtk-update-icon-cache \
+    libappstream-glib \
+    meson \
+    ninja-build && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf/*
 # --- APP_DEPS_END ---
 
 WORKDIR /github/workspace
