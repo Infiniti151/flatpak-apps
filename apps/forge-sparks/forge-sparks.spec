@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           forge-sparks
-Version:        0
+Version:        1.0.1
 Release:        1%{?dist}
 Summary:        Get Git forges notifications
 License:        MIT
@@ -78,3 +78,6 @@ git submodule update --init --recursive --depth 1
 %{_dbusservicesdir}/%{app_id}.service
 %{_metainfodir}/%{app_id}.metainfo.xml
 
+%changelog
+* Fri Nov 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.1-1
+- Bug fixes
