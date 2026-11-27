@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           door-knocker
-Version:        0
+Version:        0.9.0
 Release:        1%{?dist}
 Summary:        Check the availability of portals
 License:        GPL-3.0-or-later
@@ -59,3 +59,8 @@ Door Knocker allows you to check availability of all portals provided by xdg-des
 %{_scalableiconsdir}/%{app_id}.svg
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_metainfodir}/%{app_id}.metainfo.xml
+%changelog
+* Fri Nov 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.9.0-1
+- Style cleanup
+- Update widget styling
+- Update translations
