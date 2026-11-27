@@ -22,7 +22,8 @@ BuildRequires:  git-core
 BuildRequires:  gettext
 BuildRequires:  glibc-langpack-en
 BuildRequires:  gtk-update-icon-cache
-BuildRequires:  openssl3-devel
+BuildRequires:  pkgconfig(openssl) >= 3.0
+BuildRequires:  pkgconfig(openssl) < 4.0
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(gio-2.0) >= 2.66
 BuildRequires:  pkgconfig(glib-2.0) >= 2.66
