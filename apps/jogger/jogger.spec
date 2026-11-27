@@ -37,6 +37,7 @@ BuildRequires:  pkgconfig(gtk4) >= 4.14.0
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.9
 BuildRequires:  pkgconfig(shumate-1.0)
 BuildRequires:  pkgconfig(alsa)
+BuildRequires:  pkgconfig(sqlite3)
 
 Requires:       hicolor-icon-theme
 

@@ -108,6 +108,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "diveboard",
+        "upstream_repo": "baarkerlounger/diveboard-gtk",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "door-knocker",
         "upstream_repo": "tytan652/door-knocker",
         "provider": "codeberg",
