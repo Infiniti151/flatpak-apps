@@ -420,6 +420,12 @@
         "instance": ""
     },
     {
+        "app_name": "share-preview",
+        "upstream_repo": "rafaelmardojai/share-preview",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "shortwave",
         "upstream_repo": "World/Shortwave",
         "provider": "gitlab",
