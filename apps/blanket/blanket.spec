@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           blanket
-Version:        0
+Version:        0.8.0
 Release:        1%{?dist}
 Summary:        Listen to ambient sounds
 License:        GPL-3.0-or-later
@@ -91,3 +91,8 @@ Included Sounds in the App:
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
 
+%changelog
+* Fri Nov 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 0.8.0-1
+- Allow renaming custom sounds
+- Make suspension inhibition optional and disabled by default
+- Bug fixes
