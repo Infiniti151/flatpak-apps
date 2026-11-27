@@ -18,6 +18,12 @@
         "instance": ""
     },
     {
+        "app_name": "blanket",
+        "upstream_repo": "rafaelmardojai/blanket",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "boatswain",
         "upstream_repo": "World/boatswain",
         "provider": "gitlab",
