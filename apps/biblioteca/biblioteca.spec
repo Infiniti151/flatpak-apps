@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           biblioteca
-Version:        0
+Version:        1.8
 Release:        1%{?dist}
 Summary:        Read GNOME documentation offline
 License:        GPL-3.0-only
@@ -119,3 +119,7 @@ rm -f %{buildroot}%{_scalableiconsdir}/%{app_id}.Devel.svg
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_dbusservicesdir}/%{app_id}.service
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Fri Nov 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.8-1
+- Update to 1.8
