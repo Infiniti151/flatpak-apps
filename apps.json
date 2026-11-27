@@ -12,6 +12,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "biblioteca",
+        "upstream_repo": "sonnyp/Biblioteca",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "boatswain",
         "upstream_repo": "World/boatswain",
         "provider": "gitlab",

@@ -1,0 +1,48 @@
+--- a/src/Shortcuts.js
++++ b/src/Shortcuts.js
+@@ -11,7 +11,7 @@ export default function Shortcuts(window) {
+   application.set_accels_for_action("app.shortcuts", ["<Control>question"]);
+
+   const accels = [
+-    ["win.new-tab('file:///app/share/doc/gtk4/index.html')", ["<Control>T"]],
++    ["win.new-tab('file:///usr/share/app.drey.Biblioteca/doc/gtk4/index.html')", ["<Control>T"]],
+     ["win.close-tab", ["<Control>W"]],
+     ["win.navigation-forward", ["<Alt>Right"]],
+     ["win.navigation-back", ["<Alt>Left"]],
+--- a/src/bin.js
++++ b/src/bin.js
+@@ -16,12 +16,6 @@ imports.package.init({
+ setConsoleLogDomain(pkg.name);
+ GLib.set_application_name("Biblioteca");
+
+-if (!Xdp.Portal.running_under_flatpak()) {
+-  console.error(
+-    "Flatpak required\nBiblioteca is only meant to be run sandboxed in a specific target environment.\nBypassing this will exposes users to arbitrary code breakage.",
+-  );
+-  exit(1);
+-}
+
+ globalThis.__DEV__ = pkg.name.endsWith(".Devel");
+ if (__DEV__) {
+--- a/src/window.blp
++++ b/src/window.blp
+@@ -105,7 +105,7 @@ template $Window: Adw.ApplicationWindow {
+                 Button button_new_tab {
+                   icon-name: "tab-new-symbolic";
+                   action-name: "win.new-tab";
+-                  action-target: '"file:///app/share/doc/gtk4/index.html"';
++                  action-target: '"file:///usr/share/app.drey.Biblioteca/doc/gtk4/index.html"';
+                   tooltip-text: _("New Tab");
+
+                   styles ["flat"]
+--- a/src/window.js
++++ b/src/window.js
+@@ -161,7 +161,7 @@ class Window extends Adw.ApplicationWindow {
+     if (this._webview.is_online) this._url_bar.grab_focus();
+   };
+
+-  newTab = (uri = "file:///app/share/doc/gtk4/index.html") => {
++  newTab = (uri = "file:///usr/share/app.drey.Biblioteca/doc/gtk4/index.html") => {
+     this._webview = new WebView({
+       uri: uri,
+       sidebar: this._sidebar,

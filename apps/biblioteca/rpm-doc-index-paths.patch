@@ -1,0 +1,26 @@
+--- a/build-aux/build-index.js
++++ b/build-aux/build-index.js
+@@ -70,10 +70,21 @@
+ await loadDocs();
+
+ async function loadDocs() {
+-  await scanLibraries(Gio.File.new_for_path("/app/share/doc"));
++  const destdir = GLib.getenv("DESTDIR") || "";
++  const candidateDocDirs = [
++    destdir ? `${destdir}/usr/share/app.drey.Biblioteca/doc` : null,
++    "/usr/share/doc",
++    "/app/share/doc",
++  ].filter(Boolean);
++  for (const docDir of candidateDocDirs) {
++    if (GLib.file_test(docDir, GLib.FileTest.IS_DIR)) {
++      await scanLibraries(Gio.File.new_for_path(docDir));
++      if (DOC_INDEX.length > 0) break;
++    }
++  }
+   sort_index(DOC_INDEX);
+
+-  const [pkgdatadir] = ARGV;
++  const pkgdatadir = (GLib.getenv("DESTDIR") ?? "") + ARGV[0];
+   GLib.mkdir_with_parents(pkgdatadir, 0o755);
+
+   const start_index = DOC_INDEX.findIndex((doc) => doc.name === "Gtk-4.0");

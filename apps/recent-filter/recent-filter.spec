@@ -15,8 +15,7 @@ BuildArch:      noarch
 
 URL:            %{forgeurl}
 Source0:        %{forgesource}
-Patch0:         https://raw.githubusercontent.com/Infiniti151/flatpak-apps/main/apps/recent-filter/recent-filter-tests.patch
-Patch1:         https://raw.githubusercontent.com/Infiniti151/flatpak-apps/main/apps/recent-filter/recent-filter-unsandboxed-portal.patch
+Patch0:         https://raw.githubusercontent.com/Infiniti151/flatpak-apps/main/apps/recent-filter/rpm-unsandboxed-portal.patch
 
 BuildRequires:  meson >= 0.62.0
 BuildRequires:  ninja-build
