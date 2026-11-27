@@ -7,7 +7,7 @@
 %global         tag                 %{version}
 
 Name:           jogger
-Version:        0
+Version:        2.3.0
 Release:        1%{?dist}
 Summary:        Fitness tracker
 License:        GPL-3.0-or-later AND 0BSD AND Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-3-Clause AND CC0-1.0 AND ISC AND MIT AND MIT-0 AND MPL-2.0 AND Unlicense AND Zlib
@@ -71,3 +71,13 @@ env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none 
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_datadir}/appdata/%{app_id}.appdata.xml
 
+%changelog
+* Fri Nov 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.3.0-1
+- Save and follow routes, with off route alerts and callouts for ahead/behind previous best pace
+- Configurable countdown before starting and pausing a workout
+- Default workout type is now configurable
+- Flyover terrain downloads are now optional and the terrain tile server is configurable
+- More accurate distance calculations
+- Chart improvements
+- Various bugfixes
+- Translation updates
