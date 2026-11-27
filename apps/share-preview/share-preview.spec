@@ -3,7 +3,7 @@
 %global         tag           %{version}
 
 Name:           share-preview
-Version:        0
+Version:        1.0.0
 Release:        1%{?dist}
 Summary:        Test social media cards locally
 License:        GPL-3.0-or-later AND CC0-1.0 AND 0BSD AND Apache-2.0 AND (Apache-2.0 WITH LLVM-exception) AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND ISC AND MIT AND MPL-2.0 AND MPL-2.0-or-later AND Unlicense AND Unicode-3.0 AND Zlib
@@ -63,3 +63,8 @@ env CARGO_HOME=%{_vpath_builddir}/cargo-home cargo tree -e normal --prefix none 
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Fri Nov 27 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.0-1
+- Support opening HTTP URLs from desktop and cli
+- Improve handling of multiple windows
