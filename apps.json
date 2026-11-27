@@ -258,6 +258,12 @@
         "instance": ""
     },
     {
+        "app_name": "jogger",
+        "upstream_repo": "baarkerlounger/jogger",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "junction",
         "upstream_repo": "sonnyp/Junction",
         "provider": "github",
