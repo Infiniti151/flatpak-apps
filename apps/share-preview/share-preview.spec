@@ -1,6 +1,9 @@
-%global         app_id        com.rafaelmardojai.SharePreview
-%global         forgeurl      https://github.com/rafaelmardojai/share-preview
-%global         tag           %{version}
+%if 0%{?eln}
+%global         debug_package       %{nil}
+%endif
+%global         app_id              com.rafaelmardojai.SharePreview
+%global         forgeurl            https://github.com/rafaelmardojai/share-preview
+%global         tag                 %{version}
 
 Name:           share-preview
 Version:        1.0.0
