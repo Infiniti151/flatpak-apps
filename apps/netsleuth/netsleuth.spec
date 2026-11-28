@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           netsleuth
-Version:        0
+Version:        1.1.5
 Release:        1%{?dist}
 Summary:        Calculate IP subnets
 License:        GPL-3.0-or-later
@@ -65,3 +65,9 @@ A simple utility for the calculation and analysis of IP subnet values, designed 
 %{_symboliciconsdir}/%{app_id}-symbolic.svg
 %{_metainfodir}/%{app_id}.metainfo.xml
 
+%changelog
+* Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.5-1
+- Updated GNOME runtime
+- Minor UI improvements
+- Updated/added translations:
+- Brazilian Portuguese (Cristiano Fraga G. Nunes)
