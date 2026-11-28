@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           lenspect
-Version:        0
+Version:        1.0.7
 Release:        1%{?dist}
 Summary:        Scan files for threats
 License:        GPL-3.0-or-later
@@ -72,3 +72,16 @@ sed -i "s/'--strict', *//g" data/meson.build
 %{_searchprovidersdir}/%{app_id}.search-provider.ini
 %{_metainfodir}/%{app_id}.metainfo.xml
 
+%changelog
+* Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.7-1
+- Updated GNOME runtime
+- Added known filename
+- Added crowdsourced AI results
+- Added suggested threat label
+- Added file reputation
+- Added sandbox verdicts
+- Added upload percentage
+- Added selected file size
+- Added clear history undo
+- Minor code optimization/fixes
+- ... (see upstream for full release notes)
