@@ -300,6 +300,12 @@
         "instance": ""
     },
     {
+        "app_name": "lenspect",
+        "upstream_repo": "vmkspv/lenspect",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "lorem",
         "upstream_repo": "World/design",
         "provider": "gitlab",
