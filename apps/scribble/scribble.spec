@@ -4,7 +4,7 @@
 %global         __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*$
 
 Name:           scribble
-Version:        1.14.0
+Version:        1.15.0
 Release:        1%{?dist}
 Summary:        Take handwritten notes and homework
 License:        GPL-3
@@ -80,6 +80,9 @@ Made for a pen and a touchscreen used together: the pen draws, and your finger p
 
 
 %changelog
+* Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.15.0-1
+- Update to 1.15.0
+
 * Tue Nov 24 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.14.0-1
 - A release for printing, select all and copying into other programs.
 - Print from the menu or with Ctrl+P: the print dialog covers every page, applies page ranges, copies, collate and reverse order, and can print to a PDF file
