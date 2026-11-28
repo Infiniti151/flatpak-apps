@@ -11,6 +11,7 @@
       2. Read current version and App ID / RDNN from local .spec files
       3. Concurrently fetch upstream versions via changelog_scraper.py using a thread pool
       4. Compare versions and output a filtered JSON matrix for GitHub Actions workflow dispatch
+         (each row: apps.json fields plus old_ver, new_ver, raw_new_ver, app_id and tag)
 
     Usage:
         check_updates.py
@@ -36,6 +37,29 @@ def get_app_id(spec_path):
         return result
     except subprocess.CalledProcessError:
         return None
+
+def get_tag_template(spec_path):
+    """Return the value of `%global tag ...` from the spec (e.g. 'v%{version}'), or None."""
+    try:
+        with open(spec_path, 'r') as f:
+            for line in f:
+                m = re.match(r'\s*%global\s+tag\s+(\S+)', line)
+                if m:
+                    return m.group(1)
+    except OSError:
+        pass
+    return None
+
+def resolve_tag(spec_path, new_ver, raw_new_ver):
+    """Git tag the spec will fetch for new_ver, e.g. 'v1.1.1'."""
+    template = get_tag_template(spec_path) or '%{version}'
+    tag = template.replace('%{version}', new_ver)
+    if '%{' in tag:
+        # the spec builds its tag from other macros we can't expand here
+        print(f"{YELLOW}[WARN] Cannot resolve tag '{template}' in {spec_path}; "
+              f"using {raw_new_ver}{RESET}")
+        return raw_new_ver
+    return tag
 
 def check_app(app):
     app_name = app['app_name']
@@ -84,6 +108,8 @@ def check_app(app):
         app['old_ver'] = old_ver
         app['new_ver'] = clean_new_ver
         app['raw_new_ver'] = raw_new_ver
+        app['app_id'] = app_id
+        app['tag'] = resolve_tag(spec_path, clean_new_ver, raw_new_ver)
         print(f"{YELLOW}[INFO] Update found for {app_name}: {old_ver} -> {clean_new_ver}{RESET}")
         return app
     else:

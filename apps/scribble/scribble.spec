@@ -78,10 +78,14 @@ Made for a pen and a touchscreen used together: the pen draws, and your finger p
 %{_mimepackagesdir}/*.xml
 %{_metainfodir}/*.metainfo.xml
 
-
 %changelog
 * Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.15.0-1
-- Update to 1.15.0
+- A release for see-through fills, easier recordings and a print and export that no longer freeze the window.
+- A fill's opacity can be set with a slider in the fill color picker; a see-through fill shows over a checkerboard
+- Click a recording to play or stop it; the playing one stays selected, and the pencil button renames it
+- Drag the waveform to scrub through a recording, click it to play or stop
+- Printing and exporting as PDF prepare the pages in the background, so the window stays responsive
+- A missing print portal is explained in plain words
 
 * Tue Nov 24 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.14.0-1
 - A release for printing, select all and copying into other programs.
