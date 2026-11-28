@@ -34,6 +34,39 @@ RUN dnf install -y \
 
 # Layer 3: App-specific build dependencies (managed by scripts/update_dockerfile.py)
 # --- APP_DEPS_START ---
+RUN dnf install -y \
+    # --- graphs dependencies --- \
+    'pkgconfig(gee-0.8)' \
+    'pkgconfig(gio-2.0)' \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gobject-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    'pkgconfig(libgsf-1)' \
+    'pkgconfig(libxml-2.0)' \
+    'pkgconfig(sqlite3)' \
+    appstream \
+    blueprint-compiler \
+    desktop-file-utils \
+    gcc \
+    gettext \
+    git-core \
+    gobject-introspection \
+    gtk-update-icon-cache \
+    itstool \
+    meson \
+    python3-devel \
+    python3-gobject \
+    python3-matplotlib \
+    python3-numexpr \
+    python3-numpy \
+    python3-pip \
+    python3-pytest \
+    python3-scipy \
+    python3-sympy \
+    vala && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf/*
 # --- APP_DEPS_END ---
 
 WORKDIR /github/workspace
