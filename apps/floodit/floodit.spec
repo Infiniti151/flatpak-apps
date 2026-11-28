@@ -6,7 +6,7 @@
 %global         tag                 %{version}
 
 Name:           floodit
-Version:        0
+Version:        3.0.0
 Release:        1%{?dist}
 Summary:        Flood the board
 License:        GPL-3.0-or-later
@@ -63,3 +63,10 @@ Flood It is a game with the simple premise of flooding the entire board with one
 %{_gschemasdir}/%{app_id}.gschema.xml
 %{_metainfodir}/%{app_id}.metainfo.xml
 
+%changelog
+* Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 3.0.0-1
+- This release makes the game board resizable, allowing users to better see the board from afar, and adds number indicators on colors, togglable in the preferences dialog.
+- Changes:
+- Modified game board to resize with window
+- Added number indicators on colors toggable via preferences
+- Improved color button visibility while in focus
