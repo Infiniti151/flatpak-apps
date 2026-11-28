@@ -5,7 +5,7 @@
 %global         debug_package %{nil}
 
 Name:           panapidas
-Version:        0
+Version:        1.0.0
 Release:        1%{?dist}
 Summary:        HTTP client for APIs
 License:        GPL-3.0-only AND MIT
@@ -91,3 +91,12 @@ pip3 install --no-deps --no-build-isolation --ignore-installed \
 %{_dbusservicesdir}/%{app_id}.service
 %{_metainfodir}/%{app_id}.metainfo.xml
 
+%changelog
+* Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.0.0-1
+- First Release
+- Create requests
+- Support for HTTP + REST requests
+- Group requests
+- Add certificates
+- Use of variables in requests
+- Pre/post-request JavaScript scripts
