@@ -366,6 +366,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "panapidas",
+        "upstream_repo": "eltonarodrigues/panapidas",
+        "provider": "codeberg",
+        "instance": ""
+    },
+    {
         "app_name": "picker",
         "upstream_repo": "mezoahmedii/picker",
         "provider": "github",
