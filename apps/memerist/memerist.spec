@@ -3,7 +3,7 @@
 %global         tag           v%{version}
 
 Name:           memerist
-Version:        2.6.1
+Version:        2.6.2
 Release:        1%{?dist}
 Summary:        A simple and modern meme editor
 License:        GPL-3.0-or-later
@@ -77,6 +77,15 @@ Features:
 
 
 %changelog
+* Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.6.2-1
+- What's Changed
+- Add support for opening .meme project files from the file manager by @Infiniti151 in https://github.com/vani-tty1/memerist/pull/29
+- Update to latest ImageMagick
+- Merge Apply Crop and Apply Margins into one button
+- New Contributors
+- @Infiniti151 made their first contribution in https://github.com/vani-tty1/memerist/pull/29
+- *Full Changelog**: https://github.com/vani-tty1/memerist/compare/v2.6.1...v2.6.2
+
 * Sun Nov 15 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.6.1-1
 - This is a stable release with the following changes:
 - Sort recently added templates by added date including built in ones
