@@ -94,7 +94,7 @@ export PYTHONPATH="$PWD/pydeps"
 # upstream's install_subdir() uses an absolute build-dir path, which DESTDIR redirects into the buildroot (the test files from tests/meson.build)
 rm -rf "%{buildroot}${PWD:?}/%{_vpath_builddir}/run_tests"
 # Install the bundled wheel into the buildroot
-pip3 install --no-deps --no-index --ignore-installed --root-user-action=ignore --prefix=%{buildroot}%{_prefix} %{SOURCE1}
+pip3 install --no-deps --no-index --ignore-installed --root-user-action=ignore --prefix=%{buildroot}%{_prefix} %{SOURCE0}
 
 %find_lang %{name} --with-gnome
 %py3_shebang_fix %{buildroot}%{_bindir}/%{name}
@@ -111,19 +111,19 @@ export PYTHONPATH=%{buildroot}%{python3_sitelib}:%{buildroot}%{python3_sitearch}
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
-%{_libdir}/libgraphs.so
+%{_libdir}/lib%{name}.so
 %{_libdir}/girepository-1.0/Graphs-1.typelib
-%{python3_sitelib}/graphs/
+%{python3_sitelib}/%{name}/
 %{python3_sitelib}/gio_pyio/
 %{python3_sitelib}/gio_pyio-*.dist-info/
-%{_appsdir}/*.desktop
-%{_scalableiconsdir}/*.svg
-%{_symboliciconsdir}/*.svg
-%{_gschemasdir}/*.gschema.xml
-%{_dbusservicesdir}/*.service
-%{_mimepackagesdir}/*.xml
-%{_mandir}/man1/graphs.1*
-%{_metainfodir}/*.metainfo.xml
+%{_appsdir}/%{app_id}.desktop
+%{_scalableiconsdir}/%{app_id}.svg
+%{_symboliciconsdir}/%{app_id}-symbolic.svg
+%{_gschemasdir}/%{app_id}.gschema.xml
+%{_dbusservicesdir}/%{app_id}.service
+%{_mimepackagesdir}/%{app_id}.mime.xml
+%{_mandir}/man1/%{name}.1*
+%{_metainfodir}/%{app_id}.metainfo.xml
 
 %changelog
 * Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.0.10-1
