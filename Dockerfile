@@ -34,6 +34,22 @@ RUN dnf install -y \
 
 # Layer 3: App-specific build dependencies (managed by scripts/update_dockerfile.py)
 # --- APP_DEPS_START ---
+RUN dnf install -y \
+    # --- halftone dependencies --- \
+    'pkgconfig(glib-2.0)' \
+    'pkgconfig(gtk4)' \
+    'pkgconfig(libadwaita-1)' \
+    'pkgconfig(pygobject-3.0)' \
+    appstream \
+    blueprint-compiler \
+    desktop-file-utils \
+    forge-srpm-macros \
+    gettext \
+    gtk-update-icon-cache \
+    meson \
+    python3-devel && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf/*
 # --- APP_DEPS_END ---
 
 WORKDIR /github/workspace
