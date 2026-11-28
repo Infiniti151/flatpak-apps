@@ -3,7 +3,7 @@
 %global         gio_pyio_ver    0.0.6
 
 Name:           graphs
-Version:        2.0.9
+Version:        2.0.10
 Release:        1%{?dist}
 Summary:        Plot and manipulate data
 License:        GPL-3.0-or-later
@@ -126,6 +126,13 @@ export PYTHONPATH=%{buildroot}%{python3_sitelib}:%{buildroot}%{python3_sitearch}
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
+* Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.0.10-1
+- Bug fixes:
+- Fixed operation buttons in the sidebar being cut off when their labels do not fit, which was the case in some translations
+- Fixed error bars not changing their color when the system switches between light and dark mode
+- Other Improvements
+- Translation updates
+
 * Sat Nov 14 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.0.9-1
 - Update to 2.0.9
 
