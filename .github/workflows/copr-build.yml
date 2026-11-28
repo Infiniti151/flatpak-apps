@@ -69,6 +69,8 @@ jobs:
           OLD_VER: ${{ matrix.old_ver }}
           NEW_VER: ${{ matrix.raw_new_ver }}
           CLEAN_NEW_VER: ${{ matrix.new_ver }}
+          APP_ID: ${{ matrix.app_id }}
+          TAG: ${{ matrix.tag }}
         run: |
           if [[ ! -f "$SPEC" ]]; then
             echo "::error::==> [ERROR] $SPEC not found!"
@@ -98,8 +100,7 @@ jobs:
             python3 scripts/source_scraper.py "$PROVIDER" "$INSTANCE" "$REPO" "$NEW_VER" "$SPEC" "$FILE_PATH" $KEYWORDS
           fi
 
-          APP_ID=$(grep -E '^\s*%global\s+(app_id|rdnn)\s+' "$SPEC" | awk '{print $3}')
-          CHANGELOG=$(python3 scripts/changelog_scraper.py get-changelog "$PROVIDER" "$INSTANCE" "$REPO" "$APP_ID" "$NEW_VER")
+          CHANGELOG=$(python3 scripts/changelog_scraper.py get-changelog "$PROVIDER" "$INSTANCE" "$REPO" "$APP_ID" "$TAG")
 
           echo "changelog<<EOF" >> "$GITHUB_OUTPUT"
           echo "$CHANGELOG" >> "$GITHUB_OUTPUT"

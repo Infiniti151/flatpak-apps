@@ -73,8 +73,8 @@ Features:
 %{_scalableiconsdir}/*.svg
 %{_symboliciconsdir}/*.svg
 %{_gschemasdir}/*.gschema.xml
+%{_mimepackagesdir}/*.xml
 %{_metainfodir}/*.metainfo.xml
-
 
 %changelog
 * Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 2.6.2-1

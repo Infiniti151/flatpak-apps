@@ -70,4 +70,6 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.m
 
 %changelog
 * Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.1-1
-- Update to 1.1.1
+- Hotfix: Persistent Configuration State
+- Fixed an issue in Flatpak where all user configurations and database settings were wiped upon restarting the app.
+- Fixed an issue where the update banner continuously appeared after closing and reopening the app.
