@@ -4,7 +4,7 @@
 %global         tag           v%{version}
 
 Name:           deep-dive
-Version:        0
+Version:        1.1.1
 Release:        1%{?dist}
 Summary:        Stay focused with strict limits
 License:        GPL-3.0-or-later
@@ -67,3 +67,7 @@ appstreamcli validate --no-net --explain %{buildroot}%{_metainfodir}/%{app_id}.m
 %{_scalableiconsdir}/%{app_id}.svg
 %{_symboliciconsdir}/*-symbolic.svg
 %{_metainfodir}/%{app_id}.metainfo.xml
+
+%changelog
+* Sat Nov 28 2026 Infiniti151 <43163551+Infiniti151@users.noreply.github.com> - 1.1.1-1
+- Update to 1.1.1
