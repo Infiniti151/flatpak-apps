@@ -348,6 +348,12 @@
         "instance": ""
     },
     {
+        "app_name": "netsleuth",
+        "upstream_repo": "vmkspv/netsleuth",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "newsflash",
         "upstream_repo": "news-flash/news_flash_gtk",
         "provider": "gitlab",
