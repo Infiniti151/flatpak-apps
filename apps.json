@@ -210,6 +210,12 @@
         "instance": ""
     },
     {
+        "app_name": "floodit",
+        "upstream_repo": "tfuxu/floodit",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "forge-sparks",
         "upstream_repo": "rafaelmardojai/forge-sparks",
         "provider": "github",
