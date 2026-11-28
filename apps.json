@@ -108,6 +108,12 @@
         "instance": "gitlab.gnome.org"
     },
     {
+        "app_name": "deep-dive",
+        "upstream_repo": "tanaybhomia/DeepDive",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "diveboard",
         "upstream_repo": "baarkerlounger/diveboard-gtk",
         "provider": "codeberg",

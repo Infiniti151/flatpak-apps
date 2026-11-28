@@ -34,16 +34,6 @@ RUN dnf install -y \
 
 # Layer 3: App-specific build dependencies (managed by scripts/update_dockerfile.py)
 # --- APP_DEPS_START ---
-RUN dnf install -y \
-    # --- deep-dive dependencies --- \
-    appstream \
-    desktop-file-utils \
-    forge-srpm-macros \
-    meson \
-    ninja-build \
-    python3-devel && \
-    dnf clean all && \
-    rm -rf /var/cache/dnf/*
 # --- APP_DEPS_END ---
 
 WORKDIR /github/workspace
