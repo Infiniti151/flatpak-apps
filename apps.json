@@ -246,6 +246,12 @@
         "instance": ""
     },
     {
+        "app_name": "halftone",
+        "upstream_repo": "tfuxu/Halftone",
+        "provider": "github",
+        "instance": ""
+    },
+    {
         "app_name": "hieroglyphic",
         "upstream_repo": "FineFindus/Hieroglyphic",
         "provider": "github",
